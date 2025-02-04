@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clover Streaming Store - Alquiler de Cuentas de Streaming</title>
     <link rel="stylesheet" href="style.css">
-   <!-- Biblioteca de Font Awesome -->
+   <!-- Biblioteca de Font Awesome align-items: center; -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
    <style>
       #contact p {
@@ -22,12 +22,14 @@
             margin-top: 20px;
             width: fit-content;
             max-width: 80%;
+            
         }
         .pricing-table {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
         .price-box {
             background-color: rgb(0, 51, 102);
@@ -35,8 +37,11 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 200px;
+            width: 100%;
+            max-width: 200px;
+            margin: 10px;
             text-align: center;
+            transition: all 0.3s ease;
         }
         .price-box h2 {
             margin: 0;
@@ -50,6 +55,16 @@
         .price-box .price {
             font-size: 32px;
             color: #ffffff;
+        }
+        @media (min-width: 600px) {
+            .price-box {
+                width: calc(50% - 40px);
+            }
+        }
+        @media (min-width: 900px) {
+            .price-box {
+                width: calc(33.33% - 40px);
+            }
         }
 </style>
 </head>
