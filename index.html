@@ -16,7 +16,15 @@
             z-index: 1000; /* Para asegurarte de que el header esté por delante del contenido */
         }
         body {
-            padding-top: 100px; /* Ajusta este valor dependiendo de la altura del header */
+            padding-top: 150px; /* Ajusta este valor dependiendo de la altura del header */
+        }
+        #date-time {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #visit-counter {
+            text-align: center;
+            margin-top: 20px;
         }
         /* Otros estilos existentes */
         #contact p {
@@ -56,7 +64,14 @@
                 <li><a href="#contact" style="text-decoration: none; color: rgb(0, 0, 0); background-color: #25D366; padding: 10px 20px; border-radius: 5px; display: inline-block;">Contacto</a></li>
             </ul>
         </nav>
-    </strong>
+        </strong>
+        <div id="date-time">
+            <p id="current-date"></p>
+            <p id="current-time"></p>
+        </div>
+        <div id="visit-counter">
+            <p>Visitas: <span id="counter"></span></p>
+        </div>
     </header>
     <center>
     <section id="home">
@@ -152,5 +167,32 @@
         <p>&copy; 2025 Clover Streaming Store. Todos los derechos reservados. Ing. Teddy Valencia</p>
     </footer></center>
     <script src="script.js"></script>
+    <script>
+        // Actualiza la fecha y la hora de manera automática
+        function updateDateTime() {
+            const now = new Date();
+            const date = now.toLocaleDateString('es-ES');
+            const time = now.toLocaleTimeString('es-ES');
+            document.getElementById('current-date').innerText = `Fecha: ${date}`;
+            document.getElementById('current-time').innerText = `Hora: ${time}`;
+        }
+
+        // Contador de visitas
+        function updateCounter() {
+            let counter = localStorage.getItem('visit-counter') || 0;
+            counter++;
+            localStorage.setItem('visit-counter', counter);
+            document.getElementById('counter').innerText = counter;
+        }
+
+        // Actualiza la fecha y la hora cada segundo
+        setInterval(updateDateTime, 1000);
+
+        // Actualiza el contador de visitas al cargar la página
+        updateCounter();
+
+        // Inicializa la fecha y la hora al cargar la página
+        updateDateTime();
+    </script>
 </body>
 </html>
