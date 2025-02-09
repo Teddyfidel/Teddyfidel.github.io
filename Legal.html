@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJmqldgw5FD6r02P5xqVhkiuS96k05h2pyTYi3" crossorigin="anonymous">
     <link rel="stylesheet" href="styl.css">
     <style>
-        body {
+        body, html {
+            height: 100%;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             background-color: #f0f0f0;
         }
         section {
-            width: 90%;
-            max-width: 800px;
+            width: 100%;
+            padding: 20px;
         }
         h1 {
             color: #0d6efd;
@@ -34,12 +34,10 @@
             padding: 15px;
             background-color: rgb(0, 51, 102);
             color: #ffffff;
-            margin-top: 20px;
         }
         @media (max-width: 600px) {
             .message-box {
                 padding: 10px;
-                max-width: 100%;
             }
             p {
                 margin: 10px auto;
@@ -48,10 +46,8 @@
     </style>
 </head>
 <body>
-    <br><br><br>
     <section>
         <div class="message-box">
-            <br>
             <h1>Avisos Legales</h1>
             <p>
                 Al utilizar los servicios de alquiler de cuentas de streaming de Clover Streaming Store, aceptas y estás de acuerdo con los siguientes términos y condiciones. Por favor, lee atentamente estos avisos legales antes de utilizar nuestros servicios.
@@ -91,4 +87,3 @@
         </div>
     </section>
 </body>
-</html>
