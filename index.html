@@ -3,267 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clover Streaming Store - Alquiler de Cuentas de Streaming</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Biblioteca de Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-     <!--=============== REMIXICONS ===============-->
-     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
-
-     <!--=============== CSS ===============-->
-     <link rel="stylesheet" href="styles.css">
+    <title>Amor Eterno</title>
     <style>
-       header {
-            position: fixed;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, #ff99cc, #ff6699);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 2rem;
+            animation: flotar 3s infinite;
+        }
+
+        /* Parte 1: Login */
+        .login-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-top: 50px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-container h1 {
+            color: #ff3366;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ff99cc;
+            border-radius: 25px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .login-btn {
+            background: #ff3366;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .error-msg {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Parte 2: Bienvenida */
+        .welcome-container {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .welcome-title {
+            color: #45e9ff;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .scroll-container {
+            position: relative;
+            cursor: pointer;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+
+        .pergamino {
+            background: #f0e6d3;
+            padding: 0;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 1.5s ease-in-out;
+            max-height: 80px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .pergamino.unrolled {
+            max-height: 1000px;
+            padding: 30px;
+        }
+
+        .pergamino::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
-            width: 90%;
-            z-index: 1000; /* Para asegurarte de que el header esté por delante del contenido */
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to bottom, #d4c19c 0%, #f0e6d3 100%);
+            z-index: 1;
         }
-        body {
-            padding-top: 150px; /* Ajusta este valor dependiendo de la altura del header */
+
+        .pergamino::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to top, #d4c19c 0%, #f0e6d3 100%);
         }
-        #date-time {
-            text-align: center;
-            margin-top: 20px;
-        }
-        #visit-counter {
-            text-align: center;
-            margin-top: 20px;
-        }
-        /* Otros estilos existentes */
-        #contact p {
-            margin-top: 20px;
+
+        .poema {
             font-style: italic;
-            color: #ffffff;
+            line-height: 1.6;
+            color: #5a4a42;
+            white-space: pre-line;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 1s ease-in-out 0.3s;
         }
-        .message-box {
-            border: 2px solid #0eff0e;
-            border-radius: 10px;
-            padding: 15px;
-            background-color: rgb(0, 51, 102);
-            color: #333;
-            margin-top: 20px;
-            width: fit-content;
-            max-width: 80%;
+
+        .pergamino.unrolled .poema {
+            opacity: 1;
+            transform: translateY(0);
         }
-        #legal a {
-            text-decoration: none;
-            color: #fff;
+
+        .poema-title {
+            font-size: 1.8rem;
+            color: #ff3366;
+            margin-bottom: 1.5rem;
+            font-family: 'Brush Script MT', cursive;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out 0.5s;
         }
-        #legal h2 {
-            color: #fff;
-            text-decoration: underline;
+
+        .pergamino.unrolled .poema-title {
+            opacity: 1;
+        }
+
+        .roll {
+            position: absolute;
+            width: 60px;
+            height: 100%;
+            background: #c2ab8e;
+            right: -30px;
+            top: 0;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .roll::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            background: #a99276;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .poema {
+                font-size: 0.9rem;
+            }
+            
+            .scroll-container {
+                max-width: 90%;
+            }
         }
     </style>
 </head>
 <body>
-     <!--=============== HEADER ===============-->
-     <header class="header">
-        <nav class="nav container">
-           <div class="nav__data">
-              <a href="#" class="nav__logo">
-                 <i class="ri-planet-line"></i> Clover Streaming Store
-              </a>
-              
-              <div class="nav__toggle" id="nav-toggle">
-                 <i class="ri-menu-line nav__burger"></i>
-                 <i class="ri-close-line nav__close"></i>
-              </div>
-           </div>
+    <!-- Parte 1: Login -->
+    <div class="login-container">
+        <h1>❤️ Nuestro Amor Secreto ❤️</h1>
+        <input type="password" class="login-input" placeholder="Ingresa nuestro código especial" id="codigo">
+        <button class="login-btn" onclick="validarCodigo()">Ingresar</button>
+        <div class="error-msg" id="error">¡Código incorrecto! Intenta de nuevo</div>
+    </div>
 
-           <!--=============== NAV MENU ===============-->
-           <div class="nav__menu" id="nav-menu">
-              <ul class="nav__list">
-                 <li><a href="#home" class="nav__link">Inicio</a></li>
+    <!-- Parte 2: Bienvenida -->
+    <div class="welcome-container" id="welcome">
+        <h1 class="welcome-title">Bienvenida Amor Mio❤️</h1>
+        <div class="scroll-container">
+            <div class="pergamino" id="pergamino">
+                <div class="roll"></div>
+                <h2 class="poema-title">Nuestro amor, un canto eterno</h2>
+                <div class="poema">
+Desde el inicio, un susurro, una canción,
+la melodía que me dedicaste con pasión.
+Un recuerdo especial que en mi alma quedó,
+como el primer latido que el destino nos dio.
 
-                 <li><a href="#services" class="nav__link">Streaming</a></li>
+Me gusta de ti tu ternura infinita,
+aunque a veces la vida nos pone a prueba escrita.
+No se trata solo de ser dulce y atento,
+sino del amor que, en cada acto, siento.
 
-                 <!--=============== DROPDOWN 1 ===============-->
-                 <li class="dropdown__item">
-                    <div class="nav__link">
-                       Plataformas <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                    </div>
+Me sentí amada en tu mirada intensa,
+cuando con un toque tóxico se tornó mi esencia.
+Pero aprendimos juntos, crecimos sin miedo,
+porque el amor verdadero nunca es un enredo.
 
-                    <ul class="dropdown__menu">
-                       <li>
-                          <a href="NETFLIX.html" class="dropdown__link">
-                             <i class="ri-film-fill"></i> Netflix
-                          </a>                          
-                       </li>
-                       <!--
-                       <li>
-                          <a href="#" class="dropdown__link">
-                             <i class="ri-arrow-up-down-line"></i> Transactions
-                          </a>
-                       </li>-->
+Cuando estamos juntos, la felicidad florece,
+como un sol radiante que el alma estremece.
+Porque hablar contigo, aunque lejos estés,
+me llena de calma, me hace sentir bien.
 
-                       <!--
-                       <li class="dropdown__subitem">
-                          <div class="dropdown__link">
-                             <i class="ri-bar-chart-line"></i> Reports <i class="ri-add-line dropdown__add"></i>
-                          </div>-->
+Una promesa, incierta en su voz,
+pero en tu sinceridad hallo mi sol.
+Quisiera que fueras honesto y claro,
+sin sombras ni dudas, sin daño amargo.
 
-                          <ul class="dropdown__submenu">
-                             <li>
-                                <a href="#" class="dropdown__sublink">
-                                   <i class="ri-file-list-line"></i> Documents
-                                </a>
-                             </li>
-     
-                             <li>
-                                <a href="#" class="dropdown__sublink">
-                                   <i class="ri-cash-line"></i> Payments
-                                </a>
-                             </li>
-     
-                             <li>
-                                <a href="#" class="dropdown__sublink">
-                                   <i class="ri-refund-2-line"></i> Refunds
-                                </a>
-                             </li>
-                          </ul>
-                       </li>
-                    </ul>
-                 </li>
-                 
-                 <li><a href="#contact" class="nav__link">Contacto</a></li>
-                    </div>
-           </div>
-        </nav>
-     </header>
-     <!--=============== DROPDOWN 2 ===============
-    <header>
-        <h1>Clover Streaming Store - Alquiler de Cuentas de Streaming</h1>
-        <strong>
-            
-        <nav>
-            <ul>
-                <li><a href="#home" style="text-decoration: none; color: rgb(0, 0, 0); background-color: #25D366; padding: 10px 20px; border-radius: 5px; display: inline-block;">Inicio</a></li>
-                <li><a href="#services" style="text-decoration: none; color: rgb(0, 0, 0); background-color: #25D366; padding: 10px 20px; border-radius: 5px; display: inline-block;">Servicios</a></li>
-                <li><a href="#gallery" style="text-decoration: none; color: rgb(0, 0, 0); background-color: #25D366; padding: 10px 20px; border-radius: 5px; display: inline-block;">Streaming</a></li>
-                <li><a href="#contact" style="text-decoration: none; color: rgb(0, 0, 0); background-color: #25D366; padding: 10px 20px; border-radius: 5px; display: inline-block;">Contacto</a></li>
-            </ul>
-        </nav>
-        -->
-        </strong>
-       
-    <center>
-    <section id="home">
-        <h2>Tu sitio preferido de entretenimiento</h2>
-        <p>Todo en una sola plataforma</p>
-        
-        <button onclick="conocer()">Conoce más</button>
-    </section>
-    <section id="services">
-        <h2>Nuestros Servicios</h2>
-        <div class="service">
-        <img src="Logonetflix.png" alt="" srcset="" class="carnet">
-           
-        </div><br>
-        <div class="service">
-            <img src="disney-plus.png" alt="" srcset="" class="carnet">
-        </div><br>
-        <div class="service">
-            <img src="Amazon-Prime-.png" alt="" srcset="" class="carnet">
-           
-        </div><br>
-        <div class="service">
-            <img src="hbo1.jpg" alt="" srcset="" class="carnet">
-            <p>Películas y series exclusivas en <strong>Clover Streaming Store.</strong></p>
-        </div><br>
-    </section>
-    <section id="gallery">
-        <h2>Servicios de Streaming</h2>
-        <div class="gallery-item">
-            <img src="NETFLIX.jpeg" alt="Netflix" class="medium"><br><br>
-           <a href="NETFLIX.html"><button>Ver Catálogo</button></a>
-        </div>
-        <div class="gallery-item">
-            <img src="DISNEY.jpeg" alt="Disney+" class="medium"><br><br>
-            <a href="#"><button>Ver Catálogo</button></a>
-        </div>
-        <div class="gallery-item">
-            <img src="Prime Video.jpeg" alt="Amazon Prime" class="medium"><br><br>
-            <a href="#"><button>Ver Catálogo</button></a>
-        </div>
-        <div class="gallery-item">
-            <img src="HBO.jpeg" alt="HBO" class="medium"><br><br>
-            <a href="#"><button>Ver Catálogo</button></a>
-        </div>
-        <div class="gallery-item">
-            <img src="FOX SPORT.jpeg" alt="FOX" class="medium"><br><br>
-            <a href="#"><button>Ver Catálogo</button></a>
-        </div>
-        <div class="gallery-item">
-            <img src="Crunchyroll.jpeg" alt="Crunchyroll" class="medium"><br><br>
-            <button>Proximamente</button> 
-        </div>
-        <div class="gallery-item">
-            <img src="Paramont.jpeg" alt="Paramont" class="medium"><br><br>
-            <button>Proximamente</button> 
-        </div>
-        <div class="gallery-item">
-            <img src="Spotify.jpeg" alt="Spotify" class="medium"><br><br>
-            <button>Proximamente</button> 
-        </div>
-    </section>
-    <section id="contact">
-        <h2>Contacto</h2>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <div style="margin-bottom: 20px;">
-                <a href="https://wa.me/+593967879068" style="text-decoration: none; color: rgb(0, 0, 0); background-color: #25D366; padding: 10px 20px; border-radius: 5px; display: inline-block;" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Contacto por WhatsApp - Servidor 1
-                </a>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <a href="https://wa.me/+593990934368" style="text-decoration: none; color: rgb(0, 0, 0); background-color: #25D366; padding: 10px 20px; border-radius: 5px; display: inline-block;" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Contacto por WhatsApp - Servidor 2
-                </a>
-            </div>
-            <section id="legal">
-                <div class="message-box">
-               <a href="Privacidad.html"><h2>Privacidad</h2></a>
-              </div>
-              <div class="message-box">
-                <a href="Legal.html"><h2>Avisos legales</h2></a>
-             </div>
-            </section>
-           
-            <div class="message-box">
-                <p>Nuestros horarios de atención: Domingo a Domingo hasta las 12 de la noche ininterrumpido</p>
+Nuestro amor es único, bonito y especial,
+como un río eterno, como un brillo astral.
+Nos imagino en un futuro dorado,
+caminando juntos, con sueños alados.
+
+Y aunque no sé qué palabras escuchar,
+solo quiero sentirme amada de verdad.
+Que el amor nos guíe, que el tiempo nos una,
+y que en nuestra historia siempre haya fortuna.
+                </div>
             </div>
         </div>
-        
-       
-    </section>
+    </div>
 
-    <div id="sfc4kmnakxs8bbzq8tjrszazyld7y8799kl"></div><script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=4kmnakxs8bbzq8tjrszazyld7y8799kl&down=async" async></script><noscript><a href="https://www.contadorvisitasgratis.com" title="contador de visitas com"><img src="https://counter6.optistats.ovh/private/contadorvisitasgratis.php?c=4kmnakxs8bbzq8tjrszazyld7y8799kl" border="0" title="contador de visitas com" alt="contador de visitas com"></a></noscript>
-   
-    <footer>
-        <p>&copy; 2025 Clover Streaming Store. Todos los derechos reservados. Ing. Teddy Valencia</p>
-    </footer></center>
-    <script src="script.js"></script>
     <script>
-        // Actualiza la fecha y la hora de manera automática
-        function updateDateTime() {
-            const now = new Date();
-            const date = now.toLocaleDateString('es-ES');
-            const time = now.toLocaleTimeString('es-ES');
-            document.getElementById('current-date').innerText = `Fecha: ${date}`;
-            document.getElementById('current-time').innerText = `Hora: ${time}`;
+        function validarCodigo() {
+            const codigo = document.getElementById('codigo').value;
+            const errorMsg = document.getElementById('error');
+            
+            if (!codigo) {
+                errorMsg.textContent = "¡Por favor ingresa nuestro código especial!";
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            if (codigo === '071224') {
+                document.querySelector('.login-container').style.display = 'none';
+                document.getElementById('welcome').style.display = 'block';
+                document.title = "❤️ Mi Amor Eterno ❤️";
+                
+                // Agregar corazones flotantes
+                for(let i = 0; i < 20; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(heart);
+                }
+            } else {
+                errorMsg.textContent = "¡Código incorrecto! Intenta de nuevo";
+                errorMsg.style.display = 'block';
+            }
         }
 
-        // Actualiza la fecha y la hora cada segundo
-        setInterval(updateDateTime, 1000);
+        // Evento para desenrollar el pergamino
+        document.getElementById('pergamino').addEventListener('click', function() {
+            this.classList.toggle('unrolled');
+        });
 
-        // Actualiza el contador de visitas al cargar la página
-        updateCounter();
-
-        // Inicializa la fecha y la hora al cargar la página
-        updateDateTime();
+        // Validar al presionar Enter
+        document.getElementById('codigo').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') validarCodigo();
+        });
     </script>
-      <!--=============== MAIN JS ===============-->
-      <script src="main.js"></script>
 </body>
 </html>
