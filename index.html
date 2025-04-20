@@ -3,314 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amor Eterno</title>
+    <title>Clover - Educación Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Georgia', serif;
+            font-family: 'Segoe UI', sans-serif;
+            transition: background 0.3s, color 0.3s;
         }
 
-        body {
-            background: linear-gradient(45deg, #ff99cc, #ff6699);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        nav {
+            background: #1a237e;
+            padding: 1rem;
             position: relative;
-            overflow-x: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .heart {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 2rem;
-            animation: flotar 3s infinite;
-        }
-
-        /* Parte 1: Login */
-        .login-container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            margin-top: 50px;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .login-container h1 {
-            color: #ff3366;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #ff99cc;
-            border-radius: 25px;
-            font-size: 1rem;
-            text-align: center;
-        }
-
-        .login-btn {
-            background: #ff3366;
-            color: white;
+        .menu-btn {
+            display: none;
+            background: none;
             border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .menu-list {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .menu-list a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .menu-list a:hover {
+            color: #64ffda;
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: white;
             cursor: pointer;
             font-size: 1.1rem;
-            transition: transform 0.3s;
-            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
         }
 
-        .login-btn:hover {
-            transform: scale(1.05);
+        .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .error-msg {
-            color: red;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Parte 2: Bienvenida */
-        .welcome-container {
-            display: none;
+        .banner {
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('fondo.jpeg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 20px;
-            width: 90%;
-            max-width: 600px;
+            color: white;
+            padding: 2rem;
         }
 
-        .welcome-title {
-            color: #45e9ff;
+        .hero-content {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .hero-content h1 {
             font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            color: #1a237e;
+            margin-bottom: 1rem;
         }
 
-        .scroll-container {
-            position: relative;
-            cursor: pointer;
-            margin: 20px auto;
-            max-width: 500px;
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #444;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .pergamino {
-            background: #f0e6d3;
-            padding: 0;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-            transition: all 1.5s ease-in-out;
-            max-height: 80px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        .docente {
+            padding: 4rem 2rem;
+            background: white;
         }
 
-        .pergamino.unrolled {
-            max-height: 1000px;
-            padding: 30px;
+        .docente-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
         }
 
-        .pergamino::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 30px;
-            background: linear-gradient(to bottom, #d4c19c 0%, #f0e6d3 100%);
-            z-index: 1;
+        .docente-imagen {
+            flex: 0 0 300px;
         }
 
-        .pergamino::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 30px;
-            background: linear-gradient(to top, #d4c19c 0%, #f0e6d3 100%);
-        }
-
-        .poema {
-            font-style: italic;
-            line-height: 1.6;
-            color: #5a4a42;
-            white-space: pre-line;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(100%);
-            transition: all 1s ease-in-out 0.3s;
-        }
-
-        .pergamino.unrolled .poema {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .poema-title {
-            font-size: 1.8rem;
-            color: #ff3366;
-            margin-bottom: 1.5rem;
-            font-family: 'Brush Script MT', cursive;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out 0.5s;
-        }
-
-        .pergamino.unrolled .poema-title {
-            opacity: 1;
-        }
-
-        .roll {
-            position: absolute;
-            width: 60px;
-            height: 100%;
-            background: #c2ab8e;
-            right: -30px;
-            top: 0;
-            border-radius: 0 15px 15px 0;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.2);
-            transition: all 0.5s ease-in-out;
-        }
-
-        .roll::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            width: 40px;
-            height: 40px;
-            background: #a99276;
+        .docente-imagen img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
             border-radius: 50%;
-            transform: translateY(-50%);
+            border: 5px solid #1a237e;
         }
 
-        @keyframes flotar {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        .docente-info {
+            flex: 1;
+        }
+
+        .docente-info h2 {
+            color: #1a237e;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .docente-info p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #444;
+        }
+
+        .docente-info a {
+            color: #1a237e;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .cursos {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .cursos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .curso-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .curso-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #25d366;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .qr-section {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+        }
+
+        .qr-code {
+            max-width: 200px;
+            margin: 1rem auto;
+        }
+
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Modo Oscuro */
+        .dark-mode {
+            background: #121212;
+            color: #ffffff;
+        }
+
+        .dark-mode nav {
+            background: #0a0f3d;
+        }
+
+        .dark-mode .hero-content {
+            background: #1e1e1e;
+        }
+
+        .dark-mode .docente,
+        .dark-mode .cursos,
+        .dark-mode .qr-section {
+            background: #1e1e1e;
+        }
+
+        .dark-mode .curso-card {
+            background: #2d2d2d;
+            color: #fff;
+        }
+
+        .dark-mode .docente-info h2,
+        .dark-mode .docente-info p,
+        .dark-mode .docente-info a {
+            color: #fff;
+        }
+
+        .dark-mode .docente-imagen img {
+            border-color: #64ffda;
         }
 
         @media (max-width: 768px) {
-            .login-container {
-                padding: 1.5rem;
+            .menu-btn {
+                display: block;
+            }
+
+            .menu-list {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1a237e;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .menu-list.active {
+                display: flex;
+            }
+
+            .dark-mode-toggle {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .docente-container {
+                flex-direction: column;
+                text-align: center;
             }
             
-            .welcome-title {
-                font-size: 2rem;
+            .docente-imagen img {
+                width: 250px;
+                height: 250px;
             }
-            
-            .poema {
-                font-size: 0.9rem;
-            }
-            
-            .scroll-container {
-                max-width: 90%;
+
+            .cursos-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Parte 1: Login -->
-    <div class="login-container">
-        <h1>❤️ Nuestro Amor Secreto ❤️</h1>
-        <input type="password" class="login-input" placeholder="Ingresa nuestro código especial" id="codigo">
-        <button class="login-btn" onclick="validarCodigo()">Ingresar</button>
-        <div class="error-msg" id="error">¡Código incorrecto! Intenta de nuevo</div>
-    </div>
+    <nav>
+        <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        <ul class="menu-list">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#cursos">Cursos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+            <li>
+                <button class="dark-mode-toggle">
+                    <i class="fas fa-moon"></i>
+                    Modo Oscuro
+                </button>
+            </li>
+        </ul>
+    </nav>
 
-    <!-- Parte 2: Bienvenida -->
-    <div class="welcome-container" id="welcome">
-        <h1 class="welcome-title">Bienvenida Amor Mio❤️</h1>
-        <div class="scroll-container">
-            <div class="pergamino" id="pergamino">
-                <div class="roll"></div>
-                <h2 class="poema-title">Nuestro amor, un canto eterno</h2>
-                <div class="poema">
-Desde el inicio, un susurro, una canción,
-la melodía que me dedicaste con pasión.
-Un recuerdo especial que en mi alma quedó,
-como el primer latido que el destino nos dio.
+    <section class="banner"></section>
 
-Me gusta de ti tu ternura infinita,
-aunque a veces la vida nos pone a prueba escrita.
-No se trata solo de ser dulce y atento,
-sino del amor que, en cada acto, siento.
+    <section class="docente-info">
+        <div>
+            <h1>Transforma tu futuro con nuestros cursos</h1>
+            <p>Aprende habilidades demandadas con expertos de la industria</p>
+        </div>
+    </section>
 
-Me sentí amada en tu mirada intensa,
-cuando con un toque tóxico se tornó mi esencia.
-Pero aprendimos juntos, crecimos sin miedo,
-porque el amor verdadero nunca es un enredo.
-
-Cuando estamos juntos, la felicidad florece,
-como un sol radiante que el alma estremece.
-Porque hablar contigo, aunque lejos estés,
-me llena de calma, me hace sentir bien.
-
-Una promesa, incierta en su voz,
-pero en tu sinceridad hallo mi sol.
-Quisiera que fueras honesto y claro,
-sin sombras ni dudas, sin daño amargo.
-
-Nuestro amor es único, bonito y especial,
-como un río eterno, como un brillo astral.
-Nos imagino en un futuro dorado,
-caminando juntos, con sueños alados.
-
-Y aunque no sé qué palabras escuchar,
-solo quiero sentirme amada de verdad.
-Que el amor nos guíe, que el tiempo nos una,
-y que en nuestra historia siempre haya fortuna.
-                </div>
+    <section class="docente">
+        <div class="docente-container">
+            <div class="docente-imagen">
+                <img src="docente.jpeg" alt="Ing. Teddy Valencia">
+            </div>
+            <div class="docente-info">
+                <h2>Nuestro Experto Principal</h2>
+                <p><strong>Ing. Teddy Valencia</strong></p>
+                <p>Ingeniero en Tecnología de la Información con más de 10 años de experiencia en desarrollo front-end y gestión de bases de datos. Especialista en creación de plataformas digitales optimizadas y gestión eficiente de la información.</p>
+                <p>Con 5 años de experiencia en edición de videos profesionales, combina el diseño visual con la tecnología para generar contenido dinámico e impactante. Apasionado por la innovación digital y la optimización de procesos tecnológicos.</p>
+                <p>Contacto: <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="cursos" id="cursos">
+        <div class="cursos-grid">
+            <div class="curso-card">
+                <h3>Paquete de Office</h3>
+                <p>Word, Excel y PowerPoint</p>
+            </div>
+            <div class="curso-card">
+                <h3>Desarrollo Web</h3>
+                <p>Aprende HTML, CSS y JavaScript desde cero</p>
+            </div>
+            <div class="curso-card">
+                <h3>Lenguajes de Programación</h3>
+                <p>Python, C++, SQL, Pseint y desarrollo de la lógica desde cero</p>
+            </div>
+            <div class="curso-card">
+                <h3>Sistema Operativo - Windows</h3>
+                <p>Navegación interna, creación de carpetas y subcarpetas, creación y modificación de documentos</p>
+            </div>
+            <div class="curso-card">
+                <h3>Implementación de Herramientas de IA</h3>
+                <p>ChatGPT, Copilot, PIXLR, Gemini, Deepseek desde cero</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="qr-section">
+        <h2>Escanea para más información</h2>
+        <img src="qr.png" alt="Código QR" class="qr-code">
+    </section>
+
+    <a href="https://wa.me/qr/PJDEIUE3UZXJM1" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        Contáctanos
+    </a>
+
+    <footer>
+        <p>&copy; 2025 Clover. Todos los derechos reservados.</p>
+    </footer>
 
     <script>
-        function validarCodigo() {
-            const codigo = document.getElementById('codigo').value;
-            const errorMsg = document.getElementById('error');
-            
-            if (!codigo) {
-                errorMsg.textContent = "¡Por favor ingresa nuestro código especial!";
-                errorMsg.style.display = 'block';
-                return;
-            }
+        const menuBtn = document.querySelector('.menu-btn');
+        const menuList = document.querySelector('.menu-list');
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
 
-            if (codigo === '071224') {
-                document.querySelector('.login-container').style.display = 'none';
-                document.getElementById('welcome').style.display = 'block';
-                document.title = "❤️ Mi Amor Eterno ❤️";
-                
-                // Agregar corazones flotantes
-                for(let i = 0; i < 20; i++) {
-                    const heart = document.createElement('div');
-                    heart.className = 'heart';
-                    heart.innerHTML = '❤️';
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.animationDelay = Math.random() * 2 + 's';
-                    document.body.appendChild(heart);
-                }
-            } else {
-                errorMsg.textContent = "¡Código incorrecto! Intenta de nuevo";
-                errorMsg.style.display = 'block';
-            }
-        }
-
-        // Evento para desenrollar el pergamino
-        document.getElementById('pergamino').addEventListener('click', function() {
-            this.classList.toggle('unrolled');
+        // Menú responsive
+        menuBtn.addEventListener('click', () => {
+            menuList.classList.toggle('active');
         });
 
-        // Validar al presionar Enter
-        document.getElementById('codigo').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') validarCodigo();
+        // Cerrar menú al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                menuList.classList.remove('active');
+            }
+        });
+
+        // Modo Oscuro
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            darkModeToggle.innerHTML = isDarkMode 
+                ? '<i class="fas fa-sun"></i> Modo Claro' 
+                : '<i class="fas fa-moon"></i> Modo Oscuro';
         });
     </script>
 </body>
