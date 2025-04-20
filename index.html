@@ -7,21 +7,39 @@
     <link rel="icon" type="image/x-icon" href="fondo.jpeg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #3b82f6;
+            --text: #1f2937;
+            --bg: #f8fafc;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-            transition: background 0.3s, color 0.3s;
+            font-family: 'Inter', system-ui, sans-serif;
+            transition: all 0.3s ease;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
         }
 
         nav {
-            background: #1a237e;
-            padding: 1rem;
-            position: relative;
+            background: var(--primary);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
         }
 
         .menu-btn {
@@ -31,6 +49,13 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: rgba(255,255,255,0.1);
         }
 
         .menu-list {
@@ -43,84 +68,106 @@
         .menu-list a {
             color: white;
             text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            position: relative;
         }
 
-        .menu-list a:hover {
-            color: #64ffda;
+        .menu-list a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s;
+        }
+
+        .menu-list a:hover::after {
+            width: 100%;
+        }
+
+        .menu-list a.active {
+            background: rgba(255,255,255,0.1);
         }
 
         .dark-mode-toggle {
-            background: none;
+            background: rgba(255,255,255,0.1);
             border: none;
             color: white;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            transition: background 0.3s;
         }
 
         .dark-mode-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.2);
         }
 
         .banner {
             height: 70vh;
             background: url('fondo.jpeg') center/cover;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
-            padding: 2rem;
+            scroll-margin-top: 80px;
+        }
+
+        .banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
         }
 
         .hero-content {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: #f8f9fa;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
         }
 
         .hero-content h1 {
-            font-size: 2.5rem;
-            color: #1a237e;
-            margin-bottom: 1rem;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: #444;
-            max-width: 800px;
-            margin: 0 auto;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
         }
 
         .docente {
             padding: 4rem 2rem;
             background: white;
+            scroll-margin-top: 80px;
         }
 
         .docente-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
+            gap: 3rem;
             align-items: center;
-            gap: 2rem; /* Reduje el gap para menor espacio */
         }
 
         .docente-imagen {
-            flex: 0 0 200px; /* Reduje el ancho fijo de la imagen */
+            flex: 0 0 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .docente-imagen img {
             width: 100%;
-            height: auto; /* Ajuste automático de la altura */
+            height: 100%;
             object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid #1a237e; /* Reduje el ancho del borde */
         }
 
         .docente-info {
@@ -128,32 +175,21 @@
         }
 
         .docente-info h2 {
-            color: #1a237e;
-            margin-bottom: 0.5rem; /* Reduje el margen inferior */
-            font-size: 2rem; /* Reduje el tamaño de la fuente */
-        }
-
-        .docente-info h3 {
-            margin-bottom: 0.75rem; /* Ajuste del margen inferior */
-            font-size: 1.5rem; /* Ajuste del tamaño de la fuente */
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
         }
 
         .docente-info p {
-            line-height: 1.6;
-            margin-bottom: 0.75rem; /* Ajuste del margen inferior */
-            color: #444;
-            font-size: 1rem; /* Ajuste del tamaño de la fuente */
-        }
-
-        .docente-info a {
-            color: #1a237e;
-            text-decoration: none;
-            font-weight: 500;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #4b5563;
         }
 
         .cursos {
             padding: 4rem 2rem;
-            background: #f8f9fa;
+            background: var(--bg);
+            scroll-margin-top: 80px;
         }
 
         .cursos-grid {
@@ -166,94 +202,125 @@
 
         .curso-card {
             background: white;
+            border-radius: 12px;
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .curso-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .curso-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .curso-card p {
+            margin-bottom: 1.5rem;
+            color: #4b5563;
+        }
+
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .toggle-btn:hover {
+            background: var(--secondary);
+        }
+
+        .curso-info {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .curso-info.active {
+            max-height: 500px;
+        }
+
+        .curso-info ul {
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .curso-info li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
         }
 
         .whatsapp-btn {
             position: fixed;
             bottom: 2rem;
-            right: 2rem;
+            left: 2rem;
             background: #25d366;
             color: white;
-            padding: 1rem 2rem;
+            padding: 1rem 1.5rem;
             border-radius: 50px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(37,211,102,0.3);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
         }
 
         .qr-section {
             text-align: center;
-            padding: 2rem;
-            background: #fff;
+            padding: 4rem 2rem;
+            background: white;
+            scroll-margin-top: 80px;
         }
 
         .qr-code {
             max-width: 200px;
-            margin: 1rem auto;
+            margin: 2rem auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         footer {
-            background: #1a237e;
+            background: var(--primary);
             color: white;
-            padding: 1.5rem; /* Reduje el padding del footer */
+            padding: 2rem;
             text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem; /* Espacio entre el texto y los iconos */
         }
 
-        .share-buttons a {
-            color: white;
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            text-decoration: none;
-        }
-
-        /* Modo Oscuro */
+        /* Dark Mode */
         .dark-mode {
-            background: #121212;
-            color: #ffffff;
-        }
-
-        .dark-mode nav {
-            background: #0a0f3d;
-        }
-
-        .dark-mode .hero-content {
-            background: #1e1e1e;
+            --primary: #1e40af;
+            --secondary: #1e3a8a;
+            --text: #f8fafc;
+            --bg: #0f172a;
         }
 
         .dark-mode .docente,
-        .dark-mode .cursos,
-        .dark-mode .qr-section {
-            background: #1e1e1e;
-        }
-
+        .dark-mode .qr-section,
         .dark-mode .curso-card {
-            background: #2d2d2d;
-            color: #fff;
+            background: #1e293b;
         }
 
-        .dark-mode .docente-info h2,
-        .dark-mode .docente-info h3,
         .dark-mode .docente-info p,
-        .dark-mode .docente-info a {
-            color: #fff;
-        }
-
-        .dark-mode .docente-imagen img {
-            border-color: #64ffda;
+        .dark-mode .curso-card p {
+            color: #cbd5e1;
         }
 
         @media (max-width: 768px) {
@@ -263,53 +330,43 @@
 
             .menu-list {
                 display: none;
-                flex-direction: column;
                 position: absolute;
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: #1a237e;
+                background: var(--primary);
                 padding: 1rem;
-                gap: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
             }
 
             .menu-list.active {
                 display: flex;
             }
 
-            .dark-mode-toggle {
-                justify-content: center;
+            .menu-list a {
                 width: 100%;
+                text-align: center;
             }
 
             .docente-container {
                 flex-direction: column;
                 text-align: center;
-                gap: 1rem; /* Reduje el gap en modo móvil */
             }
 
             .docente-imagen {
-                flex: 0 0 auto; /* Permite que la imagen se ajuste al contenido */
-                width: 150px; /* Reduje aún más el tamaño en móvil */
-                margin: 0 auto 1rem; /* Centra la imagen y añade margen inferior */
+                flex: 0 0 200px;
             }
 
-            .docente-imagen img {
-                width: 100%;
-                height: auto;
+            .hero-content h1 {
+                font-size: 2rem;
             }
 
-            .cursos-grid {
-                grid-template-columns: 1fr;
-            }
-
-            footer {
-                flex-direction: column; /* Apila los elementos en móvil */
-                gap: 0.5rem;
-            }
-
-            .share-buttons {
-                margin-top: 0.5rem;
+            .whatsapp-btn {
+                left: 1rem;
+                bottom: 1rem;
+                padding: 0.75rem 1.25rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -318,7 +375,7 @@
     <nav>
         <button class="menu-btn"><i class="fas fa-bars"></i></button>
         <ul class="menu-list">
-            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#inicio" class="active">Inicio</a></li>
             <li><a href="#cursos">Cursos</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li>
@@ -330,8 +387,8 @@
         </ul>
     </nav>
 
-    <section class="banner"></section>
-<br>
+    <section class="banner" id="inicio"></section>
+    <br>
     <section class="docente-info">
         <div>
             <center>
@@ -346,11 +403,9 @@
                 <img src="docente.jpeg" alt="Ing. Teddy Valencia">
             </div>
             <div class="docente-info">
-                <h2>Instructor</h2>
-                <h3><strong>Ing. Teddy Valencia</strong></h3>
-                <br>
-                <p>Ingeniero en Tecnología de la Información. Experiencia en desarrollo front-end y gestión de bases de datos. Especialista en creación de plataformas digitales optimizadas y gestión eficiente de la información.</p>
-                <p>Con 5 años de experiencia en edición de videos profesionales, combina el diseño visual con la tecnología para generar contenido dinámico e impactante.</p>
+                <h2>Instructor Principal</h2>
+                <h3>Ing. Teddy Valencia</h3>
+                <p>Ingeniero en Tecnología de la Información con 5+ años de experiencia en desarrollo front-end, gestión de bases de datos y edición profesional de video. Especialista en implementación de soluciones tecnológicas innovadoras.</p>
                 <p>Contacto: <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
             </div>
         </div>
@@ -358,30 +413,94 @@
 
     <section class="cursos" id="cursos">
         <div class="cursos-grid">
+            <!-- Curso 1 -->
             <div class="curso-card">
                 <h3>Paquete de Office</h3>
                 <p>Word, Excel y PowerPoint</p>
+                <button class="toggle-btn">
+                    <span>Ver detalles</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="curso-info">
+                    <ul>
+                        <li>Formato avanzado de documentos</li>
+                        <li>Fórmulas y tablas dinámicas</li>
+                        <li>Presentaciones profesionales</li>
+                    </ul>
+                </div>
             </div>
+
+            <!-- Curso 2 -->
             <div class="curso-card">
                 <h3>Desarrollo Web</h3>
                 <p>Aprende HTML, CSS y JavaScript desde cero</p>
+                <button class="toggle-btn">
+                    <span>Ver detalles</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="curso-info">
+                    <ul>
+                        <li>HTML5 y CSS3 moderno</li>
+                        <li>JavaScript ES6+</li>
+                        <li>Bases de datos SQL</li>
+                    </ul>
+                </div>
             </div>
+
+            <!-- Curso 3 -->
             <div class="curso-card">
                 <h3>Lenguajes de Programación</h3>
                 <p>Python, C++, SQL, Pseint y desarrollo de la lógica desde cero</p>
+                <button class="toggle-btn">
+                    <span>Ver detalles</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="curso-info">
+                    <ul>
+                        <li>Fundamentos de programación</li>
+                        <li>Estructuras de datos</li>
+                        <li>Algoritmos básicos</li>
+                    </ul>
+                </div>
             </div>
+
+            <!-- Curso 4 -->
             <div class="curso-card">
                 <h3>Sistema Operativo - Windows</h3>
                 <p>Navegación interna, creación de carpetas y subcarpetas, creación y modificación de documentos</p>
+                <button class="toggle-btn">
+                    <span>Ver detalles</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="curso-info">
+                    <ul>
+                        <li>Administración de archivos</li>
+                        <li>Configuración del sistema</li>
+                        <li>Optimización del rendimiento</li>
+                    </ul>
+                </div>
             </div>
+
+            <!-- Curso 5 -->
             <div class="curso-card">
                 <h3>Implementación de Herramientas de IA</h3>
                 <p>ChatGPT, Copilot, PIXLR, Gemini, Deepseek desde cero</p>
+                <button class="toggle-btn">
+                    <span>Ver detalles</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="curso-info">
+                    <ul>
+                        <li>Automatización de tareas</li>
+                        <li>Generación de contenido</li>
+                        <li>Optimización de workflows</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="qr-section">
+    <section class="qr-section" id="contacto">
         <h2>Escanea para más información</h2>
         <img src="qr.png" alt="Código QR" class="qr-code">
     </section>
@@ -393,37 +512,39 @@
 
     <footer>
         <p>&copy; 2025 Clover. Todos los derechos reservados.</p>
-       <!-- <div class="share-buttons">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=TU_URL_DEL_SITIO" target="_blank" title="Compartir en Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="https://twitter.com/intent/tweet?url=TU_URL_DEL_SITIO&text=Echa%20un%20 vistazo%20a%20Clover%20-%20Educaci%C3%B3n%20Digital" target="_blank" title="Compartir en Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="whatsapp://send?text=Echa%20un%20vistazo%20a%20Clover%20-%20Educaci%C3%B3n%20Digital%20TU_URL_DEL_SITIO" data-action="share/whatsapp/share" target="_blank" title="Compartir en WhatsApp"><i class="fab fa-whatsapp"></i></a>
-           --> </div>
     </footer>
-
     <script>
+        // Menú responsive
         const menuBtn = document.querySelector('.menu-btn');
         const menuList = document.querySelector('.menu-list');
-        const darkModeToggle = document.querySelector('.dark-mode-toggle');
 
-        // Menú responsive
         menuBtn.addEventListener('click', () => {
             menuList.classList.toggle('active');
         });
 
-        // Cerrar menú al hacer click fuera
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('nav')) {
-                menuList.classList.remove('active');
-            }
-        });
-
-        // Modo Oscuro
+        // Modo oscuro
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
-            const isDarkMode = document.body.classList.contains('dark-mode');
-            darkModeToggle.innerHTML = isDarkMode
-                ? '<i class="fas fa-sun"></i> Modo Claro'
-                : '<i class="fas fa-moon"></i> Modo Oscuro';
+            darkModeToggle.querySelector('i').classList.toggle('fa-moon');
+            darkModeToggle.querySelector('i').classList.toggle('fa-sun');
+            darkModeToggle.textContent = document.body.classList.contains('dark-mode') 
+                ? ' Modo Claro' 
+                : ' Modo Oscuro';
+        });
+
+        // Acordeón de cursos
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const info = btn.nextElementSibling;
+                const icon = btn.querySelector('i');
+                
+                btn.classList.toggle('active');
+                info.classList.toggle('active');
+                icon.style.transform = info.classList.contains('active') 
+                    ? 'rotate(180deg)' 
+                    : 'rotate(0deg)';
+            });
         });
     </script>
 </body>
