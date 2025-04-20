@@ -108,19 +108,19 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
-            gap: 3rem;
+            gap: 2rem; /* Reduje el gap para menor espacio */
         }
 
         .docente-imagen {
-            flex: 0 0 300px;
+            flex: 0 0 200px; /* Reduje el ancho fijo de la imagen */
         }
 
         .docente-imagen img {
             width: 100%;
-            height: 300px;
+            height: auto; /* Ajuste automático de la altura */
             object-fit: cover;
             border-radius: 50%;
-            border: 5px solid #1a237e;
+            border: 3px solid #1a237e; /* Reduje el ancho del borde */
         }
 
         .docente-info {
@@ -129,14 +129,20 @@
 
         .docente-info h2 {
             color: #1a237e;
-            margin-bottom: 1rem;
-            font-size: 2.5rem;
+            margin-bottom: 0.5rem; /* Reduje el margen inferior */
+            font-size: 2rem; /* Reduje el tamaño de la fuente */
+        }
+
+        .docente-info h3 {
+            margin-bottom: 0.75rem; /* Ajuste del margen inferior */
+            font-size: 1.5rem; /* Ajuste del tamaño de la fuente */
         }
 
         .docente-info p {
             line-height: 1.6;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem; /* Ajuste del margen inferior */
             color: #444;
+            font-size: 1rem; /* Ajuste del tamaño de la fuente */
         }
 
         .docente-info a {
@@ -199,8 +205,19 @@
         footer {
             background: #1a237e;
             color: white;
-            padding: 2rem;
+            padding: 1.5rem; /* Reduje el padding del footer */
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem; /* Espacio entre el texto y los iconos */
+        }
+
+        .share-buttons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            text-decoration: none;
         }
 
         /* Modo Oscuro */
@@ -229,6 +246,7 @@
         }
 
         .dark-mode .docente-info h2,
+        .dark-mode .docente-info h3,
         .dark-mode .docente-info p,
         .dark-mode .docente-info a {
             color: #fff;
@@ -267,15 +285,31 @@
             .docente-container {
                 flex-direction: column;
                 text-align: center;
+                gap: 1rem; /* Reduje el gap en modo móvil */
             }
-            
+
+            .docente-imagen {
+                flex: 0 0 auto; /* Permite que la imagen se ajuste al contenido */
+                width: 150px; /* Reduje aún más el tamaño en móvil */
+                margin: 0 auto 1rem; /* Centra la imagen y añade margen inferior */
+            }
+
             .docente-imagen img {
-                width: 250px;
-                height: 250px;
+                width: 100%;
+                height: auto;
             }
 
             .cursos-grid {
                 grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column; /* Apila los elementos en móvil */
+                gap: 0.5rem;
+            }
+
+            .share-buttons {
+                margin-top: 0.5rem;
             }
         }
     </style>
@@ -314,6 +348,7 @@
             <div class="docente-info">
                 <h2>Instructor</h2>
                 <h3><strong>Ing. Teddy Valencia</strong></h3>
+                <br>
                 <p>Ingeniero en Tecnología de la Información. Experiencia en desarrollo front-end y gestión de bases de datos. Especialista en creación de plataformas digitales optimizadas y gestión eficiente de la información.</p>
                 <p>Con 5 años de experiencia en edición de videos profesionales, combina el diseño visual con la tecnología para generar contenido dinámico e impactante.</p>
                 <p>Contacto: <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
@@ -358,6 +393,11 @@
 
     <footer>
         <p>&copy; 2025 Clover. Todos los derechos reservados.</p>
+       <!-- <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=TU_URL_DEL_SITIO" target="_blank" title="Compartir en Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com/intent/tweet?url=TU_URL_DEL_SITIO&text=Echa%20un%20 vistazo%20a%20Clover%20-%20Educaci%C3%B3n%20Digital" target="_blank" title="Compartir en Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="whatsapp://send?text=Echa%20un%20vistazo%20a%20Clover%20-%20Educaci%C3%B3n%20Digital%20TU_URL_DEL_SITIO" data-action="share/whatsapp/share" target="_blank" title="Compartir en WhatsApp"><i class="fab fa-whatsapp"></i></a>
+           --> </div>
     </footer>
 
     <script>
@@ -381,8 +421,8 @@
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             const isDarkMode = document.body.classList.contains('dark-mode');
-            darkModeToggle.innerHTML = isDarkMode 
-                ? '<i class="fas fa-sun"></i> Modo Claro' 
+            darkModeToggle.innerHTML = isDarkMode
+                ? '<i class="fas fa-sun"></i> Modo Claro'
                 : '<i class="fas fa-moon"></i> Modo Oscuro';
         });
     </script>
