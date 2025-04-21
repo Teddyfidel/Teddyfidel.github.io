@@ -3,35 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clover - Educación Digital</title>
-    <link rel="icon" type="image/x-icon" href="fondo.jpeg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
+    <title>Clover - Educación Digital Moderna</title>
+    <link rel="icon" type="image/x-icon" href="fondo.jpeg"> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #1e40af;
-            --accent: #3b82f6;
-            --text: #1f2937;
-            --bg: #f8fafc;
-            --tercer: #f8fafc;
+            --primary-light: #3b82f6; /* Azul vibrante */
+            --secondary-light: #1d4ed8; /* Azul más oscuro */
+            --accent-light: #60a5fa; /* Azul claro */
+            --text-light: #1f2937; /* Gris oscuro (casi negro) */
+            --bg-light: #f9fafb; /* Gris muy claro */
+            --card-bg-light: #ffffff;
+            --border-light: #e5e7eb; /* Gris claro para bordes */
+
+            --primary-dark: #60a5fa; /* Azul claro (primario en dark) */
+            --secondary-dark: #3b82f6; /* Azul vibrante (secundario en dark) */
+            --accent-dark: #1d4ed8; /* Azul oscuro */
+            --text-dark: #f3f4f6; /* Gris muy claro (casi blanco) */
+            --bg-dark: #111827; /* Gris muy oscuro */
+            --card-bg-dark: #1f2937; /* Gris oscuro para cards */
+            --border-dark: #374151; /* Gris medio para bordes */
+
+            --font-primary: 'Poppins', sans-serif;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --border-radius-sm: 0.375rem; /* 6px */
+            --border-radius-md: 0.5rem; /* 8px */
+            --border-radius-lg: 0.75rem; /* 12px */
+            --border-radius-xl: 1rem; /* 16px */
+            --transition-speed: 0.3s;
+        }
+
+        /* Asignación inicial de variables (Modo Claro por defecto) */
+        :root {
+          --primary: var(--primary-light);
+          --secondary: var(--secondary-light);
+          --accent: var(--accent-light);
+          --text: var(--text-light);
+          --bg: var(--bg-light);
+          --card-bg: var(--card-bg-light);
+          --border-color: var(--border-light);
+        }
+
+        /* Estilos para Modo Oscuro */
+        body.dark-mode {
+          --primary: var(--primary-dark);
+          --secondary: var(--secondary-dark);
+          --accent: var(--accent-dark);
+          --text: var(--text-dark);
+          --bg: var(--bg-dark);
+          --card-bg: var(--card-bg-dark);
+          --border-color: var(--border-dark);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', system-ui, sans-serif;
-            transition: all 0.3s ease;
+            font-family: var(--font-primary);
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
             scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         body {
-            background: var(--bg);
+            background-color: var(--bg);
             color: var(--text);
+            line-height: 1.6;
         }
 
+        h1, h2, h3, h4, h5, h6 {
+            /* color: var(--primary); No poner color primario por defecto aquí, aplicar donde sea necesario */
+            line-height: 1.3;
+            font-weight: 600;
+        }
+        h1 { font-size: 2.5rem; color: var(--primary); } /* 40px */
+        h2 { font-size: 2rem; color: var(--primary); } /* 32px */
+        h3 { font-size: 1.5rem; color: var(--primary); } /* 24px */
+        p { margin-bottom: 1rem; color: var(--text); opacity: 0.9; }
+        a { color: var(--accent); text-decoration: none; transition: color var(--transition-speed); }
+        a:hover { color: var(--secondary); }
+
+        /* Contenedor Genérico */
+        .container {
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        /* Navbar */
         nav {
-            background: var(--primary);
+            background: rgba(59, 130, 246, 0.8); /* Azul primario con transparencia */
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
@@ -39,8 +111,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px); /* Efecto cristal */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body.dark-mode nav {
+             background: rgba(17, 24, 39, 0.8); /* Fondo oscuro con transparencia */
+             border-bottom: 1px solid var(--border-dark);
+        }
+
+        .logo a { /* Si tuvieras un logo */
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
         }
 
         .menu-btn {
@@ -48,453 +131,575 @@
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             padding: 0.5rem;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-
-        .menu-btn:hover {
-            background: rgba(255,255,255,0.1);
         }
 
         .menu-list {
             list-style: none;
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
         .menu-list a {
             color: white;
-            text-decoration: none;
             font-weight: 500;
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
             position: relative;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
         }
-
-        .menu-list a::after {
+        .menu-list a::after { /* Subrayado sutil al hacer hover */
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 0;
             height: 2px;
             background: white;
-            transition: width 0.3s;
+            transition: width var(--transition-speed) ease;
+        }
+        .menu-list a:hover, .menu-list a.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .menu-list a:hover::after, .menu-list a.active::after {
+            width: 70%;
         }
 
-        .menu-list a:hover::after {
-            width: 100%;
-        }
-
-        .menu-list a.active {
-            background: rgba(255,255,255,0.1);
-        }
-
+        /* Dark Mode Toggle Button */
         .dark-mode-toggle {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
             cursor: pointer;
             font-size: 1rem;
+            padding: 0.6rem 0.8rem; /* Más compacto */
+            border-radius: 50%; /* Hacerlo circular */
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            transition: background 0.3s;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
         }
-
         .dark-mode-toggle:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
         }
+        .dark-mode-toggle .fa-sun { display: none; } /* Ocultar sol por defecto */
+        body.dark-mode .dark-mode-toggle .fa-moon { display: none; } /* Ocultar luna en dark mode */
+        body.dark-mode .dark-mode-toggle .fa-sun { display: inline-block; } /* Mostrar sol en dark mode */
 
+
+        /* Banner / Hero Section */
         .banner {
-            height: 70vh;
-            background: url('fondo.jpeg') center/cover;
+            height: 65vh; /* Reducido un poco ya que el H1 está fuera */
+            min-height: 350px;
+            background: url('fondo.jpeg') center/cover no-repeat; /* Asegúrate que fondo.jpeg exista */
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
-            scroll-margin-top: 80px;
+            scroll-margin-top: 70px; /* Ajustar al alto del navbar */
         }
-
-        .banner::after {
+        .banner::after { /* Overlay oscuro para contraste */
             content: '';
             position: absolute;
-            inset: 0;
+            inset: 0; 
+            z-index: 0;
         }
-
         .hero-content {
             position: relative;
             z-index: 1;
             max-width: 800px;
             padding: 2rem;
+             /* Se puede añadir contenido aquí si se desea, como un botón */
+             /* animation: fadeInHero 1s ease-out; /* Animación sutil de entrada */
+        }
+        /* Estilos para botón CTA si lo añades */
+        .cta-button {
+             display: inline-block;
+             background-color: var(--primary-light);
+             color: white;
+             padding: 0.8rem 2rem;
+             border-radius: var(--border-radius-md);
+             font-weight: 600;
+             text-transform: uppercase;
+             letter-spacing: 1px;
+             box-shadow: var(--shadow-md);
+             transition: background-color var(--transition-speed), transform var(--transition-speed);
+        }
+         .cta-button:hover {
+             background-color: var(--secondary-light);
+             transform: translateY(-2px);
+             box-shadow: var(--shadow-lg);
+         }
+
+
+        /* Sección General */
+        section {
+            padding: 4rem 2rem; /* Reducido un poco el padding vertical general */
+            scroll-margin-top: 70px;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.25rem; /* 36px */
+             color: var(--primary);
         }
 
-        .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
+        /* NUEVA SECCIÓN: Texto Introductorio */
+        .intro-text {
+            background-color: var(--bg); /* Fondo igual al body */
+            padding: 4rem 2rem; /* Espaciado vertical y horizontal */
+            text-align: center; /* Centrar contenido */
+            scroll-margin-top: 70px; /* Para el anclaje de scroll */
+        }
+        .intro-text h1 {
+             font-size: clamp(2.2rem, 5vw, 3rem); /* Tamaño responsivo */
+             margin-bottom: 1rem;
+             color: var(--primary); /* Mantener color primario */
+        }
+        .intro-text p {
+            font-size: clamp(1rem, 2.5vw, 1.15rem); /* Tamaño responsivo */
+            max-width: 750px; /* Limitar ancho para legibilidad */
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.85;
+             color: var(--text);
         }
 
-        .docente {
-            padding: 4rem 2rem;
-            background: white;
-            scroll-margin-top: 80px;
-        }
 
+        /* Sección Docente */
+        .docente { background-color: var(--card-bg); } /* Fondo blanco/card */
         .docente-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             gap: 3rem;
             align-items: center;
         }
-
         .docente-imagen {
-            flex: 0 0 250px;
+            flex: 0 0 280px;
+            height: 280px;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-lg);
+            border: 5px solid var(--bg);
         }
-
         .docente-imagen img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
-
-        .docente-info {
-            flex: 1;
+        .docente-info { flex: 1; }
+        .docente-info h3 { /* "Instructor Principal" */
+            color: var(--secondary);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .docente-info h2 {
-            color: var(--primary);
+        .docente-info h2 { /* Nombre */
             margin-bottom: 1rem;
-            font-size: 2.5rem;
+            font-size: 2.25rem; /* 36px */
+            color: var(--primary); /* Asegurar color primario */
         }
-
         .docente-info p {
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            color: #4b5563;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            color: var(--text);
         }
+        .docente-info p a { font-weight: 500; }
 
-        .cursos {
-            padding: 4rem 2rem;
-            background: var(--bg);
-            scroll-margin-top: 80px;
-        }
-
+        /* Sección Cursos */
+        .cursos { background-color: var(--bg); }
         .cursos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
-
         .curso-card {
-            background: white;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
             padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            display: flex;
+            flex-direction: column;
         }
-
         .curso-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
         }
-
         .curso-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
             color: var(--primary);
-            margin-bottom: 1rem;
         }
-
-        .curso-card p {
+        .curso-card p { /* Descripción corta */
+            font-size: 0.95rem;
+            opacity: 0.7;
             margin-bottom: 1.5rem;
-            color: #4b5563;
+            flex-grow: 1;
+            color: var(--text);
         }
 
+        /* Botón Acordeón Cursos */
         .toggle-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
+            background: none;
+            color: var(--primary);
+            border: 1px solid var(--border-color);
             padding: 0.75rem 1.25rem;
-            border-radius: 8px;
+            border-radius: var(--border-radius-md);
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: background 0.3s;
-            width: 100%;
             justify-content: space-between;
+            width: 100%;
+            text-align: left;
+            font-weight: 500;
+            transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+            margin-top: auto;
         }
-
         .toggle-btn:hover {
-            background: var(--secondary);
+            background-color: var(--accent); /* Usar accent en hover */
+            color: white;
+            border-color: var(--accent);
+        }
+        .toggle-btn i {
+            transition: transform var(--transition-speed) ease;
+        }
+        .toggle-btn.active i { /* Rotar flecha */
+            transform: rotate(180deg);
+        }
+        body.dark-mode .toggle-btn:hover {
+            background-color: var(--secondary-dark); /* Ajustar hover en dark mode */
+            border-color: var(--secondary-dark);
         }
 
+        /* Info Acordeón Cursos */
         .curso-info {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: max-height 0.5s ease-in-out, padding-top 0.5s ease-in-out, margin-top 0.5s ease-in-out, border-top 0.5s ease-in-out; /* Animación más suave y completa */
+            border-top: 1px solid transparent; /* Empezar transparente */
+            margin-top: 0;
+            padding-top: 0;
         }
-
         .curso-info.active {
             max-height: 500px;
-        }
-
-        .curso-info ul {
-            padding-left: 1.5rem;
+            border-top-color: var(--border-color); /* Mostrar borde al abrir */
             margin-top: 1rem;
+            padding-top: 1rem;
         }
-
+        .curso-info ul {
+            padding-left: 1.25rem;
+            list-style: disc;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
         .curso-info li {
             margin-bottom: 0.5rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            opacity: 0.8;
+             color: var(--text);
         }
 
+        /* Sección QR */
+        .qr-section { background-color: var(--card-bg); }
+        .qr-section h2 {
+            text-align: center;
+            margin-bottom: 1rem; /* Menos espacio */
+             color: var(--primary);
+        }
+        .qr-section p { /* Añadido párrafo descriptivo */
+             text-align:center;
+             max-width: 600px;
+             margin: 0 auto 2rem auto;
+             opacity: 0.8;
+             color: var(--text);
+        }
+        .qr-code {
+            display: block;
+            max-width: 220px;
+            margin: 1rem auto;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 5px solid var(--bg);
+        }
+
+        /* Botón Flotante WhatsApp */
         .whatsapp-btn {
             position: fixed;
-            bottom: 2rem;
-            left: 2rem;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            left: auto;
             background: #25d366;
             color: white;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             border-radius: 50px;
             display: flex;
             align-items: center;
             gap: 0.75rem;
             text-decoration: none;
-            box-shadow: 0 8px 20px rgba(37,211,102,0.3);
-            z-index: 1000;
-            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            font-weight: 500;
         }
-
         .whatsapp-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5);
         }
+        .whatsapp-btn i { font-size: 1.4rem; }
 
-        .qr-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: white;
-            scroll-margin-top: 80px;
-        }
-
-        .qr-code {
-            max-width: 200px;
-            margin: 2rem auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
+        /* Footer */
         footer {
-            background: var(--primary);
-            color: white;
-            padding: 2rem;
+            background: var(--bg-dark); /* Fondo oscuro consistente */
+            color: var(--text-dark);
+            padding: 3rem 2rem;
             text-align: center;
+            margin-top: 3rem;
+        }
+        footer p {
+             color: rgba(243, 244, 246, 0.7);
+             margin: 0;
+        }
+        .social-links {
+            margin-top: 1rem;
+        }
+        .social-links a {
+            color: rgba(243, 244, 246, 0.7);
+            margin: 0 0.75rem;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: var(--primary-dark);
         }
 
-        /* Dark Mode */
-        .dark-mode {
-            --primary: #1e40af;
-            --secondary: #1e3a8a;
-            --text: #f8fafc;
-            --bg: #0f172a;
+        /* Animaciones */
+        @keyframes fadeInHero {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .dark-mode .docente,
-        .dark-mode .qr-section,
-        .dark-mode .curso-card {
-            background: #1e293b;
-        }
-
-        .dark-mode .docente-info p,
-        .dark-mode .curso-card p {
-            color: #cbd5e1;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .menu-btn {
-                display: block;
-            }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            h3 { font-size: 1.25rem; }
 
+            nav { padding: 1rem; }
+            .menu-btn { display: block; }
             .menu-list {
                 display: none;
                 position: absolute;
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--primary);
+                background: rgba(59, 130, 246, 0.95);
                 padding: 1rem;
                 flex-direction: column;
                 gap: 0.5rem;
+                box-shadow: var(--shadow-lg);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
-
-            .menu-list.active {
-                display: flex;
-            }
-
+             body.dark-mode .menu-list {
+                 background: rgba(17, 24, 39, 0.98);
+             }
+            .menu-list.active { display: flex; }
+            .menu-list li { width: 100%; }
             .menu-list a {
-                width: 100%;
+                display: block;
                 text-align: center;
+                padding: 0.8rem 1rem;
             }
+            .dark-mode-toggle {
+                 order: 1;
+                 margin: 0.5rem auto;
+            }
+
+            .banner { height: 50vh; } /* Ajustar altura si es necesario */
+
+            section { padding: 3rem 1rem; }
+            .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
+
+            .intro-text { padding: 3rem 1rem; }
+            .intro-text h1 { font-size: 2rem; }
+            .intro-text p { font-size: 1rem; }
+
 
             .docente-container {
                 flex-direction: column;
                 text-align: center;
+                gap: 2rem;
             }
-
             .docente-imagen {
-                flex: 0 0 200px;
+                flex-basis: 200px;
+                width: 200px;
+                height: 200px;
+                margin: 0 auto;
             }
+            .docente-info h2 { font-size: 1.8rem; }
 
-            .hero-content h1 {
-                font-size: 2rem;
-            }
+            .cursos-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+
+            .qr-section { padding: 3rem 1rem; }
+            .qr-section h2 { font-size: 1.8rem; }
 
             .whatsapp-btn {
-                left: 1rem;
-                bottom: 1rem;
-                padding: 0.75rem 1.25rem;
+                padding: 0.6rem 1rem;
                 font-size: 0.9rem;
+                bottom: 1rem;
+                right: 1rem;
             }
+             .whatsapp-btn span { display: none; }
+             .whatsapp-btn i { margin-right: 0; }
         }
+
     </style>
 </head>
 <body>
     <nav>
-        <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        <div></div>
+
+        <button class="menu-btn" aria-label="Toggle Menu" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <ul class="menu-list">
             <li><a href="#inicio" class="active">Inicio</a></li>
             <li><a href="#cursos">Cursos</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#docente">Instructor</a></li> <li><a href="#contacto">Contacto</a></li>
             <li>
-                <button class="dark-mode-toggle">
+                <button class="dark-mode-toggle" aria-label="Toggle Dark Mode">
                     <i class="fas fa-moon"></i>
-                    Modo Oscuro
+                    <i class="fas fa-sun"></i>
                 </button>
             </li>
         </ul>
     </nav>
 
-    <section class="banner" id="inicio"></section>
-    <br>
-    <section class="docente-info">
-        <div>
-            <center>
-            <h1>Transforma tu futuro con nuestros cursos</h1>
-            <p>Aprende habilidades demandadas con expertos de la industria</p></center>
-        </div>
+    <section class="banner" id="inicio">
+       <!-- <div class="hero-content">
+            <a href="#cursos" class="cta-button">Explorar Cursos</a>
+        </div>-->
     </section>
 
-    <section class="docente">
-        <div class="docente-container">
+    <section class="intro-text" aria-labelledby="intro-heading">
+       <div class="container text-center">
+           <h1 id="intro-heading">Transforma tu futuro con nuestros cursos digitales</h1>
+           <p>Aprende habilidades tecnológicas demandadas con expertos de la industria y potencia tu carrera.</p>
+       </div>
+   </section>
+   <section class="docente" id="docente"> <div class="docente-container">
             <div class="docente-imagen">
-                <img src="docente.jpeg" alt="Ing. Teddy Valencia">
+                <img src="docente.jpeg" alt="Foto del Ing. Teddy Valencia">
             </div>
             <div class="docente-info">
                 <h3>Instructor Principal</h3>
                 <h2>Ing. Teddy Valencia</h2>
-                <p>Ingeniero en Tecnología de la Información con 5+ años de experiencia en desarrollo front-end, gestión de bases de datos y edición profesional de video. Especialista en implementación de soluciones tecnológicas innovadoras.</p>
-                <p>Contacto: <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
+                <p>Ingeniero en Tecnología de la Información con más de 5 años de experiencia en desarrollo front-end, gestión de bases de datos y edición profesional de video. Apasionado por la enseñanza y la implementación de soluciones tecnológicas innovadoras.</p>
+                <p><strong>Contacto:</strong> <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
             </div>
         </div>
     </section>
 
     <section class="cursos" id="cursos">
+        <h2 class="section-title">Nuestra Oferta Educativa</h2>
         <div class="cursos-grid">
-            <!-- Curso 1 -->
             <div class="curso-card">
-                <h3>Paquete de Office</h3>
-                <p>Word, Excel y PowerPoint</p>
-                <button class="toggle-btn">
-                    <span>Ver detalles</span>
+                <h3>Paquete Completo de Office</h3>
+                <p>Domina Word, Excel y PowerPoint para optimizar tu productividad en cualquier entorno profesional.</p>
+                <button class="toggle-btn" aria-expanded="false">
+                    <span>Ver Temario</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="curso-info">
                     <ul>
-                        <li>Formato avanzado de documentos</li>
-                        <li>Fórmulas y tablas dinámicas</li>
-                        <li>Presentaciones profesionales</li>
+                        <li>Word: Formato avanzado, estilos, correspondencia.</li>
+                        <li>Excel: Fórmulas, funciones, tablas dinámicas, gráficos.</li>
+                        <li>PowerPoint: Diseño de diapositivas, animaciones, presentaciones efectivas.</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Curso 2 -->
             <div class="curso-card">
-                <h3>Desarrollo Web</h3>
-                <p>Aprende HTML, CSS y JavaScript desde cero</p>
-                <button class="toggle-btn">
-                    <span>Ver detalles</span>
+                <h3>Desarrollo Web Full Stack</h3>
+                <p>Crea aplicaciones web interactivas desde cero aprendiendo HTML5, CSS3, JavaScript moderno y bases de datos SQL.</p>
+                 <button class="toggle-btn" aria-expanded="false">
+                    <span>Ver Temario</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="curso-info">
-                    <ul>
-                        <li>HTML5 y CSS3 moderno</li>
-                        <li>JavaScript ES6+</li>
-                        <li>Bases de datos SQL</li>
+                     <ul>
+                        <li>Maquetación semántica con HTML5.</li>
+                        <li>Diseño responsive y moderno con CSS3 (Flexbox, Grid).</li>
+                        <li>Programación frontend con JavaScript (ES6+).</li>
+                        <li>Gestión de bases de datos relacionales con SQL.</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Curso 3 -->
             <div class="curso-card">
-                <h3>Lenguajes de Programación</h3>
-                <p>Python, C++, SQL, Pseint y desarrollo de la lógica desde cero</p>
-                <button class="toggle-btn">
-                    <span>Ver detalles</span>
+                <h3>Fundamentos de Programación</h3>
+                <p>Iníciate en el mundo del código con Python, C++, SQL y Pseint, desarrollando una sólida lógica de programación.</p>
+                <button class="toggle-btn" aria-expanded="false">
+                    <span>Ver Temario</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="curso-info">
                     <ul>
-                        <li>Fundamentos de programación</li>
-                        <li>Estructuras de datos</li>
-                        <li>Algoritmos básicos</li>
+                        <li>Introducción a algoritmos y pseudocódigo (Pseint).</li>
+                        <li>Sintaxis y estructuras básicas en Python y C++.</li>
+                        <li>Consultas fundamentales en SQL.</li>
+                        <li>Resolución de problemas y pensamiento lógico.</li>
+                     </ul>
+                </div>
+            </div>
+
+            <div class="curso-card">
+                <h3>Manejo Experto de Windows</h3>
+                <p>Optimiza tu uso del sistema operativo más popular: navegación, organización de archivos y configuraciones esenciales.</p>
+                <button class="toggle-btn" aria-expanded="false">
+                     <span>Ver Temario</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="curso-info">
+                    <ul>
+                        <li>Explorador de archivos: Carpetas, vistas, búsqueda avanzada.</li>
+                        <li>Panel de Control y Configuración del sistema.</li>
+                        <li>Creación y edición de documentos básicos.</li>
+                        <li>Consejos de seguridad y mantenimiento.</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Curso 4 -->
             <div class="curso-card">
-                <h3>Sistema Operativo - Windows</h3>
-                <p>Navegación interna, creación de carpetas y subcarpetas, creación y modificación de documentos</p>
-                <button class="toggle-btn">
-                    <span>Ver detalles</span>
+                 <h3>Herramientas de Inteligencia Artificial</h3>
+                <p>Aprende a utilizar las IAs más potentes (ChatGPT, Copilot, Gemini, etc.) para potenciar tu creatividad y eficiencia.</p>
+                <button class="toggle-btn" aria-expanded="false">
+                    <span>Ver Temario</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
-                <div class="curso-info">
+                 <div class="curso-info">
                     <ul>
-                        <li>Administración de archivos</li>
-                        <li>Configuración del sistema</li>
-                        <li>Optimización del rendimiento</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Curso 5 -->
-            <div class="curso-card">
-                <h3>Implementación de Herramientas de IA</h3>
-                <p>ChatGPT, Copilot, PIXLR, Gemini, Deepseek desde cero</p>
-                <button class="toggle-btn">
-                    <span>Ver detalles</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="curso-info">
-                    <ul>
-                        <li>Automatización de tareas</li>
-                        <li>Generación de contenido</li>
-                        <li>Optimización de workflows</li>
+                        <li>Generación de texto e ideas con ChatGPT y Gemini.</li>
+                        <li>Asistencia en código y tareas con Copilot.</li>
+                        <li>Edición de imágenes asistida por IA (ej. PIXLR AI).</li>
+                        <li>Aplicaciones prácticas en estudios y trabajo.</li>
                     </ul>
                 </div>
             </div>
@@ -502,51 +707,126 @@
     </section>
 
     <section class="qr-section" id="contacto">
-        <h2>Escanea para más información</h2>
-        <img src="qr.png" alt="Código QR" class="qr-code">
+        <h2>¿Listo para empezar?</h2>
+         <p>Escanea el código QR o contáctanos directamente por WhatsApp para más información e inscripciones.</p>
+        <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code">
     </section>
 
-    <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank">
+    <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
-        Contáctanos
+        <span>Contáctanos</span>
     </a>
 
     <footer>
-        <p>&copy; 2025 Clover. Todos los derechos reservados.</p>
+        <p>&copy; 2025 Clover Educación Digital. Todos los derechos reservados.</p>
+         <div class="social-links">
+            </div>
     </footer>
+
     <script>
         // Menú responsive
         const menuBtn = document.querySelector('.menu-btn');
         const menuList = document.querySelector('.menu-list');
+        const menuLinks = document.querySelectorAll('.menu-list a');
 
         menuBtn.addEventListener('click', () => {
+            const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
+            menuBtn.setAttribute('aria-expanded', !isExpanded);
             menuList.classList.toggle('active');
+            menuBtn.querySelector('i').classList.toggle('fa-bars');
+            menuBtn.querySelector('i').classList.toggle('fa-times');
+        });
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Solo cierra el menú si está activo (visible en móvil)
+                if (menuList.classList.contains('active')) {
+                   menuBtn.click(); // Cierra el menú
+                }
+
+                // Actualiza la clase 'active' en el enlace clickeado
+                 setTimeout(() => { // Pequeño delay para asegurar que el scroll ocurra antes
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                     const targetLink = e.currentTarget;
+                    targetLink.classList.add('active');
+                 }, 50); // 50ms delay
+
+            });
         });
 
         // Modo oscuro
         const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        const applyDarkModePreference = () => {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'enabled' || (!savedMode && prefersDark)) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        };
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
-            darkModeToggle.querySelector('i').classList.toggle('fa-moon');
-            darkModeToggle.querySelector('i').classList.toggle('fa-sun');
-            darkModeToggle.textContent = document.body.classList.contains('dark-mode') 
-                ? ' Modo Claro' 
-                : ' Modo Oscuro';
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
         });
+        applyDarkModePreference();
 
         // Acordeón de cursos
         document.querySelectorAll('.toggle-btn').forEach(btn => {
+            const info = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            info.classList.remove('active'); // Estado inicial cerrado
+             btn.setAttribute('aria-expanded', 'false');
+
             btn.addEventListener('click', () => {
-                const info = btn.nextElementSibling;
-                const icon = btn.querySelector('i');
-                
-                btn.classList.toggle('active');
-                info.classList.toggle('active');
-                icon.style.transform = info.classList.contains('active') 
-                    ? 'rotate(180deg)' 
-                    : 'rotate(0deg)';
+                const isActive = info.classList.toggle('active');
+                btn.classList.toggle('active', isActive);
+                icon.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
+                 btn.setAttribute('aria-expanded', isActive);
             });
         });
+
+        // Scroll suave y actualizar enlace activo en navbar
+        const sections = document.querySelectorAll('section[id]');
+        const navLinksObserver = document.querySelectorAll('.menu-list a[href^="#"]'); // Solo enlaces internos
+
+         // Observador para detectar qué sección está visible
+         const observerOptions = {
+             root: null, // Relativo al viewport
+             rootMargin: '-70px 0px -50% 0px', // Activa cuando la sección está entre 70px (navbar) desde arriba y la mitad de la pantalla
+             threshold: 0
+         };
+
+         const observer = new IntersectionObserver((entries) => {
+             entries.forEach(entry => {
+                 if (entry.isIntersecting) {
+                     const id = entry.target.getAttribute('id');
+                     navLinksObserver.forEach(link => {
+                         link.classList.remove('active');
+                         if (link.getAttribute('href') === `#${id}`) {
+                             link.classList.add('active');
+                         }
+                     });
+                 }
+             });
+         }, observerOptions);
+
+         sections.forEach(section => {
+             observer.observe(section);
+         });
+
+         // Asegurarse que el link 'Inicio' esté activo al cargar arriba de todo
+         window.addEventListener('load', () => {
+             if (window.pageYOffset < sections[0]?.offsetTop - 70) {
+                 navLinksObserver.forEach(l => l.classList.remove('active'));
+                 document.querySelector('.menu-list a[href="#inicio"]')?.classList.add('active');
+             }
+         });
+
     </script>
 </body>
 </html>
