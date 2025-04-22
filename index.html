@@ -52,7 +52,7 @@
             --bg: var(--bg-light);
             --card-bg: var(--card-bg-light);
             --border-color: var(--border-light);
-            --nav-bg: var(--nav-bg-light); /* Variable para el fondo del nav */
+            --nav-bg: var(--nav-bg-light);
         }
 
         /* Estilos para Modo Oscuro */
@@ -64,7 +64,7 @@
             --bg: var(--bg-dark);
             --card-bg: var(--card-bg-dark);
             --border-color: var(--border-dark);
-            --nav-bg: var(--nav-bg-dark); /* Variable para el fondo del nav */
+            --nav-bg: var(--nav-bg-dark);
         }
 
         * {
@@ -72,12 +72,23 @@
             padding: 0;
             box-sizing: border-box;
             font-family: var(--font-primary);
-            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease, opacity var(--transition-speed) ease; /* Añadida opacidad a la transición global */
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
         }
+
+        /* --- REQUERIMIENTO 2: Ocultar Scrollbar --- */
+        html {
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        }
+        html::-webkit-scrollbar { /* WebKit */
+          width: 0;
+          height: 0;
+        }
+        /* ---------------------------------------- */
 
         body {
             background-color: var(--bg);
@@ -324,6 +335,12 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            /* Opcional: Deshabilitar arrastrar imagen */
+            -webkit-user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
         .docente-info { flex: 1; }
         .docente-info h3 {
@@ -467,6 +484,12 @@
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-md);
             border: 5px solid var(--bg);
+             /* Opcional: Deshabilitar arrastrar imagen QR */
+            -webkit-user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
 
         /* Botón Flotante WhatsApp */
@@ -608,6 +631,14 @@
             footer { padding: 2rem 1rem; }
         }
 
+        /* Opcional: Estilo para evitar selección de texto general */
+        /* body {
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        } */
+
     </style>
 </head>
 <body>
@@ -634,7 +665,7 @@
     <main>
         <section class="banner" id="inicio">
             <div class="hero-content">
-                 </div>
+            </div>
         </section>
 
         <section class="intro-text" aria-labelledby="intro-heading">
@@ -760,18 +791,20 @@
                             <li>Edición de audio: ajuste de niveles de volumen, añadir y sincronizar música de fondo, aplicar efectos de audio básicos (fade in/out) y reducción de ruido simple.</li>
                             <li>Incorporación de elementos gráficos: añadir textos, títulos estáticos y animados, insertar imágenes y logos.</li>
                             <li>Formatos de exportación (renderizado): configuración óptima para diferentes plataformas como YouTube, Instagram, TikTok y presentaciones.</li>
-                            <br>
                         </ul>
                     </div>
                 </div>
-                </div> </section>
+
+            </div> </section>
 
         <section class="qr-section" id="contacto">
             <h2>¿Listo para empezar?</h2>
             <p>Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Resolvemos tus dudas y te ayudamos con la inscripción!</p>
             <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code">
         </section>
-    </main> <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank" aria-label="Contactar por WhatsApp">
+    </main>
+
+    <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
         <span>Contáctanos</span>
     </a>
@@ -783,6 +816,42 @@
     </footer>
 
     <script>
+        // --- REQUERIMIENTO 1: Bloquear Clic Derecho y Teclas DevTools ---
+        // Advertencia: Estas medidas no son 100% seguras y pueden ser evitadas.
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+            // console.log("Clic derecho deshabilitado."); // Mensaje opcional
+        });
+
+        document.addEventListener('keydown', function(event) {
+            // Bloquear F12
+            if (event.key === "F12") {
+                event.preventDefault();
+                // console.log("F12 deshabilitado."); // Mensaje opcional
+            }
+            // Bloquear Ctrl+Shift+I
+            if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+                event.preventDefault();
+                // console.log("Ctrl+Shift+I deshabilitado."); // Mensaje opcional
+            }
+             // Bloquear Ctrl+Shift+J
+             if (event.ctrlKey && event.shiftKey && event.key === 'J') {
+                 event.preventDefault();
+                 // console.log("Ctrl+Shift+J deshabilitado."); // Mensaje opcional
+             }
+             // Bloquear Ctrl+Shift+C (Inspector en algunos navegadores)
+              if (event.ctrlKey && event.shiftKey && event.key === 'C') {
+                 event.preventDefault();
+                 // console.log("Ctrl+Shift+C deshabilitado."); // Mensaje opcional
+             }
+            // Bloquear Ctrl+U (Ver código fuente)
+            if (event.ctrlKey && event.key === 'U') {
+                event.preventDefault();
+                // console.log("Ctrl+U deshabilitado."); // Mensaje opcional
+            }
+        });
+        // ---------------------------------------------------------------
+
         // Menú responsive
         const menuBtn = document.querySelector('.menu-btn');
         const menuList = document.querySelector('.menu-list');
@@ -828,12 +897,11 @@
             }
         });
 
-        // Acordeón de cursos (Se aplica a TODOS los botones con la clase)
+        // Acordeón de cursos
         document.querySelectorAll('.toggle-btn').forEach(btn => {
             const info = btn.nextElementSibling;
             const icon = btn.querySelector('i');
 
-            // Estado inicial cerrado
             info.style.maxHeight = '0';
             info.classList.remove('active');
             btn.classList.remove('active');
@@ -848,11 +916,9 @@
                 btn.setAttribute('aria-expanded', isActive);
 
                 if (isActive) {
-                    // Animar la apertura calculando la altura necesaria
                     info.style.maxHeight = info.scrollHeight + 'px';
                     icon.style.transform = 'rotate(180deg)';
                 } else {
-                    // Animar el cierre
                     info.style.maxHeight = '0';
                     icon.style.transform = 'rotate(0deg)';
                 }
@@ -867,27 +933,34 @@
         const observerOptions = {
             root: null,
             rootMargin: `-${navbarHeight}px 0px -50% 0px`,
-            threshold: 0
+            threshold: 0 // Se activa apenas empieza a entrar en el área definida por rootMargin
         };
 
+        let lastActiveLink = null; // Para evitar quitar 'active' si no hay nuevo link
+
         const observer = new IntersectionObserver((entries) => {
+            let foundActive = false;
             entries.forEach(entry => {
                 const id = entry.target.getAttribute('id');
                 const correspondingLink = document.querySelector(`.menu-list a[href="#${id}"]`);
 
-                // Solo activar si está realmente intersecando un porcentaje visible
-                // Ajusta el threshold en observerOptions si quieres más precisión
-                if (entry.isIntersecting) {
-                    navLinksObserver.forEach(link => link.classList.remove('active'));
-                    if (correspondingLink) {
-                        correspondingLink.classList.add('active');
+                if (entry.isIntersecting && correspondingLink) {
+                    if (lastActiveLink) {
+                        lastActiveLink.classList.remove('active');
                     }
+                    correspondingLink.classList.add('active');
+                    lastActiveLink = correspondingLink;
+                    foundActive = true;
                 }
-                 // Opcional: Desactivar si deja de intersecar completamente? Podría ser molesto.
-                 // else if (!entry.isIntersecting && correspondingLink?.classList.contains('active')) {
-                 //     correspondingLink.classList.remove('active');
-                 // }
             });
+
+             // Si después de revisar todas las entradas, ninguna está activa (scroll muy rápido o fuera de secciones)
+             // y teníamos un link activo antes, lo quitamos. Opcional: podríamos mantener el último activo.
+            // if (!foundActive && lastActiveLink) {
+            //      lastActiveLink.classList.remove('active');
+            //      lastActiveLink = null;
+            // }
+
         }, observerOptions);
 
         sections.forEach(section => {
@@ -898,14 +971,18 @@
         window.addEventListener('load', () => {
              setTimeout(() => {
                  const firstSection = sections[0];
+                 const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
+
                  if (firstSection && window.scrollY < firstSection.offsetTop - navbarHeight) {
                      navLinksObserver.forEach(l => l.classList.remove('active'));
-                     const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
                      if (homeLink) homeLink.classList.add('active');
+                     lastActiveLink = homeLink;
                  } else {
-                    // Si no está arriba, forzar una comprobación inicial del observer
-                    observer.disconnect();
-                    sections.forEach(section => { if (section) observer.observe(section); });
+                     // Forzar una comprobación inicial si no estamos arriba
+                     observer.disconnect();
+                     lastActiveLink = null; // Resetear último activo
+                     navLinksObserver.forEach(l => l.classList.remove('active')); // Limpiar todos
+                     sections.forEach(section => { if (section) observer.observe(section); }); // Re-observar
                  }
              }, 150);
         });
