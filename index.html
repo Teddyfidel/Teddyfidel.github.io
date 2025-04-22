@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clover - Educación Digital Moderna</title>
-    <link rel="icon" type="image/x-icon" href="fondo.jpeg"> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/x-icon" href="fondo.jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
         :root {
+            /* Colores Modo Claro */
             --primary-light: #3b82f6; /* Azul vibrante */
             --secondary-light: #1d4ed8; /* Azul más oscuro */
             --accent-light: #60a5fa; /* Azul claro */
@@ -17,7 +19,9 @@
             --bg-light: #f9fafb; /* Gris muy claro */
             --card-bg-light: #ffffff;
             --border-light: #e5e7eb; /* Gris claro para bordes */
+            --nav-bg-light: rgba(255, 255, 255, 0.85); /* Blanco semitransparente para nav claro */
 
+            /* Colores Modo Oscuro */
             --primary-dark: #60a5fa; /* Azul claro (primario en dark) */
             --secondary-dark: #3b82f6; /* Azul vibrante (secundario en dark) */
             --accent-dark: #1d4ed8; /* Azul oscuro */
@@ -25,7 +29,9 @@
             --bg-dark: #111827; /* Gris muy oscuro */
             --card-bg-dark: #1f2937; /* Gris oscuro para cards */
             --border-dark: #374151; /* Gris medio para bordes */
+            --nav-bg-dark: rgba(31, 41, 55, 0.85); /* Gris oscuro semitransparente para nav oscuro */
 
+            /* Configuraciones Generales */
             --font-primary: 'Poppins', sans-serif;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -39,24 +45,26 @@
 
         /* Asignación inicial de variables (Modo Claro por defecto) */
         :root {
-          --primary: var(--primary-light);
-          --secondary: var(--secondary-light);
-          --accent: var(--accent-light);
-          --text: var(--text-light);
-          --bg: var(--bg-light);
-          --card-bg: var(--card-bg-light);
-          --border-color: var(--border-light);
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --accent: var(--accent-light);
+            --text: var(--text-light);
+            --bg: var(--bg-light);
+            --card-bg: var(--card-bg-light);
+            --border-color: var(--border-light);
+            --nav-bg: var(--nav-bg-light); /* Variable para el fondo del nav */
         }
 
         /* Estilos para Modo Oscuro */
         body.dark-mode {
-          --primary: var(--primary-dark);
-          --secondary: var(--secondary-dark);
-          --accent: var(--accent-dark);
-          --text: var(--text-dark);
-          --bg: var(--bg-dark);
-          --card-bg: var(--card-bg-dark);
-          --border-color: var(--border-dark);
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --accent: var(--accent-dark);
+            --text: var(--text-dark);
+            --bg: var(--bg-dark);
+            --card-bg: var(--card-bg-dark);
+            --border-color: var(--border-dark);
+            --nav-bg: var(--nav-bg-dark); /* Variable para el fondo del nav */
         }
 
         * {
@@ -64,7 +72,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: var(--font-primary);
-            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease, opacity var(--transition-speed) ease; /* Añadida opacidad a la transición global */
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -75,17 +83,30 @@
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+             flex-grow: 1;
         }
 
         h1, h2, h3, h4, h5, h6 {
-            /* color: var(--primary); No poner color primario por defecto aquí, aplicar donde sea necesario */
             line-height: 1.3;
             font-weight: 600;
         }
-        h1 { font-size: 2.5rem; color: var(--primary); } /* 40px */
-        h2 { font-size: 2rem; color: var(--primary); } /* 32px */
-        h3 { font-size: 1.5rem; color: var(--primary); } /* 24px */
-        p { margin-bottom: 1rem; color: var(--text); opacity: 0.9; }
+        h1 { font-size: 2.5rem; color: var(--primary); }
+        h2 { font-size: 2rem; color: var(--primary); }
+        h3 { font-size: 1.5rem; color: var(--primary); }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+            opacity: 0.9;
+            text-align: justify;
+        }
+
         a { color: var(--accent); text-decoration: none; transition: color var(--transition-speed); }
         a:hover { color: var(--secondary); }
 
@@ -103,7 +124,7 @@
 
         /* Navbar */
         nav {
-            background: rgba(59, 130, 246, 0.8); /* Azul primario con transparencia */
+            background: var(--nav-bg);
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
@@ -112,16 +133,12 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: var(--shadow-md);
-            backdrop-filter: blur(10px); /* Efecto cristal */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        body.dark-mode nav {
-             background: rgba(17, 24, 39, 0.8); /* Fondo oscuro con transparencia */
-             border-bottom: 1px solid var(--border-dark);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .logo a { /* Si tuvieras un logo */
-            color: white;
+        .logo a {
+            color: var(--primary);
             font-weight: 700;
             font-size: 1.5rem;
         }
@@ -130,7 +147,7 @@
             display: none;
             background: none;
             border: none;
-            color: white;
+            color: var(--text);
             font-size: 1.8rem;
             cursor: pointer;
             padding: 0.5rem;
@@ -144,14 +161,14 @@
         }
 
         .menu-list a {
-            color: white;
+            color: var(--text);
             font-weight: 500;
             padding: 0.5rem 1rem;
             border-radius: var(--border-radius-sm);
             position: relative;
             transition: background-color var(--transition-speed), color var(--transition-speed);
         }
-        .menu-list a::after { /* Subrayado sutil al hacer hover */
+        .menu-list a::after {
             content: '';
             position: absolute;
             bottom: -2px;
@@ -159,58 +176,72 @@
             transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: white;
+            background: var(--primary);
             transition: width var(--transition-speed) ease;
         }
         .menu-list a:hover, .menu-list a.active {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--primary);
         }
+         body.dark-mode .menu-list a:hover, body.dark-mode .menu-list a.active {
+             background: rgba(255, 255, 255, 0.1);
+             color: var(--primary-dark);
+         }
         .menu-list a:hover::after, .menu-list a.active::after {
             width: 70%;
         }
 
         /* Dark Mode Toggle Button */
         .dark-mode-toggle {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text);
             cursor: pointer;
             font-size: 1rem;
-            padding: 0.6rem 0.8rem; /* Más compacto */
-            border-radius: 50%; /* Hacerlo circular */
+            padding: 0.6rem 0.8rem;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 40px;
             height: 40px;
-            transition: background-color var(--transition-speed), transform var(--transition-speed);
+            transition: background-color var(--transition-speed), transform var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
         }
         .dark-mode-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.1);
             transform: scale(1.1);
+            color: var(--primary);
         }
-        .dark-mode-toggle .fa-sun { display: none; } /* Ocultar sol por defecto */
-        body.dark-mode .dark-mode-toggle .fa-moon { display: none; } /* Ocultar luna en dark mode */
-        body.dark-mode .dark-mode-toggle .fa-sun { display: inline-block; } /* Mostrar sol en dark mode */
+         body.dark-mode .dark-mode-toggle {
+             background: rgba(255, 255, 255, 0.1);
+         }
+         body.dark-mode .dark-mode-toggle:hover {
+             background: rgba(255, 255, 255, 0.2);
+             color: var(--primary-dark);
+         }
+        .dark-mode-toggle .fa-sun { display: none; }
+        body.dark-mode .dark-mode-toggle .fa-moon { display: none; }
+        body.dark-mode .dark-mode-toggle .fa-sun { display: inline-block; }
 
 
         /* Banner / Hero Section */
         .banner {
-            height: 65vh; /* Reducido un poco ya que el H1 está fuera */
+            height: 65vh;
             min-height: 350px;
-            background: url('fondo.jpeg') center/cover no-repeat; /* Asegúrate que fondo.jpeg exista */
+            background: url('fondo.jpeg') center/cover no-repeat;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
-            scroll-margin-top: 70px; /* Ajustar al alto del navbar */
+            scroll-margin-top: 70px;
         }
-        .banner::after { /* Overlay oscuro para contraste */
+        .banner::after {
             content: '';
             position: absolute;
-            inset: 0; 
+            inset: 0;
+            background: rgba(0, 0, 0, 0.2);
             z-index: 0;
         }
         .hero-content {
@@ -218,65 +249,61 @@
             z-index: 1;
             max-width: 800px;
             padding: 2rem;
-             /* Se puede añadir contenido aquí si se desea, como un botón */
-             /* animation: fadeInHero 1s ease-out; /* Animación sutil de entrada */
         }
-        /* Estilos para botón CTA si lo añades */
         .cta-button {
-             display: inline-block;
-             background-color: var(--primary-light);
-             color: white;
-             padding: 0.8rem 2rem;
-             border-radius: var(--border-radius-md);
-             font-weight: 600;
-             text-transform: uppercase;
-             letter-spacing: 1px;
-             box-shadow: var(--shadow-md);
-             transition: background-color var(--transition-speed), transform var(--transition-speed);
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow-md);
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
         }
-         .cta-button:hover {
-             background-color: var(--secondary-light);
-             transform: translateY(-2px);
-             box-shadow: var(--shadow-lg);
-         }
-
+        .cta-button:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
 
         /* Sección General */
         section {
-            padding: 4rem 2rem; /* Reducido un poco el padding vertical general */
+            padding: 4rem 2rem;
             scroll-margin-top: 70px;
         }
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
-            font-size: 2.25rem; /* 36px */
-             color: var(--primary);
+            font-size: 2.25rem;
+            color: var(--primary);
         }
 
-        /* NUEVA SECCIÓN: Texto Introductorio */
+        /* Texto Introductorio */
         .intro-text {
-            background-color: var(--bg); /* Fondo igual al body */
-            padding: 4rem 2rem; /* Espaciado vertical y horizontal */
-            text-align: center; /* Centrar contenido */
-            scroll-margin-top: 70px; /* Para el anclaje de scroll */
+            background-color: var(--bg);
+            padding: 4rem 2rem;
+            text-align: center;
+            scroll-margin-top: 70px;
         }
         .intro-text h1 {
-             font-size: clamp(2.2rem, 5vw, 3rem); /* Tamaño responsivo */
-             margin-bottom: 1rem;
-             color: var(--primary); /* Mantener color primario */
+            font-size: clamp(2.2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            color: var(--primary);
         }
         .intro-text p {
-            font-size: clamp(1rem, 2.5vw, 1.15rem); /* Tamaño responsivo */
-            max-width: 750px; /* Limitar ancho para legibilidad */
+            font-size: clamp(1rem, 2.5vw, 1.15rem);
+            max-width: 750px;
             margin-left: auto;
             margin-right: auto;
             opacity: 0.85;
-             color: var(--text);
+            color: var(--text);
+            text-align: center;
         }
 
-
         /* Sección Docente */
-        .docente { background-color: var(--card-bg); } /* Fondo blanco/card */
+        .docente { background-color: var(--card-bg); }
         .docente-container {
             max-width: 1100px;
             margin: 0 auto;
@@ -299,7 +326,7 @@
             display: block;
         }
         .docente-info { flex: 1; }
-        .docente-info h3 { /* "Instructor Principal" */
+        .docente-info h3 {
             color: var(--secondary);
             font-size: 1rem;
             font-weight: 500;
@@ -307,15 +334,16 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .docente-info h2 { /* Nombre */
+        .docente-info h2 {
             margin-bottom: 1rem;
-            font-size: 2.25rem; /* 36px */
-            color: var(--primary); /* Asegurar color primario */
+            font-size: 2.25rem;
+            color: var(--primary);
         }
         .docente-info p {
             opacity: 0.8;
             margin-bottom: 1rem;
             color: var(--text);
+            text-align: justify;
         }
         .docente-info p a { font-weight: 500; }
 
@@ -347,12 +375,13 @@
             margin-bottom: 0.5rem;
             color: var(--primary);
         }
-        .curso-card p { /* Descripción corta */
+        .curso-card p {
             font-size: 0.95rem;
             opacity: 0.7;
             margin-bottom: 1.5rem;
             flex-grow: 1;
             color: var(--text);
+            text-align: justify;
         }
 
         /* Botón Acordeón Cursos */
@@ -373,18 +402,18 @@
             margin-top: auto;
         }
         .toggle-btn:hover {
-            background-color: var(--accent); /* Usar accent en hover */
+            background-color: var(--accent);
             color: white;
             border-color: var(--accent);
         }
         .toggle-btn i {
             transition: transform var(--transition-speed) ease;
         }
-        .toggle-btn.active i { /* Rotar flecha */
+        .toggle-btn.active i {
             transform: rotate(180deg);
         }
         body.dark-mode .toggle-btn:hover {
-            background-color: var(--secondary-dark); /* Ajustar hover en dark mode */
+            background-color: var(--secondary-dark);
             border-color: var(--secondary-dark);
         }
 
@@ -392,14 +421,14 @@
         .curso-info {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out, padding-top 0.5s ease-in-out, margin-top 0.5s ease-in-out, border-top 0.5s ease-in-out; /* Animación más suave y completa */
-            border-top: 1px solid transparent; /* Empezar transparente */
+            transition: max-height 0.5s ease-in-out, padding-top 0.5s ease-in-out, margin-top 0.5s ease-in-out, border-top 0.5s ease-in-out;
+            border-top: 1px solid transparent;
             margin-top: 0;
             padding-top: 0;
         }
         .curso-info.active {
             max-height: 500px;
-            border-top-color: var(--border-color); /* Mostrar borde al abrir */
+            border-top-color: var(--border-color);
             margin-top: 1rem;
             padding-top: 1rem;
         }
@@ -413,22 +442,23 @@
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
             opacity: 0.8;
-             color: var(--text);
+            color: var(--text);
+            text-align: justify;
         }
 
         /* Sección QR */
         .qr-section { background-color: var(--card-bg); }
         .qr-section h2 {
             text-align: center;
-            margin-bottom: 1rem; /* Menos espacio */
-             color: var(--primary);
+            margin-bottom: 1rem;
+            color: var(--primary);
         }
-        .qr-section p { /* Añadido párrafo descriptivo */
-             text-align:center;
-             max-width: 600px;
-             margin: 0 auto 2rem auto;
-             opacity: 0.8;
-             color: var(--text);
+        .qr-section p {
+            text-align:center;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.8;
+            color: var(--text);
         }
         .qr-code {
             display: block;
@@ -466,27 +496,32 @@
 
         /* Footer */
         footer {
-            background: var(--bg-dark); /* Fondo oscuro consistente */
-            color: var(--text-dark);
+            background: var(--bg);
+            color: var(--text);
             padding: 3rem 2rem;
             text-align: center;
-            margin-top: 3rem;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
         }
         footer p {
-             color: rgba(243, 244, 246, 0.7);
-             margin: 0;
+            color: var(--text);
+            opacity: 0.7;
+            margin: 0;
+            text-align: center;
         }
         .social-links {
             margin-top: 1rem;
         }
         .social-links a {
-            color: rgba(243, 244, 246, 0.7);
+            color: var(--text);
+            opacity: 0.7;
             margin: 0 0.75rem;
             font-size: 1.5rem;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, opacity 0.3s ease;
         }
         .social-links a:hover {
-            color: var(--primary-dark);
+            color: var(--primary);
+            opacity: 1;
         }
 
         /* Animaciones */
@@ -500,6 +535,7 @@
             h1 { font-size: 2rem; }
             h2 { font-size: 1.75rem; }
             h3 { font-size: 1.25rem; }
+            p, .curso-info li { font-size: 0.95rem; }
 
             nav { padding: 1rem; }
             .menu-btn { display: block; }
@@ -509,16 +545,13 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(59, 130, 246, 0.95);
+                background: var(--nav-bg);
                 padding: 1rem;
                 flex-direction: column;
                 gap: 0.5rem;
                 box-shadow: var(--shadow-lg);
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-top: 1px solid var(--border-color);
             }
-             body.dark-mode .menu-list {
-                 background: rgba(17, 24, 39, 0.98);
-             }
             .menu-list.active { display: flex; }
             .menu-list li { width: 100%; }
             .menu-list a {
@@ -527,19 +560,18 @@
                 padding: 0.8rem 1rem;
             }
             .dark-mode-toggle {
-                 order: 1;
-                 margin: 0.5rem auto;
+                order: 1;
+                margin: 0.5rem auto;
             }
 
-            .banner { height: 50vh; } /* Ajustar altura si es necesario */
+            .banner { height: 50vh; }
 
             section { padding: 3rem 1rem; }
             .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
 
             .intro-text { padding: 3rem 1rem; }
             .intro-text h1 { font-size: 2rem; }
-            .intro-text p { font-size: 1rem; }
-
+            .intro-text p { font-size: 1rem; text-align: center; }
 
             .docente-container {
                 flex-direction: column;
@@ -552,33 +584,39 @@
                 height: 200px;
                 margin: 0 auto;
             }
-            .docente-info h2 { font-size: 1.8rem; }
+            .docente-info { text-align: center; }
+            .docente-info p { text-align: justify; }
 
             .cursos-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .curso-card p { text-align: justify; }
 
             .qr-section { padding: 3rem 1rem; }
             .qr-section h2 { font-size: 1.8rem; }
+            .qr-section p { text-align: center; }
 
             .whatsapp-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
+                padding: 0.6rem;
+                width: 50px;
+                height: 50px;
                 bottom: 1rem;
                 right: 1rem;
+                gap: 0;
             }
-             .whatsapp-btn span { display: none; }
-             .whatsapp-btn i { margin-right: 0; }
+            .whatsapp-btn span { display: none; }
+            .whatsapp-btn i { margin-right: 0; font-size: 1.5rem; }
+
+            footer { padding: 2rem 1rem; }
         }
 
     </style>
 </head>
 <body>
     <nav>
-        <div></div>
-
+        <div class="logo">
+            </div>
         <button class="menu-btn" aria-label="Toggle Menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
         </button>
-
         <ul class="menu-list">
             <li><a href="#inicio" class="active">Inicio</a></li>
             <li><a href="#docente">Instructor</a></li>
@@ -593,134 +631,154 @@
         </ul>
     </nav>
 
-    <section class="banner" id="inicio">
-       <!-- <div class="hero-content">
-            <a href="#cursos" class="cta-button">Explorar Cursos</a>
-        </div>-->
-    </section>
+    <main>
+        <section class="banner" id="inicio">
+            <div class="hero-content">
+                 </div>
+        </section>
 
-    <section class="intro-text" aria-labelledby="intro-heading">
-       <div class="container text-center">
-           <h1 id="intro-heading">Transforma tu futuro con nuestros cursos digitales</h1>
-           <p>Aprende habilidades tecnológicas con expertos de la industria y potencia tu carrera.</p>
-       </div>
-   </section>
-   <section class="docente" id="docente"> <div class="docente-container">
-            <div class="docente-imagen">
-                <img src="docente.jpeg" alt="Foto del Ing. Teddy Valencia">
-            </div>
-            <div class="docente-info">
-                <h3>Instructor Principal</h3>
-                <h2>Ing. Teddy Valencia</h2>
-                <p>Ingeniero en Tecnología de la Información con más de 5 años de experiencia en desarrollo front-end, gestión de bases de datos y edición profesional de video. Apasionado por la enseñanza y la implementación de soluciones tecnológicas innovadoras.</p>
-                <p><strong>Contacto:</strong> <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
-            </div>
-        </div>
-    </section>
+        <section class="intro-text" aria-labelledby="intro-heading">
+           <div class="container text-center">
+               <h1 id="intro-heading">Transforma tu futuro con nuestros cursos digitales</h1>
+               <p>Aprende habilidades tecnológicas clave con un instructor experimentado y potencia tu perfil profesional o académico. Ofrecemos formación práctica y actualizada en herramientas esenciales para el mundo digital.</p>
+           </div>
+       </section>
 
-    <section class="cursos" id="cursos">
-        <h2 class="section-title">Nuestra Oferta Educativa</h2>
-        <div class="cursos-grid">
-            <div class="curso-card">
-                <h3>Paquete Completo de Office</h3>
-                <p>Domina Word, Excel y PowerPoint para optimizar tu productividad en cualquier entorno profesional.</p>
-                <button class="toggle-btn" aria-expanded="false">
-                    <span>Ver Temario</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="curso-info">
-                    <ul>
-                        <li>Word: Formato avanzado, estilos, correspondencia.</li>
-                        <li>Excel: Fórmulas, funciones, tablas dinámicas, gráficos.</li>
-                        <li>PowerPoint: Diseño de diapositivas, animaciones, presentaciones efectivas.</li>
-                    </ul>
+        <section class="docente" id="docente">
+            <div class="docente-container">
+                <div class="docente-imagen">
+                    <img src="docente.jpeg" alt="Foto del Ing. Teddy Valencia">
+                </div>
+                <div class="docente-info">
+                    <h3>Instructor Principal</h3>
+                    <h2>Ing. Teddy Valencia</h2>
+                    <p>Ingeniero en Tecnología de la Información con más de 5 años de experiencia práctica en desarrollo front-end (HTML, CSS, JavaScript), gestión de bases de datos relacionales (SQL) y edición profesional de video. Apasionado por la enseñanza y dedicado a facilitar el aprendizaje de conceptos tecnológicos complejos de manera clara y efectiva.</p>
+                    <p><strong>Contacto:</strong> <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
                 </div>
             </div>
+        </section>
 
-            <div class="curso-card">
-                <h3>Desarrollo Web Full Stack</h3>
-                <p>Crea aplicaciones web interactivas desde cero aprendiendo HTML5, CSS3, JavaScript moderno y bases de datos SQL.</p>
-                 <button class="toggle-btn" aria-expanded="false">
-                    <span>Ver Temario</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="curso-info">
-                     <ul>
-                        <li>Maquetación semántica con HTML5.</li>
-                        <li>Diseño responsive y moderno con CSS3 (Flexbox, Grid).</li>
-                        <li>Programación frontend con JavaScript (ES6+).</li>
-                        <li>Gestión de bases de datos relacionales con SQL.</li>
-                    </ul>
+        <section class="cursos" id="cursos">
+            <h2 class="section-title">Nuestra Oferta Educativa</h2>
+            <div class="cursos-grid">
+                <div class="curso-card">
+                    <h3>Paquete Completo de Office</h3>
+                    <p>Domina las herramientas esenciales de Microsoft Office (Word, Excel, PowerPoint) para optimizar tu productividad en cualquier entorno académico o profesional, creando documentos, hojas de cálculo y presentaciones impactantes.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Word: Creación y formato avanzado de documentos, uso de estilos, plantillas, combinación de correspondencia, tablas e ilustraciones.</li>
+                            <li>Excel: Introducción a fórmulas y funciones, formato de celdas, creación de gráficos, tablas dinámicas básicas, ordenación y filtrado de datos.</li>
+                            <li>PowerPoint: Diseño efectivo de diapositivas, uso de temas y patrones, inserción de multimedia, animaciones, transiciones y consejos para presentaciones.</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="curso-card">
-                <h3>Fundamentos de Programación</h3>
-                <p>Iníciate en el mundo del código con Python, C++, SQL y Pseint, desarrollando una sólida lógica de programación.</p>
-                <button class="toggle-btn" aria-expanded="false">
-                    <span>Ver Temario</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="curso-info">
-                    <ul>
-                        <li>Introducción a algoritmos y pseudocódigo (Pseint).</li>
-                        <li>Sintaxis y estructuras básicas en Python y C++.</li>
-                        <li>Consultas fundamentales en SQL.</li>
-                        <li>Resolución de problemas y pensamiento lógico.</li>
-                     </ul>
+                <div class="curso-card">
+                    <h3>Desarrollo Web Full Stack</h3>
+                    <p>Construye aplicaciones web interactivas y funcionales desde cero. Aprende las bases del frontend con HTML5, CSS3 (incluyendo Flexbox y Grid para diseño responsive) y JavaScript moderno (ES6+), y maneja datos con bases de datos relacionales usando SQL.</p>
+                     <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>HTML5: Estructura semántica del documento, etiquetas esenciales, formularios y elementos multimedia.</li>
+                            <li>CSS3: Selectores, modelo de caja, Flexbox para layouts flexibles, Grid para maquetación avanzada, diseño responsive y transiciones básicas.</li>
+                            <li>JavaScript (ES6+): Variables, tipos de datos, operadores, estructuras de control, funciones, manipulación del DOM y eventos.</li>
+                            <li>SQL: Conceptos de bases de datos relacionales, consultas básicas (SELECT, INSERT, UPDATE, DELETE), cláusulas WHERE, JOINs simples.</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="curso-card">
-                <h3>Manejo Experto de Windows</h3>
-                <p>Optimiza tu uso del sistema operativo más popular: navegación, organización de archivos y configuraciones esenciales.</p>
-                <button class="toggle-btn" aria-expanded="false">
-                     <span>Ver Temario</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="curso-info">
-                    <ul>
-                        <li>Explorador de archivos: Carpetas, vistas, búsqueda avanzada.</li>
-                        <li>Panel de Control y Configuración del sistema.</li>
-                        <li>Creación y edición de documentos básicos.</li>
-                        <li>Consejos de seguridad y mantenimiento.</li>
-                    </ul>
+                <div class="curso-card">
+                    <h3>Fundamentos de Programación</h3>
+                    <p>Iníciate en el apasionante mundo del código desarrollando una sólida base lógica. Aprende a resolver problemas usando pseudocódigo (Pseint) y da tus primeros pasos en lenguajes demandados como Python y C++, además de entender cómo interactuar con bases de datos SQL.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Lógica y Algoritmos: Introducción al pensamiento computacional, diagramas de flujo y pseudocódigo utilizando Pseint para practicar.</li>
+                            <li>Python Básico: Sintaxis fundamental, variables, tipos de datos, estructuras de control (if, for, while), funciones básicas.</li>
+                            <li>C++ Básico: Introducción a la sintaxis, tipos de datos, entrada/salida estándar, estructuras de control, compilación básica.</li>
+                            <li>SQL Básico: Comprensión de tablas y relaciones, ejecución de consultas SELECT sencillas para recuperar información.</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="curso-card">
-                 <h3>Herramientas de Inteligencia Artificial</h3>
-                <p>Aprende a utilizar las IAs más potentes (ChatGPT, Copilot, Gemini, etc.) para potenciar tu creatividad y eficiencia.</p>
-                <button class="toggle-btn" aria-expanded="false">
-                    <span>Ver Temario</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                 <div class="curso-info">
-                    <ul>
-                        <li>Generación de texto e ideas con ChatGPT y Gemini.</li>
-                        <li>Asistencia en código y tareas con Copilot.</li>
-                        <li>Edición de imágenes asistida por IA (ej. PIXLR AI).</li>
-                        <li>Aplicaciones prácticas en estudios y trabajo.</li>
-                    </ul>
+                 <div class="curso-card">
+                    <h3>Manejo Experto de Windows</h3>
+                    <p>Saca el máximo provecho al sistema operativo más utilizado. Aprende a navegar eficientemente, organizar tus archivos y carpetas, personalizar tu entorno, utilizar herramientas del sistema y aplicar buenas prácticas de seguridad.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Interfaz y Navegación: Escritorio, barra de tareas, menú Inicio, explorador de archivos (crear, mover, copiar, eliminar archivos/carpetas), vistas y búsqueda.</li>
+                            <li>Organización y Personalización: Creación de bibliotecas, configuración del escritorio, opciones de pantalla, cuentas de usuario básicas.</li>
+                            <li>Herramientas del Sistema: Panel de Control vs. Configuración, instalación/desinstalación de programas, herramientas básicas de mantenimiento (liberador de espacio).</li>
+                            <li>Conceptos Básicos: Uso del portapapeles, atajos de teclado comunes, conexión a redes Wi-Fi, nociones de seguridad (antivirus, actualizaciones).</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="qr-section" id="contacto">
-        <h2>¿Listo para empezar?</h2>
-         <p>Escanea el código QR o contáctanos directamente por WhatsApp para más información e inscripciones.</p>
-        <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code">
-    </section>
+                <div class="curso-card">
+                    <h3>Herramientas de Inteligencia Artificial</h3>
+                    <p>Descubre cómo la Inteligencia Artificial puede potenciar tu creatividad y eficiencia. Aprende a utilizar herramientas líderes como ChatGPT, Gemini y Copilot para generar texto, obtener ideas, programar, editar imágenes y optimizar tus tareas diarias.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Generación de Contenido: Uso efectivo de ChatGPT y Google Gemini para crear textos, resumir información, brainstorming y responder preguntas.</li>
+                            <li>Asistencia en Código y Tareas: Cómo usar GitHub Copilot (o similares) para autocompletar código, sugerir soluciones y depurar errores básicos.</li>
+                            <li>Edición de Imágenes con IA: Introducción a herramientas online (como PIXLR AI, Canva Magic Studio) para mejorar fotos, eliminar fondos o generar elementos gráficos.</li>
+                            <li>Prompts Efectivos: Aprende a formular preguntas e instrucciones claras para obtener los mejores resultados de las IAs generativas. Casos de uso prácticos.</li>
+                        </ul>
+                    </div>
+                </div>
 
-    <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank" aria-label="Contactar por WhatsApp">
+                <div class="curso-card">
+                    <h3>Edición de Video Profesional</h3>
+                    <p>Aprende a crear videos atractivos y de alta calidad utilizando los programas líderes del mercado: Camtasia, Filmora y Sony Vegas. Ideal para creadores de contenido, educadores y profesionales que buscan mejorar su comunicación audiovisual.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Introducción a la interfaz y flujo de trabajo de Camtasia, Filmora y Sony Vegas (principales diferencias y similitudes).</li>
+                            <li>Técnicas esenciales de edición: importar medios, cortar, recortar, unir clips, trabajar con la línea de tiempo y montaje básico.</li>
+                            <li>Uso de transiciones fluidas, aplicación de efectos visuales básicos (filtros, ajustes de velocidad) y corrección de color fundamental.</li>
+                            <li>Edición de audio: ajuste de niveles de volumen, añadir y sincronizar música de fondo, aplicar efectos de audio básicos (fade in/out) y reducción de ruido simple.</li>
+                            <li>Incorporación de elementos gráficos: añadir textos, títulos estáticos y animados, insertar imágenes y logos.</li>
+                            <li>Formatos de exportación (renderizado): configuración óptima para diferentes plataformas como YouTube, Instagram, TikTok y presentaciones.</li>
+                            <br>
+                        </ul>
+                    </div>
+                </div>
+                </div> </section>
+
+        <section class="qr-section" id="contacto">
+            <h2>¿Listo para empezar?</h2>
+            <p>Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Resolvemos tus dudas y te ayudamos con la inscripción!</p>
+            <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code">
+        </section>
+    </main> <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
         <span>Contáctanos</span>
     </a>
 
     <footer>
         <p>&copy; 2025 Clover Educación Digital. Todos los derechos reservados.</p>
-         <div class="social-links">
+        <div class="social-links">
             </div>
     </footer>
 
@@ -734,38 +792,33 @@
             const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
             menuBtn.setAttribute('aria-expanded', !isExpanded);
             menuList.classList.toggle('active');
-            menuBtn.querySelector('i').classList.toggle('fa-bars');
-            menuBtn.querySelector('i').classList.toggle('fa-times');
+            const icon = menuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         });
 
-        menuLinks.forEach(link => {
+         menuLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                // Solo cierra el menú si está activo (visible en móvil)
-                if (menuList.classList.contains('active')) {
-                   menuBtn.click(); // Cierra el menú
-                }
-
-                // Actualiza la clase 'active' en el enlace clickeado
-                 setTimeout(() => { // Pequeño delay para asegurar que el scroll ocurra antes
+                 if (menuList.classList.contains('active')) {
+                     menuBtn.click();
+                 }
+                 setTimeout(() => {
                     menuLinks.forEach(l => l.classList.remove('active'));
-                     const targetLink = e.currentTarget;
-                    targetLink.classList.add('active');
-                 }, 50); // 50ms delay
-
+                    const targetId = e.currentTarget.getAttribute('href');
+                    const activeLink = document.querySelector(`.menu-list a[href="${targetId}"]`);
+                    if(activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                 }, 50);
             });
         });
 
         // Modo oscuro
         const darkModeToggle = document.querySelector('.dark-mode-toggle');
-        const applyDarkModePreference = () => {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const savedMode = localStorage.getItem('darkMode');
-            if (savedMode === 'enabled' || (!savedMode && prefersDark)) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
-        };
+
+        // Siempre empieza en modo claro
+        document.body.classList.remove('dark-mode');
+
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             if (document.body.classList.contains('dark-mode')) {
@@ -774,59 +827,88 @@
                 localStorage.setItem('darkMode', 'disabled');
             }
         });
-        applyDarkModePreference();
 
-        // Acordeón de cursos
+        // Acordeón de cursos (Se aplica a TODOS los botones con la clase)
         document.querySelectorAll('.toggle-btn').forEach(btn => {
             const info = btn.nextElementSibling;
             const icon = btn.querySelector('i');
-            info.classList.remove('active'); // Estado inicial cerrado
-             btn.setAttribute('aria-expanded', 'false');
+
+            // Estado inicial cerrado
+            info.style.maxHeight = '0';
+            info.classList.remove('active');
+            btn.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+            icon.style.transform = 'rotate(0deg)';
 
             btn.addEventListener('click', () => {
-                const isActive = info.classList.toggle('active');
+                const isActive = !info.classList.contains('active');
+
+                info.classList.toggle('active', isActive);
                 btn.classList.toggle('active', isActive);
-                icon.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
-                 btn.setAttribute('aria-expanded', isActive);
+                btn.setAttribute('aria-expanded', isActive);
+
+                if (isActive) {
+                    // Animar la apertura calculando la altura necesaria
+                    info.style.maxHeight = info.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    // Animar el cierre
+                    info.style.maxHeight = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                }
             });
         });
 
-        // Scroll suave y actualizar enlace activo en navbar
-        const sections = document.querySelectorAll('section[id]');
-        const navLinksObserver = document.querySelectorAll('.menu-list a[href^="#"]'); // Solo enlaces internos
+        // Scroll suave y actualizar enlace activo en navbar al hacer scroll
+        const sections = document.querySelectorAll('main section[id]');
+        const navLinksObserver = document.querySelectorAll('.menu-list a[href^="#"]');
+        const navbarHeight = document.querySelector('nav')?.offsetHeight || 70;
 
-         // Observador para detectar qué sección está visible
-         const observerOptions = {
-             root: null, // Relativo al viewport
-             rootMargin: '-70px 0px -50% 0px', // Activa cuando la sección está entre 70px (navbar) desde arriba y la mitad de la pantalla
-             threshold: 0
-         };
+        const observerOptions = {
+            root: null,
+            rootMargin: `-${navbarHeight}px 0px -50% 0px`,
+            threshold: 0
+        };
 
-         const observer = new IntersectionObserver((entries) => {
-             entries.forEach(entry => {
-                 if (entry.isIntersecting) {
-                     const id = entry.target.getAttribute('id');
-                     navLinksObserver.forEach(link => {
-                         link.classList.remove('active');
-                         if (link.getAttribute('href') === `#${id}`) {
-                             link.classList.add('active');
-                         }
-                     });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const correspondingLink = document.querySelector(`.menu-list a[href="#${id}"]`);
+
+                // Solo activar si está realmente intersecando un porcentaje visible
+                // Ajusta el threshold en observerOptions si quieres más precisión
+                if (entry.isIntersecting) {
+                    navLinksObserver.forEach(link => link.classList.remove('active'));
+                    if (correspondingLink) {
+                        correspondingLink.classList.add('active');
+                    }
+                }
+                 // Opcional: Desactivar si deja de intersecar completamente? Podría ser molesto.
+                 // else if (!entry.isIntersecting && correspondingLink?.classList.contains('active')) {
+                 //     correspondingLink.classList.remove('active');
+                 // }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            if (section) observer.observe(section);
+        });
+
+        // Activar 'Inicio' si estamos arriba
+        window.addEventListener('load', () => {
+             setTimeout(() => {
+                 const firstSection = sections[0];
+                 if (firstSection && window.scrollY < firstSection.offsetTop - navbarHeight) {
+                     navLinksObserver.forEach(l => l.classList.remove('active'));
+                     const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
+                     if (homeLink) homeLink.classList.add('active');
+                 } else {
+                    // Si no está arriba, forzar una comprobación inicial del observer
+                    observer.disconnect();
+                    sections.forEach(section => { if (section) observer.observe(section); });
                  }
-             });
-         }, observerOptions);
-
-         sections.forEach(section => {
-             observer.observe(section);
-         });
-
-         // Asegurarse que el link 'Inicio' esté activo al cargar arriba de todo
-         window.addEventListener('load', () => {
-             if (window.pageYOffset < sections[0]?.offsetTop - 70) {
-                 navLinksObserver.forEach(l => l.classList.remove('active'));
-                 document.querySelector('.menu-list a[href="#inicio"]')?.classList.add('active');
-             }
-         });
+             }, 150);
+        });
 
     </script>
 </body>
