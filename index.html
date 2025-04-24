@@ -547,6 +547,54 @@
             opacity: 1;
         }
 
+        .servicios {
+            background-color: var(--bg);
+            padding: 4rem 2rem;
+        }
+
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .servicio-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease;
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .servicio-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .servicio-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .servicios {
+                padding: 3rem 1rem;
+            }
+            
+            .servicios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Animaciones */
         @keyframes fadeInHero {
             from { opacity: 0; transform: translateY(20px); }
@@ -632,12 +680,12 @@
         }
 
         /* Opcional: Estilo para evitar selección de texto general */
-        /* body {
+         body {
             user-select: none;
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
-        } */
+        }
 
     </style>
 </head>
@@ -651,6 +699,7 @@
         <ul class="menu-list">
             <li><a href="#inicio" class="active">Inicio</a></li>
             <li><a href="#docente">Instructor</a></li>
+            <li><a href="#servicios">Servicios</a></li>
             <li><a href="#cursos">Cursos</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li>
@@ -685,6 +734,31 @@
                     <h2>Ing. Teddy Valencia</h2>
                     <p>Ingeniero en Tecnología de la Información con más de 5 años de experiencia práctica en desarrollo front-end (HTML, CSS, JavaScript), gestión de bases de datos relacionales (SQL) y edición profesional de video. Apasionado por la enseñanza y dedicado a facilitar el aprendizaje de conceptos tecnológicos complejos de manera clara y efectiva.</p>
                     <p><strong>Contacto:</strong> <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="servicios" id="servicios">
+            <h2 class="section-title">Desarrollo Web Profesional</h2>
+            <div class="servicios-grid container">
+                <div class="servicio-card">
+                    <h3>Sitios Web para Empresas</h3>
+                    <p>Desarrollamos páginas web corporativas modernas y responsivas que se adaptan a cualquier dispositivo. Incluye diseño personalizado, optimización SEO y panel de administración fácil de usar.</p>
+                </div>
+                
+                <div class="servicio-card">
+                    <h3>Plataformas Educativas</h3>
+                    <p>Creación de sistemas LMS personalizados para instituciones educativas con aulas virtuales, gestión de cursos, evaluaciones en línea y seguimiento de progreso estudiantil.</p>
+                </div>
+
+                <div class="servicio-card">
+                    <h3>Tiendas Online</h3>
+                    <p>Desarrollo de e-commerce completos con pasarelas de pago, gestión de inventario, carrito de compras y integración con redes sociales.</p>
+                </div>
+
+                <div class="servicio-card">
+                    <h3>Sistemas a Medida</h3>
+                    <p>Creación de software personalizado para gestión interna de negocios: sistemas de inventario, CRM, reservas y más, adaptado a tus necesidades específicas.</p>
                 </div>
             </div>
         </section>
