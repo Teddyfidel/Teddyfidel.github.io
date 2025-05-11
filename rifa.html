@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Masivo de Rifas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #2d3436;
+            --primary: #6c5ce7;
+            --secondary: #a8a4ce;
+            --accent: #ff7675;
+            --card-bg: #f8f9fa;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #2d3436;
+            --text-color: #f8f9fa;
+            --primary: #a66efa;
+            --secondary: #7c7993;
+            --card-bg: #3b4142;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .controls-top {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .control-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-btn:hover {
+            opacity: 0.9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .input-group {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--primary);
+            border-radius: 0.5rem;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .generate-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 2rem auto;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .controls-top {
+                flex-direction: column;
+                right: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls-top">
+        <button class="control-btn" onclick="toggleTheme()">
+            <span class="theme-icon">🌓</span>
+            <span class="theme-text">Modo Oscuro</span>
+        </button>
+        <button class="control-btn" onclick="recargarPagina()">
+            <span>🔄</span>
+            <span>Recargar</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">🎫 Generador Masivo de Rifas</h1>
+            <p>Crea boletos personalizados en PDF</p>
+        </header>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="quantity">Cantidad de boletos (1-1000):</label>
+                <input type="number" id="quantity" min="1" max="1000" value="1">
+            </div>
+            
+            <div class="input-group">
+                <label for="imageInput">Subir imágenes de premios (max 3):</label>
+                <input type="file" id="imageInput" multiple accept="image/*">
+                <div class="preview-container" id="imagePreview"></div>
+            </div>
+        </div>
+
+        <button class="generate-btn" onclick="generatePDF()">
+            🖨️ Generar Boletos PDF
+            <span class="price-badge">$1.50 c/u</span>
+        </button>
+    </div>
+
+    <script>
+        // Función para recargar la página
+        function recargarPagina() {
+            window.location.reload();
+        }
+
+        // Tema oscuro/claro
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const themeToggle = document.querySelector('.theme-text');
+            const isDark = document.body.classList.contains('dark-theme');
+            
+            document.querySelector('.theme-icon').textContent = isDark ? '🌞' : '🌜';
+            themeToggle.textContent = isDark ? 'Modo Claro' : 'Modo Oscuro';
+            document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Cargar tema guardado
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        if(savedTheme === 'dark') document.body.classList.add('dark-theme');
+
+        // Manejar imágenes
+        let uploadedImages = [];
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            uploadedImages = [];
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+            
+            Array.from(e.target.files).slice(0, 3).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const card = document.createElement('div');
+                    card.className = 'preview-card';
+                    card.innerHTML = `<img src="${e.target.result}" class="preview-img">`;
+                    preview.appendChild(card);
+                    uploadedImages.push(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Generar números únicos
+        function generarNumerosUnicos(cantidad) {
+            const numeros = Array.from({length: 1001}, (_, i) => i);
+            for (let i = numeros.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+            }
+            return numeros.slice(0, cantidad).map(n => n.toString().padStart(4, '0'));
+        }
+
+        // Generar PDF
+        function generatePDF() {
+            const cantidad = parseInt(document.getElementById('quantity').value);
+            if (cantidad < 1 || cantidad > 1000) {
+                alert('Ingrese una cantidad válida (1-1000)');
+                return;
+            }
+
+            const doc = new jspdf.jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: [150, 200]
+            });
+
+            const numeros = generarNumerosUnicos(cantidad);
+
+            numeros.forEach((numero, index) => {
+                if (index > 0) doc.addPage();
+                
+                // Encabezado
+                doc.setFillColor(62, 62, 62);
+                doc.rect(0, 0, 150, 30, 'F');
+                doc.setFontSize(16);
+                doc.setTextColor(255);
+                doc.text("RIFA SOLIDARIA", 15, 20);
+
+                // Cuerpo
+                doc.setTextColor(0);
+                doc.setFontSize(32);
+                doc.text(numero, 15, 60);
+
+                // Información
+                doc.setFontSize(12);
+                doc.text(`Valor: $1.50 • Boleto: ${index + 1}/${cantidad}`, 15, 70);
+                doc.text("Juega con los 4 últimos números", 15, 80);
+                doc.text("de la Lotería Nacional", 15, 86);
+
+                // Imágenes
+                let yPos = 100;
+                uploadedImages.forEach(img => {
+                    if(yPos + 40 > 200) return;
+                    doc.addImage(img, 'JPEG', 15, yPos, 40, 30);
+                    yPos += 35;
+                });
+
+                // Pie de página
+                doc.setFontSize(10);
+                doc.setTextColor(100);
+                doc.text("Gracias por apoyar nuestra causa solidaria", 15, 190);
+            });
+
+            doc.save(`boletos_rifa_${cantidad}_numeros.pdf`);
+        }
+    </script>
+</body>
+</html>
