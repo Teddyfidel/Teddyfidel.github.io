@@ -7,35 +7,38 @@
     <link rel="icon" type="image/x-icon" href="fondo.jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             /* Colores Modo Claro */
-            --primary-light: #3b82f6; /* Azul vibrante */
-            --secondary-light: #1d4ed8; /* Azul más oscuro */
-            --accent-light: #60a5fa; /* Azul claro */
-            --text-light: #1f2937; /* Gris oscuro (casi negro) */
-            --bg-light: #f9fafb; /* Gris muy claro */
-            --card-bg-light: #ffffff;
+            --primary-light: #2563eb; /* Azul corporativo */
+            --secondary-light: #1e40af; /* Azul más oscuro para contraste */
+            --accent-light: #60a5fa; /* Azul claro para acentos */
+            --text-light: #1f2937; /* Gris muy oscuro */
+            --bg-light: #f9fafb; /* Fondo principal muy claro */
+            --card-bg-light: #ffffff; /* Fondo de tarjetas blanco */
             --border-light: #e5e7eb; /* Gris claro para bordes */
-            --nav-bg-light: rgba(255, 255, 255, 0.85); /* Blanco semitransparente para nav claro */
+            --nav-bg-light: rgba(255, 255, 255, 0.9); /* Blanco semitransparente */
+            --shadow-color-light: rgba(0, 0, 0, 0.08);
 
             /* Colores Modo Oscuro */
-            --primary-dark: #60a5fa; /* Azul claro (primario en dark) */
-            --secondary-dark: #3b82f6; /* Azul vibrante (secundario en dark) */
-            --accent-dark: #1d4ed8; /* Azul oscuro */
-            --text-dark: #f3f4f6; /* Gris muy claro (casi blanco) */
-            --bg-dark: #111827; /* Gris muy oscuro */
-            --card-bg-dark: #1f2937; /* Gris oscuro para cards */
-            --border-dark: #374151; /* Gris medio para bordes */
-            --nav-bg-dark: rgba(31, 41, 55, 0.85); /* Gris oscuro semitransparente para nav oscuro */
+            --primary-dark: #60a5fa; /* Azul claro para primario en dark */
+            --secondary-dark: #3b82f6; /* Azul vibrante para secundario en dark */
+            --accent-dark: #1d4ed8; /* Azul oscuro para acentos */
+            --text-dark: #e5e7eb; /* Gris claro para texto */
+            --bg-dark: #1a202c; /* Fondo principal oscuro */
+            --card-bg-dark: #2d3748; /* Fondo de tarjetas oscuro */
+            --border-dark: #4a5568; /* Gris medio para bordes */
+            --nav-bg-dark: rgba(26, 32, 44, 0.9); /* Gris oscuro semitransparente */
+            --shadow-color-dark: rgba(0, 0, 0, 0.3);
 
             /* Configuraciones Generales */
             --font-primary: 'Poppins', sans-serif;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --font-heading: 'Montserrat', sans-serif;
+            --shadow-sm: 0 1px 3px 0 var(--shadow-color);
+            --shadow-md: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+            --shadow-lg: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
             --border-radius-sm: 0.375rem; /* 6px */
             --border-radius-md: 0.5rem; /* 8px */
             --border-radius-lg: 0.75rem; /* 12px */
@@ -53,6 +56,7 @@
             --card-bg: var(--card-bg-light);
             --border-color: var(--border-light);
             --nav-bg: var(--nav-bg-light);
+            --shadow-color: var(--shadow-color-light);
         }
 
         /* Estilos para Modo Oscuro */
@@ -65,6 +69,7 @@
             --card-bg: var(--card-bg-dark);
             --border-color: var(--border-dark);
             --nav-bg: var(--nav-bg-dark);
+            --shadow-color: var(--shadow-color-dark);
         }
 
         * {
@@ -79,7 +84,7 @@
             text-rendering: optimizeLegibility;
         }
 
-        /* --- REQUERIMIENTO 2: Ocultar Scrollbar --- */
+        /* --- Ocultar Scrollbar --- */
         html {
           scrollbar-width: none; /* Firefox */
           -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -88,7 +93,40 @@
           width: 0;
           height: 0;
         }
-        /* ---------------------------------------- */
+
+        /* Fuente para el reloj digital */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap');
+
+        .digital-clock {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem; /* Tamaño ajustable para la nueva posición */
+            color: var(--primary);
+            background: var(--card-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            display: inline-flex;
+            gap: 0.75rem;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
+            margin-top: 2rem; /* Espacio después del banner */
+            margin-bottom: 2rem;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap; /* Para que la fecha pueda ir debajo en pantallas pequeñas */
+        }
+
+        .digital-clock span {
+            display: inline-block;
+        }
+        .digital-clock .date {
+            font-size: 0.9em; /* Fecha un poco más pequeña que la hora */
+            opacity: 0.8;
+        }
+
 
         body {
             background-color: var(--bg);
@@ -105,11 +143,13 @@
 
         h1, h2, h3, h4, h5, h6 {
             line-height: 1.3;
-            font-weight: 600;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            color: var(--primary); /* Asegura que los títulos usen primary */
         }
-        h1 { font-size: 2.5rem; color: var(--primary); }
-        h2 { font-size: 2rem; color: var(--primary); }
-        h3 { font-size: 1.5rem; color: var(--primary); }
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.75rem; }
 
         p {
             margin-bottom: 1rem;
@@ -123,11 +163,11 @@
 
         /* Contenedor Genérico */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
         }
         .text-center {
             text-align: center;
@@ -136,7 +176,7 @@
         /* Navbar */
         nav {
             background: var(--nav-bg);
-            padding: 1rem 2rem;
+            padding: 0.8rem 2rem;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -144,14 +184,19 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: var(--shadow-md);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--border-color);
         }
 
         .logo a {
             color: var(--primary);
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            font-family: var(--font-heading);
+            letter-spacing: -0.5px;
+        }
+        .logo a span {
+            color: var(--secondary);
         }
 
         .menu-btn {
@@ -167,68 +212,86 @@
         .menu-list {
             list-style: none;
             display: flex;
-            gap: 1.5rem;
+            gap: 1.8rem;
             align-items: center;
         }
 
         .menu-list a {
             color: var(--text);
             font-weight: 500;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: var(--border-radius-sm);
             position: relative;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
+            transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.2s ease;
+            display: flex; /* Para el icono */
+            align-items: center; /* Para el icono */
+            gap: 0.5rem; /* Espacio entre icono y texto */
         }
         .menu-list a::after {
             content: '';
             position: absolute;
-            bottom: -2px;
+            bottom: -5px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
-            height: 2px;
+            height: 3px; /* Slightly thicker underline */
             background: var(--primary);
             transition: width var(--transition-speed) ease;
+            border-radius: 2px;
         }
         .menu-list a:hover, .menu-list a.active {
-            background: rgba(0, 0, 0, 0.05);
             color: var(--primary);
+            transform: translateY(-2px); /* Slight lift on hover/active */
+        }
+        .menu-list a:hover::after, .menu-list a.active::after {
+            width: 100%; /* Full width underline */
         }
          body.dark-mode .menu-list a:hover, body.dark-mode .menu-list a.active {
-             background: rgba(255, 255, 255, 0.1);
              color: var(--primary-dark);
          }
-        .menu-list a:hover::after, .menu-list a.active::after {
-            width: 70%;
+        .menu-list a i { /* Estilos para los iconos del menú */
+            font-size: 1.1rem;
+            color: var(--accent); /* Color del icono */
         }
+        .menu-list a:hover i, .menu-list a.active i {
+            color: var(--primary); /* Cambiar color del icono al hover/active */
+        }
+        body.dark-mode .menu-list a:hover i, body.dark-mode .menu-list a.active i {
+            color: var(--primary-dark);
+        }
+
 
         /* Dark Mode Toggle Button */
         .dark-mode-toggle {
-            background: rgba(0, 0, 0, 0.05);
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text);
             cursor: pointer;
             font-size: 1rem;
-            padding: 0.6rem 0.8rem;
+            padding: 0.6rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 40px;
             height: 40px;
+            box-shadow: var(--shadow-sm);
             transition: background-color var(--transition-speed), transform var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
         }
         .dark-mode-toggle:hover {
-            background: rgba(0, 0, 0, 0.1);
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
             transform: scale(1.1);
-            color: var(--primary);
         }
          body.dark-mode .dark-mode-toggle {
-             background: rgba(255, 255, 255, 0.1);
+             background: var(--card-bg-dark);
+             color: var(--text-dark);
          }
          body.dark-mode .dark-mode-toggle:hover {
-             background: rgba(255, 255, 255, 0.2);
-             color: var(--primary-dark);
+             background: var(--primary-dark);
+             color: white;
+             border-color: var(--primary-dark);
          }
         .dark-mode-toggle .fa-sun { display: none; }
         body.dark-mode .dark-mode-toggle .fa-moon { display: none; }
@@ -237,8 +300,8 @@
 
         /* Banner / Hero Section */
         .banner {
-            height: 65vh;
-            min-height: 350px;
+            height: 70vh;
+            min-height: 400px;
             background: url('fondo.jpeg') center/cover no-repeat;
             position: relative;
             display: flex;
@@ -252,124 +315,213 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 0;
+             z-index: 0;
         }
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 800px;
+            max-width: 900px;
             padding: 2rem;
+        }
+        .hero-content h1 {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 800;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            animation: fadeInHero 1s ease-out forwards;
+        }
+        .hero-content p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInHero 1.2s ease-out forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
         }
         .cta-button {
             display: inline-block;
             background-color: var(--primary-light);
             color: white;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2.5rem;
             border-radius: var(--border-radius-md);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             box-shadow: var(--shadow-md);
-            transition: background-color var(--transition-speed), transform var(--transition-speed);
+            transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+            animation: fadeInHero 1.4s ease-out forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
         }
         .cta-button:hover {
             background-color: var(--secondary-light);
-            transform: translateY(-2px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
         }
 
         /* Sección General */
         section {
-            padding: 4rem 2rem;
-            scroll-margin-top: 70px;
+            padding: 5rem 2rem;
+            scroll-margin-top: 80px; /* Ajuste para el sticky nav */
+            position: relative;
         }
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.25rem;
+            margin-bottom: 3.5rem;
+            font-size: clamp(2rem, 4vw, 3rem);
             color: var(--primary);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
         }
 
         /* Texto Introductorio */
         .intro-text {
             background-color: var(--bg);
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             text-align: center;
             scroll-margin-top: 70px;
         }
-        .intro-text h1 {
-            font-size: clamp(2.2rem, 5vw, 3rem);
-            margin-bottom: 1rem;
+        .intro-text h1 { /* Este H1 es para la sección de introducción, no el banner */
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
             color: var(--primary);
+            font-weight: 700;
         }
         .intro-text p {
-            font-size: clamp(1rem, 2.5vw, 1.15rem);
-            max-width: 750px;
+            font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            opacity: 0.85;
+            opacity: 0.9;
             color: var(--text);
             text-align: center;
         }
 
         /* Sección Docente */
-        .docente { background-color: var(--card-bg); }
+        .docente { background-color: var(--card-bg); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
         .docente-container {
             max-width: 1100px;
             margin: 0 auto;
             display: flex;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
+            flex-wrap: wrap; /* Para que sea responsivo */
         }
         .docente-imagen {
-            flex: 0 0 280px;
-            height: 280px;
+            flex: 0 0 300px;
+            height: 300px;
             border-radius: 50%;
             overflow: hidden;
             box-shadow: var(--shadow-lg);
-            border: 5px solid var(--bg);
+            border: 6px solid var(--bg);
+            margin: 0 auto; /* Centrar en móvil */
+            transition: transform 0.3s ease;
+        }
+        .docente-imagen:hover {
+            transform: scale(1.03);
         }
         .docente-imagen img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            /* Opcional: Deshabilitar arrastrar imagen */
             -webkit-user-drag: none;
             user-select: none;
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
         }
-        .docente-info { flex: 1; }
+        .docente-info { flex: 1; min-width: 300px; }
         .docente-info h3 {
             color: var(--secondary);
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-family: var(--font-primary); /* Para este subtítulo, usar primary font */
         }
         .docente-info h2 {
-            margin-bottom: 1rem;
-            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
             color: var(--primary);
         }
         .docente-info p {
-            opacity: 0.8;
+            opacity: 0.85;
             margin-bottom: 1rem;
             color: var(--text);
             text-align: justify;
+            font-size: 1.05rem;
         }
-        .docente-info p a { font-weight: 500; }
+        .docente-info p a { font-weight: 600; color: var(--primary); }
+        .docente-info p a:hover { text-decoration: underline; }
+
+
+        /* Sección Servicios */
+        .servicios {
+            background-color: var(--bg);
+        }
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        .servicio-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .servicio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .servicio-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .servicio-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .servicio-card p {
+            font-size: 1rem;
+            opacity: 0.85;
+            line-height: 1.7;
+            text-align: center; /* Centrar texto en tarjetas de servicio */
+        }
 
         /* Sección Cursos */
-        .cursos { background-color: var(--bg); }
+        .cursos { background-color: var(--bg); border-top: 1px solid var(--border-color); }
         .cursos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -382,19 +534,30 @@
             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
             display: flex;
             flex-direction: column;
+            overflow: hidden; /* Para que el acordeón no se salga */
         }
         .curso-card:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-lg);
         }
         .curso-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
             color: var(--primary);
+            font-weight: 600;
+            display: flex; /* Para alinear el icono con el texto */
+            align-items: center;
+            gap: 0.75rem; /* Espacio entre icono y texto */
         }
+        .curso-card h3 i { /* Estilos específicos para el icono del diploma */
+            font-size: 1.8rem; /* Tamaño del icono */
+            color: var(--accent); /* Color diferente para el icono */
+            margin-bottom: 0; /* Reiniciar margin-bottom para el icono dentro del h3 */
+        }
+
         .curso-card p {
-            font-size: 0.95rem;
-            opacity: 0.7;
+            font-size: 0.98rem;
+            opacity: 0.8;
             margin-bottom: 1.5rem;
             flex-grow: 1;
             color: var(--text);
@@ -403,10 +566,10 @@
 
         /* Botón Acordeón Cursos */
         .toggle-btn {
-            background: none;
+            background: var(--bg); /* Un poco de contraste */
             color: var(--primary);
             border: 1px solid var(--border-color);
-            padding: 0.75rem 1.25rem;
+            padding: 0.9rem 1.5rem;
             border-radius: var(--border-radius-md);
             cursor: pointer;
             display: flex;
@@ -414,14 +577,14 @@
             justify-content: space-between;
             width: 100%;
             text-align: left;
-            font-weight: 500;
+            font-weight: 600;
             transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
-            margin-top: auto;
+            margin-top: auto; /* Empuja el botón al final */
         }
         .toggle-btn:hover {
-            background-color: var(--accent);
+            background-color: var(--primary);
             color: white;
-            border-color: var(--accent);
+            border-color: var(--primary);
         }
         .toggle-btn i {
             transition: transform var(--transition-speed) ease;
@@ -432,94 +595,115 @@
         body.dark-mode .toggle-btn:hover {
             background-color: var(--secondary-dark);
             border-color: var(--secondary-dark);
+            color: white;
         }
 
         /* Info Acordeón Cursos */
         .curso-info {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out, padding-top 0.5s ease-in-out, margin-top 0.5s ease-in-out, border-top 0.5s ease-in-out;
+            transition: max-height 0.6s ease-in-out, padding-top 0.6s ease-in-out, margin-top 0.6s ease-in-out, border-top 0.6s ease-in-out;
             border-top: 1px solid transparent;
             margin-top: 0;
             padding-top: 0;
         }
         .curso-info.active {
-            max-height: 500px;
+            max-height: 500px; /* Suficientemente grande para el contenido */
             border-top-color: var(--border-color);
             margin-top: 1rem;
             padding-top: 1rem;
         }
         .curso-info ul {
-            padding-left: 1.25rem;
-            list-style: disc;
+            padding-left: 1.5rem;
+            list-style: none; /* Eliminar el disco por defecto */
             margin-top: 0.5rem;
             margin-bottom: 0.5rem;
         }
         .curso-info li {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            opacity: 0.85;
             color: var(--text);
             text-align: justify;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+        .curso-info li::before {
+            content: "\f058"; /* Check-circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
         }
 
         /* Sección QR */
-        .qr-section { background-color: var(--card-bg); }
-        .qr-section h2 {
+        .qr-section {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 5rem 2rem;
             text-align: center;
-            margin-bottom: 1rem;
+        }
+        .qr-section h2 {
+            margin-bottom: 1.5rem;
             color: var(--primary);
+            font-size: 2.5rem;
         }
         .qr-section p {
-            text-align:center;
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
-            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto 2.5rem auto;
+            opacity: 0.85;
             color: var(--text);
+            font-size: 1.1rem;
         }
         .qr-code {
             display: block;
-            max-width: 220px;
-            margin: 1rem auto;
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-md);
-            border: 5px solid var(--bg);
-             /* Opcional: Deshabilitar arrastrar imagen QR */
+            max-width: 250px; /* Un poco más grande */
+            margin: 1.5rem auto;
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 6px solid var(--bg);
             -webkit-user-drag: none;
             user-select: none;
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
+            transition: transform 0.3s ease;
+        }
+        .qr-code:hover {
+            transform: scale(1.05);
         }
 
         /* Botón Flotante WhatsApp */
         .whatsapp-btn {
             position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
+            bottom: 2rem;
+            right: 2rem;
             left: auto;
             background: #25d366;
             color: white;
-            padding: 0.8rem 1.2rem;
+            padding: 1rem 1.8rem;
             border-radius: 50px;
             display: flex;
             align-items: center;
             gap: 0.75rem;
             text-decoration: none;
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
             z-index: 999;
             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
         .whatsapp-btn:hover {
-            transform: scale(1.08) translateY(-3px);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5);
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.6);
         }
-        .whatsapp-btn i { font-size: 1.4rem; }
+        .whatsapp-btn i { font-size: 1.6rem; }
 
         /* Footer */
         footer {
-            background: var(--bg);
+            background: var(--card-bg); /* Fondo de footer similar a tarjetas */
             color: var(--text);
             padding: 3rem 2rem;
             text-align: center;
@@ -528,71 +712,25 @@
         }
         footer p {
             color: var(--text);
-            opacity: 0.7;
+            opacity: 0.75;
             margin: 0;
+            font-size: 0.95rem;
             text-align: center;
         }
         .social-links {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
         .social-links a {
             color: var(--text);
             opacity: 0.7;
-            margin: 0 0.75rem;
-            font-size: 1.5rem;
-            transition: color 0.3s ease, opacity 0.3s ease;
+            margin: 0 0.8rem;
+            font-size: 1.8rem;
+            transition: color 0.3s ease, opacity 0.3s ease, transform 0.2s ease;
         }
         .social-links a:hover {
             color: var(--primary);
             opacity: 1;
-        }
-
-        .servicios {
-            background-color: var(--bg);
-            padding: 4rem 2rem;
-        }
-
-        .servicios-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .servicio-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius-lg);
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-md);
-            transition: transform 0.3s ease;
-        }
-
-        .servicio-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .servicio-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-        }
-
-        .servicio-card p {
-            font-size: 0.95rem;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .servicios {
-                padding: 3rem 1rem;
-            }
-            
-            .servicios-grid {
-                grid-template-columns: 1fr;
-            }
+            transform: translateY(-3px);
         }
 
         /* Animaciones */
@@ -602,13 +740,22 @@
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.75rem; }
-            h3 { font-size: 1.25rem; }
-            p, .curso-info li { font-size: 0.95rem; }
+        @media (max-width: 992px) {
+            .menu-list {
+                gap: 1rem;
+            }
+            .menu-list a {
+                padding: 0.4rem 0.6rem;
+            }
+        }
 
-            nav { padding: 1rem; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+            p, .curso-info li { font-size: 0.9rem; }
+
+            nav { padding: 0.8rem 1rem; }
             .menu-btn { display: block; }
             .menu-list {
                 display: none;
@@ -619,9 +766,10 @@
                 background: var(--nav-bg);
                 padding: 1rem;
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.8rem;
                 box-shadow: var(--shadow-lg);
                 border-top: 1px solid var(--border-color);
+                align-items: stretch; /* Estirar items en móvil */
             }
             .menu-list.active { display: flex; }
             .menu-list li { width: 100%; }
@@ -629,54 +777,90 @@
                 display: block;
                 text-align: center;
                 padding: 0.8rem 1rem;
+                background: var(--bg); /* Fondo para links en móvil */
+                border-radius: var(--border-radius-sm);
+                border: 1px solid var(--border-color);
             }
+            .menu-list a:hover, .menu-list a.active {
+                background: var(--primary);
+                color: white;
+            }
+             .menu-list a:hover::after, .menu-list a.active::after {
+                 width: 0; /* Desactivar underline en móvil */
+             }
             .dark-mode-toggle {
                 order: 1;
-                margin: 0.5rem auto;
+                margin: 0.8rem auto 0.2rem auto; /* Espacio y centrado */
             }
 
-            .banner { height: 50vh; }
+            .digital-clock { /* Asegurar que el reloj también se adapte bien */
+                font-size: 1rem;
+                padding: 0.6rem 1rem;
+                gap: 0.5rem;
+                flex-direction: column; /* Apila hora y fecha en móvil */
+            }
+            .digital-clock .date {
+                font-size: 0.8em;
+            }
 
-            section { padding: 3rem 1rem; }
-            .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
 
-            .intro-text { padding: 3rem 1rem; }
+            .banner { height: 60vh; min-height: 300px; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content p { font-size: 1rem; }
+            .cta-button { padding: 0.9rem 2rem; }
+
+            section { padding: 4rem 1.5rem; }
+            .section-title { font-size: 2rem; margin-bottom: 2.5rem; }
+
+            .intro-text { padding: 4rem 1.5rem; }
             .intro-text h1 { font-size: 2rem; }
             .intro-text p { font-size: 1rem; text-align: center; }
 
             .docente-container {
                 flex-direction: column;
                 text-align: center;
-                gap: 2rem;
+                gap: 3rem;
             }
             .docente-imagen {
-                flex-basis: 200px;
-                width: 200px;
-                height: 200px;
+                flex-basis: 250px;
+                width: 250px;
+                height: 250px;
                 margin: 0 auto;
             }
             .docente-info { text-align: center; }
             .docente-info p { text-align: justify; }
 
-            .cursos-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .servicios-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .servicio-card { padding: 2rem; }
+
+            .cursos-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .curso-card h3 {
+                flex-direction: column; /* Apilar icono y texto en móvil */
+                align-items: center;
+                text-align: center;
+                gap: 0.5rem;
+            }
             .curso-card p { text-align: justify; }
 
-            .qr-section { padding: 3rem 1rem; }
-            .qr-section h2 { font-size: 1.8rem; }
-            .qr-section p { text-align: center; }
+            .qr-section { padding: 4rem 1.5rem; }
+            .qr-section h2 { font-size: 2rem; }
+            .qr-section p { font-size: 1rem; text-align: center; }
+            .qr-code { max-width: 200px; }
 
             .whatsapp-btn {
-                padding: 0.6rem;
-                width: 50px;
-                height: 50px;
-                bottom: 1rem;
-                right: 1rem;
+                padding: 0.7rem;
+                width: 55px;
+                height: 55px;
+                bottom: 1.2rem;
+                right: 1.2rem;
                 gap: 0;
+                font-size: 0; /* Ocultar texto */
+                border-radius: 50%;
             }
             .whatsapp-btn span { display: none; }
-            .whatsapp-btn i { margin-right: 0; font-size: 1.5rem; }
+            .whatsapp-btn i { margin-right: 0; font-size: 1.8rem; }
 
-            footer { padding: 2rem 1rem; }
+            footer { padding: 2.5rem 1.5rem; }
         }
 
         /* Opcional: Estilo para evitar selección de texto general */
@@ -692,16 +876,17 @@
 <body>
     <nav>
         <div class="logo">
-            </div>
+            <a href="#inicio">Clover<span>.</span></a>
+        </div>
         <button class="menu-btn" aria-label="Toggle Menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
         </button>
         <ul class="menu-list">
-            <li><a href="#inicio" class="active">Inicio</a></li>
-            <li><a href="#docente">Instructor</a></li>
-            <li><a href="#servicios">Servicios</a></li>
-            <li><a href="#cursos">Cursos</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#docente"><i class="fas fa-chalkboard-teacher"></i> Instructor</a></li>
+            <li><a href="#servicios"><i class="fas fa-laptop-code"></i> Servicios</a></li>
+            <li><a href="#cursos"><i class="fas fa-book-open"></i> Cursos</a></li>
+            <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
             <li>
                 <button class="dark-mode-toggle" aria-label="Toggle Dark Mode">
                     <i class="fas fa-moon"></i>
@@ -713,15 +898,21 @@
 
     <main>
         <section class="banner" id="inicio">
-            <div class="hero-content">
-            </div>
+           
         </section>
+        <center>
+            <strong>
+        <div class="digital-clock">
+            <span class="time"></span>
+            <span class="date"></span>
+        </div></strong></center>
 
         <section class="intro-text" aria-labelledby="intro-heading">
            <div class="container text-center">
                <h1 id="intro-heading">Transforma tu futuro con nuestros cursos digitales</h1>
                <p>Aprende habilidades tecnológicas clave con un instructor experimentado y potencia tu perfil profesional o académico. Ofrecemos formación práctica y actualizada en herramientas esenciales para el mundo digital.</p>
-           </div>
+          <a href="#cursos" class="cta-button">Explora Nuestros Cursos</a>
+            </div>
        </section>
 
         <section class="docente" id="docente">
@@ -730,7 +921,7 @@
                     <img src="docente.jpeg" alt="Foto del Ing. Teddy Valencia">
                 </div>
                 <div class="docente-info">
-                    <h3>Instructor Principal</h3>
+                    <h3>Tu guía experto</h3>
                     <h2>Ing. Teddy Valencia</h2>
                     <p>Ingeniero en Tecnología de la Información con más de 5 años de experiencia práctica en desarrollo front-end (HTML, CSS, JavaScript), gestión de bases de datos relacionales (SQL) y edición profesional de video. Apasionado por la enseñanza y dedicado a facilitar el aprendizaje de conceptos tecnológicos complejos de manera clara y efectiva.</p>
                     <p><strong>Contacto:</strong> <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
@@ -739,24 +930,28 @@
         </section>
 
         <section class="servicios" id="servicios">
-            <h2 class="section-title">Desarrollo Web Profesional</h2>
+            <h2 class="section-title">Servicios de Desarrollo Web Profesional</h2>
             <div class="servicios-grid container">
                 <div class="servicio-card">
+                    <i class="fas fa-globe"></i>
                     <h3>Sitios Web para Empresas</h3>
                     <p>Desarrollamos páginas web corporativas modernas y responsivas que se adaptan a cualquier dispositivo. Incluye diseño personalizado, optimización SEO y panel de administración fácil de usar.</p>
                 </div>
-                
+
                 <div class="servicio-card">
+                    <i class="fas fa-graduation-cap"></i>
                     <h3>Plataformas Educativas</h3>
                     <p>Creación de sistemas LMS personalizados para instituciones educativas con aulas virtuales, gestión de cursos, evaluaciones en línea y seguimiento de progreso estudiantil.</p>
                 </div>
 
                 <div class="servicio-card">
+                    <i class="fas fa-shopping-cart"></i>
                     <h3>Tiendas Online</h3>
                     <p>Desarrollo de e-commerce completos con pasarelas de pago, gestión de inventario, carrito de compras y integración con redes sociales.</p>
                 </div>
 
                 <div class="servicio-card">
+                    <i class="fas fa-cogs"></i>
                     <h3>Sistemas a Medida</h3>
                     <p>Creación de software personalizado para gestión interna de negocios: sistemas de inventario, CRM, reservas y más, adaptado a tus necesidades específicas.</p>
                 </div>
@@ -767,7 +962,7 @@
             <h2 class="section-title">Nuestra Oferta Educativa</h2>
             <div class="cursos-grid">
                 <div class="curso-card">
-                    <h3>Paquete Completo de Office</h3>
+                    <h3><i class="fas fa-award"></i>Paquete Completo de Office</h3>
                     <p>Domina las herramientas esenciales de Microsoft Office (Word, Excel, PowerPoint) para optimizar tu productividad en cualquier entorno académico o profesional, creando documentos, hojas de cálculo y presentaciones impactantes.</p>
                     <button class="toggle-btn" aria-expanded="false">
                         <span>Ver Temario</span>
@@ -778,13 +973,12 @@
                             <li>Word: Creación y formato avanzado de documentos, uso de estilos, plantillas, combinación de correspondencia, tablas e ilustraciones.</li>
                             <li>Excel: Introducción a fórmulas y funciones, formato de celdas, creación de gráficos, tablas dinámicas básicas, ordenación y filtrado de datos.</li>
                             <li>PowerPoint: Diseño efectivo de diapositivas, uso de temas y patrones, inserción de multimedia, animaciones, transiciones y consejos para presentaciones.</li>
-                            <br>
                         </ul>
                     </div>
                 </div>
 
                 <div class="curso-card">
-                    <h3>Desarrollo Web Full Stack</h3>
+                    <h3><i class="fas fa-award"></i>Desarrollo Web Full Stack</h3>
                     <p>Construye aplicaciones web interactivas y funcionales desde cero. Aprende las bases del frontend con HTML5, CSS3 (incluyendo Flexbox y Grid para diseño responsive) y JavaScript moderno (ES6+), y maneja datos con bases de datos relacionales usando SQL.</p>
                      <button class="toggle-btn" aria-expanded="false">
                         <span>Ver Temario</span>
@@ -796,13 +990,12 @@
                             <li>CSS3: Selectores, modelo de caja, Flexbox para layouts flexibles, Grid para maquetación avanzada, diseño responsive y transiciones básicas.</li>
                             <li>JavaScript (ES6+): Variables, tipos de datos, operadores, estructuras de control, funciones, manipulación del DOM y eventos.</li>
                             <li>SQL: Conceptos de bases de datos relacionales, consultas básicas (SELECT, INSERT, UPDATE, DELETE), cláusulas WHERE, JOINs simples.</li>
-                            <br>
                         </ul>
                     </div>
                 </div>
 
                 <div class="curso-card">
-                    <h3>Fundamentos de Programación</h3>
+                    <h3><i class="fas fa-award"></i>Fundamentos de Programación</h3>
                     <p>Iníciate en el apasionante mundo del código desarrollando una sólida base lógica. Aprende a resolver problemas usando pseudocódigo (Pseint) y da tus primeros pasos en lenguajes demandados como Python y C++, además de entender cómo interactuar con bases de datos SQL.</p>
                     <button class="toggle-btn" aria-expanded="false">
                         <span>Ver Temario</span>
@@ -814,13 +1007,12 @@
                             <li>Python Básico: Sintaxis fundamental, variables, tipos de datos, estructuras de control (if, for, while), funciones básicas.</li>
                             <li>C++ Básico: Introducción a la sintaxis, tipos de datos, entrada/salida estándar, estructuras de control, compilación básica.</li>
                             <li>SQL Básico: Comprensión de tablas y relaciones, ejecución de consultas SELECT sencillas para recuperar información.</li>
-                            <br>
                         </ul>
                     </div>
                 </div>
 
                  <div class="curso-card">
-                    <h3>Manejo Experto de Windows</h3>
+                    <h3><i class="fas fa-award"></i>Manejo Experto de Windows</h3>
                     <p>Saca el máximo provecho al sistema operativo más utilizado. Aprende a navegar eficientemente, organizar tus archivos y carpetas, personalizar tu entorno, utilizar herramientas del sistema y aplicar buenas prácticas de seguridad.</p>
                     <button class="toggle-btn" aria-expanded="false">
                         <span>Ver Temario</span>
@@ -832,13 +1024,12 @@
                             <li>Organización y Personalización: Creación de bibliotecas, configuración del escritorio, opciones de pantalla, cuentas de usuario básicas.</li>
                             <li>Herramientas del Sistema: Panel de Control vs. Configuración, instalación/desinstalación de programas, herramientas básicas de mantenimiento (liberador de espacio).</li>
                             <li>Conceptos Básicos: Uso del portapapeles, atajos de teclado comunes, conexión a redes Wi-Fi, nociones de seguridad (antivirus, actualizaciones).</li>
-                            <br>
                         </ul>
                     </div>
                 </div>
 
                 <div class="curso-card">
-                    <h3>Herramientas de Inteligencia Artificial</h3>
+                    <h3><i class="fas fa-award"></i>Herramientas de Inteligencia Artificial</h3>
                     <p>Descubre cómo la Inteligencia Artificial puede potenciar tu creatividad y eficiencia. Aprende a utilizar herramientas líderes como ChatGPT, Gemini y Copilot para generar texto, obtener ideas, programar, editar imágenes y optimizar tus tareas diarias.</p>
                     <button class="toggle-btn" aria-expanded="false">
                         <span>Ver Temario</span>
@@ -850,13 +1041,12 @@
                             <li>Asistencia en Código y Tareas: Cómo usar GitHub Copilot (o similares) para autocompletar código, sugerir soluciones y depurar errores básicos.</li>
                             <li>Edición de Imágenes con IA: Introducción a herramientas online (como PIXLR AI, Canva Magic Studio) para mejorar fotos, eliminar fondos o generar elementos gráficos.</li>
                             <li>Prompts Efectivos: Aprende a formular preguntas e instrucciones claras para obtener los mejores resultados de las IAs generativas. Casos de uso prácticos.</li>
-                            <br>
                         </ul>
                     </div>
                 </div>
 
                 <div class="curso-card">
-                    <h3>Edición de Video Profesional</h3>
+                    <h3><i class="fas fa-award"></i>Edición de Video Profesional</h3>
                     <p>Aprende a crear videos atractivos y de alta calidad utilizando los programas líderes del mercado: Camtasia, Filmora y Sony Vegas. Ideal para creadores de contenido, educadores y profesionales que buscan mejorar su comunicación audiovisual.</p>
                     <button class="toggle-btn" aria-expanded="false">
                         <span>Ver Temario</span>
@@ -870,16 +1060,16 @@
                             <li>Edición de audio: ajuste de niveles de volumen, añadir y sincronizar música de fondo, aplicar efectos de audio básicos (fade in/out) y reducción de ruido simple.</li>
                             <li>Incorporación de elementos gráficos: añadir textos, títulos estáticos y animados, insertar imágenes y logos.</li>
                             <li>Formatos de exportación (renderizado): configuración óptima para diferentes plataformas como YouTube, Instagram, TikTok y presentaciones.</li>
-                            <br>
                         </ul>
                     </div>
                 </div>
 
-            </div> </section>
+            </div>
+        </section>
 
         <section class="qr-section" id="contacto">
-            <h2>¿Listo para empezar?</h2>
-            <p>Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Resolvemos tus dudas y te ayudamos con la inscripción!</p>
+            <h2>¿Listo para empezar tu viaje digital?</h2>
+            <p>Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Estamos aquí para resolver tus dudas y ayudarte con tu inscripción!</p>
             <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code">
         </section>
     </main>
@@ -892,42 +1082,24 @@
     <footer>
         <p>&copy; 2025 Clover Educación Digital. Todos los derechos reservados.</p>
         <div class="social-links">
-            </div>
+            <a href="https://github.com/Teddyfidel" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#inicio" class="active"><i class="fas fa-home"></i></a>
+        </div>
     </footer>
 
     <script>
-        // --- REQUERIMIENTO 1: Bloquear Clic Derecho y Teclas DevTools ---
-        // Advertencia: Estas medidas no son 100% seguras y pueden ser evitadas.
+        // --- Bloquear Clic Derecho y Teclas DevTools (Advertencia: No son 100% seguras) ---
         document.addEventListener('contextmenu', function(event) {
             event.preventDefault();
-            // console.log("Clic derecho deshabilitado."); // Mensaje opcional
+           console.log("Clic derecho deshabilitado.");
         });
 
         document.addEventListener('keydown', function(event) {
-            // Bloquear F12
-            if (event.key === "F12") {
+            if (event.key === "F12" ||
+                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C')) ||
+                (event.ctrlKey && event.key === 'U')) {
                 event.preventDefault();
-                // console.log("F12 deshabilitado."); // Mensaje opcional
-            }
-            // Bloquear Ctrl+Shift+I
-            if (event.ctrlKey && event.shiftKey && event.key === 'I') {
-                event.preventDefault();
-                // console.log("Ctrl+Shift+I deshabilitado."); // Mensaje opcional
-            }
-             // Bloquear Ctrl+Shift+J
-             if (event.ctrlKey && event.shiftKey && event.key === 'J') {
-                 event.preventDefault();
-                 // console.log("Ctrl+Shift+J deshabilitado."); // Mensaje opcional
-             }
-             // Bloquear Ctrl+Shift+C (Inspector en algunos navegadores)
-              if (event.ctrlKey && event.shiftKey && event.key === 'C') {
-                 event.preventDefault();
-                 // console.log("Ctrl+Shift+C deshabilitado."); // Mensaje opcional
-             }
-            // Bloquear Ctrl+U (Ver código fuente)
-            if (event.ctrlKey && event.key === 'U') {
-                event.preventDefault();
-                // console.log("Ctrl+U deshabilitado."); // Mensaje opcional
+                console.log("Acceso a herramientas de desarrollador o código fuente deshabilitado.");
             }
         });
         // ---------------------------------------------------------------
@@ -949,7 +1121,7 @@
          menuLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                  if (menuList.classList.contains('active')) {
-                     menuBtn.click();
+                     menuBtn.click(); // Cierra el menú en móvil
                  }
                  setTimeout(() => {
                     menuLinks.forEach(l => l.classList.remove('active'));
@@ -958,15 +1130,55 @@
                     if(activeLink) {
                         activeLink.classList.add('active');
                     }
-                 }, 50);
+                 }, 50); // Pequeño retraso para que la animación del menú no interfiera con el scroll instantáneo
             });
         });
+
+        // Función para actualizar reloj y fecha
+        function updateClock() {
+            const now = new Date();
+            // Formatear hora
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            // Formatear fecha corta para la nueva posición
+            const shortDateString = now.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+
+            // Actualizar elementos del reloj digital
+            document.querySelector('.digital-clock .time').textContent = timeString;
+            document.querySelector('.digital-clock .date').textContent = shortDateString;
+        }
+
+        // Iniciar reloj
+        updateClock();
+        setInterval(updateClock, 1000);
 
         // Modo oscuro
         const darkModeToggle = document.querySelector('.dark-mode-toggle');
 
-        // Siempre empieza en modo claro
-        document.body.classList.remove('dark-mode');
+        // Función para aplicar el modo
+        function applyDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        // Cargar preferencia guardada o establecer predeterminada (claro)
+        const savedDarkMode = localStorage.getItem('darkMode');
+        if (savedDarkMode === 'enabled') {
+            applyDarkMode(true);
+        } else {
+            applyDarkMode(false); // Por defecto en modo claro si no hay preferencia o es 'disabled'
+        }
 
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
@@ -982,6 +1194,7 @@
             const info = btn.nextElementSibling;
             const icon = btn.querySelector('i');
 
+            // Asegura que todos los acordeones estén cerrados al cargar
             info.style.maxHeight = '0';
             info.classList.remove('active');
             btn.classList.remove('active');
@@ -990,6 +1203,17 @@
 
             btn.addEventListener('click', () => {
                 const isActive = !info.classList.contains('active');
+
+                // Cierra otros acordeones abiertos si solo quieres uno abierto a la vez
+                document.querySelectorAll('.curso-info.active').forEach(openInfo => {
+                    if (openInfo !== info) {
+                        openInfo.style.maxHeight = '0';
+                        openInfo.classList.remove('active');
+                        openInfo.previousElementSibling.classList.remove('active');
+                        openInfo.previousElementSibling.setAttribute('aria-expanded', 'false');
+                        openInfo.previousElementSibling.querySelector('i').style.transform = 'rotate(0deg)';
+                    }
+                });
 
                 info.classList.toggle('active', isActive);
                 btn.classList.toggle('active', isActive);
@@ -1007,64 +1231,61 @@
 
         // Scroll suave y actualizar enlace activo en navbar al hacer scroll
         const sections = document.querySelectorAll('main section[id]');
-        const navLinksObserver = document.querySelectorAll('.menu-list a[href^="#"]');
-        const navbarHeight = document.querySelector('nav')?.offsetHeight || 70;
+        const navLinks = document.querySelectorAll('.menu-list a[href^="#"]');
+        const navbar = document.querySelector('nav');
+        const navbarHeight = navbar ? navbar.offsetHeight : 70; // Usa el valor real o un fallback
 
         const observerOptions = {
             root: null,
-            rootMargin: `-${navbarHeight}px 0px -50% 0px`,
-            threshold: 0 // Se activa apenas empieza a entrar en el área definida por rootMargin
+            rootMargin: `-${navbarHeight + 10}px 0px -50% 0px`, // Ajusta el rootMargin para que active antes
+            threshold: 0
         };
 
-        let lastActiveLink = null; // Para evitar quitar 'active' si no hay nuevo link
+        let lastActiveLink = null;
 
         const observer = new IntersectionObserver((entries) => {
-            let foundActive = false;
-            entries.forEach(entry => {
-                const id = entry.target.getAttribute('id');
-                const correspondingLink = document.querySelector(`.menu-list a[href="#${id}"]`);
+            let currentActiveSectionId = null;
 
-                if (entry.isIntersecting && correspondingLink) {
-                    if (lastActiveLink) {
-                        lastActiveLink.classList.remove('active');
-                    }
-                    correspondingLink.classList.add('active');
-                    lastActiveLink = correspondingLink;
-                    foundActive = true;
+            // Encontrar la sección que está más "en vista"
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    currentActiveSectionId = entry.target.getAttribute('id');
                 }
             });
 
-             // Si después de revisar todas las entradas, ninguna está activa (scroll muy rápido o fuera de secciones)
-             // y teníamos un link activo antes, lo quitamos. Opcional: podríamos mantener el último activo.
-            // if (!foundActive && lastActiveLink) {
-            //      lastActiveLink.classList.remove('active');
-            //      lastActiveLink = null;
-            // }
+            // Si se encontró una sección activa, actualizar el enlace
+            if (currentActiveSectionId) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === `#${currentActiveSectionId}`) {
+                        if (lastActiveLink && lastActiveLink !== link) {
+                            lastActiveLink.classList.remove('active');
+                        }
+                        link.classList.add('active');
+                        lastActiveLink = link;
+                    }
+                });
+            } else if (window.scrollY < sections[0].offsetTop - navbarHeight && document.querySelector('.menu-list a[href="#inicio"]')) {
+                 // Si estamos al principio de la página, activa "Inicio"
+                 navLinks.forEach(l => l.classList.remove('active'));
+                 const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
+                 if (homeLink) homeLink.classList.add('active');
+                 lastActiveLink = homeLink;
+            }
 
         }, observerOptions);
 
         sections.forEach(section => {
-            if (section) observer.observe(section);
+            observer.observe(section);
         });
 
-        // Activar 'Inicio' si estamos arriba
+        // Asegurar que el enlace "Inicio" esté activo al cargar si la página está al inicio
         window.addEventListener('load', () => {
-             setTimeout(() => {
-                 const firstSection = sections[0];
-                 const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
-
-                 if (firstSection && window.scrollY < firstSection.offsetTop - navbarHeight) {
-                     navLinksObserver.forEach(l => l.classList.remove('active'));
-                     if (homeLink) homeLink.classList.add('active');
-                     lastActiveLink = homeLink;
-                 } else {
-                     // Forzar una comprobación inicial si no estamos arriba
-                     observer.disconnect();
-                     lastActiveLink = null; // Resetear último activo
-                     navLinksObserver.forEach(l => l.classList.remove('active')); // Limpiar todos
-                     sections.forEach(section => { if (section) observer.observe(section); }); // Re-observar
-                 }
-             }, 150);
+             const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
+             if (window.scrollY === 0 && homeLink) {
+                 navLinks.forEach(l => l.classList.remove('active'));
+                 homeLink.classList.add('active');
+                 lastActiveLink = homeLink;
+             }
         });
 
     </script>
