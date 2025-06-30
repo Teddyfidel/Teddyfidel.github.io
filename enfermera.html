@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enfermera a Domicilio en Chone - Cuidado Profesional y Cálido</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Estilos Generales (Paleta de Enfermería - Modo Claro por defecto) */
+        :root {
+            /* Colores para Modo Claro */
+            --primary-color: #72bcd4; /* Azul suave, que evoca calma y salud */
+            --secondary-color: #d875ff; /* Verde menta, frescura y bienestar */
+            --accent-color: #4CAF50; /* Un verde vibrante para destacar */
+            --text-color: #333333; /* Texto oscuro para legibilidad en fondo claro */
+            --txt-color-tittle: #000000;
+            --heading-color: #212121; /* Color para títulos más oscuro */
+            --bg-body: #f4f7f6; /* Fondo principal muy claro */
+            --bg-section: #ffffff; /* Fondo para secciones/tarjetas blanco puro */
+            --border-color: #e0e0e0; /* Bordes y líneas divisorias suaves */
+            --button-text-color: #ffffff; /* Texto claro para botones oscuros */
+            --button-dark-text-color: #1a1a1a; /* Texto oscuro para botones claros */
+            --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra suave */
+            --shadow-hover: rgba(0, 0, 0, 0.15); /* Sombra al pasar el ratón */
+            --icon-color: #72bcd4; /* Color de icono por defecto */
+        }
+
+        /* Colores para Modo Oscuro */
+        body.dark-mode {
+            --primary-color: #8bbad6; /* Azul suave para modo oscuro */
+            --secondary-color: #a7d97d; /* Verde menta para modo oscuro */
+            --accent-color: #72bcd4; /* Azul vibrante para destacar en oscuro */
+            --text-color: #e0e0e0; /* Texto claro para legibilidad en fondo oscuro */
+            --txt-color-tittle: #ffffff;
+            --heading-color: #d1e8ed; /* Color para títulos en oscuro */
+            --bg-body: #1e2832; /* Fondo principal oscuro (azul verdoso muy oscuro) */
+            --bg-section: #2a3847; /* Fondo para secciones/tarjetas (un poco más claro) */
+            --border-color: #3b4d5e; /* Bordes y líneas divisorias oscuras */
+            --button-text-color: #1a1a1a; /* Texto oscuro para botones claros en oscuro */
+            --button-dark-text-color: #e0e0e0; /* Texto claro para botones oscuros en oscuro */
+            --shadow-color: rgba(0, 0, 0, 0.4); /* Sombra más pronunciada en oscuro */
+            --shadow-hover: rgba(0, 0, 0, 0.6); /* Sombra al pasar el ratón en oscuro */
+            --icon-color: #d875ff; /* Color de icono para modo oscuro */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-body);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+            color: var(--heading-color);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 60px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--button-text-color);
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: var(--button-dark-text-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px var(--shadow-hover);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--bg-section);
+            padding: 18px 0;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            background-color: var(--bg-section); /* Mantener para consistencia si se desea un fondo para el logo */
+            padding: 5px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 1px 5px var(--shadow-color);
+            color: var(--heading-color);
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logo-section .logo-img {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.2));
+        }
+
+        .logo-section .logo-text-description {
+            font-size: 0.9em;
+            color: var(--text-color);
+            margin: 0;
+            margin-left: 10px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center; /* Alineación vertical para el toggle */
+        }
+
+        nav .nav-menu li {
+            margin-left: 30px;
+        }
+
+        nav .nav-menu a {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            color: var(--heading-color);
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-menu a i {
+            font-size: 1.1em;
+            color: var(--primary-color); /* Usar primary color para iconos del menú */
+            transition: color 0.3s ease;
+        }
+
+        /* Dark Mode Toggle Button Styling */
+        #dark-mode-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5em; /* Ajustado para ser un icono */
+            cursor: pointer;
+            color: var(--heading-color); /* Color del icono del toggle */
+            padding: 5px;
+            border-radius: 50%;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #dark-mode-toggle:hover {
+            color: var(--primary-color);
+            background-color: var(--border-color);
+        }
+        
+        nav .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        nav .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 2.5em;
+            cursor: pointer;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(244, 247, 246, 0.8), rgba(244, 247, 246, 0.8)), url('https://via.placeholder.com/1920x600/e0f2f7/455a64?text=Fondo+Hero') no-repeat center center/cover;
+            color: var(--text-color);
+            text-align: center;
+            padding: 120px 0;
+            min-height: 550px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode .hero {
+            background: linear-gradient(rgba(30, 40, 50, 0.7), rgba(30, 40, 50, 0.7)), url('https://via.placeholder.com/1920x600/1a1a1a/cccccc?text=Fondo+Hero+Oscuro') no-repeat center center/cover;
+        }
+
+
+        .hero-content h2 {
+            font-size: 3.8em;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            color: var(--heading-color);
+            text-shadow: 0 3px 10px var(--shadow-color);
+        }
+
+        .hero-content p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-color);
+        }
+
+        /* Secciones Generales */
+        section {
+            padding: 90px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--bg-body);
+        }
+        section:nth-child(odd) {
+            background-color: var(--bg-section);
+        }
+
+        /* Acerca de Mí */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .about-content img {
+            max-width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            flex-shrink: 0;
+            border: 3px solid var(--primary-color);
+            object-fit: cover;
+            height: 350px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-content div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-content p {
+            font-size: 1.05em;
+            margin-bottom: 18px;
+            text-align: justify;
+            color: var(--text-color);
+        }
+
+        /* Servicios */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        .service-item {
+            background-color: var(--bg-section);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            text-align: center;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .service-item:hover {
+            transform: translateY(-8px);
+            background-color: var(--bg-body);
+            box-shadow: 0 10px 30px var(--shadow-hover);
+        }
+
+        body.dark-mode .service-item:hover {
+             background-color: #2e3e4d; /* Un color ligeramente más claro para el hover en modo oscuro */
+        }
+
+        .service-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 18px;
+            font-size: 1.7em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .service-item h3 i {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            transition: color 0.3s ease;
+        }
+
+        .service-item p {
+            font-size: 0.95em;
+            color: var(--text-color);
+        }
+
+        /* Testimonios */
+        .testimonials {
+            background-color: var(--primary-color);
+            color: var(--txt-color-tittle);
+            text-align: center;
+            padding: 70px 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .testimonials h2 {
+            color: var(--txt-color-tittle); /* Títulos blancos en sección primaria */
+        }
+        .testimonials h2::after {
+             background-color: var(--button-text-color);
+        }
+
+        .testimonial-slider {
+            overflow: hidden;
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .testimonial-item {
+            background-color: var(--bg-section);
+            color: var(--text-color);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .testimonial-item p {
+            font-size: 1.4em;
+            font-style: italic;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .testimonial-item span {
+            font-weight: 600;
+            font-size: 1.15em;
+            color: var(--secondary-color);
+        }
+
+        /* Contacto - Estilos específicos para el QR */
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px; /* Reducido para una apariencia más compacta */
+            margin-top: 30px;
+        }
+
+        .contact-content > p { /* Estilo para el párrafo principal de contacto */
+            font-size: 1.2em;
+            max-width: 700px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        /* Contenedor principal para las 3 columnas de contacto */
+        .contact-layout-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 0.5fr 1fr; /* Columna izquierda, vacía, columna derecha (QR) */
+            gap: 30px;
+            max-width: 1000px; /* Ancho máximo para la distribución de 3 columnas */
+            margin: 0 auto;
+            align-items: start; /* Alinea los elementos al inicio de cada celda */
+            justify-content: center;
+        }
+
+        .contact-layout-grid > div {
+            padding: 20px; /* Padding para las columnas para visualización */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra el contenido dentro de cada columna */
+        }
+        
+        /* Estilos para la tabla de contacto */
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse; /* Elimina el espacio entre celdas */
+            margin: 0; /* Reinicia el margin para que el grid lo controle */
+            text-align: center;
+        }
+
+        .contact-table td {
+            padding: 8px 0;
+            border: none; /* Elimina los bordes de las celdas */
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .contact-table td:first-child { /* Estilo para los iconos */
+            width: 40px; /* Ancho fijo para los iconos */
+        }
+
+        .contact-table i {
+            color: var(--primary-color);
+            font-size: 1.3em;
+        }
+
+        .contact-table span {
+            font-size: 1.15em;
+            color: var(--text-color);
+        }
+
+
+        .contact-content .qr-code-box {
+            background-color: var(--bg-section);
+            padding: 25px 20px; /* Ajuste de padding */
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            width: 100%; /* Important: Make it take full width of its column */
+            max-width: 250px; /* New: Set a max-width for the box itself */
+            margin: 0 auto; /* Centra el QR box dentro de su columna */
+        }
+
+        .contact-content .qr-code-box img {
+            width: 100%; /* Make image fill its parent box */
+            height: auto; /* Maintain aspect ratio */
+            display: block;
+            margin: 15px auto; /* Centrado y espacio */
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-content .qr-code-box h4 { /* Estilo para los títulos dentro de la caja QR */
+            font-size: 1em;
+            margin-bottom: 10px;
+            color: var(--heading-color);
+        }
+        .contact-content .qr-code-box h4:last-of-type {
+            margin-top: 20px; /* Espacio antes del segundo H4 */
+        }
+
+        .contact-content .qr-code-box .btn {
+            font-size: 0.9em;
+            padding: 10px 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-section);
+            color: var(--text-color);
+            text-align: center;
+            padding: 35px 0;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            font-size: 2.2em;
+            margin-left: 20px;
+            color: var(--text-color);
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+
+        /* --- Responsive Design con Media Queries --- */
+
+        /* Tablets y pantallas grandes de móviles */
+        @media (max-width: 992px) {
+            h2 {
+                font-size: 2.3em;
+                margin-bottom: 40px;
+            }
+            .hero-content h2 {
+                font-size: 3em;
+            }
+            .hero-content p {
+                font-size: 1.1em;
+            }
+            section {
+                padding: 70px 0;
+            }
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+            .about-content img {
+                max-width: 300px;
+                height: 300px;
+                margin-bottom: 10px;
+            }
+            .service-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            .testimonial-item p {
+                font-size: 1.2em;
+            }
+            /* Remove specific QR image sizing for tablets, let max-width on box control it */
+            /* .contact-content .qr-code-box img {
+                width: 180px; 
+                height: 180px; 
+            } */
+            /* Adjust the qr-code-box max-width for tablets if needed */
+            .contact-content .qr-code-box {
+                max-width: 200px; /* Slightly smaller max-width for tablets */
+            }
+            /* Ajuste del logo en tablets */
+            .logo-section .logo-img {
+                height: 60px;
+            }
+            .logo-section .logo-text-description {
+                font-size: 0.8em;
+            }
+            .contact-table td span {
+                font-size: 1.05em;
+            }
+            .contact-layout-grid {
+                grid-template-columns: 1fr; /* Apila las columnas en tablets */
+                gap: 40px; /* Espacio entre los elementos apilados */
+            }
+            .contact-layout-grid > div {
+                padding: 0; /* Quita el padding if se apilan */
+            }
+            .contact-content .qr-code-box {
+                padding: 30px 25px; /* Restaurar un poco de padding para QR box apilado */
+            }
+        }
+
+        /* Móviles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            header .container {
+                flex-direction: column;
+                align-items: flex-start;
+                position: relative;
+            }
+            .logo-section {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 15px;
+                position: relative;
+            }
+            .logo-section .logo-img {
+                height: 55px;
+            }
+            .logo-section .logo-text-description {
+                font-size: 0.75em;
+            }
+
+            nav {
+                width: 100%;
+                text-align: center;
+                margin-top: 0;
+            }
+            nav .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--bg-section); /* Asegurar el color de fondo para el menú móvil */
+                border-top: 1px solid var(--border-color);
+                box-shadow: 0 5px 15px var(--shadow-color);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                align-items: center;
+            justify-content: center;
+            }
+            nav .nav-menu.active {
+                display: flex;
+                align-items: center;
+            justify-content: center;
+            }
+            nav .nav-menu li {
+                margin: 0;
+                width: 100%;
+                border-bottom: 1px solid var(--border-color);
+                align-items: center;
+            justify-content: center;
+            }
+            nav .nav-menu li:last-child {
+                border-bottom: none;
+                align-items: center;
+            justify-content: center;
+            }
+             nav .nav-menu li #dark-mode-toggle { /* Ajuste para el botón de toggle en el menú móvil */
+                width: 100%;
+                padding: 15px 0;
+                background-color: var(--bg-section);
+                border-radius: 0;
+                color: var(--text-color);
+            }
+             nav .nav-menu li #dark-mode-toggle i {
+                 font-size: 1.1em;
+                 color: var(--text-color); /* Color del icono en el menú móvil */
+             }
+
+
+            nav .nav-menu a {
+                padding: 15px 0;
+                color: var(--text-color);
+                background-color: var(--bg-section);
+               align-items: center;
+            justify-content: center;
+            }
+            nav .nav-menu a::after {
+                display: none;
+                align-items: center;
+            justify-content: center;
+            }
+            nav .nav-menu a:hover {
+                background-color: var(--border-color);
+                align-items: center;
+            justify-content: center;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 50%;
+                right: 15px;
+                transform: translateY(-50%);
+                color: var(--heading-color);
+                z-index: 1001;
+                align-items: center;
+            justify-content: center;
+            }
+
+            .hero {
+                padding: 100px 0;
+                min-height: 400px;
+            }
+            .hero-content h2 {
+                font-size: 2.5em;
+            }
+            .hero-content p {
+                font-size: 1em;
+            }
+
+            h2 {
+                font-size: 2em;
+                margin-bottom: 35px;
+            }
+            section {
+                padding: 60px 0;
+            }
+
+            .about-content img {
+                max-width: 250px;
+                height: 250px;
+            }
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+            .service-item {
+                padding: 25px;
+            }
+            .testimonial-item p {
+                font-size: 1.1em;
+            }
+            /* Adjust the qr-code-box max-width for mobiles */
+            .contact-content .qr-code-box {
+                max-width: 180px; /* Smaller max-width for mobiles */
+            }
+            /* .contact-content .qr-code-box img {
+                width: 150px; 
+                height: 150px; 
+            } */
+            .contact-content .qr-code-box p {
+                font-size: 1em;
+            }
+            .contact-content .qr-code-box .btn {
+                font-size: 0.8em;
+                padding: 8px 15px;
+            }
+            .contact-content > p { /* Ajuste para el párrafo principal de contacto en móviles */
+                font-size: 1.05em;
+            }
+            .contact-table td span {
+                font-size: 1em;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .social-links {
+                margin-top: 10px;
+            }
+            .social-links a {
+                margin: 0 10px;
+            }
+        }
+
+        /* Móviles muy pequeños */
+        @media (max-width: 480px) {
+            .hero-content h2 {
+                font-size: 2em;
+            }
+            .hero-content p {
+                font-size: 0.9em;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .about-content img {
+                max-width: 200px;
+                height: 200px;
+            }
+            /* Adjust the qr-code-box max-width for very small mobiles */
+            .contact-content .qr-code-box {
+                max-width: 150px; /* Even smaller max-width for very small mobiles */
+            }
+            /* .contact-content .qr-code-box img {
+                width: 120px; 
+                height: 120px;
+            } */
+            .logo-section .logo-img {
+                height: 50px;
+            }
+            .logo-section .logo-text-description {
+                font-size: 0.7em;
+            }
+             .contact-content .qr-code-box h4 {
+                font-size: 0.9em;
+             }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo-section">
+                <img src="logo.png" alt="Logo de Enfermería a Domicilio" class="logo-img">
+                <p class="logo-text-description"> <strong>Enfermería Profesional a Domicilio</strong></p>
+                <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#inicio"><i class="fa-solid fa-home"></i>Inicio</a></li>
+                    <li><a href="#acerca-de"><i class="fa-solid fa-circle-info"></i>Acerca de Mí</a></li>
+                    <li><a href="#servicios"><i class="fa-solid fa-briefcase-medical"></i>Servicios</a></li>
+                    <li><a href="#testimonios"><i class="fa-solid fa-comments"></i>Testimonios</a></li>
+                    <li><a href="#contacto"><i class="fa-solid fa-phone"></i>Contacto</a></li>
+                    <li>
+                        <button id="dark-mode-toggle" aria-label="Alternar modo oscuro">
+                            <i class="fa-solid fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Tu Bienestar es Mi Prioridad</h2>
+                    <p>Recibe atención de enfermería de alta calidad, personalizada y con la calidez humana que mereces, en la comodidad de tu hogar en **Chone y sus alrededores**.</p>
+                    <a href="#servicios" class="btn">Explora Mis Servicios</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="acerca-de" class="about-me">
+            <div class="container">
+                <h2>Acerca de Mí</h2>
+                <div class="about-content">
+                    <img src="https://via.placeholder.com/350/a7d97d/1a1a1a?text=Tu+Foto+Aquí" alt="Foto de la Enfermera - [Tu Nombre]">
+                    <div>
+                        <p>Soy <strong>Gema Pierina Velasquez Verduga</strong>, enfermera profesional con 5 años de dedicación y experiencia en el cuidado de la salud. Mi trayectoria incluye trabajo en hospitales, clínicas y atención domiciliaria, lo que me ha permitido desarrollar una visión integral del bienestar del paciente.</p>
+                        <p>Mi pasión es proporcionar cuidados con calidez y profesionalismo, adaptándome a las necesidades únicas de cada persona. Estoy comprometida con la **excelencia**, la **empatía** y el **respeto**, asegurando que cada paciente reciba la atención más segura y efectiva.</p>
+                        <p>Cuento con certificaciones en **Soporte Vital Básico y Avanzado, Manejo de Heridas Crónicas, Cuidados Paliativos**, lo que respalda mi capacidad para brindarte el mejor servicio a domicilio en **Chone, Manabí, Ecuador**.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicios" class="services">
+            <div class="container">
+                <h2>Mis Servicios Profesionales</h2>
+                <div class="service-grid">
+                    <div class="service-item">
+                        <h3><i class="fa-solid fa-band-aid"></i>Cuidado de Heridas</h3>
+                        <p>Limpieza, curación y seguimiento de heridas post-operatorias, úlceras por presión, quemaduras y otras lesiones. Promuevo una cicatrización óptima y prevengo infecciones con técnicas avanzadas.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fa-solid fa-syringe"></i>Administración de Medicamentos</h3>
+                        <p>Aplicación segura y precisa de inyecciones (intramusculares, subcutáneas, intravenosas), preparación de medicación oral y manejo de bombas de infusión, siempre bajo prescripción médica.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fa-solid fa-heart-pulse"></i>Monitoreo de Signos Vitales</h3>
+                        <p>Control y registro periódico de presión arterial, frecuencia cardíaca, respiración, temperatura y saturación de oxígeno. Análisis de tendencias para un seguimiento proactivo de tu salud.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fa-solid fa-bed-pulse"></i>Cuidado Post-Operatorio Domiciliario</h3>
+                        <p>Asistencia integral para pacientes en recuperación de cirugías, incluyendo manejo del dolor, cambio de apósitos y detección temprana de complicaciones. Tu recuperación es mi prioridad.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fa-solid fa-book-medical"></i>Educación para la Salud y Prevención</h3>
+                        <p>Sesiones personalizadas sobre manejo de enfermedades crónicas (diabetes, hipertensión), nutrición, hábitos de vida saludables y prevención de enfermedades. Empodérate con conocimiento.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fa-solid fa-vial"></i>Extracción de Muestras para Laboratorio</h3>
+                        <p>Toma de muestras de sangre, orina y otras para análisis clínicos, siguiendo estrictos protocolos de bioseguridad. Comodidad y precisión sin salir de casa.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fa-solid fa-wheelchair"></i>Cuidado de Pacientes Crónicos o con Movilidad Reducida</h3>
+                        <p>Asistencia en higiene personal, movilización segura, prevención de úlceras por presión y manejo de dispositivos médicos (sondas, ostomías). Cuidado digno y especializado.</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fa-solid fa-hands-holding-child"></i>Asesoramiento y Apoyo a Cuidadores</h3>
+                        <p>Orientación y capacitación a familiares sobre técnicas de cuidado, manejo del estrés y recursos disponibles para un apoyo integral al paciente. No estás solo en esta tarea.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonios" class="testimonials">
+            <div class="container">
+                <h2>Experiencias de Mis Pacientes</h2>
+                <div class="testimonial-slider">
+                    <div class="testimonial-item">
+                        <p>"La atención de la enfermera Gema Pierina Velasquez Verduga, fue excepcional. Su profesionalismo y calidez humana nos dieron mucha tranquilidad. ¡Estamos muy agradecidos por su cuidado en Chone!"</p>
+                        <span>- Familia Zambrano, Chone</span>
+                    </div>
+                    <div class="testimonial-item">
+                        <p>"Después de mi cirugía, la recuperación en casa fue mucho más llevadera gracias a sus cuidados. Siempre puntual, atenta y con una gran vocación. ¡Un servicio de enfermería a domicilio invaluable!"</p>
+                        <span>- Sra. Elena Flores, Chone</span>
+                    </div>
+                    <div class="testimonial-item">
+                        <p>"La enfermera Gema Pierina Velasquez Verduga nos brindó un apoyo invaluable en el cuidado de mi abuela. Su paciencia y conocimiento son extraordinarios. Es la mejor opción para atención de enfermería en Manabí."</p>
+                        <span>- Andrés Castro, Calceta (cerca de Chone)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="contact">
+            <div class="container">
+                <h2>Contáctame</h2>
+                <p>Estoy aquí para brindarte el cuidado que necesitas. ¡La forma más rápida y sencilla de contactarme es a través de WhatsApp!</p>
+                
+                <div class="contact-layout-grid">
+                    <div class="contact-info-column">
+                        <table class="contact-table">
+                            <tr>
+                                <td></td>
+                                <td><span><i class="fa-solid fa-phone"></i>  Llamadas: <br><br> <a href="tel:+593959694804" target="_blank" class="btn">Llamada para agendar</a>                  
+                                </span></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-clock"></i></td>
+                                <td><span>Horario de atención: Lunes a Viernes, 8:00 AM - 6:00 PM</span></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-location-dot"></i></td>
+                                <td><span>Atención a domicilio en Chone, Manabí, Ecuador.</span></td>
+                            </tr>
+                              <tr>
+                                <td></td>
+                                <td><i class="fa-brands fa-whatsapp"></i><span>Haz clic en el botón para agendar: <a href="https://wa.me/5939959694804?text=Hola,%20me%20interesa%20agendar%20una%20cita%20de%20enfermería%20a%20domicilio." target="_blank" class="btn">Enviar Mensaje WhatsApp</a>                  
+                                </tr>
+                        </table>
+                    </div>
+                    <div class="empty-column">
+                        </div>
+                    <div class="qr-column">
+                        <div class="qr-code-box">
+                            <center>
+                            <h4>Escanea el código QR para enviar un mensaje directo por WhatsApp:</h4> <br>
+                            <img src="QR GEMA.png" alt="Código QR para Contacto por WhatsApp"></center>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Enfermera a Domicilio en Chone. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://wa.me/5939959694804?text=Hola,%20me%20interesa%20agendar%20una%20cita%20de%20enfermería%20a%20domicilio." target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#inicio"><i class="fa-solid fa-home"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Menú Responsive ---
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+
+                // Ocultar el menú al hacer clic en un enlace (para móviles)
+                navMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                        }
+                    });
+                });
+            }
+
+            // --- Smooth Scrolling para enlaces de navegación ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        const headerOffset = document.querySelector('header').offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset - 20;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // --- Animación de Testimonios (slider simple) ---
+            const testimonialSlider = document.querySelector('.testimonial-slider');
+            if (testimonialSlider) {
+                const testimonialItems = testimonialSlider.querySelectorAll('.testimonial-item');
+                let currentTestimonial = 0;
+
+                function showTestimonial(index) {
+                    testimonialItems.forEach((item, i) => {
+                        item.style.display = (i === index) ? 'block' : 'none';
+                    });
+                }
+
+                showTestimonial(currentTestimonial);
+
+                setInterval(() => {
+                    currentTestimonial = (currentTestimonial + 1) % testimonialItems.length;
+                    showTestimonial(currentTestimonial);
+                }, 5000);
+            }
+
+            // --- Dark Mode Toggle ---
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const body = document.body;
+
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                body.classList.add(savedTheme);
+                // Update icon based on saved theme
+                if (savedTheme === 'dark-mode') {
+                    darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                    darkModeToggle.querySelector('i').classList.add('fa-sun');
+                } else {
+                    darkModeToggle.querySelector('i').classList.remove('fa-sun');
+                    darkModeToggle.querySelector('i').classList.add('fa-moon');
+                }
+            } else {
+                // Default to light mode if no preference is saved
+                body.classList.remove('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-sun');
+                darkModeToggle.querySelector('i').classList.add('fa-moon');
+            }
+
+
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+
+                // Save preference to localStorage
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark-mode');
+                    darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                    darkModeToggle.querySelector('i').classList.add('fa-sun');
+                } else {
+                    localStorage.setItem('theme', 'light-mode'); // Explicitly save light mode
+                    darkModeToggle.querySelector('i').classList.remove('fa-sun');
+                    darkModeToggle.querySelector('i').classList.add('fa-moon');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
