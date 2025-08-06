@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusPlay - Reproductor Multimedia Futura</title>
+    <link rel="icon" type="image/x-icon" href="NexusPlay.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Variables CSS para facilitar la personalización */
+        :root {
+            --primary-color: #00e676; /* Verde neón */
+            --secondary-color: #212121; /* Gris oscuro casi negro */
+            --tertiary-color: #333333; /* Gris medio */
+            --text-color: #e0e0e0; /* Gris claro para texto */
+            --border-color: #00b0ff; /* Azul brillante para bordes */
+            --highlight-glow: 0 0 10px rgba(0, 230, 118, 0.6), 0 0 20px rgba(0, 230, 118, 0.4);
+            --shadow-glow: 0 0 15px rgba(0, 176, 255, 0.4);
+        }
+
+        /* Estilos generales */
+        body {
+            font-family: 'Share Tech Mono', monospace; /* Fuente tecnológica */
+            background-color: #1a1a1a; /* Fondo oscuro */
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden; /* Prevenir scroll horizontal */
+            background-image: radial-gradient(circle at center, #2e2e2e, #1a1a1a); /* Gradiente sutil */
+        }
+
+        .player-container {
+            background-color: var(--secondary-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-glow);
+            padding: 30px;
+            width: 95%; /* Responsive */
+            max-width: 1200px; /* Ancho máximo */
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            border: 2px solid var(--border-color);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Título del reproductor */
+        h1 {
+            font-family: 'Orbitron', sans-serif; /* Fuente futurista */
+            color: var(--primary-color);
+            text-align: center;
+            text-shadow: var(--highlight-glow);
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            display: flex; /* Para alinear el logo y el texto */
+            align-items: center; /* Centrar verticalmente */
+            justify-content: center; /* Centrar horizontalmente */
+            gap: 15px; /* Espacio entre el logo y el texto */
+        }
+
+        h1 .logo {
+            max-width: 60px; /* Tamaño del logo */
+            height: auto;
+            filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.8)); /* Resplandor para el logo */
+        }
+
+        /* Secciones de reproductores y lista */
+        .player-content {
+            display: flex;
+            flex-direction: column; /* Por defecto apilado */
+            gap: 25px;
+        }
+
+        .video-player, .audio-player {
+            width: 100%;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-color);
+            position: relative; /* Para posicionar el texto de NexusPlay */
+            min-height: 250px; /* Asegura un tamaño mínimo para el reproductor */
+        }
+
+        video, audio {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* Contenedor del texto de NexusPlay para audio */
+        .audio-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a1a;
+            color: var(--primary-color);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            text-shadow: var(--highlight-glow);
+            animation: pulseText 2s infinite;
+            z-index: 10;
+        }
+        
+        .audio-player {
+            display: none; /* Oculta el reproductor de audio por defecto */
+        }
+
+        @keyframes pulseText {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* Controles */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            background-color: var(--tertiary-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .controls button {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+        }
+
+        .controls button:hover {
+            background-color: var(--border-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--highlight-glow);
+        }
+
+        .controls button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        #volumeControl {
+            width: 150px;
+             height: 8px;
+            background: var(--tertiary-color);
+            border-radius: 4px;
+            outline: none;
+            transition: background 0.2s ease;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        #volumeControl::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: var(--highlight-glow);
+            border: 2px solid var(--text-color);
+        }
+
+        #volumeControl::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: var(--highlight-glow);
+            border: 2px solid var(--text-color);
+        }
+
+        /* Lista de reproducción */
+        .playlist-section {
+            background-color: var(--tertiary-color);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .playlist-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(0, 230, 118, 0.4);
+        }
+
+        #mediaList {
+            list-style: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto; /* Scroll si hay muchas canciones */
+            border-top: 1px dashed var(--border-color);
+            padding-top: 10px;
+        }
+
+        #mediaList::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #mediaList::-webkit-scrollbar-track {
+            background: var(--secondary-color);
+            border-radius: 10px;
+        }
+
+        #mediaList::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+            border: 1px solid var(--text-color);
+        }
+
+        #mediaList li {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(0, 176, 255, 0.2);
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            font-size: 0.95em;
+        }
+
+        #mediaList li:last-child {
+            border-bottom: none;
+        }
+
+        #mediaList li:hover {
+            background-color: rgba(0, 176, 255, 0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        #mediaList li.active {
+            background-color: rgba(0, 230, 118, 0.2);
+            font-weight: bold;
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+            box-shadow: 0 0 5px rgba(0, 230, 118, 0.3);
+            animation: pulseActive 1.5s infinite alternate;
+        }
+
+        @keyframes pulseActive {
+            from { box-shadow: 0 0 5px rgba(0, 230, 118, 0.3); }
+            to { box-shadow: 0 0 10px rgba(0, 230, 118, 0.6); }
+        }
+
+        /* Iconos de tipo de medio */
+        #mediaList li::before {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        #mediaList li[data-type="video"]::before {
+            content: '🎥'; /* Ícono de cámara de video */
+        }
+
+        #mediaList li[data-type="audio"]::before {
+            content: '🎵'; /* Ícono de nota musical */
+        }
+
+        /* Mensaje de no media */
+        #noMediaMessage {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #888;
+        }
+
+        /* Responsividad */
+        @media (min-width: 768px) {
+            .player-content {
+                flex-direction: row; /* Reproductores y lista en fila */
+            }
+
+            .video-player {
+                flex: 2; /* El video ocupa más espacio */
+            }
+
+            .audio-player {
+                flex: 2; /* El audio un poco menos */
+            }
+
+            .main-player-area {
+                flex: 2; /* Contenedor de video/audio */
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .playlist-section {
+                flex: 1; /* La lista de reproducción al lado */
+                margin-left: 25px;
+            }
+
+            .player-container {
+                padding: 40px;
+            }
+
+            h1 {
+                font-size: 3em;
+            }
+
+            h1 .logo {
+                max-width: 80px; /* Tamaño del logo en pantallas grandes */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .player-container {
+                padding: 20px;
+                border-radius: 8px;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 15px;
+            }
+            h1 .logo {
+                max-width: 45px; /* Tamaño del logo en pantallas pequeñas */
+            }
+            .controls button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+            #volumeControl {
+                width: 100px;
+            }
+            .playlist-section {
+                padding: 15px;
+            }
+            #mediaList li {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <h1>
+            <img src="NexusPlay.png" alt="NexusPlay Logo" class="logo">
+            NexusPlay: Acceso Multimedia
+        </h1>
+
+        <div class="player-content">
+            <div class="main-player-area">
+                <div class="video-player" id="videoPlayerContainer">
+                    <video id="videoPlayer" controls></video>
+                </div>
+
+                <div class="audio-player" id="audioPlayerContainer">
+                    <audio id="audioPlayer" controls></audio>
+                    <div class="audio-placeholder">
+                        <p>NexusPlay</p>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="prevBtn">Anterior</button>
+                    <button id="playPauseBtn">Reproducir</button>
+                    <button id="nextBtn">Siguiente</button>
+                    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" title="Volumen">
+                </div>
+            </div>
+
+            <div class="playlist-section">
+                <h3>Lista de Reproducción</h3>
+                <ul id="mediaList">
+                    </ul>
+                <p id="noMediaMessage" style="display: none;">No hay medios en la lista. ¡Añade algunos!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoPlayer = document.getElementById('videoPlayer');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const volumeControl = document.getElementById('volumeControl');
+            const nextBtn = document.getElementById('nextBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const mediaList = document.getElementById('mediaList');
+            const noMediaMessage = document.getElementById('noMediaMessage');
+
+            const videoPlayerContainer = document.getElementById('videoPlayerContainer');
+            const audioPlayerContainer = document.getElementById('audioPlayerContainer');
+            
+            let currentPlayingElement = null; // Referencia al elemento <video> o <audio> activo
+            let currentIndex = 0;
+
+            // --- Tu lista de medios aquí ---
+            const mediaItems = [
+                {
+                    type: 'video',
+                    title: 'Bucle Galáctico (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Sonido Cósmico (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+                },
+                {
+                    type: 'video',
+                    title: 'Estrellas Infinitas (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Melodía Interestelar (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
+                },
+                {
+                    type: 'video',
+                    title: 'Viaje Estelar (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Ritmo del Universo (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
+                },
+                {
+                    type: 'video',
+                    title: 'Nubes Cósmicas (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Energía de Galaxias (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
+                },
+                {
+                    type: 'video',
+                    title: 'Odisea Espacial (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Armonía de Planetas (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3'
+                },
+                // --- Nuevas 10 canciones y videos añadidos ---
+                {
+                    type: 'video',
+                    title: 'Viajero del Tiempo (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Latido Galáctico (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3'
+                },
+                {
+                    type: 'video',
+                    title: 'Nebulosa Brillante (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Eco Estelar (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3'
+                },
+                {
+                    type: 'video',
+                    title: 'Materia Oscura (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Canto de Quasar (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'
+                },
+                {
+                    type: 'video',
+                    title: 'Horizonte de Sucesos (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Sinfonía Solar (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'
+                },
+                {
+                    type: 'video',
+                    title: 'Amanecer en Marte (Video Demo)',
+                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscape.mp4'
+                },
+                {
+                    type: 'audio',
+                    title: 'Vibraciones de Cometa (Audio Demo)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'
+                }
+            ];
+
+            // Función para cargar la lista de reproducción en el HTML
+            function loadPlaylist() {
+                mediaList.innerHTML = ''; // Limpiar la lista existente
+
+                if (mediaItems.length === 0) {
+                    noMediaMessage.style.display = 'block';
+                    return;
+                } else {
+                    noMediaMessage.style.display = 'none';
+                }
+
+                mediaItems.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = item.title;
+                    li.dataset.index = index; // Guarda el índice para fácil acceso
+                    li.dataset.type = item.type; // Guarda el tipo para CSS/JS
+                    if (index === currentIndex) {
+                        li.classList.add('active');
+                    }
+                    li.addEventListener('click', () => {
+                        playMedia(index);
+                    });
+                    mediaList.appendChild(li);
+                });
+            }
+
+            // Función para reproducir un medio (video o audio)
+            function playMedia(index) {
+                if (mediaItems.length === 0) {
+                    currentPlayingElement = null; // No hay nada que reproducir
+                    playPauseBtn.textContent = 'Reproducir';
+                    videoPlayerContainer.style.display = 'none';
+                    audioPlayerContainer.style.display = 'none';
+                    return;
+                }
+
+                // Asegurar que el índice esté dentro del rango
+                currentIndex = (index + mediaItems.length) % mediaItems.length;
+                const media = mediaItems[currentIndex];
+
+                // Pausar y ocultar el reproductor que no se usará
+                if (currentPlayingElement) {
+                    currentPlayingElement.pause();
+                    currentPlayingElement.currentTime = 0; // Reiniciar tiempo
+                }
+
+                if (media.type === 'video') {
+                    videoPlayer.src = media.src;
+                    videoPlayerContainer.style.display = 'block'; // Mostrar el contenedor de video
+                    audioPlayerContainer.style.display = 'none'; // Ocultar el contenedor de audio
+                    currentPlayingElement = videoPlayer;
+                } else if (media.type === 'audio') {
+                    audioPlayer.src = media.src;
+                    audioPlayerContainer.style.display = 'block'; // Mostrar el contenedor de audio
+                    videoPlayerContainer.style.display = 'none'; // Ocultar el contenedor de video
+                    currentPlayingElement = audioPlayer;
+                }
+
+                currentPlayingElement.load();
+                currentPlayingElement.play();
+                updatePlayPauseButton();
+                updateActiveItemInPlaylist();
+            }
+
+            // Función para actualizar el botón de Play/Pause
+            function updatePlayPauseButton() {
+                if (currentPlayingElement && !currentPlayingElement.paused) {
+                    playPauseBtn.textContent = 'Pausar';
+                } else {
+                    playPauseBtn.textContent = 'Reproducir';
+                }
+            }
+
+            // Función para actualizar el elemento activo en la lista de reproducción
+            function updateActiveItemInPlaylist() {
+                const listItems = mediaList.querySelectorAll('li');
+                listItems.forEach((li, index) => {
+                    if (parseInt(li.dataset.index) === currentIndex) {
+                        li.classList.add('active');
+                    } else {
+                        li.classList.remove('active');
+                    }
+                });
+            }
+
+            // Event Listeners
+            playPauseBtn.addEventListener('click', () => {
+                if (!currentPlayingElement && mediaItems.length > 0) {
+                    // Si no hay nada reproduciéndose, reproduce el primero
+                    playMedia(currentIndex);
+                } else if (currentPlayingElement) {
+                    if (currentPlayingElement.paused) {
+                        currentPlayingElement.play();
+                    } else {
+                        currentPlayingElement.pause();
+                    }
+                }
+                updatePlayPauseButton();
+            });
+
+            volumeControl.addEventListener('input', (e) => {
+                const newVolume = parseFloat(e.target.value);
+                if (videoPlayer) videoPlayer.volume = newVolume;
+                if (audioPlayer) audioPlayer.volume = newVolume;
+            });
+
+            nextBtn.addEventListener('click', () => {
+                playMedia(currentIndex + 1);
+            });
+
+            prevBtn.addEventListener('click', () => {
+                playMedia(currentIndex - 1);
+            });
+
+            // Eventos de fin de reproducción
+            videoPlayer.addEventListener('ended', () => {
+                playMedia(currentIndex + 1);
+            });
+
+            audioPlayer.addEventListener('ended', () => {
+                playMedia(currentIndex + 1);
+            });
+
+            // Eventos para sincronizar el botón Play/Pause si el usuario usa los controles nativos
+            videoPlayer.addEventListener('play', updatePlayPauseButton);
+            videoPlayer.addEventListener('pause', updatePlayPauseButton);
+            audioPlayer.addEventListener('play', updatePlayPauseButton);
+            audioPlayer.addEventListener('pause', updatePlayPauseButton);
+
+            // Inicializar: cargar la lista de reproducción y ocultar ambos reproductores al inicio
+            loadPlaylist();
+            videoPlayerContainer.style.display = 'none';
+            audioPlayerContainer.style.display = 'none';
+
+            // Reproducir el primer elemento si existe alguno
+            if (mediaItems.length > 0) {
+                playMedia(0); 
+            }
+        });
+    </script>
+</body>
+</html>
