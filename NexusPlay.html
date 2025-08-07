@@ -3,1537 +3,2140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusPlay - Reproductor de Música</title>
+    <title>NexusPlay - Reproductor Multimedia Futura</title>
     <link rel="icon" type="image/x-icon" href="NexusPlay.png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* Variables CSS para facilitar la personalización */
-        :root {
-            --primary-color: #00e676; /* Verde neón */
-            --secondary-color: #212121; /* Gris oscuro casi negro */
-            --tertiary-color: #333333; /* Gris medio */
-            --text-color: #e0e0e0; /* Gris claro para texto */
-            --border-color: #00b0ff; /* Azul brillante para bordes */
-            --highlight-glow: 0 0 10px rgba(0, 230, 118, 0.6), 0 0 20px rgba(0, 230, 118, 0.4);
-            --shadow-glow: 0 0 15px rgba(0, 176, 255, 0.4);
-        }
-
-        /* Estilos generales */
         body {
-            font-family: 'Share Tech Mono', monospace;
-            background-color: #1a1a1a;
-            color: var(--text-color);
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at center, #2e2e2e, #1a1a1a);
+            padding: 20px;
         }
 
-        .player-container {
-            background-color: var(--secondary-color);
-            border-radius: 12px;
-            box-shadow: var(--shadow-glow);
-            padding: 30px;
-            width: 95%;
-            max-width: 800px; /* Ancho máximo para la lista */
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            border: 2px solid var(--border-color);
-            animation: fadeIn 1s ease-out;
+        .music-player-container {
+            background: #2c2c54;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            width: 380px;
             text-align: center;
+            transition: all 0.3s ease-in-out;
+            position: relative;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .album-art {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border: 6px solid #4a4a8a;
+            transition: transform 0.5s ease-in-out, box-shadow 0.3s ease;
         }
 
-        /* Título del reproductor */
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--primary-color);
-            text-align: center;
-            text-shadow: var(--highlight-glow);
+        .album-art.playing {
+            animation: rotate 12s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .album-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .song-info {
             margin-bottom: 25px;
-            font-size: 2.5em;
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
         }
 
-        h1 .logo {
-            max-width: 60px;
-            height: auto;
-            filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.8));
+        .song-info h2 {
+            font-size: 28px;
+            margin: 0;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        
+
+        .song-info h3 {
+            font-size: 18px;
+            color: #b3b3e6;
+            margin-top: 8px;
+        }
+
+        .progress-container {
+            background: #4a4a8a;
+            height: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #00bcd4;
+            border-radius: 5px;
+            transition: width 0.1s linear;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #b3b3e6;
+            margin-bottom: 25px;
+        }
+
         .controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin-top: 20px;
-            background-color: var(--tertiary-color);
-            padding: 15px 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+            gap: 20px;
         }
 
-        .controls button {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+        .control-btn {
+            background: #00bcd4;
             border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
+            color: #fff;
+            font-size: 22px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 188, 212, 0.4);
         }
 
-        .controls button:hover {
-            background-color: var(--border-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: var(--highlight-glow);
+        .control-btn:hover {
+            transform: scale(1.1);
+            background-color: #0097a7;
         }
 
-        .controls button:active {
-            transform: translateY(0);
-            box-shadow: none;
+        .control-btn:active {
+            transform: scale(0.95);
         }
 
-        #volumeControl {
-            width: 150px;
+        .play-pause-btn {
+            font-size: 28px;
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .volume-container i {
+            font-size: 24px;
+            color: #e0e0e0;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 60%;
             height: 8px;
-            background: var(--tertiary-color);
-            border-radius: 4px;
+            background: #4a4a8a;
             outline: none;
-            transition: background 0.2s ease;
+            border-radius: 5px;
             cursor: pointer;
-            border: 1px solid var(--border-color);
         }
 
-        #volumeControl::-webkit-slider-thumb {
+        .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 20px;
             height: 20px;
+            background: #00bcd4;
             border-radius: 50%;
-            background: var(--primary-color);
             cursor: pointer;
-            box-shadow: var(--highlight-glow);
-            border: 2px solid var(--text-color);
+            box-shadow: 0 2px 5px rgba(0, 188, 212, 0.5);
+            transition: background-color 0.2s ease;
         }
 
-        #volumeControl::-moz-range-thumb {
+        .volume-slider::-webkit-slider-thumb:hover {
+            background: #0097a7;
+        }
+
+        .volume-slider::-moz-range-thumb {
             width: 20px;
             height: 20px;
+            background: #00bcd4;
             border-radius: 50%;
-            background: var(--primary-color);
             cursor: pointer;
-            box-shadow: var(--highlight-glow);
-            border: 2px solid var(--text-color);
-        }
-        
-        /* Lista de reproducción */
-        .playlist-section {
-            background-color: var(--tertiary-color);
-            border-radius: 8px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .playlist-section h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--primary-color);
-            margin-top: 0;
-            margin-bottom: 15px;
-            text-align: center;
-            text-shadow: 0 0 5px rgba(0, 230, 118, 0.4);
-        }
-
-        #mediaList {
-            list-style: none;
-            padding: 0;
-            max-height: 500px;
-            overflow-y: auto;
-            border-top: 1px dashed var(--border-color);
-            padding-top: 10px;
-        }
-
-        #mediaList::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        #mediaList::-webkit-scrollbar-track {
-            background: var(--secondary-color);
-            border-radius: 10px;
-        }
-
-        #mediaList::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 10px;
-            border: 1px solid var(--text-color);
-        }
-
-        #mediaList li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            border-bottom: 1px solid rgba(0, 176, 255, 0.2);
-            transition: background-color 0.2s ease;
-            font-size: 0.95em;
-        }
-        
-        #mediaList li .song-title {
-            flex-grow: 1;
-            text-align: left;
-            padding-left: 10px;
-            transition: color 0.2s ease;
-        }
-
-        #mediaList li:last-child {
-            border-bottom: none;
-        }
-
-        #mediaList li:hover {
-            background-color: rgba(0, 176, 255, 0.1);
-        }
-
-        #mediaList li.active {
-            background-color: rgba(0, 230, 118, 0.2);
-            font-weight: bold;
-            color: var(--primary-color);
-            border-left: 3px solid var(--primary-color);
-            box-shadow: 0 0 5px rgba(0, 230, 118, 0.3);
-            animation: pulseActive 1.5s infinite alternate;
-        }
-
-        #mediaList li.active .song-title {
-            color: var(--primary-color);
-        }
-
-        @keyframes pulseActive {
-            from { box-shadow: 0 0 5px rgba(0, 230, 118, 0.3); }
-            to { box-shadow: 0 0 10px rgba(0, 230, 118, 0.6); }
-        }
-
-        /* Botones de reproducción/pausa en la lista */
-        .play-pause-btn {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
             border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
-        }
-
-        .play-pause-btn:hover {
-            background-color: var(--border-color);
-            color: white;
-            box-shadow: var(--highlight-glow);
-        }
-
-        /* Icono de nota musical para las canciones */
-        #mediaList li::before {
-            content: '🎵';
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-
-        /* Mensaje de no media */
-        #noMediaMessage {
-            text-align: center;
-            padding: 20px;
-            font-style: italic;
-            color: #888;
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 40px;
-            padding: 20px;
-            text-align: center;
-            color: var(--border-color);
-            font-size: 0.8em;
-            border-top: 1px solid rgba(0, 176, 255, 0.2);
-        }
-
-        /* Controles generales (anterior, siguiente, volumen) en dispositivos pequeños */
-        @media (max-width: 767px) {
-            .player-container {
-                padding: 20px;
-                border-radius: 8px;
-            }
-            h1 {
-                font-size: 2em;
-                margin-bottom: 15px;
-            }
-            h1 .logo {
-                max-width: 45px;
-            }
-            .controls button {
-                padding: 10px 15px;
-                font-size: 0.9em;
-            }
-            #volumeControl {
-                width: 100px;
-            }
-            .playlist-section {
-                padding: 15px;
-            }
-            #mediaList li {
-                font-size: 0.9em;
-                padding: 10px;
-            }
-            .play-pause-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 1em;
-            }
+            box-shadow: 0 2px 5px rgba(0, 188, 212, 0.5);
         }
     </style>
 </head>
 <body>
-    <div class="player-container">
-        <h1>
-            <img src="NexusPlay.png" alt="NexusPlay Logo" class="logo">
-            NexusPlay: Acceso Multimedia
-        </h1>
 
-        <div class="playlist-section">
-            <h3>Lista de Reproducción (<span id="songCount">193</span>)</h3>
-            <ul id="mediaList"></ul>
-            <p id="noMediaMessage" style="display: none;">No hay medios en la lista. ¡Añade algunos!</p>
-        </div>
-        
-        <div class="controls">
-            <button id="prevBtn">Anterior</button>
-            <button id="nextBtn">Siguiente</button>
-            <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" title="Volumen">
+    <div class="music-player-container">
+        <div class="music-player">
+            <div class="album-art">
+                <img src="" alt="Portada del álbum" id="album-image">
+            </div>
+
+            <div class="song-info">
+                <h2 id="song-title">Título de la Canción</h2>
+                <h3 id="song-artist">Nombre del Artista</h3>
+            </div>
+
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <div class="time-info">
+                <span id="current-time">0:00</span>
+                <span id="total-time">0:00</span>
+            </div>
+
+            <div class="controls">
+                <button id="prev-btn" class="control-btn"><i class="fas fa-backward"></i></button>
+                <button id="play-pause-btn" class="control-btn play-pause-btn"><i class="fas fa-play"></i></button>
+                <button id="next-btn" class="control-btn"><i class="fas fa-forward"></i></button>
+            </div>
+
+            <div class="volume-container">
+                <i class="fas fa-volume-down"></i>
+                <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="0.5">
+                <i class="fas fa-volume-up"></i>
+            </div>
         </div>
     </div>
-    
-    <footer>
-        derechos de propiedad intelectual y derechos de autor por el Ing. Teddy Valencia
-    </footer>
-
-    <audio id="audioPlayer" style="display: none;"></audio>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const audioPlayer = document.getElementById('audioPlayer');
-            const volumeControl = document.getElementById('volumeControl');
-            const nextBtn = document.getElementById('nextBtn');
-            const prevBtn = document.getElementById('prevBtn');
-            const mediaList = document.getElementById('mediaList');
-            const noMediaMessage = document.getElementById('noMediaMessage');
-            const songCount = document.getElementById('songCount');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const albumImage = document.getElementById('album-image');
+        const songTitle = document.getElementById('song-title');
+        const songArtist = document.getElementById('song-artist');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const currentTimeSpan = document.getElementById('current-time');
+        const totalTimeSpan = document.getElementById('total-time');
+        const volumeSlider = document.getElementById('volume-slider');
 
-            let currentPlayingButton = null;
-            let currentIndex = -1;
+        const songs = [
+            // Canciones de ejemplo originales
+            {
+                title: 'Dreams',
+                artist: 'Bensound',
+                path: 'https://www.bensound.com/bensound-music/bensound-dreams.mp3',
+                image: 'https://www.bensound.com/bensound-img/dreams.jpg'
+            },
+            {
+                title: 'Sunny',
+                artist: 'Bensound',
+                path: 'https://www.bensound.com/bensound-music/bensound-sunny.mp3',
+                image: 'https://www.bensound.com/bensound-img/sunny.jpg'
+            },
+            {
+                title: 'Inspire',
+                artist: 'Bensound',
+                path: 'https://www.bensound.com/bensound-music/bensound-inspire.mp3',
+                image: 'https://www.bensound.com/bensound-img/inspire.jpg'
+            },
+            // Añadiendo 297 canciones adicionales con nombres actualizados
+            {
+                title: 'Cancion 4',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 5',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 6',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 7',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 8',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 9',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 10',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 11',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 12',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 13',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 14',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 15',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 16',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 17',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 18',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-18.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 19',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-19.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 20',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-20.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 21',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-21.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 22',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-22.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 23',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-23.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 24',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-24.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 25',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-25.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 26',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-26.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 27',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-27.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 28',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-28.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 29',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-29.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 30',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-30.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 31',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-31.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 32',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-32.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 33',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-33.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 34',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-34.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 35',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-35.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 36',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-36.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 37',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-37.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 38',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-38.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 39',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-39.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 40',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-40.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 41',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-41.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 42',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-42.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 43',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-43.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 44',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-44.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 45',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-45.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 46',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-46.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 47',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-47.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 48',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-48.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 49',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-49.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 50',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-50.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 51',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-51.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 52',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-52.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 53',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-53.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 54',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-54.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 55',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-55.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 56',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-56.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 57',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-57.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 58',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-58.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 59',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-59.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 60',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-60.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 61',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-61.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 62',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-62.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 63',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-63.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 64',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-64.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 65',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-65.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 66',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-66.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 67',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-67.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 68',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-68.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 69',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-69.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 70',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-70.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 71',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-71.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 72',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-72.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 73',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-73.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 74',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-74.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 75',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-75.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 76',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-76.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 77',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-77.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 78',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-78.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 79',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-79.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 80',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-80.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 81',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-81.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 82',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-82.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 83',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-83.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 84',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-84.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 85',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-85.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 86',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-86.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 87',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-87.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 88',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-88.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 89',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-89.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 90',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-90.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 91',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-91.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 92',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-92.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 93',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-93.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 94',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-94.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 95',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-95.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 96',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-96.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 97',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-97.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 98',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-98.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 99',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-99.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 100',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-100.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 101',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-101.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 102',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-102.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 103',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-103.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 104',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-104.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 105',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-105.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 106',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-106.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 107',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-107.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 108',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-108.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 109',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-109.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 110',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-110.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 111',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-111.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 112',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-112.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 113',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-113.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 114',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-114.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 115',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-115.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 116',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-116.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 117',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-117.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 118',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-118.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 119',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-119.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 120',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-120.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 121',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-121.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 122',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-122.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 123',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-123.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 124',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-124.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 125',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-125.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 126',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-126.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 127',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-127.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 128',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-128.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 129',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-129.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 130',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-130.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 131',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-131.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 132',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-132.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 133',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-133.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 134',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-134.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 135',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-135.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 136',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-136.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 137',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-137.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 138',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-138.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 139',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-139.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 140',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-140.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 141',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-141.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 142',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-142.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 143',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-143.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 144',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-144.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 145',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-145.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 146',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-146.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 147',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-147.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 148',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-148.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 149',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-149.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 150',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-150.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 151',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-151.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 152',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-152.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 153',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-153.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 154',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-154.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 155',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-155.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 156',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-156.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 157',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-157.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 158',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-158.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 159',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-159.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 160',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-160.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 161',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-161.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 162',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-162.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 163',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-163.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 164',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-164.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 165',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-165.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 166',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-166.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 167',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-167.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 168',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-168.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 169',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-169.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 170',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-170.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 171',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-171.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 172',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-172.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 173',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-173.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 174',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-174.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 175',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-175.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 176',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-176.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 177',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-177.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 178',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-178.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 179',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-179.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 180',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-180.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 181',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-181.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 182',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-182.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 183',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-183.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 184',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-184.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 185',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-185.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 186',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-186.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 187',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-187.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 188',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-188.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 189',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-189.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 190',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-190.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 191',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-191.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 192',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-192.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 193',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-193.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 194',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-194.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 195',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-195.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 196',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-196.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 197',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-197.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 198',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-198.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 199',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-199.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 200',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-200.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 201',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-201.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 202',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-202.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 203',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-203.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 204',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-204.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 205',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-205.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 206',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-206.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 207',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-207.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 208',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-208.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 209',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-209.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 210',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-210.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 211',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-211.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 212',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-212.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 213',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-213.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 214',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-214.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 215',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-215.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 216',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-216.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 217',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-217.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 218',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-218.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 219',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-219.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 220',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-220.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 221',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-221.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 222',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-222.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 223',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-223.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 224',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-224.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 225',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-225.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 226',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-226.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 227',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-227.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 228',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-228.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 229',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-229.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 230',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-230.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 231',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-231.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 232',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-232.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 233',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-233.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 234',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-234.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 235',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-235.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 236',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-236.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 237',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-237.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 238',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-238.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 239',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-239.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 240',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-240.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 241',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-241.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 242',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-242.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 243',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-243.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 244',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-244.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 245',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-245.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 246',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-246.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 247',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-247.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 248',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-248.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 249',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-249.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 250',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-250.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 251',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-251.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 252',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-252.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 253',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-253.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 254',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-254.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 255',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-255.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 256',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-256.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 257',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-257.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 258',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-258.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 259',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-259.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 260',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-260.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 261',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-261.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 262',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-262.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 263',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-263.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 264',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-264.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 265',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-265.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 266',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-266.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 267',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-267.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 268',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-268.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 269',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-269.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 270',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-270.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 271',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-271.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 272',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-272.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 273',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-273.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 274',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-274.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 275',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-275.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 276',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-276.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 277',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-277.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 278',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-278.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 279',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-279.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 280',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-280.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 281',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-281.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 282',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-282.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 283',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-283.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 284',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-284.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 285',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-285.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 286',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-286.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 287',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-287.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 288',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-288.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 289',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-289.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 290',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-290.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 291',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-291.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 292',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-292.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 293',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-293.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 294',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-294.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 295',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-295.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 296',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-296.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 297',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-297.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 298',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-298.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 299',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-299.mp3',
+                image: 'https://placehold.co/200x200/png'
+            },
+            {
+                title: 'Cancion 300',
+                artist: 'Artista NexusPlay',
+                path: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-300.mp3',
+                image: 'https://placehold.co/200x200/png'
+            }
+        ];
+        
+        let songIndex = 0;
+        let isPlaying = false;
+        const audio = new Audio();
 
-            const mediaItems = [
-                {
-                    type: 'audio',
-                    title: 'Sonido Cósmico (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Melodía Interestelar (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Ritmo del Universo (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Energía de Galaxias (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Armonía de Planetas (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Latido Galáctico (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Eco Estelar (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Canto de Quasar (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Sinfonía Solar (Audio Demo)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-energy.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Vibraciones de Cometa (Audio Demo)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-neony.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Dura (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-punky.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Tusa (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-jazzyfrenchy.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Con Calma (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-summer.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Despacito (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-ukulele.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Gasolina (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-memories.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Safaera (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-happyrock.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'La Jeepeta (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-creativeminds.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Mi Gente (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-anewbeginning.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Te Boté (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-clearday.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Yo Perreo Sola (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-tenderness.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'X (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-littleidea.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'La Romana (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-allthat.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Vivir Mi Vida (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-slowmotion.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'El Anillo (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Criminal (Reggaeton)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-moose.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electric Glow (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-elevate.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cyber Pulse (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-epic.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synthwave Dreams (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-retro.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Horizon (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-scifi.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Future Funk (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-funkyelement.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Techno Grid (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-perception.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Virtual Reality (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-erotic.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Trance Energy (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-energy.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neon Nights (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-neony.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Deep House Flow (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-house.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Glitch Groove (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-glitch.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Rave Revolution (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-psychedelic.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Hypnotic Beat (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-hiphop.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electro Pop (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-popdance.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Liquid Bass (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-tropical.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Space Echo (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-spooky.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Circuit Surge (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-inspire.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cosmic Drip (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-sunny.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Binary Beat (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-jazzy.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Photon Flow (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-smooth.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Syntactic Sync (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-love.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Holographic Echo (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-dreams.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Dreamscape (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-sweet.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Velocity Vibe (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-chill.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Quantum Leap (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-relaxing.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Fusion Groove (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-fusion.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Nebula Drive (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-nebula.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cosmic Drift (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-funk.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Solar Flare (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-the-lounge.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Interstellar (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-interstellar.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Vortex Echoes (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-ambient.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Galactic Voyager (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-corporate-pop.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Stream (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-funky-groove.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neural Network (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-the-elevator.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Circuitry (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-acoustic-folk.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Love (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-pop-love.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Warp Speed (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-jazz-comedy.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synthetic Soul (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-indie-folk.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Robot Dance (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-romantic-guitar.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Matrix Echo (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-cinematic.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Grid Runner (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-rock-pop.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Pixel Party (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-retro-future.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synth Beat (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-upbeat-party.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electric Stream (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-acoustic-ukulele.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cyberspace (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-deep-house.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Drift (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-jazzy-funky.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'System Override (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-pop-rock.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Flow (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-action-sport.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Transcendence (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-deep-chill.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Core Pulse (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-epic-cinematic.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Dreamy Flow (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-dreams.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neon City (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-neoncity.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synth Dreams (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-synthdreams.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Night Drive (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-nightdrive.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cyberpunk (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-cyberpunk.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Future Vibes (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-futurevibes.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Hardcore Beat (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-hardcorebeat.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Techno Loop (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-technoloop.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital World (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-digitalworld.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Glitchy Groove (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-glitchygroove.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cybernetics (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-cybernetics.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Ethereal Echoes (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-etherealechoes.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Robotic Rhythm (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-roboticrhythm.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synth Odyssey (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-synthose.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Storm (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-datastorm.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Virtual Haze (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-virtualhaze.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Circuit Flux (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-circuitflux.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Wired Up (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-wiredup.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electric Surge (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-electricsurge.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neon Glitch (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-neonglitch.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Future Groove (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-futuregroove.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Deep Grid (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-deepgrid.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Solar System (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-solarsystem.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cosmic Beats (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-cosmicbeats.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Starlight (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-starlight.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Galaxy Flow (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-galaxyflow.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Celestial Dance (Electrónica)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-celestialdance.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Subatomic Pulse (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Warp Drive (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neural Funk (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Vector Vibe (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Dust (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Circuit Bender (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Hologram Heartbeat (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Grid Lock (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cygnus Loop (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Stellar Drift (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-18.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Deep Core (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-19.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electric Abyss (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-20.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Streamer (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-21.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Quantum Entanglement (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-22.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Pulsar Beat (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-23.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Nebula Rhythm (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-24.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cosmic Traveler (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-25.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synthesized Soul (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-26.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Binary Fusion (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-27.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Photon Wave (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-28.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Voyage (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-29.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electro Glider (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-30.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Transistor Tune (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-31.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Logic Loop (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-32.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Circuit Chase (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-33.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cybernetic Symphony (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-34.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Echo (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-35.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Pixel Pulse (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-36.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Futuristic Flux (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-37.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synth Stream (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-38.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Techno Trance (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-39.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electronic Groove (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-40.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Virtual Space (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-41.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cygnus X-1 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-42.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Starlight Drive (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-43.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Binary Code (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-44.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Analog Dreams (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-45.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Odyssey (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-46.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Wired Waves (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-47.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Microchip Melody (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-48.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synth Wave (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-49.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Virtual Rhythm (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-50.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Storm 2.0 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-51.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neon Drift (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-52.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Deep Circuit (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-53.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electric Universe (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-54.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cosmic Glitch (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-55.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Starlight Pulse (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-56.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Galaxy Runner (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-57.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Celestial Shift (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-58.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Quantum Leap II (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-59.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Fusion Engine (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-60.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Nebula Flow (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-61.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cosmic Voyager (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-62.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Solar Flare Remix (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-63.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Interstellar Drift (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-64.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Vortex Pulse (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-65.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Galactic Horizon (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-66.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Stream 3.0 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-67.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neural Beat (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-68.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Circuitry Vibe (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-69.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Romance (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-70.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Warp Speed 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-71.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synthetic Fantasy (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-72.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Robot Love (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-73.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Matrix Rerun (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-74.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Grid Racer (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-75.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Pixel Party 2.0 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-76.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synth Rhythm (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-77.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electric Stream 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-78.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cyberspace 2.0 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-79.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital Drift 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-80.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'System Re-engage (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-81.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Flow Reborn (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-82.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Transcendence Remix (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-83.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Core Fusion (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-84.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Dreamy Flow 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-85.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neon City Lights (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-86.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synth Dreams 2.0 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-87.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Night Drive Remix (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-88.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cyberpunk 2.0 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-89.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Future Vibes Remix (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-90.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Hardcore Beat 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-91.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Techno Loop 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-92.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Digital World Remix (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-93.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Glitchy Groove 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-94.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cybernetics 2.0 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-95.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Ethereal Echoes 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-96.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Robotic Rhythm 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-97.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Synth Odyssey 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-98.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Data Storm 3 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-99.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Virtual Haze 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-100.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Circuit Flux 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-101.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Wired Up 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-102.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Electric Surge 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-103.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Neon Glitch 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-104.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Future Groove 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-105.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Deep Grid 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-106.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Solar System 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-107.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cosmic Beats 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-108.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Starlight 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-109.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Galaxy Flow 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-110.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Celestial Dance 2 (Electrónica)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-111.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Acoustic Breeze (Folk)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'The Lounge (Jazz)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-the-lounge.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Happy Rock (Rock)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-happyrock.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Cinematic (Cinematic)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-cinematic.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Summer (Pop)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-summer.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Tenderness (Acoustic)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-tenderness.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Elevate (Upbeat)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-elevate.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Retro Future (Retro)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-retro-future.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Little Idea (Pop)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-littleidea.mp3'
-                },
-                {
-                    type: 'audio',
-                    title: 'Epic Cinematic (Cinematic)',
-                    src: 'https://www.bensound.com/bensound-music/bensound-epic-cinematic.mp3'
-                }
-            ];
+        function loadSong(song) {
+            songTitle.textContent = song.title;
+            songArtist.textContent = song.artist;
+            albumImage.src = song.image;
+            audio.src = song.path;
+            if (isPlaying) {
+                audio.play();
+                albumImage.parentElement.classList.add('playing');
+            }
+        }
 
-            function loadPlaylist() {
-                mediaList.innerHTML = '';
-                songCount.textContent = mediaItems.length;
+        function playSong() {
+            isPlaying = true;
+            playPauseBtn.querySelector('i').classList.remove('fa-play');
+            playPauseBtn.querySelector('i').classList.add('fa-pause');
+            audio.play();
+            albumImage.parentElement.classList.add('playing');
+        }
 
-                if (mediaItems.length === 0) {
-                    noMediaMessage.style.display = 'block';
-                    return;
+        function pauseSong() {
+            isPlaying = false;
+            playPauseBtn.querySelector('i').classList.remove('fa-pause');
+            playPauseBtn.querySelector('i').classList.add('fa-play');
+            audio.pause();
+            albumImage.parentElement.classList.remove('playing');
+        }
+
+        function prevSong() {
+            songIndex = (songIndex - 1 + songs.length) % songs.length;
+            loadSong(songs[songIndex]);
+            if (isPlaying) {
+                playSong();
+            }
+        }
+
+        function nextSong() {
+            songIndex = (songIndex + 1) % songs.length;
+            loadSong(songs[songIndex]);
+            if (isPlaying) {
+                playSong();
+            }
+        }
+
+        function updateProgress() {
+            if (isPlaying) {
+                const { duration, currentTime } = audio;
+                const progressPercent = (currentTime / duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+
+                const formatTime = (time) => {
+                    const minutes = Math.floor(time / 60);
+                    const seconds = Math.floor(time % 60);
+                    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                };
+
+                currentTimeSpan.textContent = formatTime(currentTime);
+
+                if (!isNaN(duration)) {
+                    totalTimeSpan.textContent = formatTime(duration);
                 } else {
-                    noMediaMessage.style.display = 'none';
-                }
-
-                mediaItems.forEach((item, index) => {
-                    const li = document.createElement('li');
-                    li.dataset.index = index;
-                    li.innerHTML = `
-                        <button class="play-pause-btn">▶</button>
-                        <span class="song-title">${item.title}</span>
-                    `;
-                    
-                    const playPauseBtn = li.querySelector('.play-pause-btn');
-                    playPauseBtn.addEventListener('click', () => {
-                        handlePlayPause(index, playPauseBtn);
-                    });
-                    
-                    mediaList.appendChild(li);
-                });
-            }
-
-            function handlePlayPause(index, button) {
-                if (currentIndex === index) {
-                    if (audioPlayer.paused) {
-                        audioPlayer.play();
-                    } else {
-                        audioPlayer.pause();
-                    }
-                } else {
-                    // Pausar la canción anterior si está reproduciéndose
-                    if (currentPlayingButton) {
-                        audioPlayer.pause();
-                        currentPlayingButton.textContent = '▶';
-                        currentPlayingButton.closest('li').classList.remove('active');
-                    }
-                    
-                    // Cargar y reproducir la nueva canción
-                    currentIndex = index;
-                    currentPlayingButton = button;
-                    audioPlayer.src = mediaItems[currentIndex].src;
-                    audioPlayer.play();
+                    totalTimeSpan.textContent = '0:00';
                 }
             }
+        }
 
-            function updateUIForPlay() {
-                if (currentPlayingButton) {
-                    currentPlayingButton.textContent = '❚❚';
-                    currentPlayingButton.closest('li').classList.add('active');
-                }
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            if (!isNaN(duration)) {
+                audio.currentTime = (clickX / width) * duration;
             }
+        }
 
-            function updateUIForPause() {
-                if (currentPlayingButton) {
-                    currentPlayingButton.textContent = '▶';
-                    currentPlayingButton.closest('li').classList.remove('active');
-                }
-            }
-            
-            audioPlayer.addEventListener('play', updateUIForPlay);
-            audioPlayer.addEventListener('pause', updateUIForPause);
+        function setVolume() {
+            audio.volume = volumeSlider.value;
+        }
 
-            audioPlayer.addEventListener('ended', () => {
-                const nextIndex = (currentIndex + 1) % mediaItems.length;
-                const nextLi = mediaList.querySelector(`li[data-index="${nextIndex}"]`);
-                const nextBtn = nextLi.querySelector('.play-pause-btn');
-                
-                // Reiniciar el botón de la canción anterior
-                updateUIForPause();
-                
-                // Reproducir la siguiente canción
-                handlePlayPause(nextIndex, nextBtn);
-            });
-
-            volumeControl.addEventListener('input', (e) => {
-                audioPlayer.volume = parseFloat(e.target.value);
-            });
-
-            nextBtn.addEventListener('click', () => {
-                const nextIndex = (currentIndex + 1) % mediaItems.length;
-                const nextLi = mediaList.querySelector(`li[data-index="${nextIndex}"]`);
-                const nextBtn = nextLi.querySelector('.play-pause-btn');
-                handlePlayPause(nextIndex, nextBtn);
-            });
-
-            prevBtn.addEventListener('click', () => {
-                let prevIndex = currentIndex - 1;
-                if (prevIndex < 0) {
-                    prevIndex = mediaItems.length - 1;
-                }
-                const prevLi = mediaList.querySelector(`li[data-index="${prevIndex}"]`);
-                const prevBtn = prevLi.querySelector('.play-pause-btn');
-                handlePlayPause(prevIndex, prevBtn);
-            });
-
-            loadPlaylist();
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying ? pauseSong() : playSong();
         });
+
+        prevBtn.addEventListener('click', prevSong);
+        nextBtn.addEventListener('click', nextSong);
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('ended', nextSong);
+        progressContainer.addEventListener('click', setProgress);
+        volumeSlider.addEventListener('input', setVolume);
+
+        loadSong(songs[songIndex]);
+        audio.volume = volumeSlider.value;
     </script>
 </body>
 </html>
