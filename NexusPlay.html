@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusPlay - Reproductor Multimedia Futura</title>
+    <title>NexusPlay - Reproductor de Música</title>
     <link rel="icon" type="image/x-icon" href="NexusPlay.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
@@ -20,16 +20,17 @@
 
         /* Estilos generales */
         body {
-            font-family: 'Share Tech Mono', monospace; /* Fuente tecnológica */
-            background-color: #1a1a1a; /* Fondo oscuro */
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #1a1a1a;
             color: var(--text-color);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            overflow-x: hidden; /* Prevenir scroll horizontal */
-            background-image: radial-gradient(circle at center, #2e2e2e, #1a1a1a); /* Gradiente sutil */
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at center, #2e2e2e, #1a1a1a);
         }
 
         .player-container {
@@ -37,13 +38,14 @@
             border-radius: 12px;
             box-shadow: var(--shadow-glow);
             padding: 30px;
-            width: 95%; /* Responsive */
-            max-width: 1200px; /* Ancho máximo */
+            width: 95%;
+            max-width: 800px; /* Ancho máximo para la lista */
             display: flex;
             flex-direction: column;
             gap: 25px;
             border: 2px solid var(--border-color);
             animation: fadeIn 1s ease-out;
+            text-align: center;
         }
 
         @keyframes fadeIn {
@@ -53,84 +55,29 @@
 
         /* Título del reproductor */
         h1 {
-            font-family: 'Orbitron', sans-serif; /* Fuente futurista */
+            font-family: 'Orbitron', sans-serif;
             color: var(--primary-color);
             text-align: center;
             text-shadow: var(--highlight-glow);
             margin-bottom: 25px;
             font-size: 2.5em;
             letter-spacing: 2px;
-            display: flex; /* Para alinear el logo y el texto */
-            align-items: center; /* Centrar verticalmente */
-            justify-content: center; /* Centrar horizontalmente */
-            gap: 15px; /* Espacio entre el logo y el texto */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
 
         h1 .logo {
-            max-width: 60px; /* Tamaño del logo */
+            max-width: 60px;
             height: auto;
-            filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.8)); /* Resplandor para el logo */
-        }
-
-        /* Secciones de reproductores y lista */
-        .player-content {
-            display: flex;
-            flex-direction: column; /* Por defecto apilado */
-            gap: 25px;
-        }
-
-        .video-player, .audio-player {
-            width: 100%;
-            background-color: #000;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--primary-color);
-            position: relative; /* Para posicionar el texto de NexusPlay */
-            min-height: 250px; /* Asegura un tamaño mínimo para el reproductor */
-        }
-
-        video, audio {
-            width: 100%;
-            display: block;
-            border-radius: 8px;
-        }
-
-        /* Contenedor del texto de NexusPlay para audio */
-        .audio-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #1a1a1a;
-            color: var(--primary-color);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3em;
-            text-shadow: var(--highlight-glow);
-            animation: pulseText 2s infinite;
-            z-index: 10;
+            filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.8));
         }
         
-        .audio-player {
-            display: none; /* Oculta el reproductor de audio por defecto */
-        }
-
-        @keyframes pulseText {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
-
-        /* Controles */
         .controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
             gap: 15px;
             margin-top: 20px;
             background-color: var(--tertiary-color);
@@ -168,7 +115,7 @@
 
         #volumeControl {
             width: 150px;
-             height: 8px;
+            height: 8px;
             background: var(--tertiary-color);
             border-radius: 4px;
             outline: none;
@@ -198,7 +145,7 @@
             box-shadow: var(--highlight-glow);
             border: 2px solid var(--text-color);
         }
-
+        
         /* Lista de reproducción */
         .playlist-section {
             background-color: var(--tertiary-color);
@@ -220,8 +167,8 @@
         #mediaList {
             list-style: none;
             padding: 0;
-            max-height: 300px;
-            overflow-y: auto; /* Scroll si hay muchas canciones */
+            max-height: 500px;
+            overflow-y: auto;
             border-top: 1px dashed var(--border-color);
             padding-top: 10px;
         }
@@ -242,13 +189,20 @@
         }
 
         #mediaList li {
-            padding: 12px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid rgba(0, 176, 255, 0.2);
-            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(0, 176, 255, 0.2);
+            transition: background-color 0.2s ease;
             font-size: 0.95em;
+        }
+        
+        #mediaList li .song-title {
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 10px;
+            transition: color 0.2s ease;
         }
 
         #mediaList li:last-child {
@@ -257,8 +211,6 @@
 
         #mediaList li:hover {
             background-color: rgba(0, 176, 255, 0.1);
-            color: white;
-            transform: translateX(5px);
         }
 
         #mediaList li.active {
@@ -270,23 +222,43 @@
             animation: pulseActive 1.5s infinite alternate;
         }
 
+        #mediaList li.active .song-title {
+            color: var(--primary-color);
+        }
+
         @keyframes pulseActive {
             from { box-shadow: 0 0 5px rgba(0, 230, 118, 0.3); }
             to { box-shadow: 0 0 10px rgba(0, 230, 118, 0.6); }
         }
 
-        /* Iconos de tipo de medio */
+        /* Botones de reproducción/pausa en la lista */
+        .play-pause-btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+        }
+
+        .play-pause-btn:hover {
+            background-color: var(--border-color);
+            color: white;
+            box-shadow: var(--highlight-glow);
+        }
+
+        /* Icono de nota musical para las canciones */
         #mediaList li::before {
+            content: '🎵';
             margin-right: 10px;
             font-size: 1.2em;
-        }
-
-        #mediaList li[data-type="video"]::before {
-            content: '🎥'; /* Ícono de cámara de video */
-        }
-
-        #mediaList li[data-type="audio"]::before {
-            content: '🎵'; /* Ícono de nota musical */
         }
 
         /* Mensaje de no media */
@@ -297,45 +269,17 @@
             color: #888;
         }
 
-        /* Responsividad */
-        @media (min-width: 768px) {
-            .player-content {
-                flex-direction: row; /* Reproductores y lista en fila */
-            }
-
-            .video-player {
-                flex: 2; /* El video ocupa más espacio */
-            }
-
-            .audio-player {
-                flex: 2; /* El audio un poco menos */
-            }
-
-            .main-player-area {
-                flex: 2; /* Contenedor de video/audio */
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .playlist-section {
-                flex: 1; /* La lista de reproducción al lado */
-                margin-left: 25px;
-            }
-
-            .player-container {
-                padding: 40px;
-            }
-
-            h1 {
-                font-size: 3em;
-            }
-
-            h1 .logo {
-                max-width: 80px; /* Tamaño del logo en pantallas grandes */
-            }
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            color: var(--border-color);
+            font-size: 0.8em;
+            border-top: 1px solid rgba(0, 176, 255, 0.2);
         }
 
+        /* Controles generales (anterior, siguiente, volumen) en dispositivos pequeños */
         @media (max-width: 767px) {
             .player-container {
                 padding: 20px;
@@ -346,7 +290,7 @@
                 margin-bottom: 15px;
             }
             h1 .logo {
-                max-width: 45px; /* Tamaño del logo en pantallas pequeñas */
+                max-width: 45px;
             }
             .controls button {
                 padding: 10px 15px;
@@ -362,6 +306,11 @@
                 font-size: 0.9em;
                 padding: 10px;
             }
+            .play-pause-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
@@ -372,69 +321,43 @@
             NexusPlay: Acceso Multimedia
         </h1>
 
-        <div class="player-content">
-            <div class="main-player-area">
-                <div class="video-player" id="videoPlayerContainer">
-                    <video id="videoPlayer" controls></video>
-                </div>
-
-                <div class="audio-player" id="audioPlayerContainer">
-                    <audio id="audioPlayer" controls></audio>
-                    <div class="audio-placeholder">
-                        <p>NexusPlay</p>
-                    </div>
-                </div>
-
-                <div class="controls">
-                    <button id="prevBtn">Anterior</button>
-                    <button id="playPauseBtn">Reproducir</button>
-                    <button id="nextBtn">Siguiente</button>
-                    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" title="Volumen">
-                </div>
-            </div>
-
-            <div class="playlist-section">
-                <h3>Lista de Reproducción</h3>
-                <ul id="mediaList">
-                    </ul>
-                <p id="noMediaMessage" style="display: none;">No hay medios en la lista. ¡Añade algunos!</p>
-            </div>
+        <div class="playlist-section">
+            <h3>Lista de Reproducción (<span id="songCount">193</span>)</h3>
+            <ul id="mediaList"></ul>
+            <p id="noMediaMessage" style="display: none;">No hay medios en la lista. ¡Añade algunos!</p>
+        </div>
+        
+        <div class="controls">
+            <button id="prevBtn">Anterior</button>
+            <button id="nextBtn">Siguiente</button>
+            <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" title="Volumen">
         </div>
     </div>
+    
+    <footer>
+        derechos de propiedad intelectual y derechos de autor por el Ing. Teddy Valencia
+    </footer>
+
+    <audio id="audioPlayer" style="display: none;"></audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const videoPlayer = document.getElementById('videoPlayer');
             const audioPlayer = document.getElementById('audioPlayer');
-            const playPauseBtn = document.getElementById('playPauseBtn');
             const volumeControl = document.getElementById('volumeControl');
             const nextBtn = document.getElementById('nextBtn');
             const prevBtn = document.getElementById('prevBtn');
             const mediaList = document.getElementById('mediaList');
             const noMediaMessage = document.getElementById('noMediaMessage');
+            const songCount = document.getElementById('songCount');
 
-            const videoPlayerContainer = document.getElementById('videoPlayerContainer');
-            const audioPlayerContainer = document.getElementById('audioPlayerContainer');
-            
-            let currentPlayingElement = null; // Referencia al elemento <video> o <audio> activo
-            let currentIndex = 0;
+            let currentPlayingButton = null;
+            let currentIndex = -1;
 
-            // --- Tu lista de medios aquí ---
             const mediaItems = [
-                {
-                    type: 'video',
-                    title: 'Bucle Galáctico (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
-                },
                 {
                     type: 'audio',
                     title: 'Sonido Cósmico (Audio Demo)',
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-                },
-                {
-                    type: 'video',
-                    title: 'Estrellas Infinitas (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
                 },
                 {
                     type: 'audio',
@@ -442,19 +365,9 @@
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
                 },
                 {
-                    type: 'video',
-                    title: 'Viaje Estelar (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
-                },
-                {
                     type: 'audio',
                     title: 'Ritmo del Universo (Audio Demo)',
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
-                },
-                {
-                    type: 'video',
-                    title: 'Nubes Cósmicas (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
                 },
                 {
                     type: 'audio',
@@ -462,20 +375,9 @@
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
                 },
                 {
-                    type: 'video',
-                    title: 'Odisea Espacial (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
-                },
-                {
                     type: 'audio',
                     title: 'Armonía de Planetas (Audio Demo)',
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3'
-                },
-                // --- Nuevas 10 canciones y videos añadidos ---
-                {
-                    type: 'video',
-                    title: 'Viajero del Tiempo (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4'
                 },
                 {
                     type: 'audio',
@@ -483,19 +385,9 @@
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3'
                 },
                 {
-                    type: 'video',
-                    title: 'Nebulosa Brillante (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4'
-                },
-                {
                     type: 'audio',
                     title: 'Eco Estelar (Audio Demo)',
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3'
-                },
-                {
-                    type: 'video',
-                    title: 'Materia Oscura (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'
                 },
                 {
                     type: 'audio',
@@ -503,30 +395,1045 @@
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'
                 },
                 {
-                    type: 'video',
-                    title: 'Horizonte de Sucesos (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
-                },
-                {
                     type: 'audio',
                     title: 'Sinfonía Solar (Audio Demo)',
-                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'
-                },
-                {
-                    type: 'video',
-                    title: 'Amanecer en Marte (Video Demo)',
-                    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscape.mp4'
+                    src: 'https://www.bensound.com/bensound-music/bensound-energy.mp3'
                 },
                 {
                     type: 'audio',
                     title: 'Vibraciones de Cometa (Audio Demo)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-neony.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Dura (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-punky.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Tusa (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-jazzyfrenchy.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Con Calma (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-summer.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Despacito (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-ukulele.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Gasolina (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-memories.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Safaera (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-happyrock.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'La Jeepeta (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-creativeminds.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Mi Gente (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-anewbeginning.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Te Boté (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-clearday.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Yo Perreo Sola (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-tenderness.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'X (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-littleidea.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'La Romana (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-allthat.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Vivir Mi Vida (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-slowmotion.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'El Anillo (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Criminal (Reggaeton)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-moose.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electric Glow (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-elevate.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cyber Pulse (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-epic.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synthwave Dreams (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-retro.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Horizon (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-scifi.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Future Funk (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-funkyelement.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Techno Grid (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-perception.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Virtual Reality (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-erotic.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Trance Energy (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-energy.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neon Nights (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-neony.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Deep House Flow (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-house.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Glitch Groove (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-glitch.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Rave Revolution (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-psychedelic.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Hypnotic Beat (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-hiphop.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electro Pop (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-popdance.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Liquid Bass (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-tropical.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Space Echo (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-spooky.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Circuit Surge (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-inspire.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cosmic Drip (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-sunny.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Binary Beat (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-jazzy.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Photon Flow (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-smooth.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Syntactic Sync (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-love.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Holographic Echo (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-dreams.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Dreamscape (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-sweet.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Velocity Vibe (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-chill.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Quantum Leap (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-relaxing.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Fusion Groove (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-fusion.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Nebula Drive (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-nebula.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cosmic Drift (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-funk.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Solar Flare (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-the-lounge.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Interstellar (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-interstellar.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Vortex Echoes (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-ambient.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Galactic Voyager (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-corporate-pop.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Stream (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-funky-groove.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neural Network (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-the-elevator.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Circuitry (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-acoustic-folk.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Love (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-pop-love.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Warp Speed (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-jazz-comedy.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synthetic Soul (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-indie-folk.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Robot Dance (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-romantic-guitar.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Matrix Echo (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-cinematic.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Grid Runner (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-rock-pop.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Pixel Party (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-retro-future.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synth Beat (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-upbeat-party.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electric Stream (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-acoustic-ukulele.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cyberspace (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-deep-house.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Drift (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-jazzy-funky.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'System Override (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-pop-rock.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Flow (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-action-sport.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Transcendence (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-deep-chill.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Core Pulse (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-epic-cinematic.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Dreamy Flow (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-dreams.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neon City (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-neoncity.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synth Dreams (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-synthdreams.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Night Drive (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-nightdrive.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cyberpunk (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-cyberpunk.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Future Vibes (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-futurevibes.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Hardcore Beat (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-hardcorebeat.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Techno Loop (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-technoloop.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital World (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-digitalworld.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Glitchy Groove (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-glitchygroove.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cybernetics (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-cybernetics.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Ethereal Echoes (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-etherealechoes.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Robotic Rhythm (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-roboticrhythm.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synth Odyssey (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-synthose.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Storm (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-datastorm.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Virtual Haze (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-virtualhaze.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Circuit Flux (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-circuitflux.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Wired Up (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-wiredup.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electric Surge (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-electricsurge.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neon Glitch (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-neonglitch.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Future Groove (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-futuregroove.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Deep Grid (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-deepgrid.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Solar System (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-solarsystem.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cosmic Beats (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-cosmicbeats.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Starlight (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-starlight.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Galaxy Flow (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-galaxyflow.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Celestial Dance (Electrónica)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-celestialdance.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Subatomic Pulse (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Warp Drive (Electrónica)',
                     src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neural Funk (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Vector Vibe (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Dust (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Circuit Bender (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Hologram Heartbeat (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Grid Lock (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cygnus Loop (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Stellar Drift (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-18.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Deep Core (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-19.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electric Abyss (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-20.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Streamer (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-21.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Quantum Entanglement (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-22.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Pulsar Beat (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-23.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Nebula Rhythm (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-24.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cosmic Traveler (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-25.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synthesized Soul (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-26.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Binary Fusion (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-27.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Photon Wave (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-28.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Voyage (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-29.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electro Glider (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-30.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Transistor Tune (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-31.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Logic Loop (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-32.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Circuit Chase (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-33.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cybernetic Symphony (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-34.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Echo (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-35.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Pixel Pulse (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-36.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Futuristic Flux (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-37.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synth Stream (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-38.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Techno Trance (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-39.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electronic Groove (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-40.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Virtual Space (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-41.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cygnus X-1 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-42.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Starlight Drive (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-43.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Binary Code (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-44.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Analog Dreams (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-45.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Odyssey (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-46.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Wired Waves (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-47.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Microchip Melody (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-48.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synth Wave (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-49.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Virtual Rhythm (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-50.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Storm 2.0 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-51.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neon Drift (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-52.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Deep Circuit (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-53.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electric Universe (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-54.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cosmic Glitch (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-55.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Starlight Pulse (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-56.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Galaxy Runner (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-57.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Celestial Shift (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-58.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Quantum Leap II (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-59.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Fusion Engine (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-60.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Nebula Flow (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-61.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cosmic Voyager (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-62.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Solar Flare Remix (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-63.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Interstellar Drift (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-64.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Vortex Pulse (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-65.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Galactic Horizon (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-66.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Stream 3.0 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-67.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neural Beat (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-68.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Circuitry Vibe (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-69.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Romance (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-70.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Warp Speed 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-71.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synthetic Fantasy (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-72.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Robot Love (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-73.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Matrix Rerun (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-74.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Grid Racer (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-75.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Pixel Party 2.0 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-76.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synth Rhythm (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-77.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electric Stream 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-78.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cyberspace 2.0 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-79.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital Drift 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-80.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'System Re-engage (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-81.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Flow Reborn (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-82.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Transcendence Remix (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-83.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Core Fusion (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-84.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Dreamy Flow 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-85.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neon City Lights (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-86.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synth Dreams 2.0 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-87.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Night Drive Remix (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-88.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cyberpunk 2.0 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-89.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Future Vibes Remix (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-90.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Hardcore Beat 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-91.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Techno Loop 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-92.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Digital World Remix (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-93.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Glitchy Groove 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-94.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cybernetics 2.0 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-95.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Ethereal Echoes 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-96.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Robotic Rhythm 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-97.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Synth Odyssey 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-98.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Data Storm 3 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-99.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Virtual Haze 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-100.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Circuit Flux 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-101.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Wired Up 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-102.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Electric Surge 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-103.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Neon Glitch 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-104.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Future Groove 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-105.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Deep Grid 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-106.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Solar System 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-107.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cosmic Beats 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-108.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Starlight 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-109.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Galaxy Flow 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-110.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Celestial Dance 2 (Electrónica)',
+                    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-111.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Acoustic Breeze (Folk)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'The Lounge (Jazz)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-the-lounge.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Happy Rock (Rock)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-happyrock.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Cinematic (Cinematic)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-cinematic.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Summer (Pop)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-summer.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Tenderness (Acoustic)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-tenderness.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Elevate (Upbeat)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-elevate.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Retro Future (Retro)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-retro-future.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Little Idea (Pop)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-littleidea.mp3'
+                },
+                {
+                    type: 'audio',
+                    title: 'Epic Cinematic (Cinematic)',
+                    src: 'https://www.bensound.com/bensound-music/bensound-epic-cinematic.mp3'
                 }
             ];
 
-            // Función para cargar la lista de reproducción en el HTML
             function loadPlaylist() {
-                mediaList.innerHTML = ''; // Limpiar la lista existente
+                mediaList.innerHTML = '';
+                songCount.textContent = mediaItems.length;
 
                 if (mediaItems.length === 0) {
                     noMediaMessage.style.display = 'block';
@@ -537,131 +1444,95 @@
 
                 mediaItems.forEach((item, index) => {
                     const li = document.createElement('li');
-                    li.textContent = item.title;
-                    li.dataset.index = index; // Guarda el índice para fácil acceso
-                    li.dataset.type = item.type; // Guarda el tipo para CSS/JS
-                    if (index === currentIndex) {
-                        li.classList.add('active');
-                    }
-                    li.addEventListener('click', () => {
-                        playMedia(index);
+                    li.dataset.index = index;
+                    li.innerHTML = `
+                        <button class="play-pause-btn">▶</button>
+                        <span class="song-title">${item.title}</span>
+                    `;
+                    
+                    const playPauseBtn = li.querySelector('.play-pause-btn');
+                    playPauseBtn.addEventListener('click', () => {
+                        handlePlayPause(index, playPauseBtn);
                     });
+                    
                     mediaList.appendChild(li);
                 });
             }
 
-            // Función para reproducir un medio (video o audio)
-            function playMedia(index) {
-                if (mediaItems.length === 0) {
-                    currentPlayingElement = null; // No hay nada que reproducir
-                    playPauseBtn.textContent = 'Reproducir';
-                    videoPlayerContainer.style.display = 'none';
-                    audioPlayerContainer.style.display = 'none';
-                    return;
-                }
-
-                // Asegurar que el índice esté dentro del rango
-                currentIndex = (index + mediaItems.length) % mediaItems.length;
-                const media = mediaItems[currentIndex];
-
-                // Pausar y ocultar el reproductor que no se usará
-                if (currentPlayingElement) {
-                    currentPlayingElement.pause();
-                    currentPlayingElement.currentTime = 0; // Reiniciar tiempo
-                }
-
-                if (media.type === 'video') {
-                    videoPlayer.src = media.src;
-                    videoPlayerContainer.style.display = 'block'; // Mostrar el contenedor de video
-                    audioPlayerContainer.style.display = 'none'; // Ocultar el contenedor de audio
-                    currentPlayingElement = videoPlayer;
-                } else if (media.type === 'audio') {
-                    audioPlayer.src = media.src;
-                    audioPlayerContainer.style.display = 'block'; // Mostrar el contenedor de audio
-                    videoPlayerContainer.style.display = 'none'; // Ocultar el contenedor de video
-                    currentPlayingElement = audioPlayer;
-                }
-
-                currentPlayingElement.load();
-                currentPlayingElement.play();
-                updatePlayPauseButton();
-                updateActiveItemInPlaylist();
-            }
-
-            // Función para actualizar el botón de Play/Pause
-            function updatePlayPauseButton() {
-                if (currentPlayingElement && !currentPlayingElement.paused) {
-                    playPauseBtn.textContent = 'Pausar';
+            function handlePlayPause(index, button) {
+                if (currentIndex === index) {
+                    if (audioPlayer.paused) {
+                        audioPlayer.play();
+                    } else {
+                        audioPlayer.pause();
+                    }
                 } else {
-                    playPauseBtn.textContent = 'Reproducir';
+                    // Pausar la canción anterior si está reproduciéndose
+                    if (currentPlayingButton) {
+                        audioPlayer.pause();
+                        currentPlayingButton.textContent = '▶';
+                        currentPlayingButton.closest('li').classList.remove('active');
+                    }
+                    
+                    // Cargar y reproducir la nueva canción
+                    currentIndex = index;
+                    currentPlayingButton = button;
+                    audioPlayer.src = mediaItems[currentIndex].src;
+                    audioPlayer.play();
                 }
             }
 
-            // Función para actualizar el elemento activo en la lista de reproducción
-            function updateActiveItemInPlaylist() {
-                const listItems = mediaList.querySelectorAll('li');
-                listItems.forEach((li, index) => {
-                    if (parseInt(li.dataset.index) === currentIndex) {
-                        li.classList.add('active');
-                    } else {
-                        li.classList.remove('active');
-                    }
-                });
+            function updateUIForPlay() {
+                if (currentPlayingButton) {
+                    currentPlayingButton.textContent = '❚❚';
+                    currentPlayingButton.closest('li').classList.add('active');
+                }
             }
 
-            // Event Listeners
-            playPauseBtn.addEventListener('click', () => {
-                if (!currentPlayingElement && mediaItems.length > 0) {
-                    // Si no hay nada reproduciéndose, reproduce el primero
-                    playMedia(currentIndex);
-                } else if (currentPlayingElement) {
-                    if (currentPlayingElement.paused) {
-                        currentPlayingElement.play();
-                    } else {
-                        currentPlayingElement.pause();
-                    }
+            function updateUIForPause() {
+                if (currentPlayingButton) {
+                    currentPlayingButton.textContent = '▶';
+                    currentPlayingButton.closest('li').classList.remove('active');
                 }
-                updatePlayPauseButton();
+            }
+            
+            audioPlayer.addEventListener('play', updateUIForPlay);
+            audioPlayer.addEventListener('pause', updateUIForPause);
+
+            audioPlayer.addEventListener('ended', () => {
+                const nextIndex = (currentIndex + 1) % mediaItems.length;
+                const nextLi = mediaList.querySelector(`li[data-index="${nextIndex}"]`);
+                const nextBtn = nextLi.querySelector('.play-pause-btn');
+                
+                // Reiniciar el botón de la canción anterior
+                updateUIForPause();
+                
+                // Reproducir la siguiente canción
+                handlePlayPause(nextIndex, nextBtn);
             });
 
             volumeControl.addEventListener('input', (e) => {
-                const newVolume = parseFloat(e.target.value);
-                if (videoPlayer) videoPlayer.volume = newVolume;
-                if (audioPlayer) audioPlayer.volume = newVolume;
+                audioPlayer.volume = parseFloat(e.target.value);
             });
 
             nextBtn.addEventListener('click', () => {
-                playMedia(currentIndex + 1);
+                const nextIndex = (currentIndex + 1) % mediaItems.length;
+                const nextLi = mediaList.querySelector(`li[data-index="${nextIndex}"]`);
+                const nextBtn = nextLi.querySelector('.play-pause-btn');
+                handlePlayPause(nextIndex, nextBtn);
             });
 
             prevBtn.addEventListener('click', () => {
-                playMedia(currentIndex - 1);
+                let prevIndex = currentIndex - 1;
+                if (prevIndex < 0) {
+                    prevIndex = mediaItems.length - 1;
+                }
+                const prevLi = mediaList.querySelector(`li[data-index="${prevIndex}"]`);
+                const prevBtn = prevLi.querySelector('.play-pause-btn');
+                handlePlayPause(prevIndex, prevBtn);
             });
 
-            // Eventos de fin de reproducción
-            videoPlayer.addEventListener('ended', () => {
-                playMedia(currentIndex + 1);
-            });
-
-            audioPlayer.addEventListener('ended', () => {
-                playMedia(currentIndex + 1);
-            });
-
-            // Eventos para sincronizar el botón Play/Pause si el usuario usa los controles nativos
-            videoPlayer.addEventListener('play', updatePlayPauseButton);
-            videoPlayer.addEventListener('pause', updatePlayPauseButton);
-            audioPlayer.addEventListener('play', updatePlayPauseButton);
-            audioPlayer.addEventListener('pause', updatePlayPauseButton);
-
-            // Inicializar: cargar la lista de reproducción y ocultar ambos reproductores al inicio
             loadPlaylist();
-            videoPlayerContainer.style.display = 'none';
-            audioPlayerContainer.style.display = 'none';
-
-            // Reproducir el primer elemento si existe alguno
-            if (mediaItems.length > 0) {
-                playMedia(0); 
-            }
         });
     </script>
 </body>
