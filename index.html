@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="logofondo.jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -34,8 +34,8 @@
             --shadow-color-dark: rgba(0, 0, 0, 0.3);
 
             /* Configuraciones Generales */
-            --font-primary: 'Poppins', sans-serif;
-            --font-heading: 'Montserrat', sans-serif;
+            --font-primary: 'Lora', serif; /* Fuente elegante para el cuerpo */
+            --font-heading: 'Playfair Display', serif; /* Fuente formal para títulos */
             --shadow-sm: 0 1px 3px 0 var(--shadow-color);
             --shadow-md: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
             --shadow-lg: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
@@ -94,12 +94,9 @@
           height: 0;
         }
 
-        /* Fuente para el reloj digital */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap');
-
         .digital-clock {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem; /* Tamaño ajustable para la nueva posición */
+            font-family: 'Merriweather', serif; /* Fuente más formal para el reloj */
+            font-size: 1.2rem;
             color: var(--primary);
             background: var(--card-bg);
             padding: 0.8rem 1.5rem;
@@ -111,19 +108,19 @@
             justify-content: center;
             box-shadow: var(--shadow-sm);
             white-space: nowrap;
-            margin-top: 2rem; /* Espacio después del banner */
+            margin-top: 2rem;
             margin-bottom: 2rem;
             width: fit-content;
             margin-left: auto;
             margin-right: auto;
-            flex-wrap: wrap; /* Para que la fecha pueda ir debajo en pantallas pequeñas */
+            flex-wrap: wrap;
         }
 
         .digital-clock span {
             display: inline-block;
         }
         .digital-clock .date {
-            font-size: 0.9em; /* Fecha un poco más pequeña que la hora */
+            font-size: 0.9em;
             opacity: 0.8;
         }
 
@@ -145,7 +142,7 @@
             line-height: 1.3;
             font-weight: 700;
             font-family: var(--font-heading);
-            color: var(--primary); /* Asegura que los títulos usen primary */
+            color: var(--primary);
         }
         h1 { font-size: 3rem; }
         h2 { font-size: 2.5rem; }
@@ -223,9 +220,9 @@
             border-radius: var(--border-radius-sm);
             position: relative;
             transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.2s ease;
-            display: flex; /* Para el icono */
-            align-items: center; /* Para el icono */
-            gap: 0.5rem; /* Espacio entre icono y texto */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .menu-list a::after {
             content: '';
@@ -234,27 +231,27 @@
             left: 50%;
             transform: translateX(-50%);
             width: 0;
-            height: 3px; /* Slightly thicker underline */
+            height: 3px;
             background: var(--primary);
             transition: width var(--transition-speed) ease;
             border-radius: 2px;
         }
         .menu-list a:hover, .menu-list a.active {
             color: var(--primary);
-            transform: translateY(-2px); /* Slight lift on hover/active */
+            transform: translateY(-2px);
         }
         .menu-list a:hover::after, .menu-list a.active::after {
-            width: 100%; /* Full width underline */
+            width: 100%;
         }
          body.dark-mode .menu-list a:hover, body.dark-mode .menu-list a.active {
              color: var(--primary-dark);
          }
-        .menu-list a i { /* Estilos para los iconos del menú */
+        .menu-list a i {
             font-size: 1.1rem;
-            color: var(--accent); /* Color del icono */
+            color: var(--accent);
         }
         .menu-list a:hover i, .menu-list a.active i {
-            color: var(--primary); /* Cambiar color del icono al hover/active */
+            color: var(--primary);
         }
         body.dark-mode .menu-list a:hover i, body.dark-mode .menu-list a.active i {
             color: var(--primary-dark);
@@ -366,7 +363,7 @@
         /* Sección General */
         section {
             padding: 5rem 2rem;
-            scroll-margin-top: 80px; /* Ajuste para el sticky nav */
+            scroll-margin-top: 80px;
             position: relative;
         }
         .section-title {
@@ -396,7 +393,7 @@
             text-align: center;
             scroll-margin-top: 70px;
         }
-        .intro-text h1 { /* Este H1 es para la sección de introducción, no el banner */
+        .intro-text h1 {
             font-size: clamp(2.5rem, 5vw, 3.5rem);
             margin-bottom: 1.5rem;
             color: var(--primary);
@@ -420,7 +417,7 @@
             display: flex;
             gap: 4rem;
             align-items: center;
-            flex-wrap: wrap; /* Para que sea responsivo */
+            flex-wrap: wrap;
         }
         .docente-imagen {
             flex: 0 0 300px;
@@ -429,7 +426,7 @@
             overflow: hidden;
             box-shadow: var(--shadow-lg);
             border: 6px solid var(--bg);
-            margin: 0 auto; /* Centrar en móvil */
+            margin: 0 auto;
             transition: transform 0.3s ease;
         }
         .docente-imagen:hover {
@@ -454,7 +451,7 @@
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-family: var(--font-primary); /* Para este subtítulo, usar primary font */
+            font-family: var(--font-primary);
         }
         .docente-info h2 {
             margin-bottom: 1.5rem;
@@ -470,6 +467,33 @@
         }
         .docente-info p a { font-weight: 600; color: var(--primary); }
         .docente-info p a:hover { text-decoration: underline; }
+
+        /* Estilos del botón para abrir el modal */
+        .btn-contacto-docente {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-md);
+            margin-top: 1.5rem;
+            transition: background-color var(--transition-speed), transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-contacto-docente:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        body.dark-mode .btn-contacto-docente:hover {
+            background-color: var(--secondary-dark);
+        }
 
 
         /* Sección Servicios */
@@ -513,7 +537,7 @@
             font-size: 1rem;
             opacity: 0.85;
             line-height: 1.7;
-            text-align: center; /* Centrar texto en tarjetas de servicio */
+            text-align: center;
         }
 
         /* Sección Cursos */
@@ -534,7 +558,7 @@
             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Para que el acordeón no se salga */
+            overflow: hidden;
         }
         .curso-card:hover {
             transform: translateY(-8px);
@@ -545,14 +569,14 @@
             margin-bottom: 0.75rem;
             color: var(--primary);
             font-weight: 600;
-            display: flex; /* Para alinear el icono con el texto */
+            display: flex;
             align-items: center;
-            gap: 0.75rem; /* Espacio entre icono y texto */
+            gap: 0.75rem;
         }
-        .curso-card h3 i { /* Estilos específicos para el icono del diploma */
-            font-size: 1.8rem; /* Tamaño del icono */
-            color: var(--accent); /* Color diferente para el icono */
-            margin-bottom: 0; /* Reiniciar margin-bottom para el icono dentro del h3 */
+        .curso-card h3 i {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0;
         }
 
         .curso-card p {
@@ -566,7 +590,7 @@
 
         /* Botón Acordeón Cursos */
         .toggle-btn {
-            background: var(--bg); /* Un poco de contraste */
+            background: var(--bg);
             color: var(--primary);
             border: 1px solid var(--border-color);
             padding: 0.9rem 1.5rem;
@@ -579,7 +603,7 @@
             text-align: left;
             font-weight: 600;
             transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
-            margin-top: auto; /* Empuja el botón al final */
+            margin-top: auto;
         }
         .toggle-btn:hover {
             background-color: var(--primary);
@@ -608,14 +632,14 @@
             padding-top: 0;
         }
         .curso-info.active {
-            max-height: 500px; /* Suficientemente grande para el contenido */
+            max-height: 500px;
             border-top-color: var(--border-color);
             margin-top: 1rem;
             padding-top: 1rem;
         }
         .curso-info ul {
             padding-left: 1.5rem;
-            list-style: none; /* Eliminar el disco por defecto */
+            list-style: none;
             margin-top: 0.5rem;
             margin-bottom: 0.5rem;
         }
@@ -629,7 +653,7 @@
             padding-left: 1.2rem;
         }
         .curso-info li::before {
-            content: "\f058"; /* Check-circle icon */
+            content: "\f058";
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             color: var(--primary);
@@ -659,7 +683,7 @@
         }
         .qr-code {
             display: block;
-            max-width: 250px; /* Un poco más grande */
+            max-width: 250px;
             margin: 1.5rem auto;
             border-radius: var(--border-radius-xl);
             box-shadow: var(--shadow-lg);
@@ -703,7 +727,7 @@
 
         /* Footer */
         footer {
-            background: var(--card-bg); /* Fondo de footer similar a tarjetas */
+            background: var(--card-bg);
             color: var(--text);
             padding: 3rem 2rem;
             text-align: center;
@@ -733,6 +757,96 @@
             transform: translateY(-3px);
         }
 
+        /* --- Estilos del Modal --- */
+        .modal {
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.is-active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: var(--border-radius-lg);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        .modal.is-active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-content h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .modal-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .modal-buttons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+        .modal-buttons a:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-whatsapp { background-color: #25d366; }
+        .btn-github { background-color: #171515; }
+        body.dark-mode .btn-github { background-color: #f6f8fa; color: black; }
+        .btn-call { background-color: #0e76a8; }
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            opacity: 0.6;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .modal-close-btn:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+        
         /* Animaciones */
         @keyframes fadeInHero {
             from { opacity: 0; transform: translateY(20px); }
@@ -769,7 +883,7 @@
                 gap: 0.8rem;
                 box-shadow: var(--shadow-lg);
                 border-top: 1px solid var(--border-color);
-                align-items: stretch; /* Estirar items en móvil */
+                align-items: stretch;
             }
             .menu-list.active { display: flex; }
             .menu-list li { width: 100%; }
@@ -777,7 +891,7 @@
                 display: block;
                 text-align: center;
                 padding: 0.8rem 1rem;
-                background: var(--bg); /* Fondo para links en móvil */
+                background: var(--bg);
                 border-radius: var(--border-radius-sm);
                 border: 1px solid var(--border-color);
             }
@@ -786,18 +900,18 @@
                 color: white;
             }
              .menu-list a:hover::after, .menu-list a.active::after {
-                 width: 0; /* Desactivar underline en móvil */
+                 width: 0;
              }
             .dark-mode-toggle {
                 order: 1;
-                margin: 0.8rem auto 0.2rem auto; /* Espacio y centrado */
+                margin: 0.8rem auto 0.2rem auto;
             }
 
-            .digital-clock { /* Asegurar que el reloj también se adapte bien */
+            .digital-clock {
                 font-size: 1rem;
                 padding: 0.6rem 1rem;
                 gap: 0.5rem;
-                flex-direction: column; /* Apila hora y fecha en móvil */
+                flex-direction: column;
             }
             .digital-clock .date {
                 font-size: 0.8em;
@@ -829,13 +943,17 @@
             }
             .docente-info { text-align: center; }
             .docente-info p { text-align: justify; }
+            .btn-contacto-docente {
+                margin: 1.5rem auto 0;
+            }
+
 
             .servicios-grid { grid-template-columns: 1fr; gap: 2rem; }
             .servicio-card { padding: 2rem; }
 
             .cursos-grid { grid-template-columns: 1fr; gap: 2rem; }
             .curso-card h3 {
-                flex-direction: column; /* Apilar icono y texto en móvil */
+                flex-direction: column;
                 align-items: center;
                 text-align: center;
                 gap: 0.5rem;
@@ -854,7 +972,7 @@
                 bottom: 1.2rem;
                 right: 1.2rem;
                 gap: 0;
-                font-size: 0; /* Ocultar texto */
+                font-size: 0;
                 border-radius: 50%;
             }
             .whatsapp-btn span { display: none; }
@@ -863,7 +981,6 @@
             footer { padding: 2.5rem 1.5rem; }
         }
 
-        /* Opcional: Estilo para evitar selección de texto general */
          body {
             user-select: none;
             -moz-user-select: none;
@@ -880,7 +997,7 @@
         </div>
         <button class="menu-btn" aria-label="Toggle Menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
-        </button> 
+        </button>
         <ul class="menu-list">
             <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Inicio</a></li>
             <li><a href="#docente"><i class="fas fa-chalkboard-teacher"></i> Instructor</a></li>
@@ -925,6 +1042,9 @@
                     <h2>Ing. Teddy Valencia</h2>
                     <p>Ingeniero en Tecnología de la Información con más de 5 años de experiencia práctica en desarrollo front-end (HTML, CSS, JavaScript), gestión de bases de datos relacionales (SQL) y edición profesional de video. Apasionado por la enseñanza y dedicado a facilitar el aprendizaje de conceptos tecnológicos complejos de manera clara y efectiva.</p>
                     <p><strong>Contacto:</strong> <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
+                    <button id="open-contact-modal" class="btn-contacto-docente">
+                        <i class="fas fa-address-card"></i> Contactar al Instructor
+                    </button>
                 </div>
             </div>
         </section>
@@ -1087,6 +1207,26 @@
         </div>
     </footer>
 
+    <div id="contact-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+            <h3 id="modal-title">Contacto del Ing. Teddy Valencia</h3>
+            <p>Selecciona una opción para contactar directamente con el instructor.</p>
+            <div class="modal-buttons">
+                <a href="https://wa.me/+593967879068" class="btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Enviar WhatsApp
+                </a>
+                <a href="https://github.com/Teddyfidel" class="btn-github" target="_blank">
+                    <i class="fab fa-github"></i> Ver GitHub
+                </a>
+                <a href="tel:+593967879068" class="btn-call">
+                    <i class="fas fa-phone-alt"></i> Llamada Directa
+                </a>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         // --- Bloquear Clic Derecho y Teclas DevTools (Advertencia: No son 100% seguras) ---
         document.addEventListener('contextmenu', function(event) {
@@ -1121,7 +1261,7 @@
          menuLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                  if (menuList.classList.contains('active')) {
-                     menuBtn.click(); // Cierra el menú en móvil
+                     menuBtn.click();
                  }
                  setTimeout(() => {
                     menuLinks.forEach(l => l.classList.remove('active'));
@@ -1130,7 +1270,7 @@
                     if(activeLink) {
                         activeLink.classList.add('active');
                     }
-                 }, 50); // Pequeño retraso para que la animación del menú no interfiera con el scroll instantáneo
+                 }, 50);
             });
         });
 
@@ -1177,7 +1317,7 @@
         if (savedDarkMode === 'enabled') {
             applyDarkMode(true);
         } else {
-            applyDarkMode(false); // Por defecto en modo claro si no hay preferencia o es 'disabled'
+            applyDarkMode(false);
         }
 
         darkModeToggle.addEventListener('click', () => {
@@ -1194,7 +1334,6 @@
             const info = btn.nextElementSibling;
             const icon = btn.querySelector('i');
 
-            // Asegura que todos los acordeones estén cerrados al cargar
             info.style.maxHeight = '0';
             info.classList.remove('active');
             btn.classList.remove('active');
@@ -1204,7 +1343,6 @@
             btn.addEventListener('click', () => {
                 const isActive = !info.classList.contains('active');
 
-                // Cierra otros acordeones abiertos si solo quieres uno abierto a la vez
                 document.querySelectorAll('.curso-info.active').forEach(openInfo => {
                     if (openInfo !== info) {
                         openInfo.style.maxHeight = '0';
@@ -1233,11 +1371,11 @@
         const sections = document.querySelectorAll('main section[id]');
         const navLinks = document.querySelectorAll('.menu-list a[href^="#"]');
         const navbar = document.querySelector('nav');
-        const navbarHeight = navbar ? navbar.offsetHeight : 70; // Usa el valor real o un fallback
+        const navbarHeight = navbar ? navbar.offsetHeight : 70;
 
         const observerOptions = {
             root: null,
-            rootMargin: `-${navbarHeight + 10}px 0px -50% 0px`, // Ajusta el rootMargin para que active antes
+            rootMargin: `-${navbarHeight + 10}px 0px -50% 0px`,
             threshold: 0
         };
 
@@ -1246,14 +1384,12 @@
         const observer = new IntersectionObserver((entries) => {
             let currentActiveSectionId = null;
 
-            // Encontrar la sección que está más "en vista"
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     currentActiveSectionId = entry.target.getAttribute('id');
                 }
             });
 
-            // Si se encontró una sección activa, actualizar el enlace
             if (currentActiveSectionId) {
                 navLinks.forEach(link => {
                     if (link.getAttribute('href') === `#${currentActiveSectionId}`) {
@@ -1265,7 +1401,6 @@
                     }
                 });
             } else if (window.scrollY < sections[0].offsetTop - navbarHeight && document.querySelector('.menu-list a[href="#inicio"]')) {
-                 // Si estamos al principio de la página, activa "Inicio"
                  navLinks.forEach(l => l.classList.remove('active'));
                  const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
                  if (homeLink) homeLink.classList.add('active');
@@ -1278,7 +1413,6 @@
             observer.observe(section);
         });
 
-        // Asegurar que el enlace "Inicio" esté activo al cargar si la página está al inicio
         window.addEventListener('load', () => {
              const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
              if (window.scrollY === 0 && homeLink) {
@@ -1286,6 +1420,28 @@
                  homeLink.classList.add('active');
                  lastActiveLink = homeLink;
              }
+        });
+        
+        // Lógica del Modal de Contacto
+        const openModalBtn = document.getElementById('open-contact-modal');
+        const modal = document.getElementById('contact-modal');
+        const closeModalBtn = modal.querySelector('.modal-close-btn');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('is-active');
+            document.body.style.overflow = '';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('is-active');
+                document.body.style.overflow = '';
+            }
         });
 
     </script>
