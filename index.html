@@ -123,6 +123,18 @@
             font-size: 0.9em;
             opacity: 0.8;
         }
+         .digital-clock .location {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-left: 1rem;
+            position: relative;
+         }
+         .digital-clock .location::before {
+            content: '|';
+            position: absolute;
+            left: -0.5rem;
+            color: var(--border-color);
+         }
 
 
         body {
@@ -661,6 +673,52 @@
             left: 0;
             top: 0.1rem;
         }
+        
+        /* Sección Métodos de Pago */
+        .payment-methods {
+            background-color: var(--bg);
+            padding: 5rem 2rem;
+        }
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .payment-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .payment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .payment-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .payment-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .payment-card p {
+            font-size: 1rem;
+            opacity: 0.85;
+            text-align: center;
+        }
+        .payment-card p strong {
+            color: var(--secondary);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+        }
+
 
         /* Sección QR */
         .qr-section {
@@ -756,7 +814,28 @@
             opacity: 1;
             transform: translateY(-3px);
         }
-
+        .footer-links {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .footer-link-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text);
+            opacity: 0.8;
+            margin: 0 1rem;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: color 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+        }
+        .footer-link-btn:hover {
+            opacity: 1;
+            color: var(--primary);
+            background-color: var(--bg);
+        }
         /* --- Estilos del Modal --- */
         .modal {
             position: fixed;
@@ -789,6 +868,8 @@
             transform: translateY(-20px);
             transition: transform 0.3s ease;
             text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         .modal.is-active .modal-content {
             transform: translateY(0);
@@ -803,6 +884,9 @@
             margin-bottom: 2rem;
             color: var(--text);
             opacity: 0.9;
+        }
+         .modal-content strong {
+            color: var(--primary);
         }
         .modal-buttons {
             display: flex;
@@ -847,6 +931,96 @@
             transform: rotate(90deg);
         }
         
+        .payment-info p {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            color: var(--text);
+        }
+        .payment-info p strong {
+            color: var(--secondary);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+        }
+        .payment-info {
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+        .payment-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        /* Cookie Consent Banner */
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            color: var(--text);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border-top: 1px solid var(--border-color);
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.5s ease-in-out;
+            max-width: 100%;
+            flex-wrap: wrap;
+        }
+        .cookie-consent.show {
+            transform: translateY(0);
+        }
+        .cookie-consent p {
+            margin: 0;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            text-align: left;
+        }
+        .cookie-consent p a {
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        .cookie-buttons .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            font-size: 0.9rem;
+        }
+        .cookie-buttons .btn:hover {
+            transform: translateY(-2px);
+        }
+        .cookie-buttons .btn-accept {
+            background-color: var(--primary);
+            color: white;
+        }
+        .cookie-buttons .btn-accept:hover {
+            background-color: var(--secondary);
+        }
+        .cookie-buttons .btn-decline {
+            background-color: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border-color);
+        }
+        .cookie-buttons .btn-decline:hover {
+             background-color: var(--border-color);
+             color: var(--text);
+        }
+
         /* Animaciones */
         @keyframes fadeInHero {
             from { opacity: 0; transform: translateY(20px); }
@@ -916,7 +1090,13 @@
             .digital-clock .date {
                 font-size: 0.8em;
             }
-
+            .digital-clock .location {
+                font-size: 0.8em;
+                margin-left: 0;
+            }
+            .digital-clock .location::before {
+                content: none;
+            }
 
             .banner { height: 60vh; min-height: 300px; }
             .hero-content h1 { font-size: 2.2rem; }
@@ -960,6 +1140,9 @@
             }
             .curso-card p { text-align: justify; }
 
+            .payment-methods-grid { grid-template-columns: 1fr; }
+            .payment-card { padding: 2rem; }
+
             .qr-section { padding: 4rem 1.5rem; }
             .qr-section h2 { font-size: 2rem; }
             .qr-section p { font-size: 1rem; text-align: center; }
@@ -977,6 +1160,27 @@
             }
             .whatsapp-btn span { display: none; }
             .whatsapp-btn i { margin-right: 0; font-size: 1.8rem; }
+             .footer-links {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+             .cookie-consent {
+                 flex-direction: column;
+                 text-align: center;
+                 padding: 1.5rem 1rem;
+             }
+             .cookie-consent p {
+                 text-align: center;
+                 font-size: 0.85rem;
+             }
+             .cookie-buttons {
+                 width: 100%;
+                 flex-direction: column;
+             }
+             .cookie-buttons .btn {
+                 width: 100%;
+             }
 
             footer { padding: 2.5rem 1.5rem; }
         }
@@ -1003,6 +1207,7 @@
             <li><a href="#docente"><i class="fas fa-chalkboard-teacher"></i> Instructor</a></li>
             <li><a href="#servicios"><i class="fas fa-laptop-code"></i> Servicios</a></li>
             <li><a href="#cursos"><i class="fas fa-book-open"></i> Cursos</a></li>
+            <li><a href="#pago"><i class="fas fa-dollar-sign"></i> Pagos</a></li>
             <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
             <li>
                 <button class="dark-mode-toggle" aria-label="Toggle Dark Mode">
@@ -1022,6 +1227,7 @@
         <div class="digital-clock">
             <span class="time"></span>
             <span class="date"></span>
+            <span class="location">Cargando...</span>
         </div></strong></center>
 
         <section class="intro-text" aria-labelledby="intro-heading">
@@ -1187,6 +1393,25 @@
             </div>
         </section>
 
+        <section class="payment-methods" id="pago">
+            <h2 class="section-title">Métodos de Pago</h2>
+            <div class="payment-methods-grid container">
+                <div class="payment-card">
+                    <i class="fas fa-university"></i>
+                    <h3>Transferencia Bancaria</h3>
+                    <p>Puedes realizar una transferencia a nuestra cuenta del **Banco Pichincha**.</p>
+                    <p>Una vez realizada, envía el comprobante por WhatsApp al instructor para confirmar tu inscripción.</p>
+                    <p><strong>Número de Cuenta:</strong> 2206904457</p>
+                </div>
+                <div class="payment-card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Pagos en Efectivo</h3>
+                    <p>Para pagar en efectivo, por favor, contacta directamente al instructor a través de su número de **WhatsApp**.</p>
+                    <p>Es necesario coordinar una cita para la entrega del pago y recibir la confirmación de tu inscripción.</p>
+                </div>
+            </div>
+        </section>
+
         <section class="qr-section" id="contacto">
             <h2>¿Listo para empezar tu viaje digital?</h2>
             <p>Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Estamos aquí para resolver tus dudas y ayudarte con tu inscripción!</p>
@@ -1200,6 +1425,10 @@
     </a>
 
     <footer>
+        <div class="footer-links">
+            <button class="footer-link-btn" id="open-terms-modal">Términos y Condiciones</button>
+            <button class="footer-link-btn" id="open-privacy-modal">Privacidad</button>
+        </div>
         <p>&copy; 2025 Clover Educación Digital. Todos los derechos reservados.</p>
         <div class="social-links">
             <a href="https://github.com/Teddyfidel" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
@@ -1226,6 +1455,58 @@
         </div>
     </div>
 
+    <div id="terms-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+            <h3 id="terms-modal-title">Términos y Condiciones</h3>
+            <p><strong>1. Aceptación de los Términos</strong></p>
+            <p>Al acceder y utilizar los servicios de Clover Educación Digital, usted acepta y se compromete a cumplir con los siguientes Términos y Condiciones. Si no está de acuerdo con estos términos, no debe utilizar nuestros servicios.</p>
+            <p><strong>2. Uso de los Servicios</strong></p>
+            <p>Nuestros cursos y servicios están destinados a fines educativos y profesionales. Queda estrictamente prohibido el uso de nuestro contenido con fines ilegales o no autorizados. No debe reproducir, duplicar, copiar, vender, revender o explotar ninguna parte del servicio sin nuestro permiso expreso por escrito.</p>
+            <p><strong>3. Propiedad Intelectual</strong></p>
+            <p>Todo el contenido de este sitio web, incluyendo textos, gráficos, logotipos, imágenes y software, es propiedad de Clover Educación Digital o de sus licenciantes y está protegido por las leyes de derechos de autor. La compra de un curso no otorga la propiedad del contenido, solo una licencia de uso personal y no transferible.</p>
+            <p><strong>4. Pagos y Reembolsos</strong></p>
+            <p>Todos los pagos por cursos y servicios deben realizarse a través de los métodos de pago indicados. Las políticas de reembolso se especificarán de forma clara al momento de la compra de cada curso.</p>
+            <p><strong>5. Modificaciones del Servicio</strong></p>
+            <p>Nos reservamos el derecho de modificar o discontinuar cualquier aspecto de nuestros servicios en cualquier momento, con o sin previo aviso. No seremos responsables ante usted ni ante terceros por cualquier modificación, suspensión o interrupción del servicio.</p>
+            <p><strong>6. Contacto</strong></p>
+            <p>Para cualquier pregunta o aclaración sobre estos términos, puede contactarnos a través de los canales de comunicación proporcionados en el sitio web.</p>
+        </div>
+    </div>
+
+    <div id="privacy-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+            <h3 id="privacy-modal-title">Política de Privacidad</h3>
+            <p><strong>1. Información que Recopilamos</strong></p>
+            <p>Recopilamos información personal que usted nos proporciona voluntariamente al registrarse en un curso, solicitar información o contactarnos. Esta información puede incluir su nombre, dirección de correo electrónico y número de teléfono.</p>
+            <p><strong>2. Uso de la Información</strong></p>
+            <p>Utilizamos la información recopilada para:</p>
+            <ul>
+                <li>Proporcionar y gestionar los servicios que ha solicitado.</li>
+                <li>Comunicarnos con usted sobre nuestros cursos, actualizaciones y ofertas especiales.</li>
+                <li>Mejorar la calidad de nuestros servicios y la experiencia del usuario.</li>
+            </ul>
+            <p><strong>3. Protección de la Información</strong></p>
+            <p>Nos comprometemos a proteger su información personal. Implementamos medidas de seguridad adecuadas para prevenir el acceso no autorizado, la divulgación, alteración o destrucción de sus datos.</p>
+            <p><strong>4. Compartir Información con Terceros</strong></p>
+            <p>No vendemos, comercializamos ni transferimos su información personal a terceros sin su consentimiento, excepto cuando sea necesario para proporcionar un servicio solicitado (por ejemplo, pasarelas de pago) o cuando la ley lo exija.</p>
+            <p><strong>5. Cookies</strong></p>
+            <p>Nuestro sitio web utiliza cookies para mejorar la experiencia de navegación. Las cookies son pequeños archivos de texto que se almacenan en su dispositivo. Puede configurar su navegador para rechazar todas o algunas cookies, aunque esto podría afectar la funcionalidad de nuestro sitio.</p>
+            <p><strong>6. Sus Derechos</strong></p>
+            <p>Usted tiene derecho a acceder, corregir o eliminar su información personal en cualquier momento. Para ejercer estos derechos, por favor, póngase en contacto con nosotros.</p>
+        </div>
+    </div>
+
+    <div class="cookie-consent" id="cookie-consent-banner">
+        <div class="container">
+            <p>Utilizamos cookies para mejorar la experiencia del usuario. Al continuar navegando, acepta nuestra <a href="#" id="open-privacy-modal-cookies">Política de Privacidad</a> y el uso de cookies.
+            <div class="cookie-buttons">
+                <button class="btn btn-accept" id="accept-cookies">Aceptar</button>
+                <button class="btn btn-decline" id="decline-cookies">Rechazar</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // --- Bloquear Clic Derecho y Teclas DevTools (Advertencia: No son 100% seguras) ---
@@ -1299,6 +1580,55 @@
         // Iniciar reloj
         updateClock();
         setInterval(updateClock, 1000);
+
+        // Geolocation
+        function updateLocation(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const locationElement = document.querySelector('.digital-clock .location');
+
+            // Usar una API de geocodificación inversa para obtener el nombre de la ciudad
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.address) {
+                        const city = data.address.city || data.address.town || data.address.village || 'Ubicación';
+                        locationElement.textContent = city;
+                    } else {
+                        locationElement.textContent = 'Ubicación Desconocida';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching location data:', error);
+                    locationElement.textContent = 'Error al obtener ubicación';
+                });
+        }
+
+        function handleLocationError(error) {
+            const locationElement = document.querySelector('.digital-clock .location');
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    locationElement.textContent = 'Ubicación Denegada';
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    locationElement.textContent = 'Ubicación no disponible';
+                    break;
+                case error.TIMEOUT:
+                    locationElement.textContent = 'Tiempo de espera agotado';
+                    break;
+                default:
+                    locationElement.textContent = 'Error al obtener ubicación';
+                    break;
+            }
+        }
+
+        // Solicitar la ubicación al cargar la página si el navegador lo soporta
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(updateLocation, handleLocationError);
+        } else {
+            document.querySelector('.digital-clock .location').textContent = 'Geolocalización no soportada';
+        }
+
 
         // Modo oscuro
         const darkModeToggle = document.querySelector('.dark-mode-toggle');
@@ -1423,25 +1753,109 @@
         });
         
         // Lógica del Modal de Contacto
-        const openModalBtn = document.getElementById('open-contact-modal');
-        const modal = document.getElementById('contact-modal');
-        const closeModalBtn = modal.querySelector('.modal-close-btn');
+        const openContactModalBtn = document.getElementById('open-contact-modal');
+        const contactModal = document.getElementById('contact-modal');
+        const closeContactModalBtn = contactModal.querySelector('.modal-close-btn');
 
-        openModalBtn.addEventListener('click', () => {
-            modal.classList.add('is-active');
+        openContactModalBtn.addEventListener('click', () => {
+            contactModal.classList.add('is-active');
             document.body.style.overflow = 'hidden';
         });
 
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.remove('is-active');
+        closeContactModalBtn.addEventListener('click', () => {
+            contactModal.classList.remove('is-active');
             document.body.style.overflow = '';
         });
 
+        // Lógica de Modales de Términos y Privacidad
+        const openTermsBtn = document.getElementById('open-terms-modal');
+        const termsModal = document.getElementById('terms-modal');
+        const closeTermsBtn = termsModal.querySelector('.modal-close-btn');
+
+        const openPrivacyBtn = document.getElementById('open-privacy-modal');
+        const privacyModal = document.getElementById('privacy-modal');
+        const closePrivacyBtn = privacyModal.querySelector('.modal-close-btn');
+
+        // Nuevo enlace en el banner de cookies
+        const openPrivacyBtnFromCookies = document.getElementById('open-privacy-modal-cookies');
+
+
+        function openModal(modal) {
+            modal.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modal) {
+            modal.classList.remove('is-active');
+            document.body.style.overflow = '';
+        }
+
+        openTermsBtn.addEventListener('click', () => openModal(termsModal));
+        closeTermsBtn.addEventListener('click', () => closeModal(termsModal));
+
+        openPrivacyBtn.addEventListener('click', () => openModal(privacyModal));
+        closePrivacyBtn.addEventListener('click', () => closeModal(privacyModal));
+        openPrivacyBtnFromCookies.addEventListener('click', (e) => {
+             e.preventDefault();
+             openModal(privacyModal);
+        });
+
         window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.classList.remove('is-active');
-                document.body.style.overflow = '';
+            if (event.target === contactModal) {
+                closeModal(contactModal);
             }
+            if (event.target === termsModal) {
+                closeModal(termsModal);
+            }
+            if (event.target === privacyModal) {
+                closeModal(privacyModal);
+            }
+        });
+
+        // Lógica de Aceptación de Cookies
+        const cookieBanner = document.getElementById('cookie-consent-banner');
+        const acceptCookiesBtn = document.getElementById('accept-cookies');
+        const declineCookiesBtn = document.getElementById('decline-cookies');
+
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            const cname = name + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cname) === 0) {
+                    return c.substring(cname.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (getCookie('cookies_accepted') !== 'true') {
+                cookieBanner.classList.add('show');
+            }
+        });
+
+        acceptCookiesBtn.addEventListener('click', () => {
+            setCookie('cookies_accepted', 'true', 365); // Expira en 1 año
+            cookieBanner.classList.remove('show');
+        });
+
+        declineCookiesBtn.addEventListener('click', () => {
+             // Puedes decidir qué hacer aquí. Por ejemplo, simplemente ocultar el banner sin guardar la preferencia.
+             // O guardar una preferencia de rechazo para no volver a mostrarlo en un tiempo.
+             setCookie('cookies_accepted', 'false', 7); // Ocultar por 7 días
+             cookieBanner.classList.remove('show');
         });
 
     </script>
