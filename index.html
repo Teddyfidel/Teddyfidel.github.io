@@ -123,18 +123,6 @@
             font-size: 0.9em;
             opacity: 0.8;
         }
-         .digital-clock .location {
-            font-size: 0.9em;
-            opacity: 0.7;
-            margin-left: 1rem;
-            position: relative;
-         }
-         .digital-clock .location::before {
-            content: '|';
-            position: absolute;
-            left: -0.5rem;
-            color: var(--border-color);
-         }
 
 
         body {
@@ -952,75 +940,7 @@
             color: var(--primary);
             text-align: center;
         }
-
-        /* Cookie Consent Banner */
-        .cookie-consent {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--card-bg);
-            color: var(--text);
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1.5rem;
-            box-shadow: var(--shadow-lg);
-            border-top: 1px solid var(--border-color);
-            z-index: 1000;
-            transform: translateY(100%);
-            transition: transform 0.5s ease-in-out;
-            max-width: 100%;
-            flex-wrap: wrap;
-        }
-        .cookie-consent.show {
-            transform: translateY(0);
-        }
-        .cookie-consent p {
-            margin: 0;
-            font-size: 0.95rem;
-            flex-grow: 1;
-            text-align: left;
-        }
-        .cookie-consent p a {
-            font-weight: 600;
-            text-decoration: underline;
-        }
-        .cookie-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-shrink: 0;
-        }
-        .cookie-buttons .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: var(--border-radius-md);
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            font-size: 0.9rem;
-        }
-        .cookie-buttons .btn:hover {
-            transform: translateY(-2px);
-        }
-        .cookie-buttons .btn-accept {
-            background-color: var(--primary);
-            color: white;
-        }
-        .cookie-buttons .btn-accept:hover {
-            background-color: var(--secondary);
-        }
-        .cookie-buttons .btn-decline {
-            background-color: var(--bg);
-            color: var(--text);
-            border: 1px solid var(--border-color);
-        }
-        .cookie-buttons .btn-decline:hover {
-             background-color: var(--border-color);
-             color: var(--text);
-        }
-
+        
         /* Animaciones */
         @keyframes fadeInHero {
             from { opacity: 0; transform: translateY(20px); }
@@ -1090,13 +1010,7 @@
             .digital-clock .date {
                 font-size: 0.8em;
             }
-            .digital-clock .location {
-                font-size: 0.8em;
-                margin-left: 0;
-            }
-            .digital-clock .location::before {
-                content: none;
-            }
+
 
             .banner { height: 60vh; min-height: 300px; }
             .hero-content h1 { font-size: 2.2rem; }
@@ -1165,22 +1079,6 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
-             .cookie-consent {
-                 flex-direction: column;
-                 text-align: center;
-                 padding: 1.5rem 1rem;
-             }
-             .cookie-consent p {
-                 text-align: center;
-                 font-size: 0.85rem;
-             }
-             .cookie-buttons {
-                 width: 100%;
-                 flex-direction: column;
-             }
-             .cookie-buttons .btn {
-                 width: 100%;
-             }
 
             footer { padding: 2.5rem 1.5rem; }
         }
@@ -1227,7 +1125,6 @@
         <div class="digital-clock">
             <span class="time"></span>
             <span class="date"></span>
-            <span class="location">Cargando...</span>
         </div></strong></center>
 
         <section class="intro-text" aria-labelledby="intro-heading">
@@ -1389,8 +1286,39 @@
                         </ul>
                     </div>
                 </div>
+                 
+                 <div class="curso-card">
+                    <h3><i class="fas fa-calculator"></i>Apoyo Académico en Matemáticas</h3>
+                    <p>Refuerza tus conocimientos y resuelve tus dudas en matemáticas. Ofrecemos clases personalizadas para diferentes niveles, desde aritmética básica hasta cálculo avanzado. Elige la modalidad que mejor se adapte a tus necesidades, por horas o por trabajo específico.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario y Modalidades</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li><strong>Temario Personalizado:</strong> Cubrimos temas como álgebra, geometría, trigonometría, estadística y cálculo diferencial e integral.</li>
+                            <li><strong>Modalidad por Horas:</strong> Sesiones de tutoría individual en vivo para reforzar conceptos, resolver ejercicios y preparar exámenes.</li>
+                            <li><strong>Modalidad por Trabajos:</strong> Ayuda en la resolución de deberes, proyectos o ejercicios específicos con entrega de soluciones detalladas.</li>
+                        </ul>
+                    </div>
+                 </div>
 
-            </div>
+                 <div class="curso-card">
+                    <h3><i class="fas fa-atom"></i>Apoyo Académico en Física</h3>
+                    <p>Comprende los principios fundamentales de la física con la ayuda de un instructor. Ofrecemos tutorías para que domines la mecánica, la termodinámica, el electromagnetismo y más. Puedes contratar el servicio por sesiones de una hora o por trabajos específicos a entregar.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario y Modalidades</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li><strong>Temario Personalizado:</strong> Incluye mecánica clásica, cinemática, dinámica, termodinámica, óptica y electricidad.</li>
+                            <li><strong>Modalidad por Horas:</strong> Clases de apoyo enfocadas en la comprensión de las leyes físicas y la aplicación de fórmulas en problemas prácticos.</li>
+                            <li><strong>Modalidad por Trabajos:</strong> Asesoramiento para la elaboración de proyectos, informes de laboratorio o la resolución completa de guías de ejercicios.</li>
+                        </ul>
+                    </div>
+                 </div>
+                 </div>
         </section>
 
         <section class="payment-methods" id="pago">
@@ -1498,16 +1426,6 @@
         </div>
     </div>
 
-    <div class="cookie-consent" id="cookie-consent-banner">
-        <div class="container">
-            <p>Utilizamos cookies para mejorar la experiencia del usuario. Al continuar navegando, acepta nuestra <a href="#" id="open-privacy-modal-cookies">Política de Privacidad</a> y el uso de cookies.
-            <div class="cookie-buttons">
-                <button class="btn btn-accept" id="accept-cookies">Aceptar</button>
-                <button class="btn btn-decline" id="decline-cookies">Rechazar</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // --- Bloquear Clic Derecho y Teclas DevTools (Advertencia: No son 100% seguras) ---
         document.addEventListener('contextmenu', function(event) {
@@ -1580,55 +1498,6 @@
         // Iniciar reloj
         updateClock();
         setInterval(updateClock, 1000);
-
-        // Geolocation
-        function updateLocation(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            const locationElement = document.querySelector('.digital-clock .location');
-
-            // Usar una API de geocodificación inversa para obtener el nombre de la ciudad
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.address) {
-                        const city = data.address.city || data.address.town || data.address.village || 'Ubicación';
-                        locationElement.textContent = city;
-                    } else {
-                        locationElement.textContent = 'Ubicación Desconocida';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching location data:', error);
-                    locationElement.textContent = 'Error al obtener ubicación';
-                });
-        }
-
-        function handleLocationError(error) {
-            const locationElement = document.querySelector('.digital-clock .location');
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    locationElement.textContent = 'Ubicación Denegada';
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    locationElement.textContent = 'Ubicación no disponible';
-                    break;
-                case error.TIMEOUT:
-                    locationElement.textContent = 'Tiempo de espera agotado';
-                    break;
-                default:
-                    locationElement.textContent = 'Error al obtener ubicación';
-                    break;
-            }
-        }
-
-        // Solicitar la ubicación al cargar la página si el navegador lo soporta
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(updateLocation, handleLocationError);
-        } else {
-            document.querySelector('.digital-clock .location').textContent = 'Geolocalización no soportada';
-        }
-
 
         // Modo oscuro
         const darkModeToggle = document.querySelector('.dark-mode-toggle');
@@ -1776,10 +1645,6 @@
         const privacyModal = document.getElementById('privacy-modal');
         const closePrivacyBtn = privacyModal.querySelector('.modal-close-btn');
 
-        // Nuevo enlace en el banner de cookies
-        const openPrivacyBtnFromCookies = document.getElementById('open-privacy-modal-cookies');
-
-
         function openModal(modal) {
             modal.classList.add('is-active');
             document.body.style.overflow = 'hidden';
@@ -1795,11 +1660,7 @@
 
         openPrivacyBtn.addEventListener('click', () => openModal(privacyModal));
         closePrivacyBtn.addEventListener('click', () => closeModal(privacyModal));
-        openPrivacyBtnFromCookies.addEventListener('click', (e) => {
-             e.preventDefault();
-             openModal(privacyModal);
-        });
-
+        
         window.addEventListener('click', (event) => {
             if (event.target === contactModal) {
                 closeModal(contactModal);
@@ -1811,53 +1672,6 @@
                 closeModal(privacyModal);
             }
         });
-
-        // Lógica de Aceptación de Cookies
-        const cookieBanner = document.getElementById('cookie-consent-banner');
-        const acceptCookiesBtn = document.getElementById('accept-cookies');
-        const declineCookiesBtn = document.getElementById('decline-cookies');
-
-        function setCookie(name, value, days) {
-            const d = new Date();
-            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + d.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
-        }
-
-        function getCookie(name) {
-            const cname = name + "=";
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const ca = decodedCookie.split(';');
-            for(let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(cname) === 0) {
-                    return c.substring(cname.length, c.length);
-                }
-            }
-            return "";
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            if (getCookie('cookies_accepted') !== 'true') {
-                cookieBanner.classList.add('show');
-            }
-        });
-
-        acceptCookiesBtn.addEventListener('click', () => {
-            setCookie('cookies_accepted', 'true', 365); // Expira en 1 año
-            cookieBanner.classList.remove('show');
-        });
-
-        declineCookiesBtn.addEventListener('click', () => {
-             // Puedes decidir qué hacer aquí. Por ejemplo, simplemente ocultar el banner sin guardar la preferencia.
-             // O guardar una preferencia de rechazo para no volver a mostrarlo en un tiempo.
-             setCookie('cookies_accepted', 'false', 7); // Ocultar por 7 días
-             cookieBanner.classList.remove('show');
-        });
-
     </script>
 </body>
 </html>
