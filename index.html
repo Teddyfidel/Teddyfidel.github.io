@@ -1090,9 +1090,90 @@
             -ms-user-select: none;
         }
 
+         /* --- Nuevos estilos para la pantalla de carga y efectos de aparición --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: var(--shadow-lg);
+            animation: bounce 1s infinite alternate;
+            margin-bottom: 2rem;
+            -webkit-user-drag: none;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-20px); }
+        }
+
+        .loader-progress {
+            width: 250px;
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-bar {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0;
+            border-radius: 4px;
+            transition: width 0.3s ease-out;
+        }
+
+        .loader-text {
+            color: var(--text);
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+            font-family: var(--font-heading);
+        }
+
+        /* Efectos de aparición con Intersection Observer */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
     </style>
 </head>
 <body>
+    <div id="preloader">
+        <img src="logofondo.jpeg" alt="Clover Logo" class="loader-logo">
+        <div class="loader-progress">
+            <div class="loader-bar"></div>
+        </div>
+        <div class="loader-text">Cargando...</div>
+    </div>
+    
     <nav>
         <div class="logo">
             <a href="#inicio"><span>Clover</span></a>
@@ -1118,18 +1199,20 @@
 
     <main>
         <section class="banner" id="inicio">
-           
+            <div class="hero-content fade-in">
+                
+            </div>
         </section>
         <center>
             <strong>
-        <div class="digital-clock">
+        <div class="digital-clock fade-in">
             <span class="time"></span>
             <span class="date"></span>
         </div></strong></center>
 
         <section class="intro-text" aria-labelledby="intro-heading">
-           <div class="container text-center">
-               <h1 id="intro-heading">Transforma tu futuro con nuestros cursos digitales</h1>
+           <div class="container text-center fade-in">
+               <h1 id="intro-heading">Una forma moderna de aprender</h1>
                <p>Aprende habilidades tecnológicas clave con un instructor experimentado y potencia tu perfil profesional o académico. Ofrecemos formación práctica y actualizada en herramientas esenciales para el mundo digital.</p>
           <a href="#cursos" class="cta-button">Explora Nuestros Cursos</a>
             </div>
@@ -1137,10 +1220,10 @@
 
         <section class="docente" id="docente">
             <div class="docente-container">
-                <div class="docente-imagen">
+                <div class="docente-imagen fade-in">
                     <img src="docente.jpeg" alt="Foto del Ing. Teddy Valencia">
                 </div>
-                <div class="docente-info">
+                <div class="docente-info fade-in">
                     <h3>Tu guía experto</h3>
                     <h2>Ing. Teddy Valencia</h2>
                     <p>Ingeniero en Tecnología de la Información con más de 5 años de experiencia práctica en desarrollo front-end (HTML, CSS, JavaScript), gestión de bases de datos relacionales (SQL) y edición profesional de video. Apasionado por la enseñanza y dedicado a facilitar el aprendizaje de conceptos tecnológicos complejos de manera clara y efectiva.</p>
@@ -1153,27 +1236,27 @@
         </section>
 
         <section class="servicios" id="servicios">
-            <h2 class="section-title">Servicios de Desarrollo Web Profesional</h2>
+            <h2 class="section-title fade-in">Servicios de Desarrollo Web Profesional</h2>
             <div class="servicios-grid container">
-                <div class="servicio-card">
+                <div class="servicio-card fade-in">
                     <i class="fas fa-globe"></i>
                     <h3>Sitios Web para Empresas</h3>
                     <p>Desarrollamos páginas web corporativas modernas y responsivas que se adaptan a cualquier dispositivo. Incluye diseño personalizado, optimización SEO y panel de administración fácil de usar.</p>
                 </div>
 
-                <div class="servicio-card">
+                <div class="servicio-card fade-in">
                     <i class="fas fa-graduation-cap"></i>
                     <h3>Plataformas Educativas</h3>
                     <p>Creación de sistemas LMS personalizados para instituciones educativas con aulas virtuales, gestión de cursos, evaluaciones en línea y seguimiento de progreso estudiantil.</p>
                 </div>
 
-                <div class="servicio-card">
+                <div class="servicio-card fade-in">
                     <i class="fas fa-shopping-cart"></i>
                     <h3>Tiendas Online</h3>
                     <p>Desarrollo de e-commerce completos con pasarelas de pago, gestión de inventario, carrito de compras y integración con redes sociales.</p>
                 </div>
 
-                <div class="servicio-card">
+                <div class="servicio-card fade-in">
                     <i class="fas fa-cogs"></i>
                     <h3>Sistemas a Medida</h3>
                     <p>Creación de software personalizado para gestión interna de negocios: sistemas de inventario, CRM, reservas y más, adaptado a tus necesidades específicas.</p>
@@ -1182,9 +1265,9 @@
         </section>
 
         <section class="cursos" id="cursos">
-            <h2 class="section-title">Nuestra Oferta Educativa</h2>
+            <h2 class="section-title fade-in">Nuestra Oferta Educativa</h2>
             <div class="cursos-grid">
-                <div class="curso-card">
+                <div class="curso-card fade-in">
                     <h3><i class="fas fa-award"></i>Paquete Completo de Office</h3>
                     <p>Domina las herramientas esenciales de Microsoft Office (Word, Excel, PowerPoint) para optimizar tu productividad en cualquier entorno académico o profesional, creando documentos, hojas de cálculo y presentaciones impactantes.</p>
                     <button class="toggle-btn" aria-expanded="false">
@@ -1200,7 +1283,7 @@
                     </div>
                 </div>
 
-                <div class="curso-card">
+                <div class="curso-card fade-in">
                     <h3><i class="fas fa-award"></i>Desarrollo Web Full Stack</h3>
                     <p>Construye aplicaciones web interactivas y funcionales desde cero. Aprende las bases del frontend con HTML5, CSS3 (incluyendo Flexbox y Grid para diseño responsive) y JavaScript moderno (ES6+), y maneja datos con bases de datos relacionales usando SQL.</p>
                      <button class="toggle-btn" aria-expanded="false">
@@ -1217,7 +1300,7 @@
                     </div>
                 </div>
 
-                <div class="curso-card">
+                <div class="curso-card fade-in">
                     <h3><i class="fas fa-award"></i>Fundamentos de Programación</h3>
                     <p>Iníciate en el apasionante mundo del código desarrollando una sólida base lógica. Aprende a resolver problemas usando pseudocódigo (Pseint) y da tus primeros pasos en lenguajes demandados como Python y C++, además de entender cómo interactuar con bases de datos SQL.</p>
                     <button class="toggle-btn" aria-expanded="false">
@@ -1234,7 +1317,7 @@
                     </div>
                 </div>
 
-                 <div class="curso-card">
+                 <div class="curso-card fade-in">
                     <h3><i class="fas fa-award"></i>Manejo Experto de Windows</h3>
                     <p>Saca el máximo provecho al sistema operativo más utilizado. Aprende a navegar eficientemente, organizar tus archivos y carpetas, personalizar tu entorno, utilizar herramientas del sistema y aplicar buenas prácticas de seguridad.</p>
                     <button class="toggle-btn" aria-expanded="false">
@@ -1251,7 +1334,7 @@
                     </div>
                 </div>
 
-                <div class="curso-card">
+                <div class="curso-card fade-in">
                     <h3><i class="fas fa-award"></i>Herramientas de Inteligencia Artificial</h3>
                     <p>Descubre cómo la Inteligencia Artificial puede potenciar tu creatividad y eficiencia. Aprende a utilizar herramientas líderes como ChatGPT, Gemini y Copilot para generar texto, obtener ideas, programar, editar imágenes y optimizar tus tareas diarias.</p>
                     <button class="toggle-btn" aria-expanded="false">
@@ -1268,7 +1351,7 @@
                     </div>
                 </div>
 
-                <div class="curso-card">
+                <div class="curso-card fade-in">
                     <h3><i class="fas fa-award"></i>Edición de Video Profesional</h3>
                     <p>Aprende a crear videos atractivos y de alta calidad utilizando los programas líderes del mercado: Camtasia, Filmora y Sony Vegas. Ideal para creadores de contenido, educadores y profesionales que buscan mejorar su comunicación audiovisual.</p>
                     <button class="toggle-btn" aria-expanded="false">
@@ -1287,7 +1370,7 @@
                     </div>
                 </div>
                  
-                 <div class="curso-card">
+                 <div class="curso-card fade-in">
                     <h3><i class="fas fa-calculator"></i>Apoyo Académico en Matemáticas</h3>
                     <p>Refuerza tus conocimientos y resuelve tus dudas en matemáticas. Ofrecemos clases personalizadas para diferentes niveles, desde aritmética básica hasta cálculo avanzado. Elige la modalidad que mejor se adapte a tus necesidades, por horas o por trabajo específico.</p>
                     <button class="toggle-btn" aria-expanded="false">
@@ -1303,7 +1386,7 @@
                     </div>
                  </div>
 
-                 <div class="curso-card">
+                 <div class="curso-card fade-in">
                     <h3><i class="fas fa-atom"></i>Apoyo Académico en Física</h3>
                     <p>Comprende los principios fundamentales de la física con la ayuda de un instructor. Ofrecemos tutorías para que domines la mecánica, la termodinámica, el electromagnetismo y más. Puedes contratar el servicio por sesiones de una hora o por trabajos específicos a entregar.</p>
                     <button class="toggle-btn" aria-expanded="false">
@@ -1322,16 +1405,16 @@
         </section>
 
         <section class="payment-methods" id="pago">
-            <h2 class="section-title">Métodos de Pago</h2>
+            <h2 class="section-title fade-in">Métodos de Pago</h2>
             <div class="payment-methods-grid container">
-                <div class="payment-card">
+                <div class="payment-card fade-in">
                     <i class="fas fa-university"></i>
                     <h3>Transferencia Bancaria</h3>
                     <p>Puedes realizar una transferencia a nuestra cuenta del **Banco Pichincha**.</p>
                     <p>Una vez realizada, envía el comprobante por WhatsApp al instructor para confirmar tu inscripción.</p>
                     <p><strong>Número de Cuenta:</strong> 2206904457</p>
                 </div>
-                <div class="payment-card">
+                <div class="payment-card fade-in">
                     <i class="fas fa-money-bill-wave"></i>
                     <h3>Pagos en Efectivo</h3>
                     <p>Para pagar en efectivo, por favor, contacta directamente al instructor a través de su número de **WhatsApp**.</p>
@@ -1341,9 +1424,9 @@
         </section>
 
         <section class="qr-section" id="contacto">
-            <h2>¿Listo para empezar tu viaje digital?</h2>
-            <p>Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Estamos aquí para resolver tus dudas y ayudarte con tu inscripción!</p>
-            <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code">
+            <h2 class="fade-in">¿Listo para empezar tu viaje digital?</h2>
+            <p class="fade-in">Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Estamos aquí para resolver tus dudas y ayudarte con tu inscripción!</p>
+            <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code fade-in">
         </section>
     </main>
 
@@ -1353,12 +1436,12 @@
     </a>
 
     <footer>
-        <div class="footer-links">
+        <div class="footer-links fade-in">
             <button class="footer-link-btn" id="open-terms-modal">Términos y Condiciones</button>
             <button class="footer-link-btn" id="open-privacy-modal">Privacidad</button>
         </div>
-        <p>&copy; 2025 Clover Educación Digital. Todos los derechos reservados.</p>
-        <div class="social-links">
+        <p class="fade-in">&copy; 2025 Clover Educación Digital. Todos los derechos reservados.</p>
+        <div class="social-links fade-in">
             <a href="https://github.com/Teddyfidel" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
             <a href="#inicio" class="active"><i class="fas fa-home"></i></a>
         </div>
@@ -1672,6 +1755,47 @@
                 closeModal(privacyModal);
             }
         });
+
+        // --- Nuevas funciones para la pantalla de carga y efectos de aparición ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const loaderBar = document.querySelector('.loader-bar');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                if (progress <= 100) {
+                    loaderBar.style.width = `${progress}%`;
+                }
+                if (progress >= 105) {
+                    clearInterval(interval);
+                    preloader.classList.add('hidden');
+                    // Mostrar contenido de la página después de que la pantalla de carga se oculte
+                    preloader.addEventListener('transitionend', () => {
+                        preloader.style.display = 'none';
+                        // Iniciar la animación de aparición de los elementos del cuerpo
+                        initScrollAnimations();
+                    }, { once: true });
+                }
+            }, 50);
+        });
+
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
+        }
     </script>
 </body>
 </html>
