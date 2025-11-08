@@ -3,1430 +3,1843 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechShop - Tu Tienda Virtual</title>
+    <title>Clover - Educación Digital Moderna</title>
+    <link rel="icon" type="image/x-icon" href="iconno.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3a0ca3;
-            --accent-color: #f72585;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --success-color: #4cc9f0;
-            --warning-color: #f8961e;
-            --card-bg: #ffffff;
-            --body-bg: #f5f7fa;
-            --text-color: #333333;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            /* Colores Modo Claro */
+            --primary-light: #2563eb; /* Azul corporativo */
+            --secondary-light: #1e40af; /* Azul más oscuro para contraste */
+            --accent-light: #60a5fa; /* Azul claro para acentos */
+            --text-light: #1f2937; /* Gris muy oscuro */
+            --bg-light: #f9fafb; /* Fondo principal muy claro */
+            --card-bg-light: #ffffff; /* Fondo de tarjetas blanco */
+            --border-light: #e5e7eb; /* Gris claro para bordes */
+            --nav-bg-light: rgba(255, 255, 255, 0.9); /* Blanco semitransparente */
+            --shadow-color-light: rgba(0, 0, 0, 0.08);
+
+            /* Colores Modo Oscuro */
+            --primary-dark: #60a5fa; /* Azul claro para primario en dark */
+            --secondary-dark: #3b82f6; /* Azul vibrante para secundario en dark */
+            --accent-dark: #1d4ed8; /* Azul oscuro para acentos */
+            --text-dark: #e5e7eb; /* Gris claro para texto */
+            --bg-dark: #1a202c; /* Fondo principal oscuro */
+            --card-bg-dark: #2d3748; /* Fondo de tarjetas oscuro */
+            --border-dark: #4a5568; /* Gris medio para bordes */
+            --nav-bg-dark: rgba(26, 32, 44, 0.9); /* Gris oscuro semitransparente */
+            --shadow-color-dark: rgba(0, 0, 0, 0.3);
+
+            /* Configuraciones Generales */
+            --font-primary: 'Lora', serif; /* Fuente elegante para el cuerpo */
+            --font-heading: 'Playfair Display', serif; /* Fuente formal para títulos */
+            --shadow-sm: 0 1px 3px 0 var(--shadow-color);
+            --shadow-md: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+            --shadow-lg: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
+            --border-radius-sm: 0.375rem; /* 6px */
+            --border-radius-md: 0.5rem; /* 8px */
+            --border-radius-lg: 0.75rem; /* 12px */
+            --border-radius-xl: 1rem; /* 16px */
+            --transition-speed: 0.3s;
         }
 
-        .dark-mode {
-            --primary-color: #4895ef;
-            --secondary-color: #560bad;
-            --accent-color: #f72585;
-            --light-color: #121212;
-            --dark-color: #e9ecef;
-            --success-color: #4cc9f0;
-            --warning-color: #f8961e;
-            --card-bg: #1e1e1e;
-            --body-bg: #121212;
-            --text-color: #e9ecef;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        /* Asignación inicial de variables (Modo Claro por defecto) */
+        :root {
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --accent: var(--accent-light);
+            --text: var(--text-light);
+            --bg: var(--bg-light);
+            --card-bg: var(--card-bg-light);
+            --border-color: var(--border-light);
+            --nav-bg: var(--nav-bg-light);
+            --shadow-color: var(--shadow-color-light);
+        }
+
+        /* Estilos para Modo Oscuro */
+        body.dark-mode {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --accent: var(--accent-dark);
+            --text: var(--text-dark);
+            --bg: var(--bg-dark);
+            --card-bg: var(--card-bg-dark);
+            --border-color: var(--border-dark);
+            --nav-bg: var(--nav-bg-dark);
+            --shadow-color: var(--shadow-color-dark);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-primary);
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
+
+        /* --- Ocultar Scrollbar --- */
+        html {
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        }
+        html::-webkit-scrollbar { /* WebKit */
+          width: 0;
+          height: 0;
+        }
+
+        .digital-clock {
+            font-family: 'Merriweather', serif; /* Fuente más formal para el reloj */
+            font-size: 1.2rem;
+            color: var(--primary);
+            background: var(--card-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            display: inline-flex;
+            gap: 0.75rem;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap;
+        }
+
+        .digital-clock span {
+            display: inline-block;
+        }
+        .digital-clock .date {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
 
         body {
-            background-color: var(--body-bg);
-            color: var(--text-color);
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
+        main {
+             flex-grow: 1;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.3;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            color: var(--primary);
+        }
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.75rem; }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+            opacity: 0.9;
+            text-align: justify;
+        }
+
+        a { color: var(--accent); text-decoration: none; transition: color var(--transition-speed); }
+        a:hover { color: var(--secondary); }
+
+        /* Contenedor Genérico */
         .container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        .text-center {
+            text-align: center;
         }
 
-        /* Header */
-        header {
-            background-color: var(--card-bg);
-            box-shadow: var(--shadow);
+        /* Navbar */
+        nav {
+            background: var(--nav-bg);
+            padding: 0.8rem 2rem;
             position: sticky;
             top: 0;
-            z-index: 100;
-            transition: var(--transition);
-        }
-
-        .header-content {
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
         }
-
-        .logo {
+        .nav-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+        }
+        .logo a {
+            color: var(--primary);
+            font-weight: 700;
             font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--primary-color);
+            font-family: var(--font-heading);
+            letter-spacing: -0.5px;
+        }
+        .logo a span {
+            color: var(--secondary);
         }
 
-        .logo i {
-            font-size: 2rem;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .theme-toggle {
+        .menu-btn {
+            display: none;
             background: none;
             border: none;
-            font-size: 1.5rem;
+            color: var(--text);
+            font-size: 1.8rem;
             cursor: pointer;
-            color: var(--text-color);
-            transition: var(--transition);
+            padding: 0.5rem;
         }
 
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            transition: var(--transition);
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: var(--accent-color);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
+        .menu-list {
+            list-style: none;
             display: flex;
-            justify-content: center;
+            gap: 1.8rem;
             align-items: center;
-            font-size: 0.8rem;
-            font-weight: bold;
         }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-            margin-bottom: 40px;
-            border-radius: 0 0 20px 20px;
+        .menu-list a {
+            color: var(--text);
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--border-radius-sm);
+            position: relative;
+            transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        .menu-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width var(--transition-speed) ease;
+            border-radius: 2px;
         }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
+        .menu-list a:hover, .menu-list a.active {
+            color: var(--primary);
+            transform: translateY(-2px);
         }
-
-        .cta-button {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
+        .menu-list a:hover::after, .menu-list a.active::after {
+            width: 100%;
+        }
+         body.dark-mode .menu-list a:hover, body.dark-mode .menu-list a.active {
+             color: var(--primary-dark);
+         }
+        .menu-list a i {
             font-size: 1.1rem;
+            color: var(--accent);
+        }
+        .menu-list a:hover i, .menu-list a.active i {
+            color: var(--primary);
+        }
+        body.dark-mode .menu-list a:hover i, body.dark-mode .menu-list a.active i {
+            color: var(--primary-dark);
+        }
+
+        /* Dark Mode Toggle Button */
+        .dark-mode-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text);
             cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
+            padding: 0.6rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            box-shadow: var(--shadow-sm);
+            transition: background-color var(--transition-speed), transform var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+        }
+        .dark-mode-toggle:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+         body.dark-mode .dark-mode-toggle {
+             background: var(--card-bg-dark);
+             color: var(--text-dark);
+         }
+         body.dark-mode .dark-mode-toggle:hover {
+             background: var(--primary-dark);
+             color: white;
+             border-color: var(--primary-dark);
+         }
+        .dark-mode-toggle .fa-sun { display: none; }
+        body.dark-mode .dark-mode-toggle .fa-moon { display: none; }
+        body.dark-mode .dark-mode-toggle .fa-sun { display: inline-block; }
+
+        /* Google Translate Widget */
+        .goog-te-gadget {
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            color: var(--text);
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .goog-te-gadget a, .goog-te-gadget span {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.2rem 0.5rem;
+        }
+        .goog-te-gadget img {
+            display: none;
+        }
+        .goog-te-combo {
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text);
+            border-radius: var(--border-radius-sm);
+            padding: 0.4rem;
+            font-size: 0.9rem;
+            transition: all var(--transition-speed);
+        }
+        .goog-te-combo:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        .skiptranslate.goog-te-gadget {
+            line-height: initial;
         }
 
+        /* Banner / Hero Section */
+        .banner {
+            height: 70vh;
+            min-height: 400px;
+            background: url('logofondo.jpeg') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            scroll-margin-top: 70px;
+        }
+        .banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+             z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 2rem;
+        }
+        .hero-content h1 {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 800;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            animation: fadeInHero 1s ease-out forwards;
+        }
+        .hero-content p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInHero 1.2s ease-out forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow-md);
+            transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+            animation: fadeInHero 1.4s ease-out forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
         .cta-button:hover {
-            background-color: #d81159;
-            transform: translateY(-3px);
+            background-color: var(--secondary-light);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
 
-        /* Productos */
-        .products-section {
-            padding: 40px 0;
+        /* Sección General */
+        section {
+            padding: 5rem 2rem;
+            scroll-margin-top: 80px;
+            position: relative;
         }
-
         .section-title {
             text-align: center;
-            margin-bottom: 40px;
-            color: var(--text-color);
-            font-size: 2.2rem;
+            margin-bottom: 3.5rem;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--primary);
             position: relative;
+            padding-bottom: 1rem;
         }
-
         .section-title::after {
             content: '';
-            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: var(--primary-color);
-            margin: 10px auto;
+            background: var(--accent);
             border-radius: 2px;
         }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+        /* Texto Introductorio */
+        .intro-text {
+            background-color: var(--bg);
+            padding: 5rem 2rem;
+            text-align: center;
+            scroll-margin-top: 70px;
+        }
+        .intro-text h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .intro-text p {
+            font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+            color: var(--text);
+            text-align: center;
         }
 
-        .product-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
+        /* Sección Docente */
+        .docente { background-color: var(--card-bg); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .docente-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .docente-imagen {
+            flex: 0 0 300px;
+            height: 300px;
+            border-radius: 50%;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+            border: 6px solid var(--bg);
+            margin: 0 auto;
+            transition: transform 0.3s ease;
         }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        .docente-imagen:hover {
+            transform: scale(1.03);
         }
-
-        .product-image {
+        .docente-imagen img {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
+            display: block;
+            -webkit-user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
-
-        .product-info {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
-
-        .product-description {
-            color: #6c757d;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            flex-grow: 1;
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            flex: 1;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-
-        /* Carrito */
-        .cart-modal {
-            position: fixed;
-            top: 0;
-            right: -450px;
-            width: 100%;
-            max-width: 450px;
-            height: 100vh;
-            background-color: var(--card-bg);
-            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
-            transition: right 0.4s ease;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cart-modal.open {
-            right: 0;
-        }
-
-        .cart-header {
-            padding: 20px;
-            border-bottom: 1px solid #dee2e6;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: white;
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .cart-item-image {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-right: 15px;
-        }
-
-        .cart-item-details {
-            flex: 1;
-        }
-
-        .cart-item-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: var(--text-color);
-        }
-
-        .cart-item-price {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .cart-item-quantity {
-            display: flex;
-            align-items: center;
-        }
-
-        .quantity-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .quantity-btn:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .quantity-input {
-            width: 50px;
-            text-align: center;
-            margin: 0 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            padding: 5px;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-        }
-
-        .remove-item {
-            background: none;
-            border: none;
-            color: var(--accent-color);
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .remove-item:hover {
-            color: #d81159;
-        }
-
-        .cart-footer {
-            padding: 20px;
-            border-top: 1px solid #dee2e6;
-            background-color: var(--card-bg);
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: var(--text-color);
-        }
-
-        .checkout-btn {
-            background-color: var(--success-color);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            width: 100%;
+        .docente-info { flex: 1; min-width: 300px; }
+        .docente-info h3 {
+            color: var(--secondary);
             font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: var(--font-primary);
+        }
+        .docente-info h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        .docente-info p {
+            opacity: 0.85;
+            margin-bottom: 1rem;
+            color: var(--text);
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+        .docente-info p a { font-weight: 600; color: var(--primary); }
+        .docente-info p a:hover { text-decoration: underline; }
+
+        /* Estilos del botón para abrir el modal */
+        .btn-contacto-docente {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            border: none;
             cursor: pointer;
-            transition: var(--transition);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-md);
+            margin-top: 1.5rem;
+            transition: background-color var(--transition-speed), transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-contacto-docente:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        body.dark-mode .btn-contacto-docente:hover {
+            background-color: var(--secondary-dark);
+        }
+
+
+        /* Sección Servicios */
+        .servicios {
+            background-color: var(--bg);
+        }
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        .servicio-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .servicio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .servicio-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .servicio-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .servicio-card p {
+            font-size: 1rem;
+            opacity: 0.85;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        /* Sección Cursos */
+        .cursos { background-color: var(--bg); border-top: 1px solid var(--border-color); }
+        .cursos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .curso-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .curso-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .curso-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .curso-card h3 i {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0;
+        }
+
+        .curso-card p {
+            font-size: 0.98rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            color: var(--text);
+            text-align: justify;
+        }
+
+        /* Botón Acordeón Cursos */
+        .toggle-btn {
+            background: var(--bg);
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            padding: 0.9rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            text-align: left;
+            font-weight: 600;
+            transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+            margin-top: auto;
+        }
+        .toggle-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .toggle-btn i {
+            transition: transform var(--transition-speed) ease;
+        }
+        .toggle-btn.active i {
+            transform: rotate(180deg);
+        }
+        body.dark-mode .toggle-btn:hover {
+            background-color: var(--secondary-dark);
+            border-color: var(--secondary-dark);
+            color: white;
+        }
+
+        /* Info Acordeón Cursos */
+        .curso-info {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-in-out, padding-top 0.6s ease-in-out, margin-top 0.6s ease-in-out, border-top 0.6s ease-in-out;
+            border-top: 1px solid transparent;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        .curso-info.active {
+            max-height: 500px;
+            border-top-color: var(--border-color);
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+        .curso-info ul {
+            padding-left: 1.5rem;
+            list-style: none;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .curso-info li {
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            opacity: 0.85;
+            color: var(--text);
+            text-align: justify;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+        .curso-info li::before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
+        }
+        
+        /* Sección Métodos de Pago */
+        .payment-methods {
+            background-color: var(--bg);
+            padding: 5rem 2rem;
+        }
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .payment-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .payment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .payment-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .payment-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .payment-card p {
+            font-size: 1rem;
+            opacity: 0.85;
+            text-align: center;
+        }
+        .payment-card p strong {
+            color: var(--secondary);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+        }
+
+
+        /* Sección QR */
+        .qr-section {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        .qr-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 2.5rem;
+        }
+        .qr-section p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem auto;
+            opacity: 0.85;
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+        .qr-code {
+            display: block;
+            max-width: 250px;
+            margin: 1.5rem auto;
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 6px solid var(--bg);
+            -webkit-user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            transition: transform 0.3s ease;
+        }
+        .qr-code:hover {
+            transform: scale(1.05);
+        }
+
+        /* Botón Flotante WhatsApp */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            left: auto;
+            background: #25d366;
+            color: white;
+            padding: 1rem 1.8rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .whatsapp-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.6);
+        }
+        .whatsapp-btn i { font-size: 1.6rem; }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            color: var(--text);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+        }
+        footer p {
+            color: var(--text);
+            opacity: 0.75;
+            margin: 0;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        .social-links {
+            margin-top: 1.5rem;
+        }
+        .social-links a {
+            color: var(--text);
+            opacity: 0.7;
+            margin: 0 0.8rem;
+            font-size: 1.8rem;
+            transition: color 0.3s ease, opacity 0.3s ease, transform 0.2s ease;
+        }
+        .social-links a:hover {
+            color: var(--primary);
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+        .footer-links {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .footer-link-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text);
+            opacity: 0.8;
+            margin: 0 1rem;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: color 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+        }
+        .footer-link-btn:hover {
+            opacity: 1;
+            color: var(--primary);
+            background-color: var(--bg);
+        }
+        /* --- Estilos del Modal --- */
+        .modal {
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        .checkout-btn:hover {
-            background-color: #3a9fc9;
+        .modal.is-active {
+            display: flex;
+            opacity: 1;
         }
-
-        .empty-cart {
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: var(--border-radius-lg);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
             text-align: center;
-            padding: 40px 20px;
-            color: #6c757d;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal.is-active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-content h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .modal-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+         .modal-content strong {
+            color: var(--primary);
+        }
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .modal-buttons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+        .modal-buttons a:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-whatsapp { background-color: #25d366; }
+        .btn-github { background-color: #171515; }
+        body.dark-mode .btn-github { background-color: #f6f8fa; color: black; }
+        .btn-call { background-color: #0e76a8; }
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            opacity: 0.6;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .modal-close-btn:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+        
+        .payment-info p {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            color: var(--text);
+        }
+        .payment-info p strong {
+            color: var(--secondary);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+        }
+        .payment-info {
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+        .payment-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInHero {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .empty-cart i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #dee2e6;
+        /* Responsive */
+        @media (max-width: 992px) {
+            .menu-list {
+                gap: 1rem;
+            }
+            .menu-list a {
+                padding: 0.4rem 0.6rem;
+            }
         }
 
-        .overlay {
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+            p, .curso-info li { font-size: 0.9rem; }
+
+            nav { padding: 0.8rem 1rem; }
+            .menu-btn { display: block; }
+            .menu-list {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--nav-bg);
+                padding: 1rem;
+                flex-direction: column;
+                gap: 0.8rem;
+                box-shadow: var(--shadow-lg);
+                border-top: 1px solid var(--border-color);
+                align-items: stretch;
+            }
+            .menu-list.active { display: flex; }
+            .menu-list li { width: 100%; }
+            .menu-list a {
+                display: block;
+                text-align: center;
+                padding: 0.8rem 1rem;
+                background: var(--bg);
+                border-radius: var(--border-radius-sm);
+                border: 1px solid var(--border-color);
+            }
+            .menu-list a:hover, .menu-list a.active {
+                background: var(--primary);
+                color: white;
+            }
+             .menu-list a:hover::after, .menu-list a.active::after {
+                 width: 0;
+             }
+            .dark-mode-toggle {
+                order: 1;
+                margin: 0.8rem auto 0.2rem auto;
+            }
+
+            .digital-clock {
+                font-size: 1rem;
+                padding: 0.6rem 1rem;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+            .digital-clock .date {
+                font-size: 0.8em;
+            }
+            .intro-text .translate-container {
+                 margin-top: 1.5rem;
+            }
+
+            .banner { height: 60vh; min-height: 300px; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content p { font-size: 1rem; }
+            .cta-button { padding: 0.9rem 2rem; }
+
+            section { padding: 4rem 1.5rem; }
+            .section-title { font-size: 2rem; margin-bottom: 2.5rem; }
+
+            .intro-text { padding: 4rem 1.5rem; }
+            .intro-text h1 { font-size: 2rem; }
+            .intro-text p { font-size: 1rem; text-align: center; }
+
+            .docente-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 3rem;
+            }
+            .docente-imagen {
+                flex-basis: 250px;
+                width: 250px;
+                height: 250px;
+                margin: 0 auto;
+            }
+            .docente-info { text-align: center; }
+            .docente-info p { text-align: justify; }
+            .btn-contacto-docente {
+                margin: 1.5rem auto 0;
+            }
+
+
+            .servicios-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .servicio-card { padding: 2rem; }
+
+            .cursos-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .curso-card h3 {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            .curso-card p { text-align: justify; }
+
+            .payment-methods-grid { grid-template-columns: 1fr; }
+            .payment-card { padding: 2rem; }
+
+            .qr-section { padding: 4rem 1.5rem; }
+            .qr-section h2 { font-size: 2rem; }
+            .qr-section p { font-size: 1rem; text-align: center; }
+            .qr-code { max-width: 200px; }
+
+            .whatsapp-btn {
+                padding: 0.7rem;
+                width: 55px;
+                height: 55px;
+                bottom: 1.2rem;
+                right: 1.2rem;
+                gap: 0;
+                font-size: 0;
+                border-radius: 50%;
+            }
+            .whatsapp-btn span { display: none; }
+            .whatsapp-btn i { margin-right: 0; font-size: 1.8rem; }
+             .footer-links {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            footer { padding: 2.5rem 1.5rem; }
+        }
+
+         body {
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+         /* --- Nuevos estilos para la pantalla de carga y efectos de aparición --- */
+        #preloader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-
-        /* Modal de Checkout */
-        .checkout-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 90%;
-            max-width: 500px;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            z-index: 1001;
-            padding: 30px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .checkout-modal.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .checkout-modal h2 {
-            margin-bottom: 20px;
-            color: var(--text-color);
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        /* Modal de Detalles de Producto */
-        .product-detail-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            overflow-y: auto;
-        }
-
-        .product-detail-modal.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .product-detail-content {
+            height: 100vh;
+            background-color: var(--bg);
+            z-index: 9999;
             display: flex;
             flex-direction: column;
-            padding: 0;
-        }
-
-        .product-detail-header {
-            padding: 20px;
-            border-bottom: 1px solid #dee2e6;
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            background-color: var(--primary-color);
-            color: white;
+            transition: opacity 0.5s ease;
         }
 
-        .close-detail {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: white;
+        #preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
-        .product-detail-body {
-            display: flex;
-            flex-direction: column;
-            padding: 30px;
+        .loader-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: var(--shadow-lg);
+            animation: bounce 1s infinite alternate;
+            margin-bottom: 2rem;
+            -webkit-user-drag: none;
         }
 
-        @media (min-width: 768px) {
-            .product-detail-body {
-                flex-direction: row;
-                gap: 30px;
-            }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-20px); }
         }
 
-        .product-detail-image {
-            flex: 1;
-            border-radius: 12px;
+        .loader-progress {
+            width: 250px;
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            position: relative;
             overflow: hidden;
         }
 
-        .product-detail-image img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
+        .loader-bar {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0;
+            border-radius: 4px;
+            transition: width 0.3s ease-out;
         }
 
-        .product-detail-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+        .loader-text {
+            color: var(--text);
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+            font-family: var(--font-heading);
         }
 
-        .product-detail-title {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--text-color);
+        /* Efectos de aparición con Intersection Observer */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
         }
 
-        .product-detail-price {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-bottom: 20px;
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .product-detail-description {
-            margin-bottom: 20px;
-            color: var(--text-color);
-        }
-
-        .product-detail-features {
-            margin-bottom: 25px;
-        }
-
-        .product-detail-features h3 {
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
-
-        .product-detail-features ul {
-            padding-left: 20px;
-        }
-
-        .product-detail-features li {
-            margin-bottom: 8px;
-            color: var(--text-color);
-        }
-
-        .product-detail-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: auto;
-        }
-
-        .quantity-selector {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .quantity-selector label {
-            font-weight: 500;
-            color: var(--text-color);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            padding: 40px 0;
-            margin-top: 60px;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .social-links a {
-            color: var(--text-color);
-            font-size: 1.5rem;
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .cart-modal {
-                max-width: 100%;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-
-            .product-detail-body {
-                flex-direction: column;
-            }
-
-            .product-detail-actions {
-                flex-direction: column;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-actions {
-                flex-direction: column;
-            }
-
-            .product-actions {
-                flex-direction: column;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>TechShop</span>
+    <div id="preloader">
+        <img src="iconno.png" alt="Clover Logo" class="loader-logo">
+        <div class="loader-progress">
+            <div class="loader-bar"></div>
+        </div>
+        <div class="loader-text">Cargando...</div>
+    </div>
+    
+    <nav>
+        <div class="logo">
+            <a href="#inicio"><span>Clover</span></a>
+        </div>
+        <button class="menu-btn" aria-label="Toggle Menu" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="menu-list">
+            <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#docente"><i class="fas fa-chalkboard-teacher"></i> Instructor</a></li>
+            <li><a href="#servicios"><i class="fas fa-laptop-code"></i> Servicios</a></li>
+            <li><a href="#cursos"><i class="fas fa-book-open"></i> Cursos</a></li>
+            <li><a href="#pago"><i class="fas fa-dollar-sign"></i> Pagos</a></li>
+            <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
+            <li><div id="google_translate_element"></div></li>
+            <li>
+                <button class="dark-mode-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <main> 
+        <section class="banner" id="inicio">
+            <div class="hero-content fade-in">
+                
+            </div>
+        </section>
+        <center>
+            <strong>
+        <div class="digital-clock fade-in">
+            <span class="time"></span>
+            <span class="date"></span>
+        </div></strong></center>
+
+        <section class="intro-text" aria-labelledby="intro-heading">
+           <div class="container text-center fade-in">
+               <h1 id="intro-heading">Una forma moderna de aprender</h1>
+               <p>Aprende habilidades tecnológicas clave con un instructor experimentado y potencia tu perfil profesional o académico. Ofrecemos formación práctica y actualizada en herramientas esenciales para el mundo digital.</p>
+          <a href="#cursos" class="cta-button">Explora Nuestros Cursos</a>
+           </div>
+       </section>
+
+        <section class="docente" id="docente">
+            <div class="docente-container">
+                <div class="docente-imagen fade-in">
+                    <img src="docente.jpeg" alt="Foto del Ing. Teddy Valencia">
                 </div>
-                <div class="header-actions">
-                    <button class="theme-toggle" id="theme-toggle">
-                        <i class="fas fa-moon"></i>
+                <div class="docente-info fade-in">
+                    <h3>Tu guía experto</h3>
+                    <h2>Ing. Teddy Valencia</h2>
+                    <p>Ingeniero en Tecnología de la Información con más de 10 años de experiencia práctica en desarrollo front-end (HTML, CSS, JavaScript), gestión de bases de datos relacionales (SQL) y edición profesional de video. Apasionado por la enseñanza y dedicado a facilitar el aprendizaje de conceptos tecnológicos complejos de manera clara y efectiva.</p>
+                    <p><strong>Contacto:</strong> <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
+                    <button id="open-contact-modal" class="btn-contacto-docente">
+                        <i class="fas fa-address-card"></i> Contactar al Instructor
                     </button>
-                    <div class="cart-icon" id="cart-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cart-count">0</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="servicios" id="servicios">
+            <h2 class="section-title fade-in">Servicios de Desarrollo Web Profesional</h2>
+            <div class="servicios-grid container">
+                <div class="servicio-card fade-in">
+                    <i class="fas fa-globe"></i>
+                    <h3>Sitios Web para Empresas</h3>
+                    <p>Desarrollamos páginas web corporativas modernas y responsivas que se adaptan a cualquier dispositivo. Incluye diseño personalizado, optimización SEO y panel de administración fácil de usar.</p>
+                </div>
+
+                <div class="servicio-card fade-in">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Plataformas Educativas</h3>
+                    <p>Creación de sistemas LMS personalizados para instituciones educativas con aulas virtuales, gestión de cursos, evaluaciones en línea y seguimiento de progreso estudiantil.</p>
+                </div>
+
+                <div class="servicio-card fade-in">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Tiendas Online</h3>
+                    <p>Desarrollo de e-commerce completos con pasarelas de pago, gestión de inventario, carrito de compras y integración con redes sociales.</p>
+                </div>
+
+                <div class="servicio-card fade-in">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Sistemas a Medida</h3>
+                    <p>Creación de software personalizado para gestión interna de negocios: sistemas de inventario, CRM, reservas y más, adaptado a tus necesidades específicas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cursos" id="cursos">
+            <h2 class="section-title fade-in">Nuestra Oferta Educativa</h2> 
+            <div class="cursos-grid">
+                <div class="curso-card fade-in">
+                    <h3><i class="fas fa-award"></i>Paquete Completo de Office</h3>
+                    <p>Domina las herramientas esenciales de Microsoft Office (Word, Excel, PowerPoint) para optimizar tu productividad en cualquier entorno académico o profesional, creando documentos, hojas de cálculo y presentaciones impactantes.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Word: Creación y formato avanzado de documentos, uso de estilos, plantillas, combinación de correspondencia, tablas e ilustraciones.</li>
+                            <li>Excel: Introducción a fórmulas y funciones, formato de celdas, creación de gráficos, tablas dinámicas básicas, ordenación y filtrado de datos.</li>
+                            <li>PowerPoint: Diseño efectivo de diapositivas, uso de temas y patrones, inserción de multimedia, animaciones, transiciones y consejos para presentaciones.</li>
+                        </ul>
                     </div>
                 </div>
+
+                <div class="curso-card fade-in">
+                    <h3><i class="fas fa-award"></i>Desarrollo Web Full Stack</h3>
+                    <p>Construye aplicaciones web interactivas y funcionales desde cero. Aprende las bases del frontend con HTML5, CSS3 (incluyendo Flexbox y Grid para diseño responsive) y JavaScript moderno (ES6+), y maneja datos con bases de datos relacionales usando SQL.</p>
+                     <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>HTML5: Estructura semántica del documento, etiquetas esenciales, formularios y elementos multimedia.</li>
+                            <li>CSS3: Selectores, modelo de caja, Flexbox para layouts flexibles, Grid para maquetación avanzada, diseño responsive y transiciones básicas.</li>
+                            <li>JavaScript (ES6+): Variables, tipos de datos, operadores, estructuras de control, funciones, manipulación del DOM y eventos.</li>
+                            <li>SQL: Conceptos de bases de datos relacionales, consultas básicas (SELECT, INSERT, UPDATE, DELETE), cláusulas WHERE, JOINs simples.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="curso-card fade-in">
+                    <h3><i class="fas fa-award"></i>Fundamentos de Programación</h3>
+                    <p>Iníciate en el apasionante mundo del código desarrollando una sólida base lógica. Aprende a resolver problemas usando pseudocódigo (Pseint) y da tus primeros pasos en lenguajes demandados como Python y C++, además de entender cómo interactuar con bases de datos SQL.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Lógica y Algoritmos: Introducción al pensamiento computacional, diagramas de flujo y pseudocódigo utilizando Pseint para practicar.</li>
+                            <li>Python Básico: Sintaxis fundamental, variables, tipos de datos, estructuras de control (if, for, while), funciones básicas.</li>
+                            <li>C++ Básico: Introducción a la sintaxis, tipos de datos, entrada/salida estándar, estructuras de control, compilación básica.</li>
+                            <li>SQL Básico: Comprensión de tablas y relaciones, ejecución de consultas SELECT sencillas para recuperar información.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                 <div class="curso-card fade-in">
+                    <h3><i class="fas fa-award"></i>Manejo Experto de Windows</h3>
+                    <p>Saca el máximo provecho al sistema operativo más utilizado. Aprende a navegar eficientemente, organizar tus archivos y carpetas, personalizar tu entorno, utilizar herramientas del sistema y aplicar buenas prácticas de seguridad.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Interfaz y Navegación: Escritorio, barra de tareas, menú Inicio, explorador de archivos (crear, mover, copiar, eliminar archivos/carpetas), vistas y búsqueda.</li>
+                            <li>Organización y Personalización: Creación de bibliotecas, configuración del escritorio, opciones de pantalla, cuentas de usuario básicas.</li>
+                            <li>Herramientas del Sistema: Panel de Control vs. Configuración, instalación/desinstalación de programas, herramientas básicas de mantenimiento (liberador de espacio).</li>
+                            <li>Conceptos Básicos: Uso del portapapeles, atajos de teclado comunes, conexión a redes Wi-Fi, nociones de seguridad (antivirus, actualizaciones).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="curso-card fade-in">
+                    <h3><i class="fas fa-award"></i>Herramientas de Inteligencia Artificial</h3>
+                    <p>Descubre cómo la Inteligencia Artificial puede potenciar tu creatividad y eficiencia. Aprende a utilizar herramientas líderes como ChatGPT, Gemini y Copilot para generar texto, obtener ideas, programar, editar imágenes y optimizar tus tareas diarias.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Generación de Contenido: Uso efectivo de ChatGPT y Google Gemini para crear textos, resumir información, brainstorming y responder preguntas.</li>
+                            <li>Asistencia en Código y Tareas: Cómo usar GitHub Copilot (o similares) para autocompletar código, sugerir soluciones y depurar errores básicos.</li>
+                            <li>Edición de Imágenes con IA: Introducción a herramientas online (como PIXLR AI, Canva Magic Studio) para mejorar fotos, eliminar fondos o generar elementos gráficos.</li>
+                            <li>Prompts Efectivos: Aprende a formular preguntas e instrucciones claras para obtener los mejores resultados de las IAs generativas. Casos de uso prácticos.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="curso-card fade-in">
+                    <h3><i class="fas fa-award"></i>Edición de Video Profesional</h3>
+                    <p>Aprende a crear videos atractivos y de alta calidad utilizando los programas líderes del mercado: Camtasia, Filmora y Sony Vegas. Ideal para creadores de contenido, educadores y profesionales que buscan mejorar su comunicación audiovisual.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li>Introducción a la interfaz y flujo de trabajo de Camtasia, Filmora y Sony Vegas (principales diferencias y similitudes).</li>
+                            <li>Técnicas esenciales de edición: importar medios, cortar, recortar, unir clips, trabajar con la línea de tiempo y montaje básico.</li>
+                            <li>Uso de transiciones fluidas, aplicación de efectos visuales básicos (filtros, ajustes de velocidad) y corrección de color fundamental.</li>
+                            <li>Edición de audio: ajuste de niveles de volumen, añadir y sincronizar música de fondo, aplicar efectos de audio básicos (fade in/out) y reducción de ruido simple.</li>
+                            <li>Incorporación de elementos gráficos: añadir textos, títulos estáticos y animados, insertar imágenes y logos.</li>
+                            <li>Formatos de exportación (renderizado): configuración óptima para diferentes plataformas como YouTube, Instagram, TikTok y presentaciones.</li>
+                        </ul>
+                    </div>
+                </div>
+                 
+                 <div class="curso-card fade-in">
+                    <h3><i class="fas fa-calculator"></i>Apoyo Académico en Matemáticas</h3>
+                    <p>Refuerza tus conocimientos y resuelve tus dudas en matemáticas. Ofrecemos clases personalizadas para diferentes niveles, desde aritmética básica hasta cálculo avanzado. Elige la modalidad que mejor se adapte a tus necesidades, por horas o por trabajo específico.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario y Modalidades</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li><strong>Temario Personalizado:</strong> Cubrimos temas como álgebra, geometría, trigonometría, estadística y cálculo diferencial e integral.</li>
+                            <li><strong>Modalidad por Horas:</strong> Sesiones de tutoría individual en vivo para reforzar conceptos, resolver ejercicios y preparar exámenes.</li>
+                            <li><strong>Modalidad por Trabajos:</strong> Ayuda en la resolución de deberes, proyectos o ejercicios específicos con entrega de soluciones detalladas.</li>
+                        </ul>
+                    </div>
+                 </div>
+
+                 <div class="curso-card fade-in">
+                    <h3><i class="fas fa-atom"></i>Apoyo Académico en Física</h3>
+                    <p>Comprende los principios fundamentales de la física con la ayuda de un instructor. Ofrecemos tutorías para que domines la mecánica, la termodinámica, el electromagnetismo y más. Puedes contratar el servicio por sesiones de una hora o por trabajos específicos a entregar.</p>
+                    <button class="toggle-btn" aria-expanded="false">
+                        <span>Ver Temario y Modalidades</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="curso-info">
+                        <ul>
+                            <li><strong>Temario Personalizado:</strong> Incluye mecánica clásica, cinemática, dinámica, termodinámica, óptica y electricidad.</li>
+                            <li><strong>Modalidad por Horas:</strong> Clases de apoyo enfocadas en la comprensión de las leyes físicas y la aplicación de fórmulas en problemas prácticos.</li>
+                            <li><strong>Modalidad por Trabajos:</strong> Asesoramiento para la elaboración de proyectos, informes de laboratorio o la resolución completa de guías de ejercicios.</li>
+                        </ul>
+                    </div>
+                 </div>
+                 </div>
+        </section>
+
+        <section class="payment-methods" id="pago">
+            <h2 class="section-title fade-in">Métodos de Pago</h2>
+            <div class="payment-methods-grid container">
+                <div class="payment-card fade-in">
+                    <i class="fas fa-university"></i>
+                    <h3>Transferencia Bancaria</h3>
+                    <p>Puedes realizar una transferencia a nuestra cuenta del **Banco Pichincha**.</p>
+                    <p>Una vez realizada, envía el comprobante por WhatsApp al instructor para confirmar tu inscripción.</p>
+                    <p><strong>Número de Cuenta:</strong> 2206904457</p>
+                </div>
+                <div class="payment-card fade-in">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Pagos en Efectivo</h3>
+                    <p>Para pagar en efectivo, por favor, contacta directamente al instructor a través de su número de **WhatsApp**.</p>
+                    <p>Es necesario coordinar una cita para la entrega del pago y recibir la confirmación de tu inscripción.</p>
+                </div>
             </div>
-        </div>
-    </header>
-    
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Descubre la Tecnología del Mañana</h1>
-            <p>Encuentra los mejores productos tecnológicos con la mejor calidad y al mejor precio. ¡Haz tu pedido ahora!</p>
-            <button class="cta-button" id="explore-btn">Explorar Productos</button>
-        </div>
-    </section>
-    
-    <!-- Productos -->
-    <section class="products-section">
-        <div class="container">
-            <h2 class="section-title">Nuestros Productos</h2>
-            <div class="products-grid" id="products-grid">
-                <!-- Los productos se cargarán dinámicamente con JavaScript -->
-            </div>
-        </div>
-    </section>
-    
-    <!-- Carrito de Compras -->
-    <div class="overlay" id="overlay"></div>
-    <div class="cart-modal" id="cart-modal">
-        <div class="cart-header">
-            <h2>Tu Carrito de Compras</h2>
-            <button class="close-cart" id="close-cart">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="cart-items" id="cart-items">
-            <!-- Los elementos del carrito se cargarán dinámicamente -->
-            <div class="empty-cart" id="empty-cart">
-                <i class="fas fa-shopping-cart"></i>
-                <p>Tu carrito está vacío</p>
-            </div>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total">$0.00</span>
-            </div>
-            <button class="checkout-btn" id="checkout-btn">
-                <i class="fab fa-whatsapp"></i>
-                Finalizar Compra por WhatsApp
-            </button>
-        </div>
-    </div>
-    
-    <!-- Modal de Checkout -->
-    <div class="checkout-modal" id="checkout-modal">
-        <h2>Información de Envío</h2>
-        <form id="checkout-form">
-            <div class="form-group">
-                <label for="customer-name">Nombre Completo</label>
-                <input type="text" id="customer-name" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="customer-phone">Teléfono</label>
-                <input type="tel" id="customer-phone" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="customer-address">Dirección de Envío</label>
-                <textarea id="customer-address" class="form-control" rows="3" required></textarea>
-            </div>
-            <div class="modal-actions">
-                <button type="button" class="btn btn-secondary" id="cancel-checkout">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Enviar Pedido por WhatsApp</button>
-            </div>
-        </form>
-    </div>
-    
-    <!-- Modal de Detalles de Producto -->
-    <div class="product-detail-modal" id="product-detail-modal">
-        <div class="product-detail-content">
-            <div class="product-detail-header">
-                <h2>Detalles del Producto</h2>
-                <button class="close-detail" id="close-detail">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="product-detail-body" id="product-detail-body">
-                <!-- Contenido dinámico -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer -->
+        </section>
+
+        <section class="qr-section" id="contacto">
+            <h2 class="fade-in">¿Listo para empezar tu viaje digital?</h2>
+            <p class="fade-in">Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Estamos aquí para resolver tus dudas y ayudarte con tu inscripción!</p>
+            <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code fade-in">
+        </section>
+    </main>
+
+    <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span>Contáctanos</span>
+    </a>
+
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="logo">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>TechShop</span>
-                </div>
-                <p>Tu tienda de confianza para productos tecnológicos</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                </div>
-                <p>&copy; 2023 TechShop. Todos los derechos reservados.</p>
-            </div>
+        <div class="footer-links fade-in">
+            <button class="footer-link-btn" id="open-terms-modal">Términos y Condiciones</button>
+            <button class="footer-link-btn" id="open-privacy-modal">Privacidad</button>
+        </div>
+        <p class="fade-in">&copy; 2025 Clover Educación Digital. Todos los derechos reservados.</p>
+        <div class="social-links fade-in">
+            <a href="https://github.com/Teddyfidel" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#inicio" class="active"><i class="fas fa-home"></i></a>
         </div>
     </footer>
-    
+
+    <div id="contact-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+            <h3 id="modal-title">Contacto del Ing. Teddy Valencia</h3>
+            <p>Selecciona una opción para contactar directamente con el instructor.</p>
+            <div class="modal-buttons">
+                <a href="https://wa.me/+593967879068" class="btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Enviar WhatsApp
+                </a>
+                <a href="https://github.com/Teddyfidel" class="btn-github" target="_blank">
+                    <i class="fab fa-github"></i> Ver GitHub
+                </a>
+                <a href="tel:+593967879068" class="btn-call">
+                    <i class="fas fa-phone-alt"></i> Llamada Directa
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+            <h3 id="terms-modal-title">Términos y Condiciones</h3>
+            <p><strong>1. Aceptación de los Términos</strong></p>
+            <p>Al acceder y utilizar los servicios de Clover Educación Digital, usted acepta y se compromete a cumplir con los siguientes Términos y Condiciones. Si no está de acuerdo con estos términos, no debe utilizar nuestros servicios.</p>
+            <p><strong>2. Uso de los Servicios</strong></p>
+            <p>Nuestros cursos y servicios están destinados a fines educativos y profesionales. Queda estrictamente prohibido el uso de nuestro contenido con fines ilegales o no autorizados. No debe reproducir, duplicar, copiar, vender, revender o explotar ninguna parte del servicio sin nuestro permiso expreso por escrito.</p>
+            <p><strong>3. Propiedad Intelectual</strong></p>
+            <p>Todo el contenido de este sitio web, incluyendo textos, gráficos, logotipos, imágenes y software, es propiedad de Clover Educación Digital o de sus licenciantes y está protegido por las leyes de derechos de autor. La compra de un curso no otorga la propiedad del contenido, solo una licencia de uso personal y no transferible.</p>
+            <p><strong>4. Pagos y Reembolsos</strong></p>
+            <p>Todos los pagos por cursos y servicios deben realizarse a través de los métodos de pago indicados. Las políticas de reembolso se especificarán de forma clara al momento de la compra de cada curso.</p>
+            <p><strong>5. Modificaciones del Servicio</strong></p>
+            <p>Nos reservamos el derecho de modificar o discontinuar cualquier aspecto de nuestros servicios en cualquier momento, con o sin previo aviso. No seremos responsables ante usted ni ante terceros por cualquier modificación, suspensión o interrupción del servicio.</p>
+            <p><strong>6. Contacto</strong></p>
+            <p>Para cualquier pregunta o aclaración sobre estos términos, puede contactarnos a través de los canales de comunicación proporcionados en el sitio web.</p>
+        </div>
+    </div>
+
+    <div id="privacy-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+        <div class="modal-content">
+            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+            <h3 id="privacy-modal-title">Política de Privacidad</h3>
+            <p><strong>1. Información que Recopilamos</strong></p>
+            <p>Recopilamos información personal que usted nos proporciona voluntariamente al registrarse en un curso, solicitar información o contactarnos. Esta información puede incluir su nombre, dirección de correo electrónico y número de teléfono.</p>
+            <p><strong>2. Uso de la Información</strong></p>
+            <p>Utilizamos la información recopilada para:</p>
+            <ul>
+                <li>Proporcionar y gestionar los servicios que ha solicitado.</li>
+                <li>Comunicarnos con usted sobre nuestros cursos, actualizaciones y ofertas especiales.</li>
+                <li>Mejorar la calidad de nuestros servicios y la experiencia del usuario.</li>
+            </ul>
+            <p><strong>3. Protección de la Información</strong></p>
+            <p>Nos comprometemos a proteger su información personal. Implementamos medidas de seguridad adecuadas para prevenir el acceso no autorizado, la divulgación, alteración o destrucción de sus datos.</p>
+            <p><strong>4. Compartir Información con Terceros</strong></p>
+            <p>No vendemos, comercializamos ni transferimos su información personal a terceros sin su consentimiento, excepto cuando sea necesario para proporcionar un servicio solicitado (por ejemplo, pasarelas de pago) o cuando la ley lo exija.</p>
+            <p><strong>5. Cookies</strong></p>
+            <p>Nuestro sitio web utiliza cookies para mejorar la experiencia de navegación. Las cookies son pequeños archivos de texto que se almacenan en su dispositivo. Puede configurar su navegador para rechazar todas o algunas cookies, aunque esto podría afectar la funcionalidad de nuestro sitio.</p>
+            <p><strong>6. Sus Derechos</strong></p>
+            <p>Usted tiene derecho a acceder, corregir o eliminar su información personal en cualquier momento. Para ejercer estos derechos, por favor, póngase en contacto con nosotros.</p>
+        </div>
+    </div>
+
     <script>
-        // Datos de productos extendidos
-        const products = [
-            {
-                id: 1,
-                name: "Smartphone X1 Pro",
-                price: 599.99,
-                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
-                description: "El último smartphone con características avanzadas y cámara de 108MP",
-                features: [
-                    "Pantalla AMOLED de 6.7 pulgadas",
-                    "Cámara principal de 108MP + ultra gran angular + teleobjetivo",
-                    "Procesador Snapdragon 8 Gen 2",
-                    "Batería de 5000 mAh con carga rápida de 65W",
-                    "Almacenamiento de 256GB, RAM de 12GB",
-                    "Resistente al agua IP68"
-                ],
-                category: "Smartphones"
-            },
-            {
-                id: 2,
-                name: "Laptop Ultra Pro",
-                price: 1299.99,
-                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80",
-                description: "Potente laptop para trabajo y entretenimiento con 16GB RAM y SSD 1TB",
-                features: [
-                    "Procesador Intel Core i7 de 12ª generación",
-                    "Pantalla de 15.6 pulgadas 4K UHD",
-                    "16GB RAM DDR5, 1TB SSD NVMe",
-                    "Tarjeta gráfica NVIDIA RTX 3050",
-                    "Batería de hasta 10 horas de duración",
-                    "Teclado retroiluminado y Windows 11 Pro"
-                ],
-                category: "Laptops"
-            },
-            {
-                id: 3,
-                name: "Auriculares Inalámbricos Elite",
-                price: 199.99,
-                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                description: "Sonido de alta calidad con cancelación de ruido activa y 30h de batería",
-                features: [
-                    "Cancelación activa de ruido (ANC)",
-                    "Sonido Hi-Fi con drivers de 40mm",
-                    "Hasta 30 horas de batería con estuche de carga",
-                    "Conexión Bluetooth 5.2",
-                    "Resistencia al agua IPX4",
-                    "Asistente de voz integrado"
-                ],
-                category: "Audio"
-            },
-            {
-                id: 4,
-                name: "Smartwatch Series 6",
-                price: 349.99,
-                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1099&q=80",
-                description: "Reloj inteligente con monitor de salud avanzado y resistencia al agua",
-                features: [
-                    "Pantalla AMOLED de 1.4 pulgadas siempre activa",
-                    "Monitor de frecuencia cardíaca y oxígeno en sangre",
-                    "Resistente al agua hasta 50 metros",
-                    "GPS integrado y conectividad LTE",
-                    "Batería de hasta 7 días de duración",
-                    "Compatible con iOS y Android"
-                ],
-                category: "Wearables"
-            },
-            {
-                id: 5,
-                name: "Tablet Max Pro",
-                price: 449.99,
-                image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-                description: "Tablet versátil para trabajo y diversión con pantalla OLED de 11 pulgadas",
-                features: [
-                    "Pantalla OLED de 11 pulgadas con 120Hz",
-                    "Procesador Snapdragon 8cx Gen 3",
-                    "8GB RAM, 256GB almacenamiento expandible",
-                    "Cámara trasera de 13MP + frontal de 8MP",
-                    "Batería de 8000 mAh con carga rápida",
-                    "Incluye stylus y teclado desmontable"
-                ],
-                category: "Tablets"
-            },
-            {
-                id: 6,
-                name: "Cámara DSLR Pro Max",
-                price: 899.99,
-                image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                description: "Captura momentos increíbles con esta cámara profesional de 24MP",
-                features: [
-                    "Sensor CMOS de 24.2 MP full frame",
-                    "Grabación de video 4K a 60fps",
-                    "Sistema de enfoque automático de 693 puntos",
-                    "Pantalla táctil abatible de 3.2 pulgadas",
-                    "Conectividad Wi-Fi y Bluetooth",
-                    "Incluye lente 24-70mm f/2.8"
-                ],
-                category: "Fotografía"
-            },
-            {
-                id: 7,
-                name: "Consola Gaming X",
-                price: 499.99,
-                image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                description: "La mejor consola para gamers con gráficos 4K y 1TB de almacenamiento",
-                features: [
-                    "Procesador de 8 núcleos a 3.8GHz",
-                    "GPU capaz de 12 teraflops",
-                    "1TB SSD de almacenamiento ultrarrápido",
-                    "Salida 4K a 120Hz con trazado de rayos",
-                    "Compatibilidad con juegos de generaciones anteriores",
-                    "Incluye mando inalámbrico y 1 juego"
-                ],
-                category: "Gaming"
-            },
-            {
-                id: 8,
-                name: "Altavoz Bluetooth Premium",
-                price: 129.99,
-                image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1331&q=80",
-                description: "Sonido envolvente 360° con bass boost y 20h de autonomía",
-                features: [
-                    "Sonido estéreo de 360° con 40W de potencia",
-                    "Bass boost para graves profundos",
-                    "Hasta 20 horas de autonomía",
-                    "Resistencia al agua IPX7",
-                    "Conexión Bluetooth 5.0 con multipunto",
-                    "Asistentes de voz integrados"
-                ],
-                category: "Audio"
+        // --- Bloquear Clic Derecho y Teclas DevTools (Advertencia: No son 100% seguras) ---
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+           console.log("Clic derecho deshabilitado.");
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "F12" ||
+                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C')) ||
+                (event.ctrlKey && event.key === 'U')) {
+                event.preventDefault();
+                console.log("Acceso a herramientas de desarrollador o código fuente deshabilitado.");
             }
-        ];
-        
-        // Estado del carrito
-        let cart = [];
-        
-        // Elementos del DOM
-        const productsGrid = document.getElementById('products-grid');
-        const cartIcon = document.getElementById('cart-icon');
-        const cartCount = document.getElementById('cart-count');
-        const cartModal = document.getElementById('cart-modal');
-        const closeCart = document.getElementById('close-cart');
-        const overlay = document.getElementById('overlay');
-        const cartItems = document.getElementById('cart-items');
-        const emptyCart = document.getElementById('empty-cart');
-        const cartTotal = document.getElementById('cart-total');
-        const checkoutBtn = document.getElementById('checkout-btn');
-        const checkoutModal = document.getElementById('checkout-modal');
-        const checkoutForm = document.getElementById('checkout-form');
-        const cancelCheckout = document.getElementById('cancel-checkout');
-        const themeToggle = document.getElementById('theme-toggle');
-        const exploreBtn = document.getElementById('explore-btn');
-        const productDetailModal = document.getElementById('product-detail-modal');
-        const productDetailBody = document.getElementById('product-detail-body');
-        const closeDetail = document.getElementById('close-detail');
-        
-        // Inicializar la tienda
-        function initStore() {
-            renderProducts();
-            updateCart();
-            
-            // Event listeners
-            cartIcon.addEventListener('click', openCart);
-            closeCart.addEventListener('click', closeCartModal);
-            overlay.addEventListener('click', closeAllModals);
-            checkoutBtn.addEventListener('click', openCheckoutModal);
-            cancelCheckout.addEventListener('click', closeCheckoutModal);
-            checkoutForm.addEventListener('submit', processCheckout);
-            themeToggle.addEventListener('click', toggleTheme);
-            exploreBtn.addEventListener('click', scrollToProducts);
-            closeDetail.addEventListener('click', closeProductDetail);
-            
-            // Cargar tema desde localStorage
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
+        });
+        // ---------------------------------------------------------------
+
+        // Menú responsive
+        const menuBtn = document.querySelector('.menu-btn');
+        const menuList = document.querySelector('.menu-list');
+        const menuLinks = document.querySelectorAll('.menu-list a');
+
+        menuBtn.addEventListener('click', () => {
+            const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
+            menuBtn.setAttribute('aria-expanded', !isExpanded);
+            menuList.classList.toggle('active');
+            const icon = menuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+         menuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                 if (menuList.classList.contains('active')) {
+                     menuBtn.click();
+                 }
+                 setTimeout(() => {
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                    const targetId = e.currentTarget.getAttribute('href');
+                    const activeLink = document.querySelector(`.menu-list a[href="${targetId}"]`);
+                    if(activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                 }, 50);
+            });
+        });
+
+        // Función para actualizar reloj y fecha
+        function updateClock() {
+            const now = new Date();
+            // Formatear hora
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            // Formatear fecha corta para la nueva posición
+            const shortDateString = now.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+
+            // Actualizar elementos del reloj digital
+            document.querySelector('.digital-clock .time').textContent = timeString;
+            document.querySelector('.digital-clock .date').textContent = shortDateString;
+        }
+
+        // Iniciar reloj
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Modo oscuro
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+
+        // Función para aplicar el modo
+        function applyDarkMode(isDark) {
+            if (isDark) {
                 document.body.classList.add('dark-mode');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                document.body.classList.remove('dark-mode');
             }
         }
-        
-        // Renderizar productos
-        function renderProducts() {
-            productsGrid.innerHTML = '';
-            
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <p class="product-description">${product.description}</p>
-                        <p class="product-price">$${product.price.toFixed(2)}</p>
-                        <div class="product-actions">
-                            <button class="btn btn-secondary view-details" data-id="${product.id}">
-                                <i class="fas fa-eye"></i>
-                                Ver Producto
-                            </button>
-                            <button class="btn btn-primary add-to-cart" data-id="${product.id}">
-                                <i class="fas fa-cart-plus"></i>
-                                Añadir al Carrito
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                productsGrid.appendChild(productCard);
-            });
-            
-            // Añadir event listeners a los botones
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.closest('.add-to-cart').getAttribute('data-id'));
-                    addToCart(productId);
-                });
-            });
-            
-            document.querySelectorAll('.view-details').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.closest('.view-details').getAttribute('data-id'));
-                    showProductDetails(productId);
-                });
-            });
+
+        // Cargar preferencia guardada o establecer predeterminada (claro)
+        const savedDarkMode = localStorage.getItem('darkMode');
+        if (savedDarkMode === 'enabled') {
+            applyDarkMode(true);
+        } else {
+            applyDarkMode(false);
         }
-        
-        // Mostrar detalles del producto
-        function showProductDetails(productId) {
-            const product = products.find(p => p.id === productId);
-            
-            if (product) {
-                productDetailBody.innerHTML = `
-                    <div class="product-detail-image">
-                        <img src="${product.image}" alt="${product.name}">
-                    </div>
-                    <div class="product-detail-info">
-                        <h2 class="product-detail-title">${product.name}</h2>
-                        <p class="product-detail-price">$${product.price.toFixed(2)}</p>
-                        <p class="product-detail-description">${product.description}</p>
-                        
-                        <div class="product-detail-features">
-                            <h3>Características:</h3>
-                            <ul>
-                                ${product.features.map(feature => `<li>${feature}</li>`).join('')}
-                            </ul>
-                        </div>
-                        
-                        <div class="quantity-selector">
-                            <label for="detail-quantity">Cantidad:</label>
-                            <input type="number" id="detail-quantity" class="quantity-input" value="1" min="1">
-                        </div>
-                        
-                        <div class="product-detail-actions">
-                            <button class="btn btn-secondary" id="close-detail-btn">
-                                <i class="fas fa-times"></i>
-                                Cerrar
-                            </button>
-                            <button class="btn btn-primary" id="add-from-detail" data-id="${product.id}">
-                                <i class="fas fa-cart-plus"></i>
-                                Añadir al Carrito
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                // Event listeners para los botones del modal de detalles
-                document.getElementById('close-detail-btn').addEventListener('click', closeProductDetail);
-                document.getElementById('add-from-detail').addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.getAttribute('data-id'));
-                    const quantity = parseInt(document.getElementById('detail-quantity').value);
-                    addToCart(productId, quantity);
-                    closeProductDetail();
-                });
-                
-                productDetailModal.classList.add('active');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
+
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
             }
-        }
-        
-        // Cerrar modal de detalles de producto
-        function closeProductDetail() {
-            productDetailModal.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Cerrar todos los modales
-        function closeAllModals() {
-            closeCartModal();
-            closeCheckoutModal();
-            closeProductDetail();
-        }
-        
-        // Añadir producto al carrito
-        function addToCart(productId, quantity = 1) {
-            const product = products.find(p => p.id === productId);
-            
-            if (product) {
-                const existingItem = cart.find(item => item.id === productId);
-                
-                if (existingItem) {
-                    existingItem.quantity += quantity;
-                } else {
-                    cart.push({
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        image: product.image,
-                        quantity: quantity
-                    });
-                }
-                
-                updateCart();
-                showAddedToCartMessage(product.name, quantity);
-            }
-        }
-        
-        // Mostrar mensaje de producto añadido
-        function showAddedToCartMessage(productName, quantity) {
-            // Crear elemento de mensaje
-            const message = document.createElement('div');
-            message.textContent = `¡${quantity} x ${productName} añadido al carrito!`;
-            message.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: var(--success-color);
-                color: white;
-                padding: 12px 24px;
-                border-radius: 50px;
-                z-index: 1001;
-                box-shadow: var(--shadow);
-                font-weight: 500;
-            `;
-            
-            document.body.appendChild(message);
-            
-            // Eliminar mensaje después de 3 segundos
-            setTimeout(() => {
-                if (document.body.contains(message)) {
-                    document.body.removeChild(message);
-                }
-            }, 3000);
-        }
-        
-        // Actualizar carrito
-        function updateCart() {
-            // Actualizar contador
-            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            
-            // Actualizar items del carrito
-            renderCartItems();
-            
-            // Actualizar total
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotal.textContent = `$${total.toFixed(2)}`;
-        }
-        
-        // Renderizar items del carrito
-        function renderCartItems() {
-            cartItems.innerHTML = '';
-            
-            if (cart.length === 0) {
-                cartItems.appendChild(emptyCart);
-                emptyCart.style.display = 'block';
-                return;
-            }
-            
-            emptyCart.style.display = 'none';
-            
-            cart.forEach(item => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <div class="cart-item-title">${item.name}</div>
-                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                        <div class="cart-item-quantity">
-                            <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
-                            <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                        </div>
-                        <button class="remove-item" data-id="${item.id}">
-                            <i class="fas fa-trash"></i> Eliminar
-                        </button>
-                    </div>
-                `;
-                
-                cartItems.appendChild(cartItem);
-            });
-            
-            // Añadir event listeners a los controles de cantidad
-            document.querySelectorAll('.quantity-btn.minus').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.getAttribute('data-id'));
-                    updateQuantity(productId, -1);
-                });
-            });
-            
-            document.querySelectorAll('.quantity-btn.plus').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.getAttribute('data-id'));
-                    updateQuantity(productId, 1);
-                });
-            });
-            
-            document.querySelectorAll('.quantity-input').forEach(input => {
-                input.addEventListener('change', (e) => {
-                    const productId = parseInt(e.target.getAttribute('data-id'));
-                    const newQuantity = parseInt(e.target.value);
-                    
-                    if (newQuantity < 1) {
-                        e.target.value = 1;
-                        updateQuantity(productId, 0, 1);
-                    } else {
-                        updateQuantity(productId, 0, newQuantity);
+        });
+
+        // Acordeón de cursos
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            const info = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+
+            info.style.maxHeight = '0';
+            info.classList.remove('active');
+            btn.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+            icon.style.transform = 'rotate(0deg)';
+
+            btn.addEventListener('click', () => {
+                const isActive = !info.classList.contains('active');
+
+                document.querySelectorAll('.curso-info.active').forEach(openInfo => {
+                    if (openInfo !== info) {
+                        openInfo.style.maxHeight = '0';
+                        openInfo.classList.remove('active');
+                        openInfo.previousElementSibling.classList.remove('active');
+                        openInfo.previousElementSibling.setAttribute('aria-expanded', 'false');
+                        openInfo.previousElementSibling.querySelector('i').style.transform = 'rotate(0deg)';
                     }
                 });
+
+                info.classList.toggle('active', isActive);
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-expanded', isActive);
+
+                if (isActive) {
+                    info.style.maxHeight = info.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    info.style.maxHeight = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                }
             });
-            
-            document.querySelectorAll('.remove-item').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.closest('.remove-item').getAttribute('data-id'));
-                    removeFromCart(productId);
+        });
+
+        // Scroll suave y actualizar enlace activo en navbar al hacer scroll
+        const sections = document.querySelectorAll('main section[id]');
+        const navLinks = document.querySelectorAll('.menu-list a[href^="#"]');
+        const navbar = document.querySelector('nav');
+        const navbarHeight = navbar ? navbar.offsetHeight : 70;
+
+        const observerOptions = {
+            root: null,
+            rootMargin: `-${navbarHeight + 10}px 0px -50% 0px`,
+            threshold: 0
+        };
+
+        let lastActiveLink = null;
+
+        const observer = new IntersectionObserver((entries) => {
+            let currentActiveSectionId = null;
+
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    currentActiveSectionId = entry.target.getAttribute('id');
+                }
+            });
+
+            if (currentActiveSectionId) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === `#${currentActiveSectionId}`) {
+                        if (lastActiveLink && lastActiveLink !== link) {
+                            lastActiveLink.classList.remove('active');
+                        }
+                        link.classList.add('active');
+                        lastActiveLink = link;
+                    }
                 });
-            });
-        }
-        
-        // Actualizar cantidad de un producto
-        function updateQuantity(productId, change, newQuantity = null) {
-            const item = cart.find(item => item.id === productId);
-            
-            if (item) {
-                if (newQuantity !== null) {
-                    item.quantity = newQuantity;
-                } else {
-                    item.quantity += change;
-                }
-                
-                if (item.quantity < 1) {
-                    removeFromCart(productId);
-                } else {
-                    updateCart();
-                }
+            } else if (window.scrollY < sections[0].offsetTop - navbarHeight && document.querySelector('.menu-list a[href="#inicio"]')) {
+                 navLinks.forEach(l => l.classList.remove('active'));
+                 const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
+                 if (homeLink) homeLink.classList.add('active');
+                 lastActiveLink = homeLink;
             }
-        }
+
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        window.addEventListener('load', () => {
+             const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
+             if (window.scrollY === 0 && homeLink) {
+                 navLinks.forEach(l => l.classList.remove('active'));
+                 homeLink.classList.add('active');
+                 lastActiveLink = homeLink;
+             }
+        });
         
-        // Eliminar producto del carrito
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCart();
-        }
-        
-        // Abrir carrito
-        function openCart() {
-            cartModal.classList.add('open');
-            overlay.classList.add('active');
+        // Lógica del Modal de Contacto
+        const openContactModalBtn = document.getElementById('open-contact-modal');
+        const contactModal = document.getElementById('contact-modal');
+        const closeContactModalBtn = contactModal.querySelector('.modal-close-btn');
+
+        openContactModalBtn.addEventListener('click', () => {
+            contactModal.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeContactModalBtn.addEventListener('click', () => {
+            contactModal.classList.remove('is-active');
+            document.body.style.overflow = '';
+        });
+
+        // Lógica de Modales de Términos y Privacidad
+        const openTermsBtn = document.getElementById('open-terms-modal');
+        const termsModal = document.getElementById('terms-modal');
+        const closeTermsBtn = termsModal.querySelector('.modal-close-btn');
+
+        const openPrivacyBtn = document.getElementById('open-privacy-modal');
+        const privacyModal = document.getElementById('privacy-modal');
+        const closePrivacyBtn = privacyModal.querySelector('.modal-close-btn');
+
+        function openModal(modal) {
+            modal.classList.add('is-active');
             document.body.style.overflow = 'hidden';
         }
-        
-        // Cerrar carrito
-        function closeCartModal() {
-            cartModal.classList.remove('open');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
+
+        function closeModal(modal) {
+            modal.classList.remove('is-active');
+            document.body.style.overflow = '';
         }
+
+        openTermsBtn.addEventListener('click', () => openModal(termsModal));
+        closeTermsBtn.addEventListener('click', () => closeModal(termsModal));
+
+        openPrivacyBtn.addEventListener('click', () => openModal(privacyModal));
+        closePrivacyBtn.addEventListener('click', () => closeModal(privacyModal));
         
-        // Abrir modal de checkout
-        function openCheckoutModal() {
-            if (cart.length === 0) {
-                alert('Tu carrito está vacío');
-                return;
+        window.addEventListener('click', (event) => {
+            if (event.target === contactModal) {
+                closeModal(contactModal);
             }
-            
-            checkoutModal.classList.add('active');
-            overlay.classList.add('active');
-        }
-        
-        // Cerrar modal de checkout
-        function closeCheckoutModal() {
-            checkoutModal.classList.remove('active');
-            overlay.classList.remove('active');
-        }
-        
-        // Procesar checkout
-        function processCheckout(e) {
-            e.preventDefault();
-            
-            const customerName = document.getElementById('customer-name').value;
-            const customerPhone = document.getElementById('customer-phone').value;
-            const customerAddress = document.getElementById('customer-address').value;
-            
-            if (!customerName || !customerPhone || !customerAddress) {
-                alert('Por favor, completa todos los campos');
-                return;
+            if (event.target === termsModal) {
+                closeModal(termsModal);
             }
-            
-            // Generar mensaje para WhatsApp
-            const phoneNumber = "593967879068";
-            let message = `¡Hola! Quiero realizar el siguiente pedido:%0A%0A`;
-            message += `*Cliente:* ${customerName}%0A`;
-            message += `*Teléfono:* ${customerPhone}%0A`;
-            message += `*Dirección:* ${customerAddress}%0A%0A`;
-            message += `*Detalles del pedido:*%0A`;
-            
-            cart.forEach(item => {
-                message += `- ${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}%0A`;
-                message += `  ${item.image}%0A%0A`;
+            if (event.target === privacyModal) {
+                closeModal(privacyModal);
+            }
+        });
+
+        // --- Nuevas funciones para la pantalla de carga y efectos de aparición ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const loaderBar = document.querySelector('.loader-bar');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                if (progress <= 100) {
+                    loaderBar.style.width = `${progress}%`;
+                }
+                if (progress >= 105) {
+                    clearInterval(interval);
+                    preloader.classList.add('hidden');
+                    // Mostrar contenido de la página después de que la pantalla de carga se oculte
+                    preloader.addEventListener('transitionend', () => {
+                        preloader.style.display = 'none';
+                        // Iniciar la animación de aparición de los elementos del cuerpo
+                        initScrollAnimations();
+                    }, { once: true });
+                }
+            }, 50);
+        });
+
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
             });
-            
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            message += `*Total:* $${total.toFixed(2)}%0A%0A`;
-            message += `¡Gracias!`;
-            
-            // Crear enlace de WhatsApp
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
-            
-            // Abrir enlace en nueva pestaña
-            window.open(whatsappURL, '_blank');
-            
-            // Cerrar modales y vaciar carrito
-            closeCheckoutModal();
-            closeCartModal();
-            
-            // Mostrar mensaje de confirmación
-            alert('¡Pedido enviado con éxito! Serás redirigido a WhatsApp.');
-            
-            // Vaciar carrito
-            cart = [];
-            updateCart();
-            
-            // Limpiar formulario
-            checkoutForm.reset();
-        }
-        
-        // Cambiar tema
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            
-            if (document.body.classList.contains('dark-mode')) {
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                localStorage.setItem('theme', 'light');
-            }
-        }
-        
-        // Scroll a productos
-        function scrollToProducts() {
-            document.querySelector('.products-section').scrollIntoView({
-                behavior: 'smooth'
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
             });
         }
-        
-        // Inicializar la tienda cuando se carga la página
-        document.addEventListener('DOMContentLoaded', initStore);
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'es,en,pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+
     </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
