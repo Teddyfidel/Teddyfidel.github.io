@@ -113,38 +113,7 @@
             color: var(--primary);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            transition: var(--transition);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
+        /* ELIMINADO: nav-links y nav-link */
 
         .header-actions {
             display: flex;
@@ -209,50 +178,7 @@
             font-weight: 600;
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--text);
-            cursor: pointer;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            background-color: var(--body-bg);
-            transition: var(--transition);
-            position: relative;
-            z-index: 101;
-        }
-
-        .mobile-menu-btn:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .mobile-menu-btn .fa-bars,
-        .mobile-menu-btn .fa-times {
-            transition: var(--transition);
-        }
-
-        .mobile-menu-btn.active .fa-bars {
-            opacity: 0;
-            transform: rotate(90deg);
-        }
-
-        .mobile-menu-btn .fa-times {
-            opacity: 0;
-            transform: rotate(-90deg);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .mobile-menu-btn.active .fa-times {
-            opacity: 1;
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
+        /* ELIMINADO: mobile-menu-btn */
 
         /* Hero Section */
         .hero {
@@ -381,7 +307,7 @@
             margin: 0 auto;
         }
         
-        /* --- NUEVO: Estilos del Buscador --- */
+        /* Estilos del Buscador */
         .search-container {
             margin-bottom: 3rem;
             max-width: 600px;
@@ -1090,48 +1016,7 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Mobile Menu Styles */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 80%;
-            max-width: 300px;
-            height: 100vh;
-            background-color: var(--card-bg);
-            box-shadow: var(--shadow-lg);
-            transition: var(--transition);
-            z-index: 99;
-            display: flex;
-            flex-direction: column;
-            padding: 5rem 2rem 2rem;
-            overflow-y: auto;
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-nav-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .mobile-nav-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.125rem;
-            transition: var(--transition);
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .mobile-nav-link:hover {
-            color: var(--primary);
-        }
+        /* ELIMINADO: Mobile Menu Styles */
 
         /* Responsive Design */
         @media (max-width: 1024px) {
@@ -1145,15 +1030,7 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+            /* ELIMINADO: .nav-links, .mobile-menu-btn */
             
             .hero-title {
                 font-size: 2.5rem;
@@ -1255,14 +1132,6 @@
                     <span>TechShop</span>
                 </a>
                 
-                <ul class="nav-links">
-                    <li><a href="#" class="nav-link">Inicio</a></li>
-                    <li><a href="#products" class="nav-link">Productos</a></li>
-                    <li><a href="#" class="nav-link">Categorías</a></li>
-                    <li><a href="#" class="nav-link">Ofertas</a></li>
-                    <li><a href="#" class="nav-link">Contacto</a></li>
-                </ul>
-                
                 <div class="header-actions">
                     <button class="theme-toggle" id="theme-toggle">
                         <i class="fas fa-moon"></i>
@@ -1271,25 +1140,11 @@
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count" id="cart-count">0</span>
                     </div>
-                    <button class="mobile-menu-btn" id="mobile-menu-btn">
-                        <i class="fas fa-bars"></i>
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+                    </div>
             </div>
         </div>
     </header>
 
-    <div class="mobile-menu" id="mobile-menu">
-        <ul class="mobile-nav-links">
-            <li><a href="#" class="mobile-nav-link">Inicio</a></li>
-            <li><a href="#products" class="mobile-nav-link">Productos</a></li>
-            <li><a href="#" class="mobile-nav-link">Categorías</a></li>
-            <li><a href="#" class="mobile-nav-link">Ofertas</a></li>
-            <li><a href="#" class="mobile-nav-link">Contacto</a></li>
-        </ul>
-    </div>
-    
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -1595,11 +1450,11 @@
         const productDetailModal = document.getElementById('product-detail-modal');
         const productDetailBody = document.getElementById('product-detail-body');
         const closeDetail = document.getElementById('close-detail');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // const mobileMenuBtn = document.getElementById('mobile-menu-btn'); // Eliminado
+        // const mobileMenu = document.getElementById('mobile-menu'); // Eliminado
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toast-message');
-        // NUEVOS elementos del DOM para el buscador
+        // elementos del DOM para el buscador
         const searchInput = document.getElementById('search-input');
         const clearSearchBtn = document.getElementById('clear-search');
         
@@ -1617,9 +1472,9 @@
             checkoutForm.addEventListener('submit', processCheckout);
             themeToggle.addEventListener('click', toggleTheme);
             closeDetail.addEventListener('click', closeProductDetail);
-            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            // mobileMenuBtn.addEventListener('click', toggleMobileMenu); // Eliminado
             
-            // NUEVOS event listeners para el buscador
+            // Event listeners para el buscador
             searchInput.addEventListener('input', filterAndRenderProducts);
             clearSearchBtn.addEventListener('click', clearSearch);
             
@@ -1703,7 +1558,7 @@
             });
         }
 
-        // NUEVO: Filtrar y renderizar productos
+        // Filtrar y renderizar productos
         function filterAndRenderProducts() {
             const searchTerm = searchInput.value.trim().toLowerCase();
             
@@ -1722,7 +1577,7 @@
             renderProducts(filteredProducts);
         }
         
-        // NUEVO: Limpiar búsqueda
+        // Limpiar búsqueda
         function clearSearch() {
             searchInput.value = '';
             filterAndRenderProducts();
@@ -1789,18 +1644,8 @@
             document.body.style.overflow = 'auto';
         }
         
-        // Alternar menú móvil
-        function toggleMobileMenu() {
-            mobileMenuBtn.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            
-            if (mobileMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
-        }
+        // Alternar menú móvil (Función Eliminada)
+        // function toggleMobileMenu() { ... }
         
         // Cerrar todos los modales
         function closeAllModals() {
@@ -1808,12 +1653,7 @@
             closeCheckoutModal();
             closeProductDetail();
             
-            // Cerrar menú móvil si está abierto
-            if (mobileMenu.classList.contains('active')) {
-                mobileMenuBtn.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
+            // El menú móvil ha sido eliminado
             
             overlay.classList.remove('active');
         }
@@ -2060,24 +1900,9 @@
         // Inicializar la tienda cuando se carga la página
         document.addEventListener('DOMContentLoaded', initStore);
         
-        // Cerrar menú móvil al hacer clic en un enlace
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenuBtn.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-        });
+        // Eliminado: Cerrar menú móvil al hacer clic en un enlace
         
-        // Ajustar menú en redimensionamiento
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                mobileMenuBtn.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
+        // Eliminado: Ajustar menú en redimensionamiento
     </script>
 </body>
 </html>
