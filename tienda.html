@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="HandheldFriendly" content="true">
     <title>ECHO Technology Store - Tu Tienda Virtual</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -61,10 +62,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
             scroll-behavior: smooth;
+            touch-action: manipulation;
         }
 
         body {
@@ -74,6 +77,8 @@
             line-height: 1.6;
             transition: var(--transition);
             overflow-x: hidden; /* Evita el scroll horizontal */
+            -webkit-text-size-adjust: 100%; /* Previene ajuste automático de texto en iOS */
+            text-size-adjust: 100%; /* Previene ajuste automático de texto */
         }
 
         .container {
@@ -845,7 +850,93 @@
             }
         }
         
-        /* Estilos detallados omitidos por brevedad, pero presentes en el código completo... */
+        /* Product Detail Image */
+        .product-detail-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .product-detail-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Product Detail Info */
+        .product-detail-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-detail-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .product-detail-price {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-detail-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .product-detail-features {
+            margin-bottom: 2rem;
+        }
+
+        .product-detail-features h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .product-detail-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .product-detail-features li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .product-detail-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .quantity-selector {
+            margin-bottom: 2rem;
+        }
+
+        .quantity-selector label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .product-detail-actions {
+            display: flex;
+            gap: 1rem;
+        }
 
         /* General Modal (For Policy/Terms) */
         .general-modal {
@@ -1358,9 +1449,9 @@
                 <div class="footer-column">
                     <h4>Contacto</h4>
                     <ul class="contact-info">
-                        <li><i class="fas fa-phone"></i><span>+593 9XXXXXXXX</span></li>
+                        <li><i class="fas fa-phone"></i><span>+593 96 787 9068</span></li>
                         <li><i class="fas fa-envelope"></i><span>contacto@echo.com</span></li>
-                        <li><i class="fas fa-map-marker-alt"></i><span>Guayaquil, Ecuador</span></li>
+                        <li><i class="fas fa-map-marker-alt"></i><span>Chone, Ecuador</span></li>
                     </ul>
                 </div>
                 
@@ -1368,9 +1459,8 @@
                     <h4>Métodos de Pago</h4>
                     <ul class="contact-info">
                         <li><i class="fas fa-money-bill-wave"></i><span>Efectivo (Contra Entrega)</span></li>
-                        <li><i class="fas fa-university"></i><span>Transferencia Bancaria</span></li>
-                        <li><i class="fab fa-paypal"></i><span>PayPal (Próximamente)</span></li>
-                    </ul>
+                        <li><i class="fas fa-university"></i><span>Transferencia Bancaria - Banco Pichincha</span></li>
+                        </ul>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -1417,7 +1507,7 @@
             </div>
             <div class="form-group">
                 <label for="phone">Número de Teléfono (WhatsApp) *</label>
-                <input type="tel" id="phone" class="form-control" placeholder="Ej: 5939XXXXXXXX" required>
+                <input type="tel" id="phone" class="form-control" placeholder="Ej: 593967879068" required>
             </div>
             <div class="form-group">
                 <label for="address">Dirección de Entrega *</label>
@@ -2199,7 +2289,7 @@
                             `Por favor, ayúdame a concretar este pedido. Confirmo los datos de envío y espero instrucciones para el pago.`;
 
             // Codificar el mensaje para la URL de WhatsApp
-            const whatsappNumber = '5939XXXXXXXX'; // REEMPLAZA CON TU NÚMERO DE WHATSAPP
+            const whatsappNumber = '593967879068'; // NÚMERO ACTUALIZADO
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
             // Abrir WhatsApp en una nueva pestaña/ventana
