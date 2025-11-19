@@ -164,23 +164,107 @@
             font-weight: 600;
         }
         
-        /* --- BANNER PRINCIPAL Y SECCIÓN HERO (RESPONSIVE) --- */
-        .top-banner {
+        /* --- BANNER PRINCIPAL: CARRUSEL (RESPONSIVE/ADAPTABLE) --- */
+        .carousel-container {
             width: 100%;
+            /* Altura base: Mínimo 400px, Máximo 600px en escritorio */
             min-height: 400px;
             max-height: 600px;
             overflow: hidden;
             margin-bottom: 0;
             position: relative;
         }
-        
-        /* La imagen dentro del banner debe ser completamente responsive */
-        .top-banner img {
+
+        .carousel-track {
+            display: flex;
+            width: 400%; /* ACTUALIZADO: 4 slides (100% * 4) */
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            width: 25%; /* ACTUALIZADO: Ajustar al número de slides (100% / 4) */
+            height: 100%;
+            flex-shrink: 0; 
+            position: relative;
+        }
+
+        .carousel-slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsión */
             object-position: center;
         }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        /* Navegación del Carrusel */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 1rem 0.75rem;
+            cursor: pointer;
+            z-index: 20;
+            font-size: 1.5rem;
+            opacity: 0.8;
+            transition: opacity 0.3s, background 0.3s;
+        }
+
+        .carousel-nav:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-nav.prev {
+            left: 1rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .carousel-nav.next {
+            right: 1rem;
+            border-radius: var(--radius) 0 0 var(--radius);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background-color: var(--primary);
+            width: 25px;
+            border-radius: 5px;
+        }
+        /* Fin Carrusel CSS */
 
         .hero {
             background-size: cover;
@@ -1014,7 +1098,8 @@
         .general-modal-body p, .general-modal-body ul {
             margin-bottom: 1rem;
             color: var(--text);
-        }
+        } 
+
         /* End General Modal */
 
         /* Checkout Modal */
@@ -1042,82 +1127,103 @@
         }
 
         .checkout-modal h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
-            color: var(--text);
+            color: var(--primary);
             text-align: center;
-            font-size: 1.75rem;
+        }
+
+        .checkout-summary {
+            background-color: var(--body-bg);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-light);
+        }
+
+        .checkout-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkout-summary-total {
+            font-weight: 700;
+            font-size: 1.125rem;
+            border-top: 1px dashed var(--gray-light);
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
+            font-weight: 600;
             color: var(--text);
-            font-weight: 500;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.875rem 1rem;
+            padding: 0.75rem;
             border: 1px solid var(--gray-light);
             border-radius: var(--radius);
+            font-size: 1rem;
             background-color: var(--card-bg);
             color: var(--text);
-            font-size: 1rem;
-            transition: var(--transition);
+            transition: border-color 0.3s;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
         }
 
         .modal-actions {
             display: flex;
             gap: 1rem;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--gray-light);
-            color: var(--text);
+            background-color: var(--body-bg);
+            color: var(--text-light);
+            border: 1px solid var(--gray-light);
         }
 
         .btn-outline:hover {
-            background-color: var(--body-bg);
+            background-color: var(--gray-light);
+            color: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
-        /* --- FOOTER (RESPONSIVE GRID) --- */
+        /* --- FOOTER --- */
         footer {
             background-color: var(--card-bg);
-            color: var(--text);
-            padding: 4rem 0 2rem;
-            margin-top: 4rem;
-            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05), 0 -2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: var(--transition);
+            padding: 3rem 0;
+            border-top: 1px solid var(--gray-light);
         }
 
         .footer-content {
-            /* Desktop/Tablet grande: 4 columnas */
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr; 
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
-            border-bottom: 1px solid var(--gray-light);
-            padding-bottom: 3rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .footer-logo-section .logo {
+            font-size: 1.5rem;
             margin-bottom: 1rem;
+            display: inline-flex;
         }
 
         .footer-logo-section p {
-            font-size: 0.9rem;
             color: var(--text-light);
             margin-bottom: 1.5rem;
         }
@@ -1134,16 +1240,15 @@
             width: 2.5rem;
             height: 2.5rem;
             border-radius: 50%;
-            background-color: var(--body-bg);
-            color: var(--primary);
-            font-size: 1.1rem;
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.125rem;
             transition: var(--transition);
-            text-decoration: none;
         }
 
         .social-link:hover {
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--secondary);
+            transform: translateY(-2px);
         }
 
         .footer-column h4 {
@@ -1151,19 +1256,7 @@
             font-weight: 600;
             margin-bottom: 1.5rem;
             color: var(--text);
-            position: relative;
         }
-        
-        .footer-column h4::after {
-            content: '';
-            display: block;
-            width: 30px;
-            height: 2px;
-            background: var(--secondary);
-            margin-top: 0.5rem;
-            border-radius: 1px;
-        }
-
 
         .footer-column ul {
             list-style: none;
@@ -1178,214 +1271,272 @@
             color: var(--text-light);
             text-decoration: none;
             transition: var(--transition);
-            font-size: 0.95rem;
         }
 
         .footer-column ul li a:hover {
             color: var(--primary);
         }
-        
-        .contact-info li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .contact-info li i {
-            color: var(--primary);
-            font-size: 1rem;
-        }
 
         .footer-bottom {
             text-align: center;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: var(--text-light);
         }
-        
-        /* --- NOTIFICACIÓN TOAST --- */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: var(--dark);
-            color: #fff;
-            text-align: center;
-            border-radius: var(--radius);
-            padding: 16px;
+
+        /* TOAST NOTIFICATION */
+        .toast {
             position: fixed;
-            z-index: 10000;
+            bottom: -50px; /* Inicialmente oculto */
             left: 50%;
-            bottom: 30px;
-            font-size: 17px;
+            transform: translateX(-50%);
+            background-color: var(--success);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
-            transition: all 0.5s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+            transition: bottom 0.5s ease-out, opacity 0.5s ease-out;
+            z-index: 2000;
         }
 
-        #toast.show {
+        .toast.show {
+            bottom: 2rem;
+            opacity: 1;
             visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
         }
 
-        @keyframes fadein {
-            from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
+        /* Animación para el botón de ir arriba */
+        .scroll-to-top-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 500;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
         }
 
-        @keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
-            to {bottom: 0; opacity: 0;}
+        .scroll-to-top-btn.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            animation: bounceIn 0.5s;
         }
 
+        .scroll-to-top-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.1);
+        }
 
-        /* ======================================= */
-        /* --- MEDIA QUERIES (RESPONSIVE RULES) --- */
-        /* ======================================= */
-
-        /* Tablets grandes y medianas (992px y menos) */
-        @media (max-width: 992px) {
-            .footer-content {
-                grid-template-columns: 2fr 1fr 1fr; /* 3 columnas */
+        @keyframes bounceIn {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
             }
-            .footer-column:nth-child(4) {
-                grid-column: 2 / span 2; /* Última columna ocupa dos espacios abajo */
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+        
+        /* --- MEDIA QUERIES PARA ADAPTABILIDAD --- */
+
+        /* Tablets grandes y monitores pequeños (1024px y menos) */
+        @media (max-width: 1024px) {
+            .carousel-container {
+                max-height: 500px;
+                min-height: 350px;
             }
         }
 
-        /* Tablets pequeñas y dispositivos horizontales (768px y menos) */
+        /* Tablets y móviles en horizontal (768px y menos) */
         @media (max-width: 768px) {
-            .hero {
-                padding: 4rem 0;
+            .container {
+                padding: 0 1rem;
             }
-            .hero-title {
-                font-size: 2.5rem;
+
+            .carousel-container {
+                max-height: 400px;
+                min-height: 300px;
             }
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            .section {
-                padding: 3rem 0;
-                padding-top: 8rem; /* Menor padding superior en móvil */
-                margin-top: -3rem; /* Menor margen negativo en móvil */
-            }
-            .overlap-box {
+            .slide-caption {
                 padding: 1.5rem;
-                transform: translateY(30%); /* Menor superposición en móvil */
+                font-size: 1.5rem;
             }
-            .top-banner {
-                min-height: 250px;
+            .carousel-nav {
+                padding: 0.75rem 0.5rem;
+                font-size: 1.25rem;
             }
-            .product-detail-body {
-                gap: 1.5rem;
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr); /* Dos columnas en el footer */
             }
         }
 
         /* Teléfonos grandes (640px y menos): Cambio a diseños de una columna */
         @media (max-width: 640px) {
-            .hero {
-                padding: 3rem 0;
+            .hero { 
+                padding: 3rem 0; 
             }
-            .hero-title {
-                font-size: 2rem;
+            .hero-title { 
+                font-size: 2rem; 
             }
             .overlap-box .hero-actions {
                 flex-direction: column; /* Botones de hero apilados */
                 align-items: center;
             }
-            .overlap-box .btn {
-                width: 100%;
-                max-width: 300px;
+            .overlap-box .btn { 
+                width: 100%; 
+                max-width: 300px; 
             }
-            .products-grid {
+            .products-grid { 
                 grid-template-columns: 1fr; /* Una sola columna para la cuadrícula de productos */
             }
-            .section {
-                padding: 3rem 0;
+            .section { 
+                padding: 3rem 0; 
             }
-            .footer-content {
+            .footer-content { 
                 grid-template-columns: 1fr; /* Una sola columna para el footer */
+            }
+            .footer-logo-section {
+                text-align: center;
+            }
+            .footer-logo-section .logo {
+                justify-content: center;
+            }
+            .social-links {
+                justify-content: center;
             }
         }
 
         /* Teléfonos pequeños (480px y menos) */
         @media (max-width: 480px) {
-            .container {
+            .container { 
                 padding: 0 1rem; /* Menor padding en los bordes */
             }
-            .header-content {
-                padding: 1rem 0;
+            .header-content { 
+                padding: 1rem 0; 
             }
-            .logo {
-                font-size: 1.5rem;
+            .logo { 
+                font-size: 1.5rem; 
             }
-            .product-actions {
+            .product-actions { 
                 flex-direction: column; /* Botones de producto apilados */
             }
-            .btn-full {
-                width: 100%;
+            .product-actions .btn-full { 
+                width: 100%; 
             }
-            .cart-item {
-                flex-direction: column; /* Items del carrito apilados */
+            .product-title { 
+                font-size: 1.15rem; 
             }
-            .cart-item-image {
-                width: 100%;
-                height: 150px;
-                margin-right: 0;
-                margin-bottom: 1rem;
+            /* Adaptabilidad adicional para el carrusel en móviles pequeños */
+            .carousel-container {
+                min-height: 250px;
+                max-height: 350px;
+            }
+            .slide-caption {
+                padding: 1rem;
+                font-size: 1.25rem;
+            }
+            .carousel-nav {
+                /* Ocultar flechas para maximizar el área visible del banner */
+                display: none; 
+            }
+            .carousel-dots {
+                bottom: 0.5rem;
             }
         }
-
     </style>
 </head>
 <body>
-    
     <header>
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">
                     <i class="fas fa-laptop-code logo-icon"></i>
-                    <span>ECHO Technology Store</span>
+                    <span>ECHO</span>
                 </a>
                 <div class="header-actions">
-                    <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema oscuro/claro">
                         <i class="fas fa-moon"></i>
                     </button>
-                    <div class="cart-icon" id="cart-icon">
-                        <i class="fas fa-shopping-cart"></i>
+                    <button class="cart-icon" id="cart-icon" aria-label="Abrir carrito de compras">
+                        <i class="fas fa-shopping-basket"></i>
                         <span class="cart-count" id="cart-count">0</span>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
     <main>
-        
-        <section class="top-banner">
-            <img src="banner pr.JPG" alt="Banner principal de la tienda con productos tecnológicos">
+        <section class="carousel-container" id="main-carousel">
+            <div class="carousel-track">
+                <div class="carousel-slide">
+                    <img src="banner pr.JPG" alt="Banner principal de la tienda con productos tecnológicos">
+                    <div class="slide-caption">¡Bienvenido a ECHO Technology!</div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="banner 2.jpeg" alt="Oferta de la semana en cargadores" onerror="this.onerror=null;this.src='https://via.placeholder.com/1200x500?text=OFERTA+ESPECIAL+2'">
+                    <div class="slide-caption">Oferta de la Semana: 20% OFF</div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="banner 3.jpeg" alt="Nuevos accesorios para gamers" onerror="this.onerror=null;this.src='https://via.placeholder.com/1200x500?text=NUEVOS+ACCESORIOS'">
+                    <div class="slide-caption">Nuevos Accesorios Gaming</div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="banner 4.jpeg" alt="Promoción de envíos gratis" onerror="this.onerror=null;this.src='https://via.placeholder.com/1200x500?text=ENVIO+GRATIS'">
+                    <div class="slide-caption">Envío GRATIS en pedidos mayores a $50</div>
+                </div>
+            </div>
+
+            <button class="carousel-nav prev" aria-label="Anterior">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-nav next" aria-label="Siguiente">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div class="carousel-dots">
+                <span class="dot" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+                <span class="dot" data-slide="3"></span> </div>
         </section>
-        <br>
-        <div class="section-header">
+        <div class="section">
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="section-title">¡Lo mejor en Tecnología y Accesorios!</h1>
-                    <p class="section-subtitle">Descubre nuestra selección de cargadores y cables de alta calidad de las marcas LDNIO y ECCO. ¡Potencia tu vida digital!</p>
+                    <h1 class="section-title">Accesorios de Calidad, Precios Insuperables.</h1>
+                    <p class="section-subtitle">Encuentra los mejores gadgets y accesorios tecnológicos con garantía y el mejor servicio al cliente.</p>
                 </div>
-                
-            </div> <br>
-             <div class="hero-actions">
-                         <a href="#productos" class="btn btn-primary" id="scroll-to-products">
-                            <i class="fas fa-bolt"></i> Explorar Productos
-                        </a>
-                        <button class="btn btn-secondary" id="open-cart-hero">
-                            <i class="fas fa-shopping-basket"></i> Ver Carrito
-                        </button>
-                    </div>
+            </div>
         </div>
-        
+
+        <div class="overlap-box">
+            <div class="hero-actions">
+                <a href="#productos" class="btn btn-primary">
+                    <i class="fas fa-store"></i> Ver Productos
+                </a>
+                <button class="btn btn-secondary" id="open-cart-hero">
+                    <i class="fas fa-shopping-basket"></i> Abrir Carrito
+                </button>
+            </div>
+        </div>
+
         <section class="section" id="productos">
             <div class="container">
-                
-                
                 <div class="section-header">
                     <h2 class="section-title">Nuestra Colección</h2>
                     <p class="section-subtitle">Encuentra el producto perfecto con nuestros filtros de categoría y el potente buscador.</p>
@@ -1407,9 +1558,23 @@
                 <div class="products-grid" id="products-container">
                     <p style="text-align: center; grid-column: 1/-1;">Cargando productos...</p>
                 </div>
+
             </div>
         </section>
-        
+
+        <section class="section" id="contacto">
+             <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Contáctanos</h2>
+                    <p class="section-subtitle">Estamos listos para ayudarte con cualquier duda o consulta.</p>
+                </div>
+                <div style="text-align: center;">
+                    <a href="https://wa.me/593967879068" target="_blank" class="btn btn-primary" style="background-color: #25d366;">
+                        <i class="fab fa-whatsapp"></i> Chatear por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -1433,46 +1598,47 @@
                         </a>
                     </div>
                 </div>
-                
                 <div class="footer-column">
                     <h4>Enlaces Rápidos</h4>
                     <ul>
                         <li><a href="#productos">Tienda</a></li>
-                        <li><a href="#" id="open-cart-footer">Ver Carrito</a></li>
-                        <li><a href="#productos">Categorías</a></li>
                         <li><a href="#" id="privacy-policy-link">Política de Privacidad</a></li>
                         <li><a href="#" id="terms-of-service-link">Términos de Servicio</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-column">
-                    <h4>Contacto</h4>
-                    <ul class="contact-info">
-                        <li><i class="fas fa-phone"></i><span>+593 96 787 9068</span></li>
-                        <li><i class="fas fa-envelope"></i><span>contacto@echo.com</span></li>
-                        <li><i class="fas fa-map-marker-alt"></i><span>Chone, Ecuador</span></li>
+                    <h4>Información de Contacto</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Guayaquil, Ecuador</li>
+                        <li><i class="fab fa-whatsapp"></i> +593 96 787 9068</li>
+                        <li><i class="fas fa-envelope"></i> info@echotech.com</li>
                     </ul>
                 </div>
-                
                 <div class="footer-column">
                     <h4>Métodos de Pago</h4>
-                    <ul class="contact-info">
-                        <li><i class="fas fa-money-bill-wave"></i><span>Efectivo (Contra Entrega)</span></li>
-                        <li><i class="fas fa-university"></i><span>Transferencia Bancaria - Banco Pichincha</span></li>
-                        </ul>
+                    <ul>
+                        <li>Transferencia Bancaria</li>
+                        <li>Depósito en Efectivo</li>
+                        <li>Pago con Tarjeta (Próximamente)</li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; 2025 ECHO Technology Store. Todos los derechos reservados.
+                <p>&copy; 2024 ECHO Technology Store. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
+    <button class="scroll-to-top-btn" id="scroll-to-top" aria-label="Ir arriba">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
     <div class="overlay" id="overlay"></div>
 
-    <div class="cart-modal" id="cart-modal">
+    <div class="cart-modal" id="cart-modal" aria-modal="true" role="dialog">
         <div class="cart-header">
-            <h2 class="cart-title">Tu Carrito de Compras</h2>
+            <h2 class="cart-title"><i class="fas fa-shopping-basket"></i> Tu Carrito (<span id="cart-count-modal">0</span>)</h2>
             <button class="close-cart" id="close-cart" aria-label="Cerrar carrito">
                 <i class="fas fa-times"></i>
             </button>
@@ -1480,10 +1646,7 @@
         <div class="cart-items" id="cart-items">
             <div class="empty-cart" id="empty-cart">
                 <i class="fas fa-shopping-basket empty-cart-icon"></i>
-                <p>Tu carrito está vacío.</p>
-                <a href="#productos" class="btn btn-primary" onclick="closeCartModal()">
-                    <i class="fas fa-store"></i> Ir a la Tienda
-                </a>
+                <p>Tu carrito está vacío. ¡Empieza a comprar!</p>
             </div>
         </div>
         <div class="cart-footer">
@@ -1496,17 +1659,33 @@
             </button>
         </div>
     </div>
-    
-    <div class="checkout-modal" id="checkout-modal">
-        <h2>Detalles de Envío</h2>
+
+    <div class="checkout-modal" id="checkout-modal" aria-modal="true" role="dialog">
+        <h2>Detalles de Envío y Contacto</h2>
+        
+        <div class="checkout-summary">
+            <div class="checkout-summary-item">
+                <span>Subtotal:</span>
+                <span id="checkout-subtotal">$0.00</span>
+            </div>
+            <div class="checkout-summary-item">
+                <span>Envío:</span>
+                <span id="checkout-shipping">A convenir</span>
+            </div>
+            <div class="checkout-summary-total">
+                <span>Total a Pagar:</span>
+                <span id="checkout-final-total">$0.00</span>
+            </div>
+        </div>
+
         <form id="checkout-form">
             <div class="form-group">
                 <label for="name">Nombre Completo *</label>
                 <input type="text" id="name" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="phone">Número de Teléfono (WhatsApp) *</label>
-                <input type="tel" id="phone" class="form-control" placeholder="Ej: 593967879068" required>
+                <label for="phone">Teléfono / WhatsApp *</label>
+                <input type="tel" id="phone" class="form-control" required placeholder="Ej: 5939XXXXXXXX">
             </div>
             <div class="form-group">
                 <label for="address">Dirección de Entrega *</label>
@@ -1541,7 +1720,7 @@
         <div class="product-detail-body" id="product-detail-body">
             </div>
     </div>
-    
+
     <div class="general-modal" id="general-modal">
         <div class="general-modal-header">
             <h2 id="general-modal-title"></h2>
@@ -1550,211 +1729,36 @@
             </button>
         </div>
         <div class="general-modal-body" id="general-modal-body">
-            </div>
+             </div>
     </div>
 
-
-    <div id="toast">
+    <div class="toast" id="toast">
         <span id="toast-message"></span>
     </div>
 
     <script>
-        // --- 1. BASE DE DATOS DE PRODUCTOS ---
+        // --- 1. DATOS DE PRODUCTOS ---
         const products = [
-            { 
-                id: 1, 
-                name: "CARGADOR LDNIO A2203 Doble USB (2.4A)", 
-                price: 3.50, 
-                image: "cargador-ldnio-a2203.jpg", 
-                description: "Cargador de pared LDNIO A2203 de alta calidad con doble puerto USB-A y salida máxima de 2.4A. Ideal para carga diaria y segura.",
-                features: [ 
-                    "Puertos: 2x USB-A", 
-                    "Salida: 2.4A (máx.)", 
-                    "Tecnología: Auto-ID (Identificación automática)", 
-                    "Color: Blanco", 
-                    "Marca: LDNIO" 
-                ], 
-                category: "Cargadores de Pared", 
-                badge: null 
-            },
-            { 
-                id: 2, 
-                name: "CABLE LDNIO LS841 Tipo C Blanco (1M, 25W)", 
-                price: 1.00, 
-                image: "cable-ldnio-ls841-type-c-b.jpg", 
-                description: "Cable de carga rápida LDNIO LS841 de 1 metro, USB-A a Tipo C. Soporta hasta 25W. Diseño duradero y anti-enredos.",
-                features: [ 
-                    "Conexión: USB-A a Tipo C (USB-C)", 
-                    "Longitud: 1 metro", 
-                    "Potencia de Carga: 25W", 
-                    "Color: Blanco", 
-                    "Marca: LDNIO" 
-                ], 
-                category: "Cables y Accesorios", 
-                badge: null 
-            },
-            { 
-                id: 3, 
-                name: "CABLE LDNIO LS841 Micro-USB (1M, 25W)", 
-                price: 1.00, 
-                image: "cable-ldnio-ls841-micro-usb.jpg", 
-                description: "Cable de carga rápida LDNIO LS841 de 1 metro, USB-A a Micro-USB (V8). Soporta hasta 25W, compatible con la mayoría de dispositivos Android antiguos.",
-                features: [ 
-                    "Conexión: USB-A a Micro-USB (V8)", 
-                    "Longitud: 1 metro", 
-                    "Potencia de Carga: 25W", 
-                    "Color: Blanco", 
-                    "Marca: LDNIO" 
-                ], 
-                category: "Cables y Accesorios", 
-                badge: null 
-            },
-            { 
-                id: 4, 
-                name: "CABLE LDNIO LS841 USB-C Negro (1M, 25W)", 
-                price: 1.00, 
-                image: "cable-ldnio-ls841-type-c-n.jpg", 
-                description: "Cable de carga rápida LDNIO LS841 de 1 metro, USB-A a Tipo C. Soporta hasta 25W. Elegante color negro.",
-                features: [ 
-                    "Conexión: USB-A a Tipo C (USB-C)", 
-                    "Longitud: 1 metro", 
-                    "Potencia de Carga: 25W", 
-                    "Color: Negro", 
-                    "Marca: LDNIO" 
-                ], 
-                category: "Cables y Accesorios", 
-                badge: null 
-            },
-            { 
-                id: 5, 
-                name: "CARGADOR LDNIO A4405 4 USB Auto-ID", 
-                price: 5.00, 
-                image: "cargador-ldnio-a4405.jpg", 
-                description: "Cargador potente de pared con 4 puertos USB (4.4A total). Perfecto para cargar múltiples dispositivos simultáneamente. Incluye luz LED nocturna.",
-                features: [ 
-                    "Puertos: 4x USB-A", 
-                    "Salida: 4.4A (máx.)", 
-                    "Tecnología: Auto-ID", 
-                    "Luz Nocturna: Sí", 
-                    "Marca: LDNIO" 
-                ], 
-                category: "Cargadores de Pared", 
-                badge: "4 Puertos" 
-            },
-            { 
-                id: 6, 
-                name: "CARGADOR LDNIO A1304Q USB QC3.0 (30W)", 
-                price: 4.50, 
-                image: "cargador-ldnio-a1304q.jpg", 
-                description: "Cargador de pared de carga rápida con tecnología Quick Charge 3.0. Ideal para dispositivos compatibles con alta velocidad de carga.",
-                features: [ 
-                    "Puertos: 1x USB-A (QC 3.0)", 
-                    "Potencia Máxima: 30W", 
-                    "Tecnología: Quick Charge 3.0", 
-                    "Color: Blanco", 
-                    "Marca: LDNIO" 
-                ], 
-                category: "Cargadores de Pared", 
-                badge: "30W" 
-            },
-            { 
-                id: 7, 
-                name: "CARGADOR LDNIO C304 2 USB para Auto (3.4A)", 
-                price: 2.50, 
-                image: "cargador-ldnio-c304.jpg", 
-                description: "Cargador de coche LDNIO C304 con doble puerto USB y 3.4A de salida total, ideal para el vehículo. Carga rápida y segura en el camino.",
-                features: [ 
-                    "Puertos: 2x USB-A", 
-                    "Salida: 3.4A (máx.)", 
-                    "Tecnología: Auto-ID", 
-                    "Color: Blanco/Plateado", 
-                    "Marca: LDNIO" 
-                ], 
-                category: "Cargadores de Auto", 
-                badge: null 
-            },
-            { 
-                id: 8, 
-                name: "CABLE ECCO EC-25 Tipo C (1M, 65W)", 
-                price: 1.50, 
-                image: "cable-ecco-ec25-type-c.jpg", 
-                description: "Cable ECCO EC-25 de 1 metro, USB-A a Tipo C. Soporte de carga súper rápida de hasta 65W. Alta durabilidad y rendimiento.",
-                features: [ 
-                    "Conexión: USB-A a Tipo C (USB-C)", 
-                    "Longitud: 1 metro", 
-                    "Potencia de Carga: 65W", 
-                    "Marca: ECCO" 
-                ], 
-                category: "Cables y Accesorios", 
-                badge: "Súper Carga" 
-            },
-            { 
-                id: 9, 
-                name: "CABLE ECCO EC-25 Lightning (1M, 45W)", 
-                price: 1.50, 
-                image: "cable-ecco-ec25-lightning.jpg", 
-                description: "Cable ECCO EC-25 de 1 metro, USB-A a Lightning. Soporta hasta 45W. Certificado para dispositivos Apple.",
-                features: [ 
-                    "Conexión: USB-A a Lightning (IPH)", 
-                    "Longitud: 1 metro", 
-                    "Potencia de Carga: 45W", 
-                    "Marca: ECCO" 
-                ], 
-                category: "Cables y Accesorios", 
-                badge: null 
-            },
-            { 
-                id: 10, 
-                name: "CABLE ECCO EC-41 4EN1 (65W, Múltiples Conectores)", 
-                price: 2.00, 
-                image: "cable-ecco-ec41-4in1.jpg", 
-                description: "Cable multipropósito 4-en-1 ECCO EC-41 de 65W. Incluye adaptadores para USB-C y Lightning. La solución universal de carga.",
-                features: [ 
-                    "Tipo: 4 en 1 (Múltiples combinaciones)", 
-                    "Potencia Máxima: 65W", 
-                    "Conectores: USB-C, USB-A, Lightning (IPH)", 
-                    "Marca: ECCO" 
-                ], 
-                category: "Cables y Accesorios", 
-                badge: "Universal" 
-            },
-            { 
-                id: 11, 
-                name: "SOPORTE DE ESCRITORIO AJUSTABLE", 
-                price: 7.50, 
-                image: "soporte-escritorio.jpg", 
-                description: "Soporte de aluminio plegable y ajustable para celulares y tablets. Mejora tu postura y productividad.",
-                features: [ 
-                    "Material: Aleación de Aluminio", 
-                    "Ajustable: Ángulo y Altura", 
-                    "Compatibilidad: Universal (hasta 12 pulgadas)", 
-                    "Uso: Escritorio/Oficina" 
-                ], 
-                category: "Soportes y Bases", 
-                badge: "Nuevo" 
-            },
-            { 
-                id: 12, 
-                name: "ADAPTADOR USB-C a HDMI 4K", 
-                price: 5.00, 
-                image: "adaptador-usbc-hdmi.jpg", 
-                description: "Adaptador compacto USB-C a HDMI que soporta resolución 4K a 60Hz. Perfecto para proyectar desde laptops o móviles.",
-                features: [ 
-                    "Conexión: USB-C (Entrada) a HDMI (Salida)", 
-                    "Resolución Máx: 4K @ 60Hz", 
-                    "Uso: Plug and Play (No requiere drivers)", 
-                    "Material: Carcasa de Aluminio" 
-                ], 
-                category: "Adaptadores y Hubs", 
-                badge: null 
-            }
-            
+            { id: 1, name: "CABLE LDNIO SY-01 TIPO C (1m)", price: 2.00, image: "cable-ldnio-sy01.jpg", description: "Cable de carga y datos USB a Tipo C de 1 metro. Soporta carga rápida (2.4A). Diseño duradero y anti-enredos.", features: [ "Longitud: 1 metro", "Conector: USB-A a USB-C", "Carga Rápida: Sí (2.4A)", "Material: TPE de alta resistencia" ], category: "Cables de Carga", badge: "Más Vendido" },
+            { id: 2, name: "CABLE LDNIO SY-02 LIGHTNING (1m)", price: 2.00, image: "cable-ldnio-sy02.jpg", description: "Cable de carga y datos USB a Lightning de 1 metro para dispositivos Apple (iPhone, iPad). Carga rápida 2.4A.", features: [ "Longitud: 1 metro", "Conector: USB-A a Lightning", "Compatibilidad: Apple (MFI-Certificado)", "Corriente: 2.4A" ], category: "Cables de Carga", badge: "Apple" },
+            { id: 3, name: "CARGADOR LDNIO A6802 6 USB Auto-ID (30W)", price: 12.00, image: "cargador-ldnio-a6802.jpg", description: "Estación de carga con 6 puertos USB y 30W de potencia total. Ideal para familias y oficinas. Detecta automáticamente la carga óptima.", features: [ "Puertos: 6x USB-A", "Potencia Máxima: 30W", "Tecnología: Auto-ID", "Color: Blanco/Plateado" ], category: "Cargadores de Pared", badge: "Potente" },
+            { id: 4, name: "POWER BANK LDNIO PQ10 10000mAh PD+QC (22.5W)", price: 20.00, image: "powerbank-ldnio-pq10.jpg", description: "Batería externa de 10000mAh con soporte de carga súper rápida (PD/QC 22.5W). Puerto USB-C y USB-A. Diseño compacto.", features: [ "Capacidad: 10000mAh", "Salida Máx: 22.5W", "Puertos: USB-C (PD) y USB-A (QC)", "Indicador LED: Sí", "Marca: LDNIO" ], category: "Power Banks", badge: "Súper Rápida" },
+            { id: 5, name: "CARGADOR LDNIO A4405 4 USB Auto-ID", price: 5.00, image: "cargador-ldnio-a4405.jpg", description: "Cargador potente de pared con 4 puertos USB (4.4A total). Perfecto para cargar múltiples dispositivos simultáneamente. Incluye luz LED nocturna.", features: [ "Puertos: 4x USB-A", "Salida: 4.4A (máx.)", "Tecnología: Auto-ID", "Luz Nocturna: Sí", "Marca: LDNIO" ], category: "Cargadores de Pared", badge: "4 Puertos" },
+            { id: 6, name: "CARGADOR LDNIO A1304Q USB QC3.0 (30W)", price: 4.50, image: "cargador-ldnio-a1304q.jpg", description: "Cargador de pared de carga rápida con tecnología Quick Charge 3.0. Ideal para dispositivos compatibles con alta velocidad de carga.", features: [ "Puertos: 1x USB-A (QC 3.0)", "Potencia Máxima: 30W", "Tecnología: Quick Charge 3.0", "Color: Blanco", "Marca: LDNIO" ], category: "Cargadores de Pared", badge: "30W" },
+            { id: 7, name: "CARGADOR LDNIO C304 2 USB para Auto (3.4A)", price: 2.50, image: "cargador-ldnio-c304.jpg", description: "Cargador de coche LDNIO C304 con doble puerto USB y 3.4A de salida total, ideal para el vehículo. Carga rápida y segura en el camino.", features: [ "Puertos: 2x USB-A", "Salida: 3.4A (total)", "Tecnología: Auto-ID", "Compatibilidad: Universal", "Marca: LDNIO" ], category: "Cargadores de Coche", badge: null },
+            { id: 8, name: "AUDÍFONOS LDNIO LT13 TWS Bluetooth 5.3", price: 15.00, image: "audifonos-ldnio-lt13.jpg", description: "Audífonos Inalámbricos True Wireless (TWS) con la última tecnología Bluetooth 5.3. Sonido nítido, batería de larga duración y estuche de carga.", features: [ "Conectividad: Bluetooth 5.3", "Tipo: True Wireless Stereo (TWS)", "Batería: Larga duración", "Control: Táctil", "Marca: LDNIO" ], category: "Audio y Audífonos", badge: "Nuevo" },
+            { id: 9, name: "AUDÍFONOS LDNIO HT06 ANC (Cancelación de Ruido)", price: 35.00, image: "audifonos-ldnio-ht06.jpg", description: "Audífonos de diadema con Cancelación Activa de Ruido (ANC). Disfruta de tu música sin distracciones externas. Confort superior.", features: [ "Conectividad: Bluetooth", "Función: Cancelación Activa de Ruido (ANC)", "Diseño: Diadema (Over-ear)", "Batería: 30 horas (aprox.)" ], category: "Audio y Audífonos", badge: "Premium" },
+            { id: 10, name: "ADAPTADOR OTG TIPO C", price: 1.50, image: "adaptador-otg-usbc.jpg", description: "Adaptador On-The-Go (OTG) USB-C a USB-A. Permite conectar periféricos como memorias USB, teclados o ratones a tu móvil o tablet.", features: [ "Conector 1: USB-C (Macho)", "Conector 2: USB-A (Hembra)", "Función: OTG (On-The-Go)", "Uso: Transferencia de Datos y Accesorios", "Marca: Universal" ], category: "Adaptadores y Hubs", badge: "Universal" },
+            { id: 11, name: "SOPORTE DE ESCRITORIO AJUSTABLE", price: 7.50, image: "soporte-escritorio.jpg", description: "Soporte de aluminio plegable y ajustable para celulares y tablets. Mejora tu postura y productividad.", features: [ "Material: Aleación de Aluminio", "Ajustable: Ángulo y Altura", "Compatibilidad: Universal (hasta 12 pulgadas)", "Uso: Escritorio/Oficina" ], category: "Soportes y Bases", badge: "Nuevo" },
+            { id: 12, name: "ADAPTADOR USB-C a HDMI 4K", price: 5.00, image: "adaptador-usbc-hdmi.jpg", description: "Adaptador compacto USB-C a HDMI que soporta resolución 4K a 60Hz. Perfecto para proyectar desde laptops o móviles.", features: [ "Conexión: USB-C (Entrada) a HDMI (Salida)", "Resolución Máx: 4K @ 60Hz", "Uso: Plug and Play (No requiere drivers)", "Material: Carcasa de Aluminio" ], category: "Adaptadores y Hubs", badge: null }
         ];
-        
+
+
         // --- 2. VARIABLES GLOBALES DE LA TIENDA ---
         let cart = [];
         let currentCategory = 'Todos'; // Categoría activa
         let isCartOpen = false;
+        const whatsappNumber = '593967879068'; // Número de WhatsApp para el checkout
 
         // --- 3. SELECCIÓN DE ELEMENTOS DEL DOM ---
         const productsContainer = document.getElementById('products-container');
@@ -1773,48 +1777,54 @@
         const checkoutForm = document.getElementById('checkout-form');
         const cancelCheckout = document.getElementById('cancel-checkout');
         const themeToggle = document.getElementById('theme-toggle');
-        const productDetailModal = document.getElementById('product-detail-modal');
-        const productDetailBody = document.getElementById('product-detail-body');
-        const closeDetail = document.getElementById('close-detail');
+        const scrollButton = document.getElementById('scroll-to-top');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toast-message');
         const searchInput = document.getElementById('search-input');
         const clearSearchBtn = document.getElementById('clear-search');
-        // Elementos del Modal General
+        const cartCountModal = document.getElementById('cart-count-modal');
+        const productDetailModal = document.getElementById('product-detail-modal');
+        const closeDetailModal = document.getElementById('close-detail');
+        const productDetailModalTitle = document.getElementById('product-detail-modal-title');
+        const productDetailBody = document.getElementById('product-detail-body');
         const generalModal = document.getElementById('general-modal');
         const generalModalTitle = document.getElementById('general-modal-title');
         const generalModalBody = document.getElementById('general-modal-body');
         const closeGeneralModal = document.getElementById('close-general-modal');
         const privacyPolicyLink = document.getElementById('privacy-policy-link');
         const termsOfServiceLink = document.getElementById('terms-of-service-link');
-        const openCartFooter = document.getElementById('open-cart-footer');
-        
-        // --- 4. INICIALIZACIÓN ---
+
+        // --- 4. CONFIGURACIÓN E INICIALIZACIÓN ---
         function initStore() {
+            // Cargar datos
             loadCartFromStorage();
             updateCart();
             renderCategories();
-            filterAndRenderProducts();
+            filterAndRenderProducts(); // Renderizar productos iniciales
+            
+            // Adjuntar Listeners globales
+            attachGlobalListeners();
+        }
 
-            // Event listeners para Modales y Carrito
-            cartIcon.addEventListener('click', openCart);
-            openCartHero.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                openCart(); 
-            });
-            openCartFooter.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                openCart(); 
-            });
+        function attachGlobalListeners() {
+            // Event listeners para el Carrito
+            cartIcon.addEventListener('click', openCartModal);
+            openCartHero.addEventListener('click', openCartModal);
             closeCart.addEventListener('click', closeCartModal);
             overlay.addEventListener('click', closeAllModals);
+
+            // Event listeners para Checkout
             checkoutBtn.addEventListener('click', openCheckoutModal);
             cancelCheckout.addEventListener('click', closeCheckoutModal);
-            checkoutForm.addEventListener('submit', processCheckout);
+            checkoutForm.addEventListener('submit', handleCheckout);
+            
+            // Event listener para el tema
             themeToggle.addEventListener('click', toggleTheme);
-            closeDetail.addEventListener('click', closeProductDetail);
+            
+            // Event listeners para el modal de detalles
+            closeDetailModal.addEventListener('click', closeProductDetail);
 
-            // Event listeners para Modales de Política/Términos
+            // Event listeners para modales generales (Políticas/Términos)
             closeGeneralModal.addEventListener('click', closeGeneralModalHandler);
             privacyPolicyLink.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1829,6 +1839,10 @@
             searchInput.addEventListener('input', filterAndRenderProducts);
             clearSearchBtn.addEventListener('click', clearSearch);
 
+            // Listener para el botón de scroll to top
+            window.addEventListener('scroll', toggleScrollButton);
+            scrollButton.addEventListener('click', scrollToTop);
+
             // Cargar tema desde localStorage
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
@@ -1840,7 +1854,6 @@
         }
 
         // --- 5. LÓGICA DE FILTROS Y BÚSQUEDA ---
-        
         // 1. Obtener lista única de categorías
         function getCategories() {
             const categories = products.map(p => p.category);
@@ -1867,58 +1880,59 @@
                 categoryRibbon.appendChild(button);
             });
         }
-        
+
         // 3. Renderizar productos en el contenedor
         function renderProducts(productsList) {
             productsContainer.innerHTML = ''; // Limpiar contenedor
             
             // Si el filtro de búsqueda está activo y no hay resultados.
-            if (searchInput.value.trim().length > 0 && productsList.length === 0 && currentCategory !== 'Todos') {
+            if (searchInput.value.trim().length > 0 && productsList.length === 0) {
                 productsContainer.innerHTML = `
                     <div style="text-align: center; padding: 2rem; color: var(--text-light); grid-column: 1/-1;">
                         <i class="fas fa-search-minus" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
-                        <p>No se encontraron productos que coincidan con su filtro y/o búsqueda.</p>
+                        <p>No se encontraron productos para <strong>"${searchInput.value.trim()}"</strong>.</p>
+                        <p>Intenta con otra palabra clave o categoría.</p>
                     </div>
                 `;
+                clearSearchBtn.style.display = 'inline-block';
                 return;
-            } else if (productsList.length === 0) {
+            }
+
+            // Ocultar botón de limpiar si no hay búsqueda
+            clearSearchBtn.style.display = searchInput.value.trim().length > 0 ? 'inline-block' : 'none';
+
+            if (productsList.length === 0) {
                  productsContainer.innerHTML = `
                     <div style="text-align: center; padding: 2rem; color: var(--text-light); grid-column: 1/-1;">
-                        <i class="fas fa-boxes" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
-                        <p>No hay productos disponibles en este momento.</p>
+                        <i class="fas fa-box-open" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <p>No hay productos disponibles en esta categoría.</p>
                     </div>
                 `;
                 return;
             }
 
-            // Renderizar todos los productos en secuencia
             productsList.forEach(product => {
-                productsContainer.appendChild(createProductCard(product));
+                const card = createProductCard(product);
+                productsContainer.appendChild(card);
             });
             
-            // Re-añadir event listeners a los botones de producto
-            attachProductCardListeners();
+            // Una vez que se renderizan las tarjetas, adjuntar sus listeners
+            attachProductCardListeners(); 
         }
 
-        // 4. Función central de filtrado (combina búsqueda y categoría)
+        // 4. Filtrar y renderizar productos (Combina categoría y búsqueda)
         function filterAndRenderProducts() {
             const searchTerm = searchInput.value.trim().toLowerCase();
-            
-            if (searchTerm.length > 0) {
-                clearSearchBtn.style.display = 'flex';
-            } else {
-                clearSearchBtn.style.display = 'none';
-            }
             
             const filteredProducts = products.filter(product => {
                 // Filtro de búsqueda
                 const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
-                                      product.description.toLowerCase().includes(searchTerm) ||
+                                      product.description.toLowerCase().includes(searchTerm) || 
                                       product.category.toLowerCase().includes(searchTerm);
-
+                
                 // Filtro de categoría
                 const matchesCategory = currentCategory === 'Todos' || product.category === currentCategory;
-
+                
                 return matchesSearch && matchesCategory;
             });
 
@@ -1932,7 +1946,6 @@
         }
 
         // --- 6. LÓGICA DE TARJETA DE PRODUCTO ---
-
         // Crea el HTML de una tarjeta de producto
         function createProductCard(product) {
             const productCard = document.createElement('div');
@@ -1942,7 +1955,7 @@
             if (product.badge) {
                 badgeHTML = `<span class="product-badge">${product.badge}</span>`;
             }
-            
+
             productCard.innerHTML = `
                 <div class="product-image-container">
                     ${badgeHTML}
@@ -1968,13 +1981,15 @@
 
         // Añadir event listeners a los botones de producto
         function attachProductCardListeners() {
+            // Añadir al carrito
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const productId = parseInt(e.currentTarget.getAttribute('data-id'));
                     addToCart(productId, 1);
                 });
             });
-            
+
+            // Ver detalles
             document.querySelectorAll('.view-details').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const productId = parseInt(e.currentTarget.getAttribute('data-id'));
@@ -1982,9 +1997,8 @@
                 });
             });
         }
-        
-        // --- 7. LÓGICA DEL CARRITO (Cart) ---
 
+        // --- 7. LÓGICA DEL CARRITO (Cart) ---
         // Cargar carrito desde localStorage
         function loadCartFromStorage() {
             const savedCart = localStorage.getItem('echo_tech_cart');
@@ -1998,58 +2012,60 @@
             localStorage.setItem('echo_tech_cart', JSON.stringify(cart));
         }
 
-        // Añadir producto al carrito
-        function addToCart(productId, quantity) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
+        // Encontrar un producto por ID
+        function findProduct(id) {
+            return products.find(p => p.id === id);
+        }
 
+        // Añadir/Incrementar un producto al carrito
+        function addToCart(productId, quantity) {
             const existingItem = cart.find(item => item.id === productId);
+            const productInfo = findProduct(productId);
 
             if (existingItem) {
                 existingItem.quantity += quantity;
-            } else {
+            } else if (productInfo) {
                 cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
+                    id: productInfo.id,
+                    name: productInfo.name,
+                    price: productInfo.price,
+                    image: productInfo.image,
                     quantity: quantity
                 });
             }
             updateCart();
-            showToast(`"${product.name}" añadido al carrito.`);
+            showToast(`"${productInfo.name}" añadido al carrito.`);
         }
 
-        // Eliminar producto del carrito
-        function removeFromCart(productId) {
-            const product = cart.find(item => item.id === productId);
-            if (!product) return;
-            cart = cart.filter(item => item.id !== productId);
-            updateCart();
-            showToast(`"${product.name}" eliminado del carrito.`);
-        }
-
-        // Actualizar cantidad de producto en el carrito
+        // Actualizar cantidad de un item
         function updateQuantity(productId, change) {
             const item = cart.find(i => i.id === productId);
-            if (!item) return;
-
-            const newQuantity = item.quantity + change;
-
-            if (newQuantity <= 0) {
-                removeFromCart(productId);
-            } else {
-                item.quantity = newQuantity;
-                updateCart();
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                }
             }
+            updateCart();
         }
 
-        // Función principal para recalcular totales y actualizar UI
+        // Eliminar un item del carrito
+        function removeFromCart(productId) {
+            const item = cart.find(i => i.id === productId);
+            if(item) {
+                showToast(`"${item.name}" eliminado del carrito.`, 'error');
+            }
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Actualizar UI del carrito
         function updateCart() {
             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
             cartCount.textContent = totalCount;
+            cartCountModal.textContent = totalCount;
             cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
 
             if (totalCount > 0) {
@@ -2073,12 +2089,13 @@
                 emptyCart.style.display = 'block';
                 return;
             }
-            
+
             emptyCart.style.display = 'none';
 
             cart.forEach(item => {
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
+                
                 cartItem.innerHTML = `
                     <img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/80x80?text=IMG'">
                     <div class="cart-item-details">
@@ -2104,45 +2121,51 @@
                     updateQuantity(productId, -1);
                 });
             });
+
             document.querySelectorAll('.quantity-btn.plus').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const productId = parseInt(e.target.getAttribute('data-id'));
                     updateQuantity(productId, 1);
                 });
             });
+            
             document.querySelectorAll('.remove-item').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    // Usamos el parentElement para asegurarnos de obtener el botón correcto
+                    const productId = parseInt(e.currentTarget.getAttribute('data-id'));
                     removeFromCart(productId);
                 });
             });
         }
-        
-        // --- 8. LÓGICA DE MODALES ---
 
+        // --- 8. LÓGICA DE MODALES ---
         // Abrir modal de carrito
-        function openCart() {
+        function openCartModal() {
             cartModal.classList.add('open');
             overlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Evita el scroll del fondo
-            updateCart();
+            document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
+            isCartOpen = true;
         }
 
         // Cerrar modal de carrito
         function closeCartModal() {
             cartModal.classList.remove('open');
-            // Si el overlay no es usado por otro modal, cerrarlo.
-            if (!productDetailModal.classList.contains('active') && 
-                !checkoutModal.classList.contains('active') &&
-                !generalModal.classList.contains('active')) {
+            isCartOpen = false;
+            // Solo remueve el overlay si no hay otro modal abierto
+            if (!checkoutModal.classList.contains('active') && !productDetailModal.classList.contains('active') && !generalModal.classList.contains('active')) {
                 overlay.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                document.body.style.overflow = 'auto'; 
             }
         }
 
         // Abrir modal de checkout
         function openCheckoutModal() {
-            closeCartModal(); // Cerrar carrito primero
+            closeCartModal(); // Cierra el carrito
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            document.getElementById('checkout-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('checkout-final-total').textContent = `$${subtotal.toFixed(2)}`; // Asumiendo envío gratis o a convenir
+
             checkoutModal.classList.add('active');
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -2151,69 +2174,71 @@
         // Cerrar modal de checkout
         function closeCheckoutModal() {
             checkoutModal.classList.remove('active');
-            // Si el overlay no es usado por otro modal, cerrarlo.
-            if (!productDetailModal.classList.contains('active') && 
-                !cartModal.classList.contains('open') &&
-                !generalModal.classList.contains('active')) {
+            // Solo remueve el overlay si no hay otro modal abierto
+             if (!cartModal.classList.contains('open') && !productDetailModal.classList.contains('active') && !generalModal.classList.contains('active')) {
                 overlay.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
-            openCart(); // Volver al carrito
         }
         
-        // Mostrar detalles del producto
+        // Mostrar detalles del producto en un modal
         function showProductDetails(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                // Actualizar contenido del modal de detalles
-                productDetailBody.innerHTML = `
-                    <div class="product-detail-image">
-                        <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x400?text=IMG'">
-                    </div>
-                    <div class="product-detail-info">
-                        <h2 class="product-detail-title">${product.name}</h2>
-                        <div class="product-detail-price">$${product.price.toFixed(2)}</div>
-                        <p class="product-detail-description">${product.description}</p>
-                        <div class="product-detail-features">
-                            <h3>Características:</h3>
-                            <ul>
-                                ${product.features.map(feature => `<li>${feature}</li>`).join('')}
-                            </ul>
-                        </div>
-                        <div class="quantity-selector">
-                            <label for="detail-quantity">Cantidad:</label>
-                            <input type="number" id="detail-quantity" class="quantity-input" value="1" min="1" style="width: 5rem;">
-                        </div>
-                        <div class="product-detail-actions">
-                            <button class="btn btn-primary btn-full add-to-cart-detail" data-id="${product.id}">
-                                <i class="fas fa-cart-plus"></i> Añadir al Carrito
-                            </button>
-                        </div>
-                    </div>
-                `;
+            const product = findProduct(productId);
+            if (!product) return;
+            
+            // Cerrar cualquier otro modal abierto antes de abrir este
+            closeCartModal();
+            closeCheckoutModal();
+            closeGeneralModalHandler();
+            
+            const featuresList = product.features.map(feature => `<li>${feature}</li>` ).join('');
 
-                // Añadir listener al botón de añadir al carrito dentro del modal
-                document.querySelector('.add-to-cart-detail').addEventListener('click', (e) => {
-                    const id = parseInt(e.target.getAttribute('data-id'));
-                    const quantity = parseInt(document.getElementById('detail-quantity').value);
-                    addToCart(id, quantity);
-                    closeProductDetail();
-                });
-                
-                // Abrir modal de detalles
-                productDetailModal.classList.add('active');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+            productDetailBody.innerHTML = `
+                <div class="product-detail-image">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x400?text=IMG'">
+                </div>
+                <div class="product-detail-info">
+                    <span class="product-category">${product.category}</span>
+                    <h1 class="product-detail-title">${product.name}</h1>
+                    <div class="product-detail-price">$${product.price.toFixed(2)}</div>
+                    <p class="product-detail-description">${product.description}</p>
+                    <div class="product-detail-features">
+                        <h3>Características Clave:</h3>
+                        <ul>
+                            ${featuresList}
+                        </ul>
+                    </div>
+                    <div class="quantity-selector">
+                        <label for="detail-quantity">Cantidad:</label>
+                        <input type="number" id="detail-quantity" class="quantity-input" value="1" min="1" style="width: 5rem;">
+                    </div>
+                    <div class="product-detail-actions">
+                        <button class="btn btn-primary btn-full add-to-cart-detail" data-id="${product.id}">
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Añadir listener al botón de añadir al carrito dentro del modal
+            document.querySelector('.add-to-cart-detail').addEventListener('click', (e) => {
+                const id = parseInt(e.target.getAttribute('data-id'));
+                const quantity = parseInt(document.getElementById('detail-quantity').value);
+                addToCart(id, quantity);
+                closeProductDetail();
+            });
+
+            // Abrir modal de detalles
+            productDetailModal.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         // Cerrar modal de detalles del producto
         function closeProductDetail() {
             productDetailModal.classList.remove('active');
             // Si el overlay no es usado por otro modal, cerrarlo.
-            if (!cartModal.classList.contains('open') && 
-                !checkoutModal.classList.contains('active') &&
-                !generalModal.classList.contains('active')) {
+            if (!cartModal.classList.contains('open') && !checkoutModal.classList.contains('active') && !generalModal.classList.contains('active')) {
                 overlay.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
@@ -2227,40 +2252,29 @@
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
+        
         // Cerrar Modal General
         function closeGeneralModalHandler() {
-            generalModal.classList.remove('active');
-            // Si el overlay no es usado por otro modal, cerrarlo.
-            if (!cartModal.classList.contains('open') && 
-                !checkoutModal.classList.contains('active') &&
-                !productDetailModal.classList.contains('active')) {
+             generalModal.classList.remove('active');
+             // Si el overlay no es usado por otro modal, cerrarlo.
+             if (!cartModal.classList.contains('open') && !checkoutModal.classList.contains('active') && !productDetailModal.classList.contains('active')) {
                 overlay.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
         }
-
-        // Cerrar todos los modales al hacer clic en el overlay
+        
+        // Cerrar todos los modales (usado por el click en el overlay)
         function closeAllModals() {
-            if (cartModal.classList.contains('open')) {
-                closeCartModal();
-            }
-            if (productDetailModal.classList.contains('active')) {
-                closeProductDetail();
-            }
-            if (checkoutModal.classList.contains('active')) {
-                // En el checkout modal, queremos volver al carrito
-                closeCheckoutModal(); 
-            }
-            if (generalModal.classList.contains('active')) {
-                closeGeneralModalHandler();
-            }
+            closeCartModal();
+            closeCheckoutModal();
+            closeProductDetail();
+            closeGeneralModalHandler();
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
         // --- 9. LÓGICA DE CHECKOUT (WhatsApp) ---
-
-        // Procesar formulario de checkout y enviar a WhatsApp
-        function processCheckout(e) {
+        function handleCheckout(e) {
             e.preventDefault();
 
             const name = document.getElementById('name').value;
@@ -2268,29 +2282,36 @@
             const address = document.getElementById('address').value;
             const city = document.getElementById('city').value;
             const notes = document.getElementById('notes').value;
-            const total = cartTotal.textContent;
-
-            let productList = "📦 *DETALLES DEL PEDIDO*\n";
-            cart.forEach(item => {
-                productList += `- ${item.name} (${item.quantity} und.) = $${(item.price * item.quantity).toFixed(2)}\n`;
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+            
+            let orderSummary = `*¡Hola! Quiero realizar un pedido de ECHO Technology Store:*\n\n`;
+            
+            orderSummary += `*DETALLES DEL PEDIDO (${cart.length} productos):*\n`;
+            cart.forEach((item, index) => {
+                orderSummary += `*${index + 1}.* ${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}\n`;
             });
-            productList += `\n*TOTAL A PAGAR: ${total}*`;
 
-            const message = `¡Hola! He realizado un pedido en ECHO Technology Store. Aquí están los detalles:\n\n` +
-                            `👤 *DATOS DEL CLIENTE*\n` +
-                            `Nombre: ${name}\n` +
-                            `Teléfono: ${phone}\n\n` +
-                            `📍 *DIRECCIÓN DE ENVÍO*\n` +
-                            `Dirección: ${address}\n` +
-                            `Ciudad/Cantón: ${city}\n\n` +
-                            `${productList}\n\n` +
-                            `📝 *NOTAS ADICIONALES:*\n${notes || 'Ninguna.'}\n\n` +
-                            `Por favor, ayúdame a concretar este pedido. Confirmo los datos de envío y espero instrucciones para el pago.`;
+            orderSummary += `\n*RESUMEN DE PAGO:*\n`;
+            orderSummary += `Subtotal: *$${subtotal}*\n`;
+            orderSummary += `Total (Envío a convenir): *$${subtotal}*\n`; // Se ajustará al confirmar el envío
 
-            // Codificar el mensaje para la URL de WhatsApp
-            const whatsappNumber = '593967879068'; // NÚMERO ACTUALIZADO
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            orderSummary += `\n*DATOS DEL CLIENTE:*\n`;
+            orderSummary += `*Nombre:* ${name}\n`;
+            orderSummary += `*Teléfono/WhatsApp:* ${phone}\n`;
+            orderSummary += `*Ciudad/Cantón:* ${city}\n`;
+            orderSummary += `*Dirección de Entrega:* ${address}\n`;
+            
+            if (notes.trim()) {
+                orderSummary += `*Notas Adicionales:* ${notes}\n`;
+            } else {
+                orderSummary += `*Notas Adicionales:* Ninguna\n`;
+            }
 
+            orderSummary += "\n¡Muchas gracias! Espero la confirmación para el pago y envío.";
+
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderSummary)}`;
+            
             // Abrir WhatsApp en una nueva pestaña/ventana
             window.open(whatsappURL, '_blank');
 
@@ -2300,18 +2321,17 @@
             
             // Mostrar mensaje de confirmación
             showToast('¡Pedido enviado con éxito! Serás redirigido a WhatsApp para concretar.');
-            
+
             // Vaciar carrito
             cart = [];
             updateCart();
-            saveCartToStorage(); // Limpiar localStorage
+            saveCartToStorage();
             
             // Limpiar formulario
             checkoutForm.reset();
         }
-        
+
         // --- 10. LÓGICA DE UTILIDADES ---
-        
         // Contenido Modal de Política de Privacidad
         function getPrivacyPolicyContent() {
             return `
@@ -2323,8 +2343,10 @@
                     <li>Comunicarnos con usted vía WhatsApp sobre el estado de su compra.</li>
                     <li>Mejorar nuestros servicios y ofertas.</li>
                 </ul>
-                <h3>Compartir Información</h3>
-                <p>No vendemos, intercambiamos ni transferimos su información personal a terceros, excepto en la medida necesaria para el proceso logístico de entrega (ej. courier).</p>
+                <h3>Compartición de Información</h3>
+                <p>Su información personal (nombre, dirección, teléfono) solo es compartida con la empresa de mensajería para fines de entrega. No vendemos ni alquilamos su información a terceros.</p>
+                <h3>Consentimiento</h3>
+                <p>Al utilizar nuestra tienda, usted acepta esta política de privacidad.</p>
             `;
         }
 
@@ -2332,40 +2354,153 @@
         function getTermsOfServiceContent() {
             return `
                 <h3>Aceptación de Términos</h3>
-                <p>Al utilizar nuestra tienda en línea y realizar un pedido, usted acepta los siguientes términos y condiciones.</p>
+                <p>Al realizar un pedido, usted acepta los siguientes términos de servicio.</p>
                 <h3>Precios y Pagos</h3>
-                <p>Los precios de los productos están indicados en dólares estadounidenses ($). El pago se coordina directamente a través de WhatsApp con nuestro equipo, una vez que haya enviado su pedido con la información de envío.</p>
-                <h3>Envíos y Entregas</h3>
-                <p>Los pedidos se procesan tras la confirmación del pago. Los tiempos de envío varían según su ubicación. No nos hacemos responsables por demoras causadas por la empresa de transporte una vez que el paquete ha sido entregado a la misma.</p>
+                <p>Todos los precios están en Dólares Americanos (USD). El pago se realiza por transferencia o depósito bancario al confirmar el pedido vía WhatsApp. El costo de envío se calculará y confirmará en ese momento.</p>
+                <h3>Envíos</h3>
+                <p>Realizamos envíos a nivel nacional. El tiempo de entrega puede variar dependiendo de su ubicación y la empresa de mensajería.</p>
                 <h3>Garantía y Devoluciones</h3>
-                <p>La garantía aplica por defectos de fábrica. Las devoluciones o cambios se analizan caso por caso, y deben ser notificadas a nuestro número de contacto en un plazo máximo de 48 horas tras la recepción del producto.</p>
+                <p>Todos nuestros productos tienen una garantía de 30 días contra defectos de fabricación. Las devoluciones o cambios se aceptan solo si el producto se encuentra en su empaque original y sin signos de uso.</p>
             `;
         }
 
-        // Cambiar tema
+        // Alternar tema claro/oscuro
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             
+            // Guardar preferencia en localStorage
             if (document.body.classList.contains('dark-mode')) {
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
                 localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             } else {
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
                 localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             }
         }
         
         // Mostrar notificación toast
-        function showToast(message) {
+        function showToast(message, type = 'success') {
             toastMessage.textContent = message;
+            
+            // Limpiar clases de color anteriores
+            toast.classList.remove('bg-success', 'bg-error');
+            
+            // Aplicar clase de color según el tipo
+            if (type === 'error') {
+                toast.style.backgroundColor = 'var(--error)';
+            } else {
+                 toast.style.backgroundColor = 'var(--success)';
+            }
+            
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
         }
 
+        // Lógica del botón de scroll
+        function toggleScrollButton() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollButton.classList.add('show');
+            } else {
+                scrollButton.classList.remove('show');
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- 11. LÓGICA DEL CARRUSEL (ACTUALIZADA PARA 4 SLIDES) ---
+        function setupCarousel() {
+            const carouselContainer = document.getElementById('main-carousel');
+            if (!carouselContainer) return;
+
+            const track = carouselContainer.querySelector('.carousel-track');
+            const slides = Array.from(carouselContainer.querySelectorAll('.carousel-slide'));
+            const totalSlides = slides.length; // Detecta 4 slides automáticamente
+            
+            // Si hay más de un slide, configurar la navegación
+            if (totalSlides > 1) {
+                const nextButton = carouselContainer.querySelector('.next');
+                const prevButton = carouselContainer.querySelector('.prev');
+                const dotsContainer = carouselContainer.querySelector('.carousel-dots');
+                const dots = Array.from(dotsContainer.querySelectorAll('.dot'));
+                
+                let slideIndex = 0;
+                let autoSlideInterval;
+
+                // 1. Mover el track al slide actual
+                const moveToSlide = (index) => {
+                    if (index < 0) {
+                        index = totalSlides - 1;
+                    } else if (index >= totalSlides) {
+                        index = 0;
+                    }
+                    slideIndex = index;
+                    // Cálculo de movimiento: (índice * -100 / número de slides)
+                    const amountToMove = slideIndex * (-100 / totalSlides); 
+                    track.style.transform = `translateX(${amountToMove}%)`;
+                    updateDots();
+                };
+
+                // 2. Mover al siguiente slide
+                const nextSlide = () => {
+                    let nextIndex = (slideIndex + 1) % totalSlides;
+                    moveToSlide(nextIndex);
+                };
+
+                // 3. Actualizar los puntos de navegación
+                const updateDots = () => {
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === slideIndex);
+                    });
+                };
+
+                // 4. Iniciar el desplazamiento automático
+                const startAutoSlide = () => {
+                    stopAutoSlide(); // Asegurarse de que no haya múltiples intervalos
+                    autoSlideInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
+                };
+
+                // 5. Detener el desplazamiento automático
+                const stopAutoSlide = () => {
+                    clearInterval(autoSlideInterval);
+                };
+
+                // Event Listeners para la navegación manual
+                nextButton.addEventListener('click', () => {
+                    stopAutoSlide();
+                    nextSlide();
+                    startAutoSlide(); // Reinicia el temporizador
+                });
+
+                prevButton.addEventListener('click', () => {
+                    stopAutoSlide();
+                    let prevIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+                    moveToSlide(prevIndex);
+                    startAutoSlide(); // Reinicia el temporizador
+                });
+
+                dots.forEach(dot => {
+                    dot.addEventListener('click', (e) => {
+                        stopAutoSlide();
+                        const index = parseInt(e.target.getAttribute('data-slide'));
+                        moveToSlide(index);
+                        startAutoSlide(); // Reinicia el temporizador
+                    });
+                });
+
+                // Iniciar el carrusel
+                moveToSlide(slideIndex);
+                startAutoSlide(); 
+            }
+        }
+        // --- Fin LÓGICA DEL CARRUSEL ---
+
         // Inicializar la tienda cuando se carga la página
         document.addEventListener('DOMContentLoaded', initStore);
+        document.addEventListener('DOMContentLoaded', setupCarousel);
     </script>
 </body>
 </html>
