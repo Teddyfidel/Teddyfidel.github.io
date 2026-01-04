@@ -3,1843 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clover - Educación Digital Moderna</title>
+    <title>Ing. Teddy Valencia - Portafolio Digital</title>
     <link rel="icon" type="image/x-icon" href="iconno.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/03a89292db.js" crossorigin="anonymous"></script>
+
     <style>
         :root {
-            /* Colores Modo Claro */
-            --primary-light: #2563eb; /* Azul corporativo */
-            --secondary-light: #1e40af; /* Azul más oscuro para contraste */
-            --accent-light: #60a5fa; /* Azul claro para acentos */
-            --text-light: #1f2937; /* Gris muy oscuro */
-            --bg-light: #f9fafb; /* Fondo principal muy claro */
-            --card-bg-light: #ffffff; /* Fondo de tarjetas blanco */
-            --border-light: #e5e7eb; /* Gris claro para bordes */
-            --nav-bg-light: rgba(255, 255, 255, 0.9); /* Blanco semitransparente */
-            --shadow-color-light: rgba(0, 0, 0, 0.08);
-
-            /* Colores Modo Oscuro */
-            --primary-dark: #60a5fa; /* Azul claro para primario en dark */
-            --secondary-dark: #3b82f6; /* Azul vibrante para secundario en dark */
-            --accent-dark: #1d4ed8; /* Azul oscuro para acentos */
-            --text-dark: #e5e7eb; /* Gris claro para texto */
-            --bg-dark: #1a202c; /* Fondo principal oscuro */
-            --card-bg-dark: #2d3748; /* Fondo de tarjetas oscuro */
-            --border-dark: #4a5568; /* Gris medio para bordes */
-            --nav-bg-dark: rgba(26, 32, 44, 0.9); /* Gris oscuro semitransparente */
-            --shadow-color-dark: rgba(0, 0, 0, 0.3);
-
-            /* Configuraciones Generales */
-            --font-primary: 'Lora', serif; /* Fuente elegante para el cuerpo */
-            --font-heading: 'Playfair Display', serif; /* Fuente formal para títulos */
-            --shadow-sm: 0 1px 3px 0 var(--shadow-color);
-            --shadow-md: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
-            --shadow-lg: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
-            --border-radius-sm: 0.375rem; /* 6px */
-            --border-radius-md: 0.5rem; /* 8px */
-            --border-radius-lg: 0.75rem; /* 12px */
-            --border-radius-xl: 1rem; /* 16px */
-            --transition-speed: 0.3s;
+            --bg-dark: #010103;
+            --accent-cyan: #00d4ff;
+            --accent-purple: #7000ff;
+            --card-bg: rgba(10, 15, 30, 0.7);
+            --text-main: #ffffff;
+            --text-dim: #b0b0b0;
+            --border-glow: rgba(0, 212, 255, 0.2);
+            --whatsapp-green: #25d366;
         }
 
-        /* Asignación inicial de variables (Modo Claro por defecto) */
-        :root {
-            --primary: var(--primary-light);
-            --secondary: var(--secondary-light);
-            --accent: var(--accent-light);
-            --text: var(--text-light);
-            --bg: var(--bg-light);
-            --card-bg: var(--card-bg-light);
-            --border-color: var(--border-light);
-            --nav-bg: var(--nav-bg-light);
-            --shadow-color: var(--shadow-color-light);
+        /* --- Animaciones de Iconos --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        /* Estilos para Modo Oscuro */
-        body.dark-mode {
-            --primary: var(--primary-dark);
-            --secondary: var(--secondary-dark);
-            --accent: var(--accent-dark);
-            --text: var(--text-dark);
-            --bg: var(--bg-dark);
-            --card-bg: var(--card-bg-dark);
-            --border-color: var(--border-dark);
-            --nav-bg: var(--nav-bg-dark);
-            --shadow-color: var(--shadow-color-dark);
+        @keyframes pulse-glow {
+            0% { transform: scale(1); filter: drop-shadow(0 0 0px var(--accent-cyan)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 15px var(--accent-cyan)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--accent-cyan)); }
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-primary);
-            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
-            scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* --- Ocultar Scrollbar --- */
-        html {
-          scrollbar-width: none; /* Firefox */
-          -ms-overflow-style: none;  /* Internet Explorer 10+ */
-        }
-        html::-webkit-scrollbar { /* WebKit */
-          width: 0;
-          height: 0;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px) rotate(-2deg); }
+            75% { transform: translateX(3px) rotate(2deg); }
         }
 
-        .digital-clock {
-            font-family: 'Merriweather', serif; /* Fuente más formal para el reloj */
-            font-size: 1.2rem;
-            color: var(--primary);
-            background: var(--card-bg);
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius-md);
-            border: 1px solid var(--border-color);
-            display: inline-flex;
-            gap: 0.75rem;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-sm);
-            white-space: nowrap;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-            flex-wrap: wrap;
-        }
-
-        .digital-clock span {
-            display: inline-block;
-        }
-        .digital-clock .date {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
             line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
 
-        main {
-             flex-grow: 1;
+        #bg-canvas { 
+            position: fixed; top: 0; left: 0; z-index: -1; 
+            width: 100%; height: 100%; 
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            line-height: 1.3;
-            font-weight: 700;
-            font-family: var(--font-heading);
-            color: var(--primary);
+        /* --- Header & Nav --- */
+        header {
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(3, 3, 5, 0.9);
+            backdrop-filter: blur(15px); z-index: 1000; 
+            border-bottom: 1px solid var(--border-glow);
         }
-        h1 { font-size: 3rem; }
-        h2 { font-size: 2.5rem; }
-        h3 { font-size: 1.75rem; }
-
-        p {
-            margin-bottom: 1rem;
-            color: var(--text);
-            opacity: 0.9;
-            text-align: justify;
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; 
+            display: flex; justify-content: space-between; 
+            align-items: center; padding: 15px 20px;
         }
-
-        a { color: var(--accent); text-decoration: none; transition: color var(--transition-speed); }
-        a:hover { color: var(--secondary); }
-
-        /* Contenedor Genérico */
-        .container {
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-        }
-        .text-center {
-            text-align: center;
+        .logo-text { 
+            font-family: 'Exo', sans-serif; color: var(--accent-cyan); 
+            font-size: 1.6rem; font-weight: 900; text-decoration: none; 
+            text-shadow: 0 0 10px var(--accent-cyan);
         }
 
-        /* Navbar */
-        nav {
-            background: var(--nav-bg);
-            padding: 0.8rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-md);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .nav-left {
-            display: flex;
-            align-items: center;
-        }
-        .logo a {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.8rem;
-            font-family: var(--font-heading);
-            letter-spacing: -0.5px;
-        }
-        .logo a span {
-            color: var(--secondary);
-        }
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1100; }
+        .menu-toggle span { width: 25px; height: 3px; background: var(--accent-cyan); border-radius: 2px; transition: 0.3s; }
 
-        .menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 0.5rem;
+        .nav-menu { display: flex; list-style: none; gap: 20px; }
+        .menu__item { 
+            text-decoration: none; color: var(--text-dim); font-size: 0.75rem;
+            display: flex; flex-direction: column; align-items: center; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 1px;
         }
+        .menu__item i { font-size: 1.1rem; margin-bottom: 4px; color: var(--accent-cyan); transition: 0.3s; }
+        .menu__item:hover { color: #fff; transform: translateY(-3px); }
+        .menu__item:hover i { animation: float 1.5s infinite ease-in-out; }
 
-        .menu-list {
-            list-style: none;
-            display: flex;
-            gap: 1.8rem;
-            align-items: center;
-        }
-        .menu-list a {
-            color: var(--text);
-            font-weight: 500;
-            padding: 0.4rem 0.8rem;
-            border-radius: var(--border-radius-sm);
-            position: relative;
-            transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .menu-list a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            background: var(--primary);
-            transition: width var(--transition-speed) ease;
-            border-radius: 2px;
-        }
-        .menu-list a:hover, .menu-list a.active {
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-        .menu-list a:hover::after, .menu-list a.active::after {
-            width: 100%;
-        }
-         body.dark-mode .menu-list a:hover, body.dark-mode .menu-list a.active {
-             color: var(--primary-dark);
-         }
-        .menu-list a i {
-            font-size: 1.1rem;
-            color: var(--accent);
-        }
-        .menu-list a:hover i, .menu-list a.active i {
-            color: var(--primary);
-        }
-        body.dark-mode .menu-list a:hover i, body.dark-mode .menu-list a.active i {
-            color: var(--primary-dark);
-        }
+        /* --- Layout --- */
+        .main-content { max-width: 1200px; margin: 0 auto; padding: 120px 20px 60px; position: relative; }
 
-        /* Dark Mode Toggle Button */
-        .dark-mode-toggle {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text);
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 0.6rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            box-shadow: var(--shadow-sm);
-            transition: background-color var(--transition-speed), transform var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
-        }
-        .dark-mode-toggle:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: scale(1.1);
-        }
-         body.dark-mode .dark-mode-toggle {
-             background: var(--card-bg-dark);
-             color: var(--text-dark);
-         }
-         body.dark-mode .dark-mode-toggle:hover {
-             background: var(--primary-dark);
-             color: white;
-             border-color: var(--primary-dark);
-         }
-        .dark-mode-toggle .fa-sun { display: none; }
-        body.dark-mode .dark-mode-toggle .fa-moon { display: none; }
-        body.dark-mode .dark-mode-toggle .fa-sun { display: inline-block; }
-
-        /* Google Translate Widget */
-        .goog-te-gadget {
-            font-family: var(--font-primary);
-            font-size: 1rem;
-            color: var(--text);
-            display: inline-block;
-            vertical-align: middle;
-            text-align: center;
-        }
-        .goog-te-gadget a, .goog-te-gadget span {
-            color: var(--text);
-            text-decoration: none;
-            padding: 0.2rem 0.5rem;
-        }
-        .goog-te-gadget img {
-            display: none;
-        }
-        .goog-te-combo {
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            color: var(--text);
-            border-radius: var(--border-radius-sm);
-            padding: 0.4rem;
-            font-size: 0.9rem;
-            transition: all var(--transition-speed);
-        }
-        .goog-te-combo:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px var(--accent);
-        }
-        .skiptranslate.goog-te-gadget {
-            line-height: initial;
-        }
-
-        /* Banner / Hero Section */
-        .banner {
-            height: 70vh;
-            min-height: 400px;
-            background: url('logofondo.jpeg') center/cover no-repeat;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            scroll-margin-top: 70px;
-        }
-        .banner::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-             z-index: 0;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            padding: 2rem;
-        }
-        .hero-content h1 {
-            font-size: clamp(3rem, 6vw, 4.5rem);
-            margin-bottom: 1rem;
-            color: white;
-            font-weight: 800;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-            animation: fadeInHero 1s ease-out forwards;
-        }
-        .hero-content p {
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            animation: fadeInHero 1.2s ease-out forwards;
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: var(--primary-light);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: var(--border-radius-md);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: var(--shadow-md);
-            transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
-            animation: fadeInHero 1.4s ease-out forwards;
-            animation-delay: 0.4s;
-            opacity: 0;
-        }
-        .cta-button:hover {
-            background-color: var(--secondary-light);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* Sección General */
-        section {
-            padding: 5rem 2rem;
-            scroll-margin-top: 80px;
-            position: relative;
-        }
         .section-title {
-            text-align: center;
-            margin-bottom: 3.5rem;
-            font-size: clamp(2rem, 4vw, 3rem);
-            color: var(--primary);
-            position: relative;
-            padding-bottom: 1rem;
+            text-align: center; font-family: 'Exo', sans-serif; font-size: clamp(1.5rem, 5vw, 2.2rem);
+            letter-spacing: 3px; margin: 60px 0 40px; text-transform: uppercase;
         }
         .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 2px;
+            content: ''; display: block; width: 80px; height: 3px; 
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            margin: 15px auto; box-shadow: 0 0 15px var(--accent-cyan);
         }
 
-        /* Texto Introductorio */
-        .intro-text {
-            background-color: var(--bg);
-            padding: 5rem 2rem;
-            text-align: center;
-            scroll-margin-top: 70px;
-        }
-        .intro-text h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            font-weight: 700;
-        }
-        .intro-text p {
-            font-size: clamp(1.1rem, 2.5vw, 1.25rem);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0.9;
-            color: var(--text);
-            text-align: center;
-        }
-
-        /* Sección Docente */
-        .docente { background-color: var(--card-bg); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
-        .docente-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            gap: 4rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .docente-imagen {
-            flex: 0 0 300px;
-            height: 300px;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            border: 6px solid var(--bg);
-            margin: 0 auto;
-            transition: transform 0.3s ease;
-        }
-        .docente-imagen:hover {
-            transform: scale(1.03);
-        }
-        .docente-imagen img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            -webkit-user-drag: none;
-            user-select: none;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-        }
-        .docente-info { flex: 1; min-width: 300px; }
-        .docente-info h3 {
-            color: var(--secondary);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: var(--font-primary);
-        }
-        .docente-info h2 {
-            margin-bottom: 1.5rem;
-            font-size: 2.5rem;
-            color: var(--primary);
-        }
-        .docente-info p {
-            opacity: 0.85;
-            margin-bottom: 1rem;
-            color: var(--text);
-            text-align: justify;
-            font-size: 1.05rem;
-        }
-        .docente-info p a { font-weight: 600; color: var(--primary); }
-        .docente-info p a:hover { text-decoration: underline; }
-
-        /* Estilos del botón para abrir el modal */
-        .btn-contacto-docente {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius-md);
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: var(--shadow-md);
-            margin-top: 1.5rem;
-            transition: background-color var(--transition-speed), transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .btn-contacto-docente:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        body.dark-mode .btn-contacto-docente:hover {
-            background-color: var(--secondary-dark);
-        }
-
-
-        /* Sección Servicios */
-        .servicios {
-            background-color: var(--bg);
-        }
-        .servicios-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            margin-top: 2rem;
-        }
-        .servicio-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius-lg);
-            padding: 2.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-md);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .servicio-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-        .servicio-card i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-        .servicio-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        .servicio-card p {
-            font-size: 1rem;
-            opacity: 0.85;
-            line-height: 1.7;
-            text-align: center;
-        }
-
-        /* Sección Cursos */
-        .cursos { background-color: var(--bg); border-top: 1px solid var(--border-color); }
-        .cursos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .curso-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .curso-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-        .curso-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.75rem;
-            color: var(--primary);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .curso-card h3 i {
-            font-size: 1.8rem;
-            color: var(--accent);
-            margin-bottom: 0;
-        }
-
-        .curso-card p {
-            font-size: 0.98rem;
-            opacity: 0.8;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-            color: var(--text);
-            text-align: justify;
-        }
-
-        /* Botón Acordeón Cursos */
-        .toggle-btn {
-            background: var(--bg);
-            color: var(--primary);
-            border: 1px solid var(--border-color);
-            padding: 0.9rem 1.5rem;
-            border-radius: var(--border-radius-md);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            text-align: left;
-            font-weight: 600;
-            transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
-            margin-top: auto;
-        }
-        .toggle-btn:hover {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        .toggle-btn i {
-            transition: transform var(--transition-speed) ease;
-        }
-        .toggle-btn.active i {
-            transform: rotate(180deg);
-        }
-        body.dark-mode .toggle-btn:hover {
-            background-color: var(--secondary-dark);
-            border-color: var(--secondary-dark);
-            color: white;
-        }
-
-        /* Info Acordeón Cursos */
-        .curso-info {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s ease-in-out, padding-top 0.6s ease-in-out, margin-top 0.6s ease-in-out, border-top 0.6s ease-in-out;
-            border-top: 1px solid transparent;
-            margin-top: 0;
-            padding-top: 0;
-        }
-        .curso-info.active {
-            max-height: 500px;
-            border-top-color: var(--border-color);
-            margin-top: 1rem;
-            padding-top: 1rem;
-        }
-        .curso-info ul {
-            padding-left: 1.5rem;
-            list-style: none;
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .curso-info li {
-            margin-bottom: 0.6rem;
-            font-size: 0.95rem;
-            opacity: 0.85;
-            color: var(--text);
-            text-align: justify;
-            position: relative;
-            padding-left: 1.2rem;
-        }
-        .curso-info li::before {
-            content: "\f058";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            color: var(--primary);
-            position: absolute;
-            left: 0;
-            top: 0.1rem;
-        }
+        /* --- Hero --- */
+        .hero { display: grid; grid-template-columns: 1fr 400px; gap: 40px; align-items: center; margin-bottom: 80px; }
+        .hero-text h2 { font-family: 'Exo', sans-serif; font-size: clamp(2.2rem, 6vw, 3.5rem); margin-bottom: 20px; line-height: 1.1; color: #fff; }
         
-        /* Sección Métodos de Pago */
-        .payment-methods {
-            background-color: var(--bg);
-            padding: 5rem 2rem;
+        .btn-contacto-docente, .btn-cv {
+            padding: 15px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; 
+            transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 0.9rem;
         }
-        .payment-methods-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .payment-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius-lg);
-            padding: 2.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-md);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .payment-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-        .payment-card i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-        .payment-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .payment-card p {
-            font-size: 1rem;
-            opacity: 0.85;
-            text-align: center;
-        }
-        .payment-card p strong {
-            color: var(--secondary);
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-        }
+        .btn-contacto-docente { background: var(--accent-cyan); color: #000; border: none; }
+        .btn-contacto-docente:hover { box-shadow: 0 0 20px var(--accent-cyan); }
+        .btn-cv { background: transparent; color: var(--accent-cyan); border: 2px solid var(--accent-cyan); }
+        .btn-cv:hover { background: var(--accent-cyan); color: #000; }
 
+        /* --- Profile Side --- */
+        .profile-side { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        .profile-img-container {
+            width: 100%; max-width: 400px; aspect-ratio: 1/1; 
+            background: var(--card-bg); border-radius: 30px; 
+            border: 1px solid var(--border-glow); display: flex; 
+            align-items: center; justify-content: center;
+            backdrop-filter: blur(10px); overflow: hidden; position: relative;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
+        }
+        .profile-img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .profile-img-container:hover img { transform: scale(1.05); }
+        
+        .social-bar { display: flex; gap: 12px; justify-content: center; width: 100%; }
+        .social-icon {
+            width: 45px; height: 45px; background: var(--card-bg); 
+            border: 1px solid var(--border-glow); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-dim); text-decoration: none; transition: 0.3s;
+        }
+        .social-icon:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); animation: shake 0.4s ease-in-out; }
 
-        /* Sección QR */
-        .qr-section {
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            padding: 5rem 2rem;
-            text-align: center;
+        /* --- Grid & Cards --- */
+        .grid-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        
+        .card { 
+            background: var(--card-bg); padding: 30px; border-radius: 20px; 
+            border: 1px solid var(--border-glow); transition: 0.3s; 
+            backdrop-filter: blur(8px); display: flex; flex-direction: column;
         }
-        .qr-section h2 {
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            font-size: 2.5rem;
-        }
-        .qr-section p {
-            max-width: 700px;
-            margin: 0 auto 2.5rem auto;
-            opacity: 0.85;
-            color: var(--text);
-            font-size: 1.1rem;
-        }
-        .qr-code {
-            display: block;
-            max-width: 250px;
-            margin: 1.5rem auto;
-            border-radius: var(--border-radius-xl);
-            box-shadow: var(--shadow-lg);
-            border: 6px solid var(--bg);
-            -webkit-user-drag: none;
-            user-select: none;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            transition: transform 0.3s ease;
-        }
-        .qr-code:hover {
-            transform: scale(1.05);
-        }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-cyan); }
+        .card i.main-icon { font-size: 2.8rem; color: var(--accent-cyan); margin-bottom: 20px; transition: 0.4s; }
 
-        /* Botón Flotante WhatsApp */
+        /* Asignación de movimientos por sección */
+        #sistemas .card:hover i.main-icon { animation: pulse-glow 1.5s infinite; }
+        #freelance .card:hover i.main-icon { animation: rotate-slow 4s infinite linear; }
+        #pago .card:hover i.main-icon { animation: float 2s infinite ease-in-out; }
+
+        .card h3 { color: #fff; margin-bottom: 15px; font-family: 'Exo', sans-serif; }
+        .feature-list { list-style: none; margin-top: 15px; }
+        .feature-list li { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .feature-list li i { color: var(--accent-cyan); font-size: 0.75rem; }
+
+        /* --- Inscripciones --- */
+        .inscripciones-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+            background: var(--card-bg); padding: 40px; 
+            border-radius: 30px; border: 1px solid var(--border-glow); align-items: center;
+        }
+        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .info-item i { 
+            background: var(--accent-cyan); color: #000; width: 45px; height: 45px; 
+            display: flex; align-items: center; justify-content: center; border-radius: 50%; 
+            font-size: 1.2rem; transition: 0.3s;
+        }
+        .info-item:hover i { animation: pulse-glow 1.5s infinite; }
+
+        /* --- Floating UI --- */
         .whatsapp-btn {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            left: auto;
-            background: #25d366;
-            color: white;
-            padding: 1rem 1.8rem;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-            z-index: 999;
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-            font-weight: 600;
-            font-size: 1.1rem;
+            position: fixed; bottom: 30px; right: 30px; background: var(--whatsapp-green);
+            color: white; width: 60px; height: 60px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-size: 2rem;
+            z-index: 2000; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.3s;
+            animation: float 3s infinite ease-in-out;
         }
-        .whatsapp-btn:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.6);
-        }
-        .whatsapp-btn i { font-size: 1.6rem; }
+        .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--whatsapp-green); }
 
-        /* Footer */
-        footer {
-            background: var(--card-bg);
-            color: var(--text);
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-top: auto;
-            border-top: 1px solid var(--border-color);
-        }
-        footer p {
-            color: var(--text);
-            opacity: 0.75;
-            margin: 0;
-            font-size: 0.95rem;
-            text-align: center;
-        }
-        .social-links {
-            margin-top: 1.5rem;
-        }
-        .social-links a {
-            color: var(--text);
-            opacity: 0.7;
-            margin: 0 0.8rem;
-            font-size: 1.8rem;
-            transition: color 0.3s ease, opacity 0.3s ease, transform 0.2s ease;
-        }
-        .social-links a:hover {
-            color: var(--primary);
-            opacity: 1;
-            transform: translateY(-3px);
-        }
-        .footer-links {
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .footer-link-btn {
-            background: none;
-            border: none;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            color: var(--text);
-            opacity: 0.8;
-            margin: 0 1rem;
-            padding: 0.5rem;
-            border-radius: var(--border-radius-sm);
-            transition: color 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
-        }
-        .footer-link-btn:hover {
-            opacity: 1;
-            color: var(--primary);
-            background-color: var(--bg);
-        }
-        /* --- Estilos del Modal --- */
+        /* --- Modal --- */
         .modal {
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .modal.is-active {
-            display: flex;
-            opacity: 1;
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
         }
         .modal-content {
-            background-color: var(--card-bg);
-            margin: auto;
-            padding: 2.5rem;
-            border-radius: var(--border-radius-lg);
-            width: 90%;
-            max-width: 500px;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
-            text-align: center;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        .modal.is-active .modal-content {
-            transform: translateY(0);
-        }
-        .modal-content h3 {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-        .modal-content p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: var(--text);
-            opacity: 0.9;
-        }
-         .modal-content strong {
-            color: var(--primary);
-        }
-        .modal-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .modal-buttons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            border-radius: var(--border-radius-md);
-            font-weight: 600;
-            color: white;
-            text-decoration: none;
-            box-shadow: var(--shadow-md);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-        }
-        .modal-buttons a:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-        .btn-whatsapp { background-color: #25d366; }
-        .btn-github { background-color: #171515; }
-        body.dark-mode .btn-github { background-color: #f6f8fa; color: black; }
-        .btn-call { background-color: #0e76a8; }
-        .modal-close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text);
-            opacity: 0.6;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        .modal-close-btn:hover {
-            opacity: 1;
-            transform: rotate(90deg);
-        }
-        
-        .payment-info p {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            text-align: left;
-            color: var(--text);
-        }
-        .payment-info p strong {
-            color: var(--secondary);
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-        }
-        .payment-info {
-            text-align: left;
-            margin-top: 1.5rem;
-        }
-        .payment-info h4 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            text-align: center;
-        }
-        
-        /* Animaciones */
-        @keyframes fadeInHero {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            background: #0a0a15; margin: 10% auto; padding: 40px; border: 1px solid var(--accent-cyan);
+            width: 90%; max-width: 450px; border-radius: 25px; position: relative; text-align: center;
         }
 
-        /* Responsive */
+        footer { text-align: center; padding: 60px 20px; color: var(--text-dim); border-top: 1px solid var(--border-glow); margin-top: 40px; }
+        footer .tech-stack i { margin: 0 10px; font-size: 1.5rem; transition: 0.3s; }
+        footer .tech-stack i:hover { color: var(--accent-cyan); transform: scale(1.3); }
+
+        /* --- Responsive --- */
         @media (max-width: 992px) {
-            .menu-list {
-                gap: 1rem;
-            }
-            .menu-list a {
-                padding: 0.4rem 0.6rem;
-            }
+            .hero { grid-template-columns: 1fr; text-align: center; }
+            .hero-buttons { justify-content: center; }
+            .profile-side { order: -1; }
+            .profile-img-container { max-width: 300px; }
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            h3 { font-size: 1.5rem; }
-            p, .curso-info li { font-size: 0.9rem; }
-
-            nav { padding: 0.8rem 1rem; }
-            .menu-btn { display: block; }
-            .menu-list {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--nav-bg);
-                padding: 1rem;
-                flex-direction: column;
-                gap: 0.8rem;
-                box-shadow: var(--shadow-lg);
-                border-top: 1px solid var(--border-color);
-                align-items: stretch;
+            .menu-toggle { display: flex; }
+            .nav-menu {
+                position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+                background: rgba(5, 5, 15, 0.98); flex-direction: column; 
+                padding: 100px 40px; transition: 0.4s; border-left: 1px solid var(--accent-cyan);
             }
-            .menu-list.active { display: flex; }
-            .menu-list li { width: 100%; }
-            .menu-list a {
-                display: block;
-                text-align: center;
-                padding: 0.8rem 1rem;
-                background: var(--bg);
-                border-radius: var(--border-radius-sm);
-                border: 1px solid var(--border-color);
-            }
-            .menu-list a:hover, .menu-list a.active {
-                background: var(--primary);
-                color: white;
-            }
-             .menu-list a:hover::after, .menu-list a.active::after {
-                 width: 0;
-             }
-            .dark-mode-toggle {
-                order: 1;
-                margin: 0.8rem auto 0.2rem auto;
-            }
-
-            .digital-clock {
-                font-size: 1rem;
-                padding: 0.6rem 1rem;
-                gap: 0.5rem;
-                flex-direction: column;
-            }
-            .digital-clock .date {
-                font-size: 0.8em;
-            }
-            .intro-text .translate-container {
-                 margin-top: 1.5rem;
-            }
-
-            .banner { height: 60vh; min-height: 300px; }
-            .hero-content h1 { font-size: 2.2rem; }
-            .hero-content p { font-size: 1rem; }
-            .cta-button { padding: 0.9rem 2rem; }
-
-            section { padding: 4rem 1.5rem; }
-            .section-title { font-size: 2rem; margin-bottom: 2.5rem; }
-
-            .intro-text { padding: 4rem 1.5rem; }
-            .intro-text h1 { font-size: 2rem; }
-            .intro-text p { font-size: 1rem; text-align: center; }
-
-            .docente-container {
-                flex-direction: column;
-                text-align: center;
-                gap: 3rem;
-            }
-            .docente-imagen {
-                flex-basis: 250px;
-                width: 250px;
-                height: 250px;
-                margin: 0 auto;
-            }
-            .docente-info { text-align: center; }
-            .docente-info p { text-align: justify; }
-            .btn-contacto-docente {
-                margin: 1.5rem auto 0;
-            }
-
-
-            .servicios-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .servicio-card { padding: 2rem; }
-
-            .cursos-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .curso-card h3 {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                gap: 0.5rem;
-            }
-            .curso-card p { text-align: justify; }
-
-            .payment-methods-grid { grid-template-columns: 1fr; }
-            .payment-card { padding: 2rem; }
-
-            .qr-section { padding: 4rem 1.5rem; }
-            .qr-section h2 { font-size: 2rem; }
-            .qr-section p { font-size: 1rem; text-align: center; }
-            .qr-code { max-width: 200px; }
-
-            .whatsapp-btn {
-                padding: 0.7rem;
-                width: 55px;
-                height: 55px;
-                bottom: 1.2rem;
-                right: 1.2rem;
-                gap: 0;
-                font-size: 0;
-                border-radius: 50%;
-            }
-            .whatsapp-btn span { display: none; }
-            .whatsapp-btn i { margin-right: 0; font-size: 1.8rem; }
-             .footer-links {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            footer { padding: 2.5rem 1.5rem; }
+            .nav-menu.active { right: 0; }
         }
-
-         body {
-            user-select: none;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-        }
-
-         /* --- Nuevos estilos para la pantalla de carga y efectos de aparición --- */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: var(--bg);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease;
-        }
-
-        #preloader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader-logo {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            box-shadow: var(--shadow-lg);
-            animation: bounce 1s infinite alternate;
-            margin-bottom: 2rem;
-            -webkit-user-drag: none;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-20px); }
-        }
-
-        .loader-progress {
-            width: 250px;
-            height: 8px;
-            background-color: var(--border-color);
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .loader-bar {
-            height: 100%;
-            background-color: var(--primary);
-            width: 0;
-            border-radius: 4px;
-            transition: width 0.3s ease-out;
-        }
-
-        .loader-text {
-            color: var(--text);
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            opacity: 0.8;
-            font-family: var(--font-heading);
-        }
-
-        /* Efectos de aparición con Intersection Observer */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-
-        .fade-in.appear {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
     </style>
 </head>
 <body>
-    <div id="preloader">
-        <img src="iconno.png" alt="Clover Logo" class="loader-logo">
-        <div class="loader-progress">
-            <div class="loader-bar"></div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo-text">CLOVER<span>.</span></a>
+            <div class="menu-toggle" id="mobile-menu"><span></span><span></span><span></span></div>
+            <nav class="nav-menu" id="nav-list">
+                <a class="menu__item" href="#inicio"><i class="fas fa-user-astronaut"></i><span>Perfil</span></a>
+                <a class="menu__item" href="#sistemas"><i class="fas fa-microchip"></i><span>Sistemas</span></a>
+                <a class="menu__item" href="#freelance"><i class="fas fa-code-branch"></i><span>Servicios</span></a>
+                <a class="menu__item" href="#inscripciones"><i class="fas fa-user-check"></i><span>Registro</span></a>
+                <a class="menu__item" href="#pago"><i class="fas fa-credit-card"></i><span>Pagos</span></a>
+            </nav>
         </div>
-        <div class="loader-text">Cargando...</div>
-    </div>
-    
-    <nav>
-        <div class="logo">
-            <a href="#inicio"><span>Clover</span></a>
-        </div>
-        <button class="menu-btn" aria-label="Toggle Menu" aria-expanded="false">
-            <i class="fas fa-bars"></i>
-        </button>
-        <ul class="menu-list">
-            <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Inicio</a></li>
-            <li><a href="#docente"><i class="fas fa-chalkboard-teacher"></i> Instructor</a></li>
-            <li><a href="#servicios"><i class="fas fa-laptop-code"></i> Servicios</a></li>
-            <li><a href="#cursos"><i class="fas fa-book-open"></i> Cursos</a></li>
-            <li><a href="#pago"><i class="fas fa-dollar-sign"></i> Pagos</a></li>
-            <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
-            <li><div id="google_translate_element"></div></li>
-            <li>
-                <button class="dark-mode-toggle" aria-label="Toggle Dark Mode">
-                    <i class="fas fa-moon"></i>
-                    <i class="fas fa-sun"></i>
-                </button>
-            </li>
-        </ul>
-    </nav>
+    </header>
 
-    <main> 
-        <section class="banner" id="inicio">
-            <div class="hero-content fade-in">
-                
-            </div>
-        </section>
-        <center>
-            <strong>
-        <div class="digital-clock fade-in">
-            <span class="time"></span>
-            <span class="date"></span>
-        </div></strong></center>
-
-        <section class="intro-text" aria-labelledby="intro-heading">
-           <div class="container text-center fade-in">
-               <h1 id="intro-heading">Una forma moderna de aprender</h1>
-               <p>Aprende habilidades tecnológicas clave con un instructor experimentado y potencia tu perfil profesional o académico. Ofrecemos formación práctica y actualizada en herramientas esenciales para el mundo digital.</p>
-          <a href="#cursos" class="cta-button">Explora Nuestros Cursos</a>
-           </div>
-       </section>
-
-        <section class="docente" id="docente">
-            <div class="docente-container">
-                <div class="docente-imagen fade-in">
-                    <img src="docente.jpeg" alt="Foto del Ing. Teddy Valencia">
+    <main class="main-content">
+        
+        <section id="inicio" class="hero">
+            <div class="hero-text">
+                <h2 style="color: var(--accent-cyan); font-size: 1.1rem; letter-spacing: 5px; margin-bottom: 10px;">LÍDER TECNOLÓGICO</h2>
+                <h2>Ing. Teddy Valencia</h2>
+                <div class="hero-resumen">
+                    <p>Ingeniero en Tecnologías de la Información. Especialista en <strong>Arquitectura de Software</strong>, <strong>IA aplicada</strong> y formación de talentos digitales en Clover Educación.</p>
+                    <div class="hero-buttons">
+                        <button id="open-contact-modal" class="btn-contacto-docente">
+                            <i class="fas fa-paper-plane"></i> Contactar Ahora
+                        </button>
+                        <a href="https://teddyfidel.github.io/cv_teddy.html" target="_blank" class="btn-cv" download>
+                            <i class="fas fa-file-pdf"></i> Obtener CV
+                        </a>
+                    </div>
                 </div>
-                <div class="docente-info fade-in">
-                    <h3>Tu guía experto</h3>
-                    <h2>Ing. Teddy Valencia</h2>
-                    <p>Ingeniero en Tecnología de la Información con más de 10 años de experiencia práctica en desarrollo front-end (HTML, CSS, JavaScript), gestión de bases de datos relacionales (SQL) y edición profesional de video. Apasionado por la enseñanza y dedicado a facilitar el aprendizaje de conceptos tecnológicos complejos de manera clara y efectiva.</p>
-                    <p><strong>Contacto:</strong> <a href="mailto:teddyvalencia1997@gmail.com">teddyvalencia1997@gmail.com</a></p>
-                    <button id="open-contact-modal" class="btn-contacto-docente">
-                        <i class="fas fa-address-card"></i> Contactar al Instructor
-                    </button>
+            </div>
+            
+            <div class="profile-side">
+                <div class="profile-img-container">
+                    <img src="docente.jpeg" alt="Ing. Teddy Valencia" onerror="this.src='https://via.placeholder.com/400x400/0a0f1e/00d4ff?text=Teddy+Valencia'">
+                </div>
+                <div class="social-bar">
+                    <a href="https://www.facebook.com/profile.php?id=61585158788849" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ing.teddy_valencia/" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@ing..teddy.valenc?_r=1&_t=ZM-92nL5nWR3kJ" class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.linkedin.com/in/teddy-fidel-valencia-castro-430825311/" class="social-icon" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/Teddyfidel" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
                 </div>
             </div>
         </section>
 
-        <section class="servicios" id="servicios">
-            <h2 class="section-title fade-in">Servicios de Desarrollo Web Profesional</h2>
-            <div class="servicios-grid container">
-                <div class="servicio-card fade-in">
-                    <i class="fas fa-globe"></i>
-                    <h3>Sitios Web para Empresas</h3>
-                    <p>Desarrollamos páginas web corporativas modernas y responsivas que se adaptan a cualquier dispositivo. Incluye diseño personalizado, optimización SEO y panel de administración fácil de usar.</p>
+        <section id="sistemas">
+            <h2 class="section-title">Soluciones de Software</h2>
+            <div class="grid-wrapper">
+                <div class="card">
+                    <i class="fas fa-layer-group main-icon"></i>
+                    <h3>Sistemas Básicos</h3>
+                    <p>Estructuras dinámicas para negocios en crecimiento.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-desktop"></i> Landing Pages Pro</li>
+                        <li><i class="fas fa-pencil-ruler"></i> UX/UI Moderno</li>
+                        <li><i class="fas fa-search-dollar"></i> SEO de Alto Impacto</li>
+                    </ul>
                 </div>
-
-                <div class="servicio-card fade-in">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h3>Plataformas Educativas</h3>
-                    <p>Creación de sistemas LMS personalizados para instituciones educativas con aulas virtuales, gestión de cursos, evaluaciones en línea y seguimiento de progreso estudiantil.</p>
+                <div class="card">
+                    <i class="fas fa-database main-icon"></i>
+                    <h3>Sistemas Medios</h3>
+                    <p>Arquitectura robusta para gestión de datos masivos.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-project-diagram"></i> Bases Relacionales</li>
+                        <li><i class="fas fa-chart-line"></i> Paneles de Control</li>
+                        <li><i class="fas fa-boxes"></i> Control de Stock Pro</li>
+                    </ul>
                 </div>
-
-                <div class="servicio-card fade-in">
-                    <i class="fas fa-shopping-cart"></i>
-                    <h3>Tiendas Online</h3>
-                    <p>Desarrollo de e-commerce completos con pasarelas de pago, gestión de inventario, carrito de compras y integración con redes sociales.</p>
-                </div>
-
-                <div class="servicio-card fade-in">
-                    <i class="fas fa-cogs"></i>
-                    <h3>Sistemas a Medida</h3>
-                    <p>Creación de software personalizado para gestión interna de negocios: sistemas de inventario, CRM, reservas y más, adaptado a tus necesidades específicas.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="cursos" id="cursos">
-            <h2 class="section-title fade-in">Nuestra Oferta Educativa</h2> 
-            <div class="cursos-grid">
-                <div class="curso-card fade-in">
-                    <h3><i class="fas fa-award"></i>Paquete Completo de Office</h3>
-                    <p>Domina las herramientas esenciales de Microsoft Office (Word, Excel, PowerPoint) para optimizar tu productividad en cualquier entorno académico o profesional, creando documentos, hojas de cálculo y presentaciones impactantes.</p>
-                    <button class="toggle-btn" aria-expanded="false">
-                        <span>Ver Temario</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="curso-info">
-                        <ul>
-                            <li>Word: Creación y formato avanzado de documentos, uso de estilos, plantillas, combinación de correspondencia, tablas e ilustraciones.</li>
-                            <li>Excel: Introducción a fórmulas y funciones, formato de celdas, creación de gráficos, tablas dinámicas básicas, ordenación y filtrado de datos.</li>
-                            <li>PowerPoint: Diseño efectivo de diapositivas, uso de temas y patrones, inserción de multimedia, animaciones, transiciones y consejos para presentaciones.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="curso-card fade-in">
-                    <h3><i class="fas fa-award"></i>Desarrollo Web Full Stack</h3>
-                    <p>Construye aplicaciones web interactivas y funcionales desde cero. Aprende las bases del frontend con HTML5, CSS3 (incluyendo Flexbox y Grid para diseño responsive) y JavaScript moderno (ES6+), y maneja datos con bases de datos relacionales usando SQL.</p>
-                     <button class="toggle-btn" aria-expanded="false">
-                        <span>Ver Temario</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="curso-info">
-                        <ul>
-                            <li>HTML5: Estructura semántica del documento, etiquetas esenciales, formularios y elementos multimedia.</li>
-                            <li>CSS3: Selectores, modelo de caja, Flexbox para layouts flexibles, Grid para maquetación avanzada, diseño responsive y transiciones básicas.</li>
-                            <li>JavaScript (ES6+): Variables, tipos de datos, operadores, estructuras de control, funciones, manipulación del DOM y eventos.</li>
-                            <li>SQL: Conceptos de bases de datos relacionales, consultas básicas (SELECT, INSERT, UPDATE, DELETE), cláusulas WHERE, JOINs simples.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="curso-card fade-in">
-                    <h3><i class="fas fa-award"></i>Fundamentos de Programación</h3>
-                    <p>Iníciate en el apasionante mundo del código desarrollando una sólida base lógica. Aprende a resolver problemas usando pseudocódigo (Pseint) y da tus primeros pasos en lenguajes demandados como Python y C++, además de entender cómo interactuar con bases de datos SQL.</p>
-                    <button class="toggle-btn" aria-expanded="false">
-                        <span>Ver Temario</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="curso-info">
-                        <ul>
-                            <li>Lógica y Algoritmos: Introducción al pensamiento computacional, diagramas de flujo y pseudocódigo utilizando Pseint para practicar.</li>
-                            <li>Python Básico: Sintaxis fundamental, variables, tipos de datos, estructuras de control (if, for, while), funciones básicas.</li>
-                            <li>C++ Básico: Introducción a la sintaxis, tipos de datos, entrada/salida estándar, estructuras de control, compilación básica.</li>
-                            <li>SQL Básico: Comprensión de tablas y relaciones, ejecución de consultas SELECT sencillas para recuperar información.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                 <div class="curso-card fade-in">
-                    <h3><i class="fas fa-award"></i>Manejo Experto de Windows</h3>
-                    <p>Saca el máximo provecho al sistema operativo más utilizado. Aprende a navegar eficientemente, organizar tus archivos y carpetas, personalizar tu entorno, utilizar herramientas del sistema y aplicar buenas prácticas de seguridad.</p>
-                    <button class="toggle-btn" aria-expanded="false">
-                        <span>Ver Temario</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="curso-info">
-                        <ul>
-                            <li>Interfaz y Navegación: Escritorio, barra de tareas, menú Inicio, explorador de archivos (crear, mover, copiar, eliminar archivos/carpetas), vistas y búsqueda.</li>
-                            <li>Organización y Personalización: Creación de bibliotecas, configuración del escritorio, opciones de pantalla, cuentas de usuario básicas.</li>
-                            <li>Herramientas del Sistema: Panel de Control vs. Configuración, instalación/desinstalación de programas, herramientas básicas de mantenimiento (liberador de espacio).</li>
-                            <li>Conceptos Básicos: Uso del portapapeles, atajos de teclado comunes, conexión a redes Wi-Fi, nociones de seguridad (antivirus, actualizaciones).</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="curso-card fade-in">
-                    <h3><i class="fas fa-award"></i>Herramientas de Inteligencia Artificial</h3>
-                    <p>Descubre cómo la Inteligencia Artificial puede potenciar tu creatividad y eficiencia. Aprende a utilizar herramientas líderes como ChatGPT, Gemini y Copilot para generar texto, obtener ideas, programar, editar imágenes y optimizar tus tareas diarias.</p>
-                    <button class="toggle-btn" aria-expanded="false">
-                        <span>Ver Temario</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="curso-info">
-                        <ul>
-                            <li>Generación de Contenido: Uso efectivo de ChatGPT y Google Gemini para crear textos, resumir información, brainstorming y responder preguntas.</li>
-                            <li>Asistencia en Código y Tareas: Cómo usar GitHub Copilot (o similares) para autocompletar código, sugerir soluciones y depurar errores básicos.</li>
-                            <li>Edición de Imágenes con IA: Introducción a herramientas online (como PIXLR AI, Canva Magic Studio) para mejorar fotos, eliminar fondos o generar elementos gráficos.</li>
-                            <li>Prompts Efectivos: Aprende a formular preguntas e instrucciones claras para obtener los mejores resultados de las IAs generativas. Casos de uso prácticos.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="curso-card fade-in">
-                    <h3><i class="fas fa-award"></i>Edición de Video Profesional</h3>
-                    <p>Aprende a crear videos atractivos y de alta calidad utilizando los programas líderes del mercado: Camtasia, Filmora y Sony Vegas. Ideal para creadores de contenido, educadores y profesionales que buscan mejorar su comunicación audiovisual.</p>
-                    <button class="toggle-btn" aria-expanded="false">
-                        <span>Ver Temario</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="curso-info">
-                        <ul>
-                            <li>Introducción a la interfaz y flujo de trabajo de Camtasia, Filmora y Sony Vegas (principales diferencias y similitudes).</li>
-                            <li>Técnicas esenciales de edición: importar medios, cortar, recortar, unir clips, trabajar con la línea de tiempo y montaje básico.</li>
-                            <li>Uso de transiciones fluidas, aplicación de efectos visuales básicos (filtros, ajustes de velocidad) y corrección de color fundamental.</li>
-                            <li>Edición de audio: ajuste de niveles de volumen, añadir y sincronizar música de fondo, aplicar efectos de audio básicos (fade in/out) y reducción de ruido simple.</li>
-                            <li>Incorporación de elementos gráficos: añadir textos, títulos estáticos y animados, insertar imágenes y logos.</li>
-                            <li>Formatos de exportación (renderizado): configuración óptima para diferentes plataformas como YouTube, Instagram, TikTok y presentaciones.</li>
-                        </ul>
-                    </div>
-                </div>
-                 
-                 <div class="curso-card fade-in">
-                    <h3><i class="fas fa-calculator"></i>Apoyo Académico en Matemáticas</h3>
-                    <p>Refuerza tus conocimientos y resuelve tus dudas en matemáticas. Ofrecemos clases personalizadas para diferentes niveles, desde aritmética básica hasta cálculo avanzado. Elige la modalidad que mejor se adapte a tus necesidades, por horas o por trabajo específico.</p>
-                    <button class="toggle-btn" aria-expanded="false">
-                        <span>Ver Temario y Modalidades</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="curso-info">
-                        <ul>
-                            <li><strong>Temario Personalizado:</strong> Cubrimos temas como álgebra, geometría, trigonometría, estadística y cálculo diferencial e integral.</li>
-                            <li><strong>Modalidad por Horas:</strong> Sesiones de tutoría individual en vivo para reforzar conceptos, resolver ejercicios y preparar exámenes.</li>
-                            <li><strong>Modalidad por Trabajos:</strong> Ayuda en la resolución de deberes, proyectos o ejercicios específicos con entrega de soluciones detalladas.</li>
-                        </ul>
-                    </div>
-                 </div>
-
-                 <div class="curso-card fade-in">
-                    <h3><i class="fas fa-atom"></i>Apoyo Académico en Física</h3>
-                    <p>Comprende los principios fundamentales de la física con la ayuda de un instructor. Ofrecemos tutorías para que domines la mecánica, la termodinámica, el electromagnetismo y más. Puedes contratar el servicio por sesiones de una hora o por trabajos específicos a entregar.</p>
-                    <button class="toggle-btn" aria-expanded="false">
-                        <span>Ver Temario y Modalidades</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="curso-info">
-                        <ul>
-                            <li><strong>Temario Personalizado:</strong> Incluye mecánica clásica, cinemática, dinámica, termodinámica, óptica y electricidad.</li>
-                            <li><strong>Modalidad por Horas:</strong> Clases de apoyo enfocadas en la comprensión de las leyes físicas y la aplicación de fórmulas en problemas prácticos.</li>
-                            <li><strong>Modalidad por Trabajos:</strong> Asesoramiento para la elaboración de proyectos, informes de laboratorio o la resolución completa de guías de ejercicios.</li>
-                        </ul>
-                    </div>
-                 </div>
-                 </div>
-        </section>
-
-        <section class="payment-methods" id="pago">
-            <h2 class="section-title fade-in">Métodos de Pago</h2>
-            <div class="payment-methods-grid container">
-                <div class="payment-card fade-in">
-                    <i class="fas fa-university"></i>
-                    <h3>Transferencia Bancaria</h3>
-                    <p>Puedes realizar una transferencia a nuestra cuenta del **Banco Pichincha**.</p>
-                    <p>Una vez realizada, envía el comprobante por WhatsApp al instructor para confirmar tu inscripción.</p>
-                    <p><strong>Número de Cuenta:</strong> 2206904457</p>
-                </div>
-                <div class="payment-card fade-in">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <h3>Pagos en Efectivo</h3>
-                    <p>Para pagar en efectivo, por favor, contacta directamente al instructor a través de su número de **WhatsApp**.</p>
-                    <p>Es necesario coordinar una cita para la entrega del pago y recibir la confirmación de tu inscripción.</p>
+                <div class="card">
+                    <i class="fas fa-neural-network main-icon"></i>
+                    <h3>Sistemas Avanzados</h3>
+                    <p>Potenciados con IA y escalabilidad en la nube.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-robot"></i> Integración con IA</li>
+                        <li><i class="fas fa-cloud"></i> Microservicios Cloud</li>
+                        <li><i class="fas fa-shield-alt"></i> Seguridad Criptográfica</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section class="qr-section" id="contacto">
-            <h2 class="fade-in">¿Listo para empezar tu viaje digital?</h2>
-            <p class="fade-in">Escanea el código QR con tu móvil o haz clic en el botón flotante para contactarnos directamente por WhatsApp. ¡Estamos aquí para resolver tus dudas y ayudarte con tu inscripción!</p>
-            <img src="qr.png" alt="Código QR para contacto WhatsApp" class="qr-code fade-in">
+        <section id="freelance">
+            <h2 class="section-title">Servicios Freelance</h2>
+            <div class="grid-wrapper">
+                <div class="card">
+                    <i class="fas fa-laptop-code main-icon"></i>
+                    <h3>Cocreación de Software</h3>
+                    <p>Desarrollo especializado en lenguajes como Python, C++ y Node.js adaptado a tu lógica de negocio.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-brain main-icon"></i>
+                    <h3>Bots e Inteligencia Artificial</h3>
+                    <p>Automatización inteligente de procesos repetitivos y creación de agentes de visión artificial.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-video main-icon"></i>
+                    <h3>Contenido Tecnológico</h3>
+                    <p>Producción de tutoriales técnicos de alta fidelidad y material educativo para plataformas digitales.</p>
+                </div>
+            </div>
         </section>
+
+        <section id="inscripciones">
+            <h2 class="section-title">Inscripciones Abiertas</h2>
+            <div class="inscripciones-grid">
+                <div>
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 20px; font-family: 'Exo';">Únete a Clover</h3>
+                    <p style="margin-bottom: 25px;">Forma parte de la nueva generación de ingenieros. Mentorías directas y personalizadas.</p>
+                    <div class="info-item"><i class="fas fa-phone-alt"></i><span>+593 967 879 068</span></div>
+                    <div class="info-item"><i class="fas fa-at"></i><span>teddyvalencia1997@gmail.com</span></div>
+                    <div class="info-item"><i class="fas fa-city"></i><span>Chone, Manabí, Ecuador</span></div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="background: white; padding: 15px; border-radius: 20px; display: inline-block; border: 2px solid var(--accent-cyan);">
+                        <img src="qr-whatsapp.png" alt="QR Contacto" style="width: 160px; display: block;" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/593967879068'">
+                    </div>
+                    <p style="margin-top: 15px; color: var(--accent-cyan); font-weight: bold; text-transform: uppercase; font-size: 0.8rem; animation: pulse-glow 2s infinite;">Escanea para registro</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pago">
+            <h2 class="section-title">Métodos de Recaudación</h2>
+            <div class="grid-wrapper">
+                <div class="card" style="text-align: center;">
+                    <i class="fas fa-university main-icon"></i>
+                    <h3>Banco Pichincha</h3>
+                    <p>Ahorros: <strong>2206904457</strong></p>
+                    <span style="font-size: 0.75rem; color: var(--accent-cyan);"><i class="fas fa-university"></i> Transferencia</span>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <i class="fab fa-paypal main-icon" style="color: #003087;"></i>
+                    <h3>PayPal</h3>
+                    <p>Pagos Internacionales</p>
+                    <span style="font-size: 0.75rem; color: var(--accent-cyan);"><i class="fas fa-globe"></i> Global Checkout</span>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <i class="fas fa-money-check-alt main-icon"></i>
+                    <h3>Western Union</h3>
+                    <p>Giros Directos</p>
+                    <span style="font-size: 0.75rem; color: var(--accent-cyan);"><i class="fas fa-exchange-alt"></i> Red de Giros</span>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <i class="fas fa-hand-holding-usd main-icon"></i>
+                    <h3>Presencial</h3>
+                    <p>Oficina Clover - Chone</p>
+                    <span style="font-size: 0.75rem; color: var(--accent-cyan);"><i class="fas fa-user-friends"></i> Pago en Efectivo</span>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank" aria-label="Contactar por WhatsApp">
+    <a href="https://wa.me/+593967879068" class="whatsapp-btn" target="_blank">
         <i class="fab fa-whatsapp"></i>
-        <span>Contáctanos</span>
     </a>
 
     <footer>
-        <div class="footer-links fade-in">
-            <button class="footer-link-btn" id="open-terms-modal">Términos y Condiciones</button>
-            <button class="footer-link-btn" id="open-privacy-modal">Privacidad</button>
-        </div>
-        <p class="fade-in">&copy; 2025 Clover Educación Digital. Todos los derechos reservados.</p>
-        <div class="social-links fade-in">
-            <a href="https://github.com/Teddyfidel" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#inicio" class="active"><i class="fas fa-home"></i></a>
+        <p>&copy; 2026 Ing. Teddy Valencia | Desarrollado por Clover Educación Digital</p>
+        <div class="tech-stack" style="margin-top: 15px;">
+            <i class="fab fa-html5"></i> <i class="fab fa-css3-alt"></i> <i class="fab fa-js-square"></i> <i class="fab fa-python"></i> <i class="fab fa-aws"></i>
         </div>
     </footer>
 
-    <div id="contact-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="contact-modal" class="modal">
         <div class="modal-content">
-            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
-            <h3 id="modal-title">Contacto del Ing. Teddy Valencia</h3>
-            <p>Selecciona una opción para contactar directamente con el instructor.</p>
-            <div class="modal-buttons">
-                <a href="https://wa.me/+593967879068" class="btn-whatsapp" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Enviar WhatsApp
+            <button id="close-modal" style="position:absolute; right:20px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+            <i class="fas fa-headset" style="font-size: 3.5rem; color: var(--accent-cyan); margin-bottom: 20px; animation: float 2s infinite;"></i>
+            <h3 style="color: var(--accent-cyan); margin-bottom: 25px; font-family: 'Exo';">¿Cómo puedo ayudarte?</h3>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <a href="https://wa.me/+593967879068" target="_blank" style="background:var(--whatsapp-green); color:#fff; padding:15px; border-radius:12px; text-decoration:none; font-weight:bold; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Soporte
                 </a>
-                <a href="https://github.com/Teddyfidel" class="btn-github" target="_blank">
-                    <i class="fab fa-github"></i> Ver GitHub
-                </a>
-                <a href="tel:+593967879068" class="btn-call">
-                    <i class="fas fa-phone-alt"></i> Llamada Directa
+                <a href="mailto:teddyvalencia1997@gmail.com" style="background:var(--accent-cyan); color:#000; padding:15px; border-radius:12px; text-decoration:none; font-weight:bold; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                    <i class="fas fa-envelope"></i> Enviar Mensaje
                 </a>
             </div>
-        </div>
-    </div>
-
-    <div id="terms-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
-        <div class="modal-content">
-            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
-            <h3 id="terms-modal-title">Términos y Condiciones</h3>
-            <p><strong>1. Aceptación de los Términos</strong></p>
-            <p>Al acceder y utilizar los servicios de Clover Educación Digital, usted acepta y se compromete a cumplir con los siguientes Términos y Condiciones. Si no está de acuerdo con estos términos, no debe utilizar nuestros servicios.</p>
-            <p><strong>2. Uso de los Servicios</strong></p>
-            <p>Nuestros cursos y servicios están destinados a fines educativos y profesionales. Queda estrictamente prohibido el uso de nuestro contenido con fines ilegales o no autorizados. No debe reproducir, duplicar, copiar, vender, revender o explotar ninguna parte del servicio sin nuestro permiso expreso por escrito.</p>
-            <p><strong>3. Propiedad Intelectual</strong></p>
-            <p>Todo el contenido de este sitio web, incluyendo textos, gráficos, logotipos, imágenes y software, es propiedad de Clover Educación Digital o de sus licenciantes y está protegido por las leyes de derechos de autor. La compra de un curso no otorga la propiedad del contenido, solo una licencia de uso personal y no transferible.</p>
-            <p><strong>4. Pagos y Reembolsos</strong></p>
-            <p>Todos los pagos por cursos y servicios deben realizarse a través de los métodos de pago indicados. Las políticas de reembolso se especificarán de forma clara al momento de la compra de cada curso.</p>
-            <p><strong>5. Modificaciones del Servicio</strong></p>
-            <p>Nos reservamos el derecho de modificar o discontinuar cualquier aspecto de nuestros servicios en cualquier momento, con o sin previo aviso. No seremos responsables ante usted ni ante terceros por cualquier modificación, suspensión o interrupción del servicio.</p>
-            <p><strong>6. Contacto</strong></p>
-            <p>Para cualquier pregunta o aclaración sobre estos términos, puede contactarnos a través de los canales de comunicación proporcionados en el sitio web.</p>
-        </div>
-    </div>
-
-    <div id="privacy-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
-        <div class="modal-content">
-            <button class="modal-close-btn" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
-            <h3 id="privacy-modal-title">Política de Privacidad</h3>
-            <p><strong>1. Información que Recopilamos</strong></p>
-            <p>Recopilamos información personal que usted nos proporciona voluntariamente al registrarse en un curso, solicitar información o contactarnos. Esta información puede incluir su nombre, dirección de correo electrónico y número de teléfono.</p>
-            <p><strong>2. Uso de la Información</strong></p>
-            <p>Utilizamos la información recopilada para:</p>
-            <ul>
-                <li>Proporcionar y gestionar los servicios que ha solicitado.</li>
-                <li>Comunicarnos con usted sobre nuestros cursos, actualizaciones y ofertas especiales.</li>
-                <li>Mejorar la calidad de nuestros servicios y la experiencia del usuario.</li>
-            </ul>
-            <p><strong>3. Protección de la Información</strong></p>
-            <p>Nos comprometemos a proteger su información personal. Implementamos medidas de seguridad adecuadas para prevenir el acceso no autorizado, la divulgación, alteración o destrucción de sus datos.</p>
-            <p><strong>4. Compartir Información con Terceros</strong></p>
-            <p>No vendemos, comercializamos ni transferimos su información personal a terceros sin su consentimiento, excepto cuando sea necesario para proporcionar un servicio solicitado (por ejemplo, pasarelas de pago) o cuando la ley lo exija.</p>
-            <p><strong>5. Cookies</strong></p>
-            <p>Nuestro sitio web utiliza cookies para mejorar la experiencia de navegación. Las cookies son pequeños archivos de texto que se almacenan en su dispositivo. Puede configurar su navegador para rechazar todas o algunas cookies, aunque esto podría afectar la funcionalidad de nuestro sitio.</p>
-            <p><strong>6. Sus Derechos</strong></p>
-            <p>Usted tiene derecho a acceder, corregir o eliminar su información personal en cualquier momento. Para ejercer estos derechos, por favor, póngase en contacto con nosotros.</p>
         </div>
     </div>
 
     <script>
-        // --- Bloquear Clic Derecho y Teclas DevTools (Advertencia: No son 100% seguras) ---
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault();
-           console.log("Clic derecho deshabilitado.");
-        });
-
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "F12" ||
-                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C')) ||
-                (event.ctrlKey && event.key === 'U')) {
-                event.preventDefault();
-                console.log("Acceso a herramientas de desarrollador o código fuente deshabilitado.");
-            }
-        });
-        // ---------------------------------------------------------------
-
-        // Menú responsive
-        const menuBtn = document.querySelector('.menu-btn');
-        const menuList = document.querySelector('.menu-list');
-        const menuLinks = document.querySelectorAll('.menu-list a');
-
-        menuBtn.addEventListener('click', () => {
-            const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
-            menuBtn.setAttribute('aria-expanded', !isExpanded);
-            menuList.classList.toggle('active');
-            const icon = menuBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        });
-
-         menuLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                 if (menuList.classList.contains('active')) {
-                     menuBtn.click();
-                 }
-                 setTimeout(() => {
-                    menuLinks.forEach(l => l.classList.remove('active'));
-                    const targetId = e.currentTarget.getAttribute('href');
-                    const activeLink = document.querySelector(`.menu-list a[href="${targetId}"]`);
-                    if(activeLink) {
-                        activeLink.classList.add('active');
-                    }
-                 }, 50);
-            });
-        });
-
-        // Función para actualizar reloj y fecha
-        function updateClock() {
-            const now = new Date();
-            // Formatear hora
-            const timeString = now.toLocaleTimeString('es-ES', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-
-            // Formatear fecha corta para la nueva posición
-            const shortDateString = now.toLocaleDateString('es-ES', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric'
-            });
-
-            // Actualizar elementos del reloj digital
-            document.querySelector('.digital-clock .time').textContent = timeString;
-            document.querySelector('.digital-clock .date').textContent = shortDateString;
-        }
-
-        // Iniciar reloj
-        updateClock();
-        setInterval(updateClock, 1000);
-
-        // Modo oscuro
-        const darkModeToggle = document.querySelector('.dark-mode-toggle');
-
-        // Función para aplicar el modo
-        function applyDarkMode(isDark) {
-            if (isDark) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
-        }
-
-        // Cargar preferencia guardada o establecer predeterminada (claro)
-        const savedDarkMode = localStorage.getItem('darkMode');
-        if (savedDarkMode === 'enabled') {
-            applyDarkMode(true);
-        } else {
-            applyDarkMode(false);
-        }
-
-        darkModeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                localStorage.setItem('darkMode', 'disabled');
-            }
-        });
-
-        // Acordeón de cursos
-        document.querySelectorAll('.toggle-btn').forEach(btn => {
-            const info = btn.nextElementSibling;
-            const icon = btn.querySelector('i');
-
-            info.style.maxHeight = '0';
-            info.classList.remove('active');
-            btn.classList.remove('active');
-            btn.setAttribute('aria-expanded', 'false');
-            icon.style.transform = 'rotate(0deg)';
-
-            btn.addEventListener('click', () => {
-                const isActive = !info.classList.contains('active');
-
-                document.querySelectorAll('.curso-info.active').forEach(openInfo => {
-                    if (openInfo !== info) {
-                        openInfo.style.maxHeight = '0';
-                        openInfo.classList.remove('active');
-                        openInfo.previousElementSibling.classList.remove('active');
-                        openInfo.previousElementSibling.setAttribute('aria-expanded', 'false');
-                        openInfo.previousElementSibling.querySelector('i').style.transform = 'rotate(0deg)';
-                    }
-                });
-
-                info.classList.toggle('active', isActive);
-                btn.classList.toggle('active', isActive);
-                btn.setAttribute('aria-expanded', isActive);
-
-                if (isActive) {
-                    info.style.maxHeight = info.scrollHeight + 'px';
-                    icon.style.transform = 'rotate(180deg)';
-                } else {
-                    info.style.maxHeight = '0';
-                    icon.style.transform = 'rotate(0deg)';
-                }
-            });
-        });
-
-        // Scroll suave y actualizar enlace activo en navbar al hacer scroll
-        const sections = document.querySelectorAll('main section[id]');
-        const navLinks = document.querySelectorAll('.menu-list a[href^="#"]');
-        const navbar = document.querySelector('nav');
-        const navbarHeight = navbar ? navbar.offsetHeight : 70;
-
-        const observerOptions = {
-            root: null,
-            rootMargin: `-${navbarHeight + 10}px 0px -50% 0px`,
-            threshold: 0
+        // Menu Móvil
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        mobileMenu.onclick = () => {
+            mobileMenu.classList.toggle('active');
+            navList.classList.toggle('active');
         };
 
-        let lastActiveLink = null;
+        // Modal Logic
+        const modal = document.getElementById('contact-modal');
+        const openBtn = document.getElementById('open-contact-modal');
+        const closeBtn = document.getElementById('close-modal');
+        openBtn.onclick = () => modal.style.display = "block";
+        closeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
 
-        const observer = new IntersectionObserver((entries) => {
-            let currentActiveSectionId = null;
-
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    currentActiveSectionId = entry.target.getAttribute('id');
-                }
-            });
-
-            if (currentActiveSectionId) {
-                navLinks.forEach(link => {
-                    if (link.getAttribute('href') === `#${currentActiveSectionId}`) {
-                        if (lastActiveLink && lastActiveLink !== link) {
-                            lastActiveLink.classList.remove('active');
-                        }
-                        link.classList.add('active');
-                        lastActiveLink = link;
-                    }
-                });
-            } else if (window.scrollY < sections[0].offsetTop - navbarHeight && document.querySelector('.menu-list a[href="#inicio"]')) {
-                 navLinks.forEach(l => l.classList.remove('active'));
-                 const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
-                 if (homeLink) homeLink.classList.add('active');
-                 lastActiveLink = homeLink;
+        // Fondo de Estrellas Dinámico
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        class Star {
+            constructor() { this.init(); }
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.speed = (Math.random() * 0.2) + 0.1;
+                this.size = Math.random() * 1.5;
+                this.color = Math.random() > 0.5 ? '#00d4ff' : '#7000ff';
             }
-
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        window.addEventListener('load', () => {
-             const homeLink = document.querySelector('.menu-list a[href="#inicio"]');
-             if (window.scrollY === 0 && homeLink) {
-                 navLinks.forEach(l => l.classList.remove('active'));
-                 homeLink.classList.add('active');
-                 lastActiveLink = homeLink;
-             }
-        });
-        
-        // Lógica del Modal de Contacto
-        const openContactModalBtn = document.getElementById('open-contact-modal');
-        const contactModal = document.getElementById('contact-modal');
-        const closeContactModalBtn = contactModal.querySelector('.modal-close-btn');
-
-        openContactModalBtn.addEventListener('click', () => {
-            contactModal.classList.add('is-active');
-            document.body.style.overflow = 'hidden';
-        });
-
-        closeContactModalBtn.addEventListener('click', () => {
-            contactModal.classList.remove('is-active');
-            document.body.style.overflow = '';
-        });
-
-        // Lógica de Modales de Términos y Privacidad
-        const openTermsBtn = document.getElementById('open-terms-modal');
-        const termsModal = document.getElementById('terms-modal');
-        const closeTermsBtn = termsModal.querySelector('.modal-close-btn');
-
-        const openPrivacyBtn = document.getElementById('open-privacy-modal');
-        const privacyModal = document.getElementById('privacy-modal');
-        const closePrivacyBtn = privacyModal.querySelector('.modal-close-btn');
-
-        function openModal(modal) {
-            modal.classList.add('is-active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modal) {
-            modal.classList.remove('is-active');
-            document.body.style.overflow = '';
-        }
-
-        openTermsBtn.addEventListener('click', () => openModal(termsModal));
-        closeTermsBtn.addEventListener('click', () => closeModal(termsModal));
-
-        openPrivacyBtn.addEventListener('click', () => openModal(privacyModal));
-        closePrivacyBtn.addEventListener('click', () => closeModal(privacyModal));
-        
-        window.addEventListener('click', (event) => {
-            if (event.target === contactModal) {
-                closeModal(contactModal);
+            update() {
+                this.y -= this.speed;
+                if (this.y < 0) this.y = canvas.height;
             }
-            if (event.target === termsModal) {
-                closeModal(termsModal);
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
             }
-            if (event.target === privacyModal) {
-                closeModal(privacyModal);
-            }
-        });
-
-        // --- Nuevas funciones para la pantalla de carga y efectos de aparición ---
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            const loaderBar = document.querySelector('.loader-bar');
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 5;
-                if (progress <= 100) {
-                    loaderBar.style.width = `${progress}%`;
-                }
-                if (progress >= 105) {
-                    clearInterval(interval);
-                    preloader.classList.add('hidden');
-                    // Mostrar contenido de la página después de que la pantalla de carga se oculte
-                    preloader.addEventListener('transitionend', () => {
-                        preloader.style.display = 'none';
-                        // Iniciar la animación de aparición de los elementos del cuerpo
-                        initScrollAnimations();
-                    }, { once: true });
-                }
-            }, 50);
-        });
-
-        function initScrollAnimations() {
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('appear');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            });
-
-            document.querySelectorAll('.fade-in').forEach(element => {
-                observer.observe(element);
-            });
         }
-
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'es,en,pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        function initStars() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            stars = []; for(let i=0; i<150; i++) stars.push(new Star());
         }
-
+        function animate() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            stars.forEach(s => { s.update(); s.draw(); });
+            requestAnimationFrame(animate);
+        }
+        window.onresize = initStars;
+        initStars(); animate();
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
