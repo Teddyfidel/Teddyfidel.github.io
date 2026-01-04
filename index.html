@@ -20,28 +20,11 @@
             --whatsapp-green: #25d366;
         }
 
-        /* --- Animaciones de Iconos --- */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes pulse-glow {
-            0% { transform: scale(1); filter: drop-shadow(0 0 0px var(--accent-cyan)); }
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 15px var(--accent-cyan)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--accent-cyan)); }
-        }
-
-        @keyframes rotate-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-3px) rotate(-2deg); }
-            75% { transform: translateX(3px) rotate(2deg); }
-        }
+        /* --- Animaciones --- */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulse-glow { 0% { transform: scale(1); filter: drop-shadow(0 0 0px var(--accent-cyan)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--accent-cyan)); } 100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--accent-cyan)); } }
+        @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px) rotate(-2deg); } 75% { transform: translateX(3px) rotate(2deg); } }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
@@ -53,15 +36,12 @@
             line-height: 1.6;
         }
 
-        #bg-canvas { 
-            position: fixed; top: 0; left: 0; z-index: -1; 
-            width: 100%; height: 100%; 
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; }
 
         /* --- Header & Nav --- */
         header {
             position: fixed; top: 0; width: 100%; 
-            background: rgba(3, 3, 5, 0.9);
+            background: rgba(3, 3, 5, 0.95);
             backdrop-filter: blur(15px); z-index: 1000; 
             border-bottom: 1px solid var(--border-glow);
         }
@@ -85,16 +65,15 @@
             display: flex; flex-direction: column; align-items: center; transition: 0.3s;
             text-transform: uppercase; letter-spacing: 1px;
         }
-        .menu__item i { font-size: 1.1rem; margin-bottom: 4px; color: var(--accent-cyan); transition: 0.3s; }
+        .menu__item i { font-size: 1.1rem; margin-bottom: 4px; color: var(--accent-cyan); }
         .menu__item:hover { color: #fff; transform: translateY(-3px); }
-        .menu__item:hover i { animation: float 1.5s infinite ease-in-out; }
 
         /* --- Layout --- */
-        .main-content { max-width: 1200px; margin: 0 auto; padding: 120px 20px 60px; position: relative; }
+        .main-content { max-width: 1200px; margin: 0 auto; padding: 120px 20px 60px; }
 
         .section-title {
-            text-align: center; font-family: 'Exo', sans-serif; font-size: clamp(1.5rem, 5vw, 2.2rem);
-            letter-spacing: 3px; margin: 60px 0 40px; text-transform: uppercase;
+            text-align: center; font-family: 'Exo', sans-serif; font-size: clamp(1.8rem, 5vw, 2.5rem);
+            letter-spacing: 3px; margin: 80px 0 40px; text-transform: uppercase;
         }
         .section-title::after {
             content: ''; display: block; width: 80px; height: 3px; 
@@ -104,83 +83,72 @@
 
         /* --- Hero --- */
         .hero { display: grid; grid-template-columns: 1fr 400px; gap: 40px; align-items: center; margin-bottom: 80px; }
-        .hero-text h2 { font-family: 'Exo', sans-serif; font-size: clamp(2.2rem, 6vw, 3.5rem); margin-bottom: 20px; line-height: 1.1; color: #fff; }
+        .hero-text h2 { font-family: 'Exo', sans-serif; font-size: clamp(2.2rem, 6vw, 3.5rem); margin-bottom: 20px; line-height: 1.1; }
+        .hero-buttons { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 30px; }
         
         .btn-contacto-docente, .btn-cv {
             padding: 15px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; 
             transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 0.9rem;
+            justify-content: center;
         }
         .btn-contacto-docente { background: var(--accent-cyan); color: #000; border: none; }
-        .btn-contacto-docente:hover { box-shadow: 0 0 20px var(--accent-cyan); }
         .btn-cv { background: transparent; color: var(--accent-cyan); border: 2px solid var(--accent-cyan); }
-        .btn-cv:hover { background: var(--accent-cyan); color: #000; }
 
         /* --- Profile Side --- */
         .profile-side { display: flex; flex-direction: column; gap: 20px; align-items: center; }
         .profile-img-container {
             width: 100%; max-width: 400px; aspect-ratio: 1/1; 
             background: var(--card-bg); border-radius: 30px; 
-            border: 1px solid var(--border-glow); display: flex; 
-            align-items: center; justify-content: center;
-            backdrop-filter: blur(10px); overflow: hidden; position: relative;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border-glow); overflow: hidden; position: relative;
         }
         .profile-img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .profile-img-container:hover img { transform: scale(1.05); }
         
-        .social-bar { display: flex; gap: 12px; justify-content: center; width: 100%; }
+        .social-bar { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
         .social-icon {
             width: 45px; height: 45px; background: var(--card-bg); 
             border: 1px solid var(--border-glow); border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
             color: var(--text-dim); text-decoration: none; transition: 0.3s;
         }
-        .social-icon:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); animation: shake 0.4s ease-in-out; }
+        .social-icon:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); animation: shake 0.4s; }
 
-        /* --- Grid & Cards --- */
-        .grid-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        /* --- Grid System --- */
+        .grid-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         
         .card { 
             background: var(--card-bg); padding: 30px; border-radius: 20px; 
             border: 1px solid var(--border-glow); transition: 0.3s; 
-            backdrop-filter: blur(8px); display: flex; flex-direction: column;
+            backdrop-filter: blur(8px); display: flex; flex-direction: column; height: 100%;
         }
-        .card:hover { transform: translateY(-10px); border-color: var(--accent-cyan); }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-cyan); box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1); }
         .card i.main-icon { font-size: 2.8rem; color: var(--accent-cyan); margin-bottom: 20px; transition: 0.4s; }
 
-        /* Asignación de movimientos por sección */
-        #sistemas .card:hover i.main-icon { animation: pulse-glow 1.5s infinite; }
-        #freelance .card:hover i.main-icon { animation: rotate-slow 4s infinite linear; }
-        #pago .card:hover i.main-icon { animation: float 2s infinite ease-in-out; }
-
-        .card h3 { color: #fff; margin-bottom: 15px; font-family: 'Exo', sans-serif; }
-        .feature-list { list-style: none; margin-top: 15px; }
-        .feature-list li { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .card h3 { color: #fff; margin-bottom: 15px; font-family: 'Exo', sans-serif; font-size: 1.4rem; }
+        .card p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 15px; flex-grow: 1; }
+        
+        .feature-list { list-style: none; }
+        .feature-list li { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
         .feature-list li i { color: var(--accent-cyan); font-size: 0.75rem; }
 
         /* --- Inscripciones --- */
         .inscripciones-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-            background: var(--card-bg); padding: 40px; 
+            background: var(--card-bg); padding: clamp(20px, 5vw, 40px); 
             border-radius: 30px; border: 1px solid var(--border-glow); align-items: center;
         }
         .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
         .info-item i { 
-            background: var(--accent-cyan); color: #000; width: 45px; height: 45px; 
+            background: var(--accent-cyan); color: #000; width: 45px; height: 45px; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center; border-radius: 50%; 
-            font-size: 1.2rem; transition: 0.3s;
         }
-        .info-item:hover i { animation: pulse-glow 1.5s infinite; }
 
         /* --- Floating UI --- */
         .whatsapp-btn {
             position: fixed; bottom: 30px; right: 30px; background: var(--whatsapp-green);
             color: white; width: 60px; height: 60px; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; font-size: 2rem;
-            z-index: 2000; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.3s;
-            animation: float 3s infinite ease-in-out;
+            z-index: 2000; box-shadow: 0 10px 20px rgba(0,0,0,0.5); animation: float 3s infinite ease-in-out;
         }
-        .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--whatsapp-green); }
 
         /* --- Modal --- */
         .modal {
@@ -192,16 +160,15 @@
             width: 90%; max-width: 450px; border-radius: 25px; position: relative; text-align: center;
         }
 
-        footer { text-align: center; padding: 60px 20px; color: var(--text-dim); border-top: 1px solid var(--border-glow); margin-top: 40px; }
-        footer .tech-stack i { margin: 0 10px; font-size: 1.5rem; transition: 0.3s; }
-        footer .tech-stack i:hover { color: var(--accent-cyan); transform: scale(1.3); }
+        footer { text-align: center; padding: 60px 20px; color: var(--text-dim); border-top: 1px solid var(--border-glow); margin-top: 60px; }
 
-        /* --- Responsive --- */
+        /* --- Responsive Queries --- */
         @media (max-width: 992px) {
             .hero { grid-template-columns: 1fr; text-align: center; }
             .hero-buttons { justify-content: center; }
             .profile-side { order: -1; }
-            .profile-img-container { max-width: 300px; }
+            .inscripciones-grid { grid-template-columns: 1fr; text-align: center; }
+            .info-item { justify-content: center; }
         }
 
         @media (max-width: 768px) {
@@ -212,6 +179,8 @@
                 padding: 100px 40px; transition: 0.4s; border-left: 1px solid var(--accent-cyan);
             }
             .nav-menu.active { right: 0; }
+            .main-content { padding-top: 100px; }
+            .hero-buttons .btn-contacto-docente, .hero-buttons .btn-cv { width: 100%; }
         }
     </style>
 </head>
@@ -245,7 +214,7 @@
                         <button id="open-contact-modal" class="btn-contacto-docente">
                             <i class="fas fa-paper-plane"></i> Contactar Ahora
                         </button>
-                        <a href="https://teddyfidel.github.io/cv_teddy.html" target="_blank" class="btn-cv" download>
+                        <a href="https://teddyfidel.github.io/cv_teddy.html" target="_blank" class="btn-cv">
                             <i class="fas fa-file-pdf"></i> Obtener CV
                         </a>
                     </div>
@@ -272,31 +241,31 @@
                 <div class="card">
                     <i class="fas fa-layer-group main-icon"></i>
                     <h3>Sistemas Básicos</h3>
-                    <p>Estructuras dinámicas para negocios en crecimiento.</p>
+                    <p>Estructuras dinámicas para negocios en crecimiento y presencia digital inmediata.</p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-desktop"></i> Landing Pages Pro</li>
-                        <li><i class="fas fa-pencil-ruler"></i> UX/UI Moderno</li>
-                        <li><i class="fas fa-search-dollar"></i> SEO de Alto Impacto</li>
+                        <li><i class="fas fa-check"></i> Landing Pages de Alta Conversión</li>
+                        <li><i class="fas fa-check"></i> Diseño UX/UI Moderno</li>
+                        <li><i class="fas fa-check"></i> Optimización SEO</li>
                     </ul>
                 </div>
                 <div class="card">
                     <i class="fas fa-database main-icon"></i>
                     <h3>Sistemas Medios</h3>
-                    <p>Arquitectura robusta para gestión de datos masivos.</p>
+                    <p>Arquitectura robusta para la gestión eficiente de flujos de datos y procesos internos.</p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-project-diagram"></i> Bases Relacionales</li>
-                        <li><i class="fas fa-chart-line"></i> Paneles de Control</li>
-                        <li><i class="fas fa-boxes"></i> Control de Stock Pro</li>
+                        <li><i class="fas fa-check"></i> Gestión de Inventarios</li>
+                        <li><i class="fas fa-check"></i> Dashboards Administrativos</li>
+                        <li><i class="fas fa-check"></i> Bases de Datos Relacionales</li>
                     </ul>
                 </div>
                 <div class="card">
                     <i class="fas fa-neural-network main-icon"></i>
                     <h3>Sistemas Avanzados</h3>
-                    <p>Potenciados con IA y escalabilidad en la nube.</p>
+                    <p>Tecnología de vanguardia con escalabilidad global y procesamiento inteligente.</p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-robot"></i> Integración con IA</li>
-                        <li><i class="fas fa-cloud"></i> Microservicios Cloud</li>
-                        <li><i class="fas fa-shield-alt"></i> Seguridad Criptográfica</li>
+                        <li><i class="fas fa-check"></i> Integración con LLMs (IA)</li>
+                        <li><i class="fas fa-check"></i> Microservicios en la Nube</li>
+                        <li><i class="fas fa-check"></i> Seguridad de Grado Bancario</li>
                     </ul>
                 </div>
             </div>
@@ -306,36 +275,61 @@
             <h2 class="section-title">Servicios Freelance</h2>
             <div class="grid-wrapper">
                 <div class="card">
-                    <i class="fas fa-laptop-code main-icon"></i>
-                    <h3>Cocreación de Software</h3>
-                    <p>Desarrollo especializado en lenguajes como Python, C++ y Node.js adaptado a tu lógica de negocio.</p>
+                    <i class="fas fa-laptop-code main-icon" style="animation: rotate-slow 10s infinite linear;"></i>
+                    <h3>Desarrollo de Software Custom</h3>
+                    <p>Soluciones a medida diseñadas para resolver problemas específicos. Dominio total de Python, C++, Node.js y React para crear aplicaciones rápidas y seguras.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-bolt"></i> Refactorización de Código</li>
+                        <li><i class="fas fa-bug"></i> Debugging Especializado</li>
+                        <li><i class="fas fa-rocket"></i> Despliegue en AWS/Vercel</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <i class="fas fa-brain main-icon"></i>
-                    <h3>Bots e Inteligencia Artificial</h3>
-                    <p>Automatización inteligente de procesos repetitivos y creación de agentes de visión artificial.</p>
+                    <i class="fas fa-brain main-icon" style="animation: pulse-glow 2s infinite;"></i>
+                    <h3>Automatización e IA</h3>
+                    <p>Transformo procesos manuales en flujos automáticos inteligentes. Creación de bots para scraping, agentes de atención al cliente y sistemas de visión artificial.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-robot"></i> Bots de Telegram/WhatsApp</li>
+                        <li><i class="fas fa-eye"></i> Procesamiento de Imágenes</li>
+                        <li><i class="fas fa-cogs"></i> Workflows de Datos</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chalkboard-teacher main-icon" style="animation: float 3s infinite ease-in-out;"></i>
+                    <h3>Consultoría & Tutorías</h3>
+                    <p>Mentoría técnica para desarrolladores y empresas. Ayuda en la resolución de algoritmos complejos, preparación para entrevistas y arquitectura de proyectos.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-graduation-cap"></i> Tutorías de Programación</li>
+                        <li><i class="fas fa-clipboard-check"></i> Code Review de Proyectos</li>
+                        <li><i class="fas fa-lightbulb"></i> Estrategia Tecnológica</li>
+                    </ul>
                 </div>
                 <div class="card">
                     <i class="fas fa-video main-icon"></i>
-                    <h3>Contenido Tecnológico</h3>
-                    <p>Producción de tutoriales técnicos de alta fidelidad y material educativo para plataformas digitales.</p>
+                    <h3>Contenido & Divulgación</h3>
+                    <p>Creación de material educativo de alta calidad. Guiones técnicos, tutoriales paso a paso y demostraciones de software para plataformas digitales.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-play"></i> Edición de Video Técnico</li>
+                        <li><i class="fas fa-file-code"></i> Documentación de APIs</li>
+                        <li><i class="fas fa-users"></i> Webinars Tecnológicos</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <section id="inscripciones">
-            <h2 class="section-title">Inscripciones Abiertas</h2>
+            <h2 class="section-title">Inscripciones Clover</h2>
             <div class="inscripciones-grid">
                 <div>
-                    <h3 style="color: var(--accent-cyan); margin-bottom: 20px; font-family: 'Exo';">Únete a Clover</h3>
-                    <p style="margin-bottom: 25px;">Forma parte de la nueva generación de ingenieros. Mentorías directas y personalizadas.</p>
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">Únete a la Academia</h3>
+                    <p style="margin-bottom: 25px;">Aprende programación desde cero con un enfoque práctico y orientado a proyectos reales. Mentorías directas del Ing. Teddy Valencia.</p>
                     <div class="info-item"><i class="fas fa-phone-alt"></i><span>+593 967 879 068</span></div>
                     <div class="info-item"><i class="fas fa-at"></i><span>teddyvalencia1997@gmail.com</span></div>
-                    <div class="info-item"><i class="fas fa-city"></i><span>Chone, Manabí, Ecuador</span></div>
+                    <div class="info-item"><i class="fas fa-map-marker-alt"></i><span>Chone, Manabí, Ecuador</span></div>
                 </div>
                 <div style="text-align: center;">
-                    <div style="background: white; padding: 15px; border-radius: 20px; display: inline-block; border: 2px solid var(--accent-cyan);">
-                        <img src="qr-whatsapp.png" alt="QR Contacto" style="width: 160px; display: block;" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/593967879068'">
+                    <div style="background: white; padding: 15px; border-radius: 20px; display: inline-block; border: 2px solid var(--accent-cyan); max-width: 100%;">
+                        <img src="qr-whatsapp.png" alt="QR Contacto" style="width: 160px; max-width: 100%; display: block;" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/593967879068'">
                     </div>
                     <p style="margin-top: 15px; color: var(--accent-cyan); font-weight: bold; text-transform: uppercase; font-size: 0.8rem; animation: pulse-glow 2s infinite;">Escanea para registro</p>
                 </div>
@@ -343,31 +337,31 @@
         </section>
 
         <section id="pago">
-            <h2 class="section-title">Métodos de Recaudación</h2>
+            <h2 class="section-title">Métodos de Pago</h2>
             <div class="grid-wrapper">
                 <div class="card" style="text-align: center;">
                     <i class="fas fa-university main-icon"></i>
                     <h3>Banco Pichincha</h3>
                     <p>Ahorros: <strong>2206904457</strong></p>
-                    <span style="font-size: 0.75rem; color: var(--accent-cyan);"><i class="fas fa-university"></i> Transferencia</span>
+                    <span style="font-size: 0.75rem; color: var(--accent-cyan);">Transferencia Directa</span>
                 </div>
                 <div class="card" style="text-align: center;">
                     <i class="fab fa-paypal main-icon" style="color: #003087;"></i>
                     <h3>PayPal</h3>
-                    <p>Pagos Internacionales</p>
-                    <span style="font-size: 0.75rem; color: var(--accent-cyan);"><i class="fas fa-globe"></i> Global Checkout</span>
+                    <p>teddyvalencia1997@gmail.com</p>
+                    <span style="font-size: 0.75rem; color: var(--accent-cyan);">Pagos Internacionales</span>
                 </div>
                 <div class="card" style="text-align: center;">
                     <i class="fas fa-money-check-alt main-icon"></i>
                     <h3>Western Union</h3>
-                    <p>Giros Directos</p>
-                    <span style="font-size: 0.75rem; color: var(--accent-cyan);"><i class="fas fa-exchange-alt"></i> Red de Giros</span>
+                    <p>Chone - Manabí</p>
+                    <span style="font-size: 0.75rem; color: var(--accent-cyan);">Giros Internacionales</span>
                 </div>
                 <div class="card" style="text-align: center;">
                     <i class="fas fa-hand-holding-usd main-icon"></i>
                     <h3>Presencial</h3>
                     <p>Oficina Clover - Chone</p>
-                    <span style="font-size: 0.75rem; color: var(--accent-cyan);"><i class="fas fa-user-friends"></i> Pago en Efectivo</span>
+                    <span style="font-size: 0.75rem; color: var(--accent-cyan);">Pago en Efectivo</span>
                 </div>
             </div>
         </section>
@@ -379,8 +373,8 @@
     </a>
 
     <footer>
-        <p style="color: #ffffff;">&copy; 2026 Ing. Teddy Valencia | Desarrollado por Clover Digital</p>
-        <div class="tech-stack" style="margin-top: 15px;">
+        <p style="color: #ffffff;">&copy; 2026 Ing. Teddy Valencia | Clover Digital</p>
+        <div style="margin-top: 20px; font-size: 1.5rem; opacity: 0.6;">
             <i class="fab fa-html5"></i> <i class="fab fa-css3-alt"></i> <i class="fab fa-js-square"></i> <i class="fab fa-python"></i> <i class="fab fa-aws"></i>
         </div>
     </footer>
@@ -388,25 +382,20 @@
     <div id="contact-modal" class="modal">
         <div class="modal-content">
             <button id="close-modal" style="position:absolute; right:20px; top:15px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
-            <i class="fas fa-headset" style="font-size: 3.5rem; color: var(--accent-cyan); margin-bottom: 20px; animation: float 2s infinite;"></i>
-            <h3 style="color: var(--accent-cyan); margin-bottom: 25px; font-family: 'Exo';">¿Cómo puedo ayudarte?</h3>
+            <i class="fas fa-headset" style="font-size: 3.5rem; color: var(--accent-cyan); margin-bottom: 20px;"></i>
+            <h3 style="color: var(--accent-cyan); margin-bottom: 25px;">¿En qué puedo ayudarte?</h3>
             <div style="display: flex; flex-direction: column; gap: 15px;">
-                <a href="https://wa.me/+593967879068" target="_blank" style="background:var(--whatsapp-green); color:#fff; padding:15px; border-radius:12px; text-decoration:none; font-weight:bold; display: flex; align-items: center; justify-content: center; gap: 12px;">
-                    <i class="fab fa-whatsapp"></i> WhatsApp Soporte
-                </a>
-                <a href="mailto:teddyvalencia1997@gmail.com" style="background:var(--accent-cyan); color:#000; padding:15px; border-radius:12px; text-decoration:none; font-weight:bold; display: flex; align-items: center; justify-content: center; gap: 12px;">
-                    <i class="fas fa-envelope"></i> Enviar Mensaje
-                </a>
+                <a href="https://wa.me/+593967879068" target="_blank" style="background:var(--whatsapp-green); color:#fff; padding:15px; border-radius:12px; text-decoration:none; font-weight:bold;">WhatsApp Soporte</a>
+                <a href="mailto:teddyvalencia1997@gmail.com" style="background:var(--accent-cyan); color:#000; padding:15px; border-radius:12px; text-decoration:none; font-weight:bold;">Enviar Correo</a>
             </div>
         </div>
     </div>
 
     <script>
-        // Menu Móvil
+        // Menu Toggle
         const mobileMenu = document.getElementById('mobile-menu');
         const navList = document.getElementById('nav-list');
         mobileMenu.onclick = () => {
-            mobileMenu.classList.toggle('active');
             navList.classList.toggle('active');
         };
 
@@ -418,7 +407,7 @@
         closeBtn.onclick = () => modal.style.display = "none";
         window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
 
-        // Fondo de Estrellas Dinámico
+        // Background Stars
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -429,14 +418,13 @@
                 this.y = Math.random() * canvas.height;
                 this.speed = (Math.random() * 0.2) + 0.1;
                 this.size = Math.random() * 1.5;
-                this.color = Math.random() > 0.5 ? '#00d4ff' : '#7000ff';
             }
             update() {
                 this.y -= this.speed;
                 if (this.y < 0) this.y = canvas.height;
             }
             draw() {
-                ctx.fillStyle = this.color;
+                ctx.fillStyle = '#00d4ff';
                 ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
             }
         }
