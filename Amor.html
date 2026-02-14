@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>San Valentín · Merly - Amor mio </title>
+  <!-- Google Fonts: cursiva romántica -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Variables modo claro/oscuro */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.2s;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    :root {
+      --bg: #fff9f9;
+      --card-bg: #ffe4e9;
+      --text: #4a2e2e;
+      --accent: #d44e6c;
+      --accent-hover: #b63e5a;
+      --error: #c0392b;
+      --parchment-bg: #fcedda;
+      --parchment-border: #d4a78b;
+      --parchment-shadow: rgba(150, 90, 60, 0.15);
+      --btn-text: white;
+      --heart-emoji: #d44e6c;
+    }
+
+    body.dark-mode {
+      --bg: #1f1b1b;
+      --card-bg: #2f2626;
+      --text: #f2e3d5;
+      --accent: #b34e6b;
+      --accent-hover: #9f435b;
+      --error: #e57a6c;
+      --parchment-bg: #4d3f34;
+      --parchment-border: #947b68;
+      --parchment-shadow: rgba(0, 0, 0, 0.5);
+      --btn-text: #f0e0d0;
+      --heart-emoji: #ff8da1;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background-color: var(--card-bg);
+      border-radius: 3rem 3rem 2.5rem 2.5rem;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), 0 4px 10px var(--parchment-shadow);
+      padding: 2rem 1.8rem 2.5rem;
+      border: 2px solid var(--parchment-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: "❤️ ❤️ ❤️";
+      position: absolute;
+      top: -5px;
+      left: 0;
+      width: 100%;
+      font-size: 1.4rem;
+      opacity: 0.3;
+      letter-spacing: 10px;
+      text-align: center;
+      color: var(--heart-emoji);
+      pointer-events: none;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin: 0.2rem 0 1rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 4px var(--parchment-shadow);
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1.5rem;
+    }
+
+    #darkModeToggle {
+      background: var(--accent);
+      border: none;
+      padding: 0.6rem 1.3rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--btn-text);
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 1px solid var(--parchment-border);
+      transition: transform 0.2s, background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    #darkModeToggle:hover {
+      background: var(--accent-hover);
+      transform: scale(1.02);
+    }
+
+    /* LOGIN */
+    #loginContainer {
+      text-align: center;
+      padding: 1rem 0.5rem;
+    }
+
+    #loginContainer h2 {
+      font-size: 2rem;
+      font-family: 'Dancing Script', cursive;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    label {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      font-size: 1.3rem;
+      text-align: center;
+      border: 2px solid var(--parchment-border);
+      border-radius: 60px;
+      background-color: var(--bg);
+      color: var(--text);
+      outline: none;
+      font-family: monospace;
+      letter-spacing: 3px;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(212, 78, 108, 0.3);
+    }
+
+    #loginButton {
+      background: var(--accent);
+      color: var(--btn-text);
+      border: none;
+      padding: 0.9rem 2.2rem;
+      border-radius: 60px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-top: 1.2rem;
+      cursor: pointer;
+      border: 1px solid var(--parchment-border);
+      transition: 0.2s;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 6px 0 #9e3b52;
+    }
+
+    #loginButton:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #9e3b52;
+    }
+
+    .error {
+      color: var(--error);
+      min-height: 2rem;
+      margin-top: 1rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    /* POEMA (pergamino) */
+    #poemContainer {
+      text-align: center;
+      animation: aparecer 0.8s ease;
+    }
+
+    @keyframes aparecer {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .parchment {
+      background: var(--parchment-bg);
+      border: 5px double var(--parchment-border);
+      border-radius: 30px 10px 30px 10px;
+      padding: 2rem 1.8rem;
+      box-shadow: 0 15px 25px var(--parchment-shadow), inset 0 0 30px rgba(255, 235, 200, 0.3);
+      margin: 1.5rem 0 2rem;
+      position: relative;
+      transform: rotate(0.2deg);
+    }
+
+    .parchment::before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      right: 10px;
+      bottom: 5px;
+      border-radius: 25px 5px 25px 5px;
+      border: 1px dashed var(--parchment-border);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .poem {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.9rem;
+      line-height: 2.3rem;
+      color: var(--text);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      font-weight: 500;
+      margin: 0;
+      white-space: pre-line;
+    }
+
+    .poem br {
+      content: "";
+      display: block;
+      margin: 0.6rem 0;
+    }
+
+    #logoutButton {
+      background: var(--accent);
+      color: var(--btn-text);
+      border: 1px solid var(--parchment-border);
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.2s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    #logoutButton:hover {
+      background: var(--accent-hover);
+    }
+
+    .footer-hearts {
+      margin-top: 1.8rem;
+      text-align: center;
+      font-size: 1.6rem;
+      color: var(--heart-emoji);
+      filter: drop-shadow(0 2px 4px #d44e6c80);
+    }
+
+    @media (max-width: 450px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .poem {
+        font-size: 1.6rem;
+        line-height: 2.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-bar">
+      <button id="darkModeToggle">🌙 Modo oscuro</button>
+    </div>
+
+    <h1>💕 Te amo mi amor  💕</h1>
+
+    <!-- LOGIN -->
+    <div id="loginContainer">
+      <h2>🔐 Nuestra fecha</h2>
+      <div class="input-group">
+        <label for="codeInput">Ingresa el código (ddmmaaaa):</label>
+        <input type="text" id="codeInput" placeholder="Ingresa el código" maxlength="8" inputmode="numeric" autocomplete="off">
+      </div>
+      <button id="loginButton">Abrir pergamino</button>
+      <div id="errorMsg" class="error"></div>
+      <div class="footer-hearts">❤️ Merly ❤️</div>
+    </div>
+
+    <!-- POEMA (oculto inicialmente) -->
+    <div id="poemContainer" style="display: none;">
+      <div class="parchment">
+        <div class="poem">
+          Merly, un 12 de diciembre llegaste a mi vida,<br>
+          el 2020 nos vio cruzar miradas, promesas, latidos.<br>
+          Desde aquel día mi alma quedó prendida,<br>
+          y hoy, 12 de febrero de 2026, sigues siendo mi abrigo.<br>
+          <br>
+          Más de cinco años contigo, amor sin medida,<br>
+          cada instante a tu lado es un verso escrito en el tiempo.<br>
+          <br>
+          Febrero nos trae la calma de un ciclo cumplido,<br>
+          la certeza de que este amor es eterno y sincero.<br>
+          Tú y yo, Merly, contra el mundo, un solo latido,<br>
+          celebrando el pasado, soñando el futuro entero.<br>
+          <br>
+          Gracias por estos años, por sus risas, por su paz,<br>
+          por ser mi compañera, mi hogar, mi San Valentín.<br>
+          Que sigamos escribiendo una historia capaz<br>
+          de durar mil diciembres más, y un enero sin fin.
+        </div>
+      </div>
+      <button id="logoutButton">Cerrar pergamino</button>
+      <div class="footer-hearts">🌸 12.12.2020  —  12.02.2026 🌸</div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const ACCESS_CODE = "12122020";  // día que empezó todo
+
+      const loginContainer = document.getElementById('loginContainer');
+      const poemContainer = document.getElementById('poemContainer');
+      const codeInput = document.getElementById('codeInput');
+      const loginBtn = document.getElementById('loginButton');
+      const errorMsg = document.getElementById('errorMsg');
+      const logoutBtn = document.getElementById('logoutButton');
+      const darkToggle = document.getElementById('darkModeToggle');
+      const body = document.body;
+
+      function updateDarkButtonText() {
+        darkToggle.innerHTML = body.classList.contains('dark-mode') ? '☀️ Modo claro' : '🌙 Modo oscuro';
+      }
+
+      darkToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        updateDarkButtonText();
+      });
+      updateDarkButtonText();
+
+      function mostrarPoema() {
+        loginContainer.style.display = 'none';
+        poemContainer.style.display = 'block';
+        errorMsg.textContent = '';
+        codeInput.value = '';
+      }
+
+      function mostrarLogin() {
+        loginContainer.style.display = 'block';
+        poemContainer.style.display = 'none';
+        errorMsg.textContent = '';
+        codeInput.value = '';
+        codeInput.focus();
+      }
+
+      loginBtn.addEventListener('click', () => {
+        const codigo = codeInput.value.trim();
+        if (codigo === ACCESS_CODE) {
+          mostrarPoema();
+        } else {
+          errorMsg.textContent = '❌ Código incorrecto. Intenta con 12122020';
+          codeInput.value = '';
+          codeInput.focus();
+        }
+      });
+
+      codeInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') loginBtn.click();
+      });
+
+      logoutBtn.addEventListener('click', mostrarLogin);
+
+      // Solo números y máximo 8 dígitos
+      codeInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 8);
+      });
+    })();
+  </script>
+</body>
+</html>
