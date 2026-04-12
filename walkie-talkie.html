@@ -2,235 +2,310 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Walkie-Talkie PRO | Clover Tech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>WalkieTALK PRO | Clover Tech</title>
   <style>
-    /* Estilos optimizados y responsivos */
-    * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.2s ease; }
+    :root { --primary: #2563eb; --danger: #ef4444; --bg: #0f172a; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    
     body {
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+      background: var(--bg);
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
-      color: white;
-    }
-    body.dark { background: radial-gradient(circle at center, #020617 0%, #000000 100%); }
-    .card {
-      max-width: 450px;
-      width: 100%;
-      background: rgba(30, 41, 59, 0.7);
-      backdrop-filter: blur(16px);
-      border-radius: 2.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      min-height: 100vh;
       overflow: hidden;
     }
+
+    .app-container {
+      width: 100%;
+      max-width: 400px;
+      height: 90vh;
+      background: #1e293b;
+      border-radius: 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 2px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    /* Header */
     .header {
       padding: 1.5rem;
-      background: rgba(0, 0, 0, 0.2);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      text-align: center;
+      background: rgba(0,0,0,0.2);
+      border-radius: 2rem 2rem 0 0;
     }
-    .content { padding: 2rem; }
-    .input-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    /* Pantallas */
+    .screen { padding: 2rem; display: none; flex-direction: column; height: 100%; }
+    .active { display: flex; }
+
+    /* Login */
     input {
       padding: 1rem;
-      border-radius: 1rem;
-      border: 1px solid #475569;
+      border-radius: 0.8rem;
+      border: none;
       background: #0f172a;
       color: white;
-      font-size: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 1.1rem;
     }
-    button {
+
+    .btn {
       padding: 1rem;
-      border-radius: 1rem;
+      border-radius: 0.8rem;
       border: none;
-      background: #2563eb;
+      background: var(--primary);
       color: white;
       font-weight: bold;
       cursor: pointer;
     }
-    button:active { transform: scale(0.98); }
-    .freq-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-top: 1rem; }
-    .freq-btn { padding: 0.5rem; font-size: 0.8rem; background: #334155; border-radius: 0.5rem; }
-    .freq-btn.active { background: #10b981; }
-    .ptt-container { display: flex; justify-content: center; margin: 2rem 0; }
-    .ptt-button {
-      width: 140px; height: 140px; border-radius: 50%;
-      background: #ef4444; border: 8px solid #991b1b;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      cursor: pointer; user-select: none; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+
+    /* Walkie UI */
+    .status-panel {
+      display: flex;
+      justify-content: space-between;
+      background: #0f172a;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
     }
-    .ptt-button:active { background: #b91c1c; transform: scale(0.95); box-shadow: none; }
-    .ptt-button.disabled { background: #4b5563; border-color: #1f2937; cursor: not-allowed; }
-    .led { width: 12px; height: 12px; border-radius: 50%; display: inline-block; background: #334155; }
-    .led.red { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
-    .led.green { background: #10b981; box-shadow: 0 0 10px #10b981; }
-    .status-bar { display: flex; justify-content: space-between; font-size: 0.8rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 1rem; }
+
+    .led {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #334155; display: inline-block; margin-right: 5px;
+    }
+    .led.tx-active { background: #ff0000; box-shadow: 0 0 10px #ff0000; }
+    .led.rx-active { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
+
+    .freq-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      margin-bottom: 2rem;
+    }
+
+    .freq-btn {
+      padding: 0.5rem;
+      background: #334155;
+      border: none;
+      color: white;
+      border-radius: 0.5rem;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+    .freq-btn.active { background: var(--primary); }
+
+    /* PTT Button */
+    .ptt-wrapper {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ptt-btn {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: var(--danger);
+      border: 10px solid #991b1b;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 0 #7f1d1d;
+    }
+
+    .ptt-btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 5px 0 #7f1d1d;
+      background: #b91c1c;
+    }
+
+    .ptt-btn.disabled { opacity: 0.3; pointer-events: none; }
+
+    footer {
+      padding: 1rem;
+      font-size: 0.7rem;
+      text-align: center;
+      opacity: 0.5;
+    }
   </style>
 </head>
 <body>
 
-<div class="card">
+<div class="app-container">
   <div class="header">
-    <div style="font-weight: bold;">📡 WalkieTALK PRO</div>
-    <button id="darkModeBtn" style="padding: 5px 10px; background: transparent;">🌙</button>
+    <h2>📡 WalkieTALK PRO</h2>
+    <small id="userTag">Offline / Online Mode</small>
   </div>
 
-  <div class="content" id="loginScreen">
-    <div class="input-group">
-      <label>Código de Operador (usuario1 - usuario10)</label>
-      <input type="text" id="userCode" placeholder="Escribe tu código...">
-    </div>
-    <button id="loginBtn" style="width: 100%;">INICIAR SISTEMA</button>
+  <div id="loginScreen" class="screen active">
+    <input type="text" id="userCode" placeholder="Ingresa tu código (usuario1-10)">
+    <button class="btn" onclick="app.login()">CONECTAR EQUIPO</button>
   </div>
 
-  <div class="content" id="walkieScreen" style="display: none;">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-      <span id="userNameDisplay">---</span>
-      <button id="logoutBtn" style="padding: 5px 10px; background: #475569; font-size: 0.7rem;">SALIR</button>
+  <div id="walkieScreen" class="screen">
+    <div class="status-panel">
+      <div><span id="ledTX" class="led"></span> <small>TX</small></div>
+      <div><span id="ledRX" class="led"></span> <small>RX</small></div>
+      <div><small>FREQ: </small><strong id="freqLabel">1</strong><small> MHz</small></div>
     </div>
 
-    <div class="status-bar">
-      <div><span class="led" id="txLed"></span> TX</div>
-      <div><span class="led" id="rxLed"></span> RX</div>
-      <div>FRECUENCIA: <span id="freqLabel">1</span> MHz</div>
-    </div>
+    <div class="freq-grid" id="freqGrid"></div>
 
-    <div class="freq-buttons" id="freqContainer"></div>
-
-    <div class="ptt-container">
-      <div id="pttBtn" class="ptt-button">
-        <span style="font-size: 2rem;">🎤</span>
+    <div class="ptt-wrapper">
+      <div id="pttBtn" class="ptt-btn">
+        <span>🎤</span>
+        <br>
         <span>HABLAR</span>
       </div>
+      <p style="margin-top: 1.5rem; font-size: 0.8rem; color: #94a3b8;">Mantén presionado para transmitir</p>
     </div>
 
-    <div style="text-align: center; font-size: 0.8rem; color: #94a3b8;">
-      Push-To-Talk: Mantén presionado para transmitir
-    </div>
+    <button class="btn" onclick="location.reload()" style="background: #475569; margin-top: 1rem;">CERRAR SESIÓN</button>
   </div>
+  
+  <footer>Clover Technology &copy; 2026</footer>
 </div>
 
 <script>
-  // Configuración
-  const userFreqMap = { usuario1:1, usuario2:1, usuario3:2, usuario4:2, usuario5:3, usuario6:3, usuario7:4, usuario8:4, usuario9:5, usuario10:5 };
-  let currentUser = null, currentFreq = 1, senderId = 'ID_' + Math.random().toString(36).substr(2, 9);
-  let channel, mediaRecorder, audioCtx;
+const app = {
+    userFreqs: { usuario1:1, usuario2:1, usuario3:2, usuario4:2, usuario5:3, usuario6:3, usuario7:4, usuario8:4, usuario9:5, usuario10:5 },
+    currentFreq: 1,
+    senderId: 'ID_' + Math.random().toString(36).substr(2, 9),
+    channel: null,
+    audioCtx: null,
+    mediaRecorder: null,
+    stream: null,
 
-  // Elementos
-  const pttBtn = document.getElementById('pttBtn');
-  const txLed = document.getElementById('txLed');
-  const rxLed = document.getElementById('rxLed');
+    initAudio() {
+        if (!this.audioCtx) {
+            this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
+    },
 
-  // Inicializar Audio
-  function initAudio() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
+    login() {
+        const code = document.getElementById('userCode').value.toLowerCase().trim();
+        if (this.userFreqs[code]) {
+            this.currentFreq = this.userFreqs[code];
+            document.getElementById('loginScreen').classList.remove('active');
+            document.getElementById('walkieScreen').classList.add('active');
+            document.getElementById('userTag').innerText = `Operador: ${code}`;
+            this.setupWalkie();
+        } else {
+            alert("Código inválido. Intenta con usuario1 o usuario2");
+        }
+    },
 
-  // Reproducir Audio Recibido
-  async function playBuffer(arrayBuffer) {
-    initAudio();
-    try {
-      const buffer = await audioCtx.decodeAudioData(arrayBuffer);
-      const source = audioCtx.createBufferSource();
-      source.buffer = buffer;
-      source.connect(audioCtx.destination);
-      source.start();
-      rxLed.classList.add('green');
-      source.onended = () => rxLed.classList.remove('green');
-    } catch (e) { console.error("Error de audio:", e); }
-  }
+    setupWalkie() {
+        // Crear botones de frecuencia
+        const grid = document.getElementById('freqGrid');
+        for(let i=1; i<=5; i++) {
+            const btn = document.createElement('button');
+            btn.className = `freq-btn ${i === this.currentFreq ? 'active' : ''}`;
+            btn.innerText = `${i} MHz`;
+            btn.onclick = () => this.changeFreq(i);
+            btn.id = `fbtn-${i}`;
+            grid.appendChild(btn);
+        }
+        this.changeFreq(this.currentFreq);
+        this.bindPTT();
+    },
 
-  // Sintonizar Canal (BroadcastChannel funciona Offline entre pestañas)
-  function setChannel(freq) {
-    if (channel) channel.close();
-    currentFreq = freq;
-    document.getElementById('freqLabel').innerText = freq;
-    channel = new BroadcastChannel(`freq_ch_${freq}`);
-    
-    channel.onmessage = (e) => {
-      if (e.data.sender !== senderId) {
-        playBuffer(e.data.audio);
-      }
-    };
+    changeFreq(f) {
+        if (this.channel) this.channel.close();
+        this.currentFreq = f;
+        document.getElementById('freqLabel').innerText = f;
+        document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`fbtn-${f}`).classList.add('active');
 
-    // Actualizar UI botones
-    document.querySelectorAll('.freq-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.freq == freq);
-    });
-  }
+        this.channel = new BroadcastChannel(`clover_freq_${f}`);
+        this.channel.onmessage = (e) => this.handleIncomingAudio(e.data);
+    },
 
-  // Transmisión (TX)
-  async function startTX() {
-    initAudio();
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      let chunks = [];
-      
-      mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-      
-      mediaRecorder.onstop = async () => {
-        const blob = new Blob(chunks, { type: 'audio/webm' });
-        const buffer = await blob.arrayBuffer();
-        channel.postMessage({ sender: senderId, audio: buffer });
-        stream.getTracks().forEach(t => t.stop());
-      };
+    async handleIncomingAudio(data) {
+        if (data.sender === this.senderId) return;
+        this.initAudio();
+        
+        try {
+            document.getElementById('ledRX').classList.add('rx-active');
+            const buffer = await this.audioCtx.decodeAudioData(data.audio);
+            const source = this.audioCtx.createBufferSource();
+            source.buffer = buffer;
+            source.connect(this.audioCtx.destination);
+            source.start();
+            source.onended = () => document.getElementById('ledRX').classList.remove('rx-active');
+        } catch (err) {
+            console.error("Error al decodificar audio entrante");
+        }
+    },
 
-      mediaRecorder.start();
-      txLed.classList.add('red');
-    } catch (err) { alert("Acceso al micro denegado"); }
-  }
+    bindPTT() {
+        const ptt = document.getElementById('pttBtn');
+        const start = async (e) => {
+            e.preventDefault();
+            this.initAudio();
+            this.startRecording();
+        };
+        const stop = (e) => {
+            e.preventDefault();
+            this.stopRecording();
+        };
 
-  function stopTX() {
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-      mediaRecorder.stop();
-      txLed.classList.remove('red');
+        ptt.addEventListener('mousedown', start);
+        ptt.addEventListener('touchstart', start);
+        ptt.addEventListener('mouseup', stop);
+        ptt.addEventListener('touchend', stop);
+        ptt.addEventListener('mouseleave', stop);
+    },
+
+    async startRecording() {
+        try {
+            this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            this.mediaRecorder = new MediaRecorder(this.stream);
+            let chunks = [];
+
+            this.mediaRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) chunks.push(e.data);
+            };
+
+            this.mediaRecorder.onstop = async () => {
+                const blob = new Blob(chunks, { type: 'audio/webm' });
+                const arrayBuffer = await blob.arrayBuffer();
+                this.channel.postMessage({
+                    sender: this.senderId,
+                    audio: arrayBuffer
+                });
+            };
+
+            this.mediaRecorder.start();
+            document.getElementById('ledTX').classList.add('tx-active');
+        } catch (err) {
+            alert("Debes permitir el acceso al micrófono para hablar.");
+        }
+    },
+
+    stopRecording() {
+        if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+            this.mediaRecorder.stop();
+            this.stream.getTracks().forEach(track => track.stop());
+            document.getElementById('ledTX').classList.remove('tx-active');
+        }
     }
-  }
-
-  // Eventos PTT (Mouse y Touch)
-  const events = {
-    start: ['mousedown', 'touchstart'],
-    stop: ['mouseup', 'mouseleave', 'touchend']
-  };
-
-  events.start.forEach(ev => pttBtn.addEventListener(ev, (e) => { e.preventDefault(); startTX(); }));
-  events.stop.forEach(ev => pttBtn.addEventListener(ev, (e) => { e.preventDefault(); stopTX(); }));
-
-  // Gestión de Login
-  document.getElementById('loginBtn').onclick = () => {
-    const code = document.getElementById('userCode').value.toLowerCase().trim();
-    if (userFreqMap[code]) {
-      currentUser = code;
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('walkieScreen').style.display = 'block';
-      document.getElementById('userNameDisplay').innerText = `Op: ${code}`;
-      
-      // Crear botones de frecuencia
-      const container = document.getElementById('freqContainer');
-      container.innerHTML = '';
-      for(let i=1; i<=5; i++) {
-        const b = document.createElement('button');
-        b.className = 'freq-btn';
-        b.innerText = `${i} MHz`;
-        b.dataset.freq = i;
-        b.onclick = () => setChannel(i);
-        container.appendChild(b);
-      }
-      setChannel(userFreqMap[code]);
-    } else {
-      alert("Código inválido");
-    }
-  };
-
-  document.getElementById('logoutBtn').onclick = () => location.reload();
-  document.getElementById('darkModeBtn').onclick = () => document.body.classList.toggle('dark');
+};
 </script>
 </body>
 </html>
