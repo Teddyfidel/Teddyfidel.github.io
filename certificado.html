@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Sistema de Liberación de Artículos | Seguridad Activa</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    /* Prevención de selección de texto y arrastre */
+    * { 
+      margin: 0; padding: 0; box-sizing: border-box; 
+      -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+      -webkit-user-drag: none;
+    }
+    
+    /* Permitir selección y escritura SOLO en los inputs */
+    input { 
+      -webkit-user-select: text !important; 
+      -moz-user-select: text !important; 
+      -ms-user-select: text !important; 
+      user-select: text !important; 
+    }
+
+    body { background: linear-gradient(145deg, #eef2f7 0%, #e0e6ef 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 2rem 1.5rem; min-height: 100vh; }
+    .main-container { max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
+    .form-card { flex: 1.1; min-width: 280px; background: white; border-radius: 2rem; box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2); padding: 1.8rem 2rem; border: 1px solid rgba(255,255,255,0.5); }
+    .document-card { flex: 1.9; min-width: 480px; background: #fefefe; border-radius: 2rem; box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.25); padding: 1.8rem 2rem; border: 1px solid rgba(255,255,255,0.7); position: relative; }
+    
+    h1 { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, #1e3c72, #2a5298); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 0.5rem; }
+    .sub { color: #2c3e66; border-left: 4px solid #2a5298; padding-left: 1rem; font-weight: 500; margin-bottom: 1.8rem; font-size: 0.9rem; }
+    
+    .input-group { margin-bottom: 1.5rem; }
+    label { display: block; font-weight: 600; color: #1a2c48; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    input { width: 100%; padding: 0.9rem 1rem; border-radius: 1.2rem; border: 1.5px solid #cfdee9; background: #ffffff; font-size: 1rem; outline: none; transition: all 0.3s; }
+    input:focus { border-color: #1e3c72; box-shadow: 0 0 0 4px rgba(30, 60, 114, 0.1); }
+    
+    .btn-generate { background: linear-gradient(95deg, #1e3c72, #2a5298); border: none; width: 100%; padding: 0.9rem; font-weight: bold; color: white; border-radius: 2rem; cursor: pointer; margin-top: 0.5rem; transition: transform 0.2s; }
+    .btn-generate:active { transform: scale(0.98); }
+    .pdf-btn { background: linear-gradient(135deg, #2b5e2f, #1e4a2a); border: none; width: 100%; padding: 0.9rem; font-weight: bold; color: white; border-radius: 2rem; cursor: pointer; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    
+    .document-preview { background: white; padding: 2rem; border-radius: 0.5rem; font-family: 'Georgia', serif; }
+    .document-header { text-align: center; margin-bottom: 1.5rem; border-bottom: 2px solid #cfdde6; padding-bottom: 0.8rem; }
+    .document-header h2 { font-size: 1.6rem; color: #1e3c72; text-transform: uppercase; }
+    .doc-content { line-height: 1.6; color: #1a2c3f; text-align: justify; font-size: 1.05rem; }
+    .signature-area { margin-top: 2.5rem; border-top: 1px solid #eee; padding-top: 1.5rem; text-align: center; }
+    .firma-nombre { font-weight: 800; font-size: 1.1rem; color: #1e4663; }
+    .error-msg { background: #ffe9e9; border-left: 5px solid #c7362b; padding: 0.6rem; border-radius: 1rem; margin-top: 0.8rem; font-size: 0.8rem; color: #b13e33; display: none; }
+
+    /* Bloqueo para cuando se intenta imprimir desde el navegador */
+    @media print { 
+      body { display: none !important; } 
+    }
+  </style>
+</head>
+<body oncontextmenu="return false">
+
+<div class="main-container">
+  <div class="form-card">
+    <h1>📄 Liberación de artículo</h1>
+    <div class="sub">Gestión Profesional de Proyectos</div>
+
+    <div class="input-group">
+      <label>📇 Nombres y Apellidos del Beneficiario</label>
+      <input type="text" id="nombresApellidos" placeholder="Escriba aquí..." autocomplete="off">
+    </div>
+
+    <div class="input-group">
+      <label>🆔 Cédula de Identidad (CI)</label>
+      <input type="text" id="cedulaIdentidad" placeholder="Escriba aquí..." autocomplete="off">
+    </div>
+
+    <button class="btn-generate" id="generarBtn">✍️ Actualizar Documento</button>
+    <button class="pdf-btn" id="generarPdfBtn">💾 Descargar PDF Seguro</button>
+    <div id="errorMessage" class="error-msg"></div>
+  </div>
+
+  <div class="document-card">
+    <div class="document-preview" id="documentoPreview">
+      <div class="document-header">
+        <h2>Carta de Liberación Total</h2>
+        <p style="font-size: 0.85rem; color: #666;">Propiedad Intelectual y Cesión de Derechos</p>
+      </div>
+      <div class="doc-content">
+        <p><strong>Fecha de emisión:</strong> <span id="fechaActual"></span></p><br>
+        
+        <p>Por la presente, se hace constar que el/la señor(a) <strong><span id="docNombreDestino">____________________</span></strong>, identificado(a) con la cédula de identidad N° <strong><span id="docCedulaDestino">__________</span></strong>, ha cumplido satisfactoriamente con todos los compromisos adquiridos.</p>
+        
+        <br>
+        <p><strong>Yo, Ing. Teddy Valencia, Mgtr.</strong>, certifico que ante el pago total de los honorarios profesionales por el desarrollo del artículo científico titulado:</p>
+        
+        <p style="text-align: center; font-weight: bold; margin: 20px 0; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;">
+          "IMPACTO DE LOS SIMULADORES VIRTUALES EN EL PROCESO ENSEÑANZA APRENDIZAJE DE LA FÍSICA"
+        </p>
+        
+        <p>Declaro el documento <strong>LIBERADO DE TODA OBLIGACIÓN</strong>. El beneficiario posee desde este momento la libertad absoluta para su uso académico, publicación en revistas indexadas o trámites de titulación, sin reserva alguna de mi parte.</p>
+        
+        <div class="signature-area">
+          <p>Documento firmado electrónicamente</p>
+          <div style="margin-top: 10px;">
+            <div class="firma-nombre">Ing. Teddy Valencia, Mgtr.</div>
+            <div style="font-size: 0.8rem; color: #555;">RESPONSABLE DEL PROYECTO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // --- SEGURIDAD AVANZADA (PERMISIVA EN INPUTS) ---
+    
+    // 1. Bloquear menú contextual (clic derecho)
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // 2. Bloqueo selectivo de teclado
+    document.addEventListener('keydown', function(e) {
+      // Permitir teclas normales si el usuario está en un input (escribiendo datos)
+      const isInput = e.target.tagName.toLowerCase() === 'input';
+      
+      // Bloquear teclas de función y atajos de sistema en todo el sitio
+      const forbiddenKeys = [
+        e.keyCode === 123, // F12 (Inspeccionar)
+        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)), // Ctrl+Shift+I/J/C
+        (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 80)), // Ctrl+U, S, P
+        (e.metaKey && e.altKey && e.keyCode === 73) // Cmd+Opt+I (Mac)
+      ];
+
+      if (forbiddenKeys.some(key => key)) {
+        e.preventDefault();
+        return false;
+      }
+
+      // Si NO está en un input, bloquear todas las teclas excepto las de navegación básica
+      if (!isInput) {
+        const allowGeneral = [37, 38, 39, 40, 9, 13].includes(e.keyCode); // Flechas, Tab, Enter
+        if (!allowGeneral) {
+          e.preventDefault();
+        }
+      }
+    });
+
+    // 3. Limpiar portapapeles en intento de captura (PrintScreen)
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'PrintScreen') {
+        navigator.clipboard.writeText('Contenido Protegido');
+        alert('Las capturas de pantalla están restringidas para este documento.');
+      }
+    });
+
+    // --- LÓGICA DE NEGOCIO ---
+    const nombresInput = document.getElementById('nombresApellidos');
+    const cedulaInput = document.getElementById('cedulaIdentidad');
+    const generarBtn = document.getElementById('generarBtn');
+    const generarPdfBtn = document.getElementById('generarPdfBtn');
+    const errorDiv = document.getElementById('errorMessage');
+    
+    const docNombreDestino = document.getElementById('docNombreDestino');
+    const docCedulaDestino = document.getElementById('docCedulaDestino');
+    const fechaSpan = document.getElementById('fechaActual');
+
+    function actualizarVista() {
+      errorDiv.style.display = 'none';
+      if (nombresInput.value.trim() === "" || cedulaInput.value.trim() === "") {
+        errorDiv.innerText = "❌ Ingrese los datos para poder actualizar.";
+        errorDiv.style.display = 'block';
+        return false;
+      }
+      docNombreDestino.innerText = nombresInput.value.toUpperCase();
+      docCedulaDestino.innerText = cedulaInput.value;
+      return true;
+    }
+
+    generarBtn.addEventListener('click', actualizarVista);
+
+    generarPdfBtn.addEventListener('click', async () => {
+      if (!actualizarVista()) return;
+      
+      const element = document.getElementById('documentoPreview');
+      const opt = {
+        margin: 0.5,
+        filename: `LIBERACION_${cedulaInput.value}.pdf`,
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 3, useCORS: true },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      
+      generarPdfBtn.innerText = '🛡️ Protegiendo...';
+      try {
+        await html2pdf().set(opt).from(element).save();
+      } finally {
+        generarPdfBtn.innerText = '💾 Descargar PDF Seguro';
+      }
+    });
+
+    // Fecha automática
+    const fecha = new Date();
+    fechaSpan.innerText = fecha.toLocaleDateString('es-ES', { 
+      day: '2-digit', month: 'long', year: 'numeric' 
+    });
+
+  })();
+</script>
+</body>
+</html>
