@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>CETA PreU | Academia Futurista</title>
+    <title>CETA PreU | Academia Futurista - Ecuador Élite</title>
     <!-- Google Fonts: Orbitron + Outfit -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
@@ -94,6 +94,11 @@
             scroll-behavior: smooth;
         }
 
+        /* scroll-margin para evitar que el header tape secciones */
+        .futur-section {
+            scroll-margin-top: 85px;
+        }
+
         .container {
             max-width: 1350px;
             margin: 0 auto;
@@ -119,6 +124,7 @@
             padding: 16px 0;
             flex-wrap: wrap;
             gap: 15px;
+            position: relative;
         }
         .logo h1 {
             font-family: 'Orbitron', monospace;
@@ -142,6 +148,7 @@
             list-style: none;
             flex-wrap: wrap;
             justify-content: center;
+            transition: all 0.2s;
         }
         .nav-links a {
             text-decoration: none;
@@ -155,6 +162,27 @@
             color: var(--neon-cyan);
             text-shadow: 0 0 6px var(--neon-cyan);
         }
+        /* Hamburguesa */
+        .hamburger {
+            display: none;
+            background: rgba(0, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.6rem;
+            color: var(--neon-cyan);
+            transition: 0.2s;
+        }
+        .hamburger:hover {
+            background: rgba(0, 224, 255, 0.2);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
         .dark-toggle {
             background: rgba(0, 255, 255, 0.1);
             backdrop-filter: blur(4px);
@@ -167,6 +195,7 @@
             font-weight: 500;
             font-family: monospace;
             font-size: 0.8rem;
+            transition: 0.2s;
         }
 
         /* BOTONES NEÓN */
@@ -185,6 +214,7 @@
             box-shadow: var(--shadow-neon);
             cursor: pointer;
             font-size: 0.9rem;
+            text-decoration: none;
         }
         .btn-neon:hover {
             transform: translateY(-3px);
@@ -394,7 +424,7 @@
             margin: 15px 0;
         }
 
-        /* TESTIMONIOS CARRUSEL STELLAR - RESPONSIVE */
+        /* TESTIMONIOS STELLAR - ECUADOR */
         .testi-stellar {
             background: var(--bg-card);
             backdrop-filter: blur(12px);
@@ -425,10 +455,12 @@
             border-radius: 50%;
             margin: 0 auto 15px;
             border: 2px solid var(--neon-cyan);
+            object-fit: cover;
         }
         .testi-card p {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin: 15px 0;
+            line-height: 1.4;
         }
         .testi-btn {
             position: absolute;
@@ -442,6 +474,12 @@
             color: white;
             cursor: pointer;
             font-size: 1rem;
+            transition: 0.2s;
+            z-index: 10;
+        }
+        .testi-btn:hover {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 12px var(--neon-cyan);
         }
         .testi-prev { left: 0; }
         .testi-next { right: 0; }
@@ -496,6 +534,7 @@
             box-shadow: 0 0 20px #25D366;
             transition: 0.2s;
             z-index: 99;
+            text-decoration: none;
         }
         @media (max-width: 480px) {
             .container { padding: 0 16px; }
@@ -506,6 +545,50 @@
             .dot-cyber.active { width: 18px; }
             .slide-caption h3 { font-size: 1rem; }
             .slide-caption p { font-size: 0.7rem; }
+        }
+
+        /* MENU HAMBURGUESA RESPONSIVE */
+        @media (max-width: 850px) {
+            .hamburger {
+                display: flex;
+            }
+            .navbar .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-card);
+                backdrop-filter: blur(24px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1.8rem;
+                padding: 2rem 1rem;
+                border-top: 1px solid var(--glass-border);
+                border-bottom: 1px solid var(--glass-border);
+                border-radius: 0 0 28px 28px;
+                box-shadow: 0 30px 40px rgba(0,0,0,0.5);
+                z-index: 1050;
+                transition: all 0.2s ease;
+            }
+            .navbar .nav-links.show-nav {
+                display: flex;
+            }
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 6px 0;
+                width: 100%;
+                text-align: center;
+            }
+            .dark-toggle {
+                margin-left: auto;
+            }
+        }
+        @media (min-width: 851px) {
+            .nav-links {
+                display: flex !important;
+            }
         }
     </style>
 </head>
@@ -522,17 +605,19 @@
     <div class="container">
         <div class="navbar">
             <div class="logo">
-                <h1>CETA PREU</h1>
-                <p>// NEURAL ACADEMY //</p>
+                <h1>CETA PREUNIVERSITARIO</h1>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#">INICIO</a></li>
                 <li><a href="#modulos">MÓDULOS</a></li>
                 <li><a href="#director">DIRECTOR</a></li>
-                <li><a href="#simuladores">SIMULADOR</a></li>
-                <li><a href="#testimonios">+TEST</a></li>
+                <li><a href="#simuladores">SIMULADORES</a></li>
+                <li><a href="#testimonios">TESTIMONIOS</a></li>
                 <li><a href="#contacto">CONTACTO</a></li>
             </ul>
+            <div class="hamburger" id="hamburgerBtn">
+                <i class="fas fa-bars"></i>
+            </div>
             <div class="dark-toggle" id="darkToggleBtn">
                 <i class="fas fa-sun"></i> / <i class="fas fa-moon"></i> <span>MODO</span>
             </div>
@@ -540,27 +625,15 @@
     </div>
 </header>
 
-<!-- CARRUSEL PRINCIPAL (imágenes reales y completamente responsive) -->
+<!-- CARRUSEL PRINCIPAL -->
 <section style="padding: 30px 0 20px; border: none;">
     <div class="container">
         <div class="carousel-hologram" id="carouselMain">
             <div class="carousel-track" id="carouselTrack">
-                <div class="slide">
-                    <img src="ceta-1.jpeg" alt="Futuro académico">
-                    <div class="slide-caption"><h3>🌀 NEURON EXCELENCIA</h3><p>Metodología inmersiva + IA predictiva.</p></div>
-                   </div>
-                <div class="slide">
-                    <img src="ceta-2.jpeg" alt="Matemáticas">
-                    <div class="slide-caption"><h3>📐 MATRIX MATEMÁTICA</h3><p>Álgebra, cálculo y geometría cuántica.</p></div>
-                </div>
-                <div class="slide">
-                    <img src="ceta-3.jpeg" alt="Química">
-                    <div class="slide-caption"><h3>⚗️ LABORATORIO SINTÉTICO</h3><p>Química orgánica y simulaciones moleculares.</p></div>
-                </div>
-                <div class="slide">
-                    <img src="ceta-4.jpeg" alt="Lenguaje">
-                    <div class="slide-caption"><h3>📖 LENGUAJE COGNITIVO</h3><p>Lectura crítica & redacción algorítmica.</p></div>
-                </div>
+                <div class="slide"><img src="ceta-1.jpeg" alt="Futuro académico"><div class="slide-caption"><h3>🌀 NEURON EXCELENCIA</h3><p>Metodología inmersiva + IA predictiva.</p></div></div>
+                <div class="slide"><img src="ceta-2.jpeg" alt="Matemáticas"><div class="slide-caption"><h3>📐 MATRIX MATEMÁTICA</h3><p>Álgebra, cálculo y geometría cuántica.</p></div></div>
+                <div class="slide"><img src="ceta-3.jpeg" alt="Química"><div class="slide-caption"><h3>⚗️ LABORATORIO SINTÉTICO</h3><p>Química orgánica y simulaciones moleculares.</p></div></div>
+                <div class="slide"><img src="ceta-4.jpeg" alt="Lenguaje"><div class="slide-caption"><h3>📖 LENGUAJE COGNITIVO</h3><p>Lectura crítica & redacción algorítmica.</p></div></div>
             </div>
             <button class="carousel-btn prev-car" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
             <button class="carousel-btn next-car" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
@@ -585,15 +658,13 @@
 <!-- DIRECTOR ACADÉMICO -->
 <section id="director" class="futur-section">
     <div class="container">
-        <h2 class="section-title">Dirección <span>Cognitiva</span></h2>
+        <h2 class="section-title">Director <span>Académico</span></h2>
         <div class="director-future">
-            <div class="director-img">
-                <img src="https://randomuser.me/api/portraits/men/95.jpg" alt="Dr. Ethan Vance">
-            </div>
+            <div class="director-img"><img src="https://teddyfidel.github.io/docente.jpeg" alt="Dr. Ethan Vance"></div>
             <div class="director-text">
-                <h3>Dr. Ethan Vance</h3>
-                <p style="color: var(--neon-cyan); font-weight: 600;">PhD en Neuroaprendizaje - MIT Media Lab</p>
-                <p>Pionero en sistemas de inteligencia aumentada para educación preuniversitaria. Ha diseñado la plataforma CETA Neural, con una tasa de ingreso del 96% en universidades top. Su visión: transformar el talento académico con tecnología inmersiva.</p>
+                <h3>Ing. Teddy Valencia, Mg. </h3>
+                <p style="color: var(--neon-cyan); font-weight: 600;">Magíster en Educación con mención en Innovaciones Pedagógicas | ULEAM ECUADOR</p>
+                <p>Ingeniero en TI & Mg. en Innovaciones Pedagógicas. Experto en Arquitectura de Software e IA aplicada. Dedicado al desarrollo tecnológico y la formación de talentos digitales en entornos de alto rendimiento.</p>
             </div>
         </div>
     </div>
@@ -611,15 +682,39 @@
     </div>
 </section>
 
-<!-- TESTIMONIOS -->
+<!-- TESTIMONIOS ECUADOR - NATURALES Y AUTOMÁTICOS -->
 <section id="testimonios" class="futur-section">
     <div class="container">
         <h2 class="section-title">Feedback <span>Estelar</span> ⭐</h2>
-        <div class="testi-stellar" style="position: relative;">
+        <div class="testi-stellar" id="testiContainer">
             <div class="testi-track" id="testiTrack">
-                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/68.jpg"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"Gracias a CETA ingresé a Ingeniería de Software. Los simuladores son una herramienta brutal."</p><h4>Valeria Kim</h4><span>Ingeniería UNI</span></div></div>
-                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/men/45.jpg"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"El módulo de abstracto es espectacular. Aprendí a resolver matrices en segundos."</p><h4>Diego Alva</h4><span>Medicina USMP</span></div></div>
-                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/90.jpg"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"La preparación en lenguaje fue clave para mi ingreso a Derecho PUCP. 100% recomendado."</p><h4>Camila Ríos</h4><span>Derecho PUCP</span></div></div>
+                <div class="testi-slide">
+                    <div class="testi-card">
+                        <img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Andrea Morales">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p>"Gracias al sistema CETA logré ingresar a Ingeniería en Sistemas en la <strong>Escuela Politécnica Nacional (EPN)</strong>. Los simuladores predictivos y los módulos de matemática me dieron ventaja competitiva. 100% recomendado."</p>
+                        <h4>Andrea Morales</h4>
+                        <span>EPN - Ingeniería en Sistemas</span>
+                    </div>
+                </div>
+                <div class="testi-slide">
+                    <div class="testi-card">
+                        <img class="testimonial-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="José Espinoza">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p>"Cuando empecé en CETA mis habilidades en Química y Razonamiento eran bajas, pero con la metodología inmersiva y el feedback en tiempo real ingresé a <strong>Medicina en la Universidad Central del Ecuador (UCE)</strong>. Un antes y después."</p>
+                        <h4>José Espinoza</h4>
+                        <span>UCE - Medicina</span>
+                    </div>
+                </div>
+                <div class="testi-slide">
+                    <div class="testi-card">
+                        <img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/90.jpg" alt="Valeria Salazar">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p>"El enfoque cognitivo de CETA me permitió entender la lógica abstracta como nunca. Logré mi cupo en <strong>Arquitectura en la USFQ</strong> y muchos de mis compañeros también estudiaron aquí. ¡La mejor decisión!"</p>
+                        <h4>Valeria Salazar</h4>
+                        <span>USFQ - Arquitectura</span>
+                    </div>
+                </div>
             </div>
             <button class="testi-btn testi-prev" id="testPrev"><i class="fas fa-chevron-left"></i></button>
             <button class="testi-btn testi-next" id="testNext"><i class="fas fa-chevron-right"></i></button>
@@ -633,37 +728,14 @@
     <div class="container">
         <h2 class="section-title">Contacto <span>Matrix</span></h2>
         <div class="contact-dual">
-            <div class="contact-panel">
-                <i class="fas fa-map-marker-alt fa-2x" style="color: var(--neon-cyan);"></i>
-                <h3>Núcleo Central</h3>
-                <p>Av. Paseo de la República 3650, San Isidro, Lima</p>
-                <p><i class="fas fa-phone-alt"></i> +51 999 882 344</p>
-                <p><i class="fas fa-envelope"></i> synapse@cetapreuni.edu.pe</p>
-            </div>
-            <div class="contact-panel">
-                <i class="far fa-clock fa-2x" style="color: var(--neon-cyan);"></i>
-                <h3>Horario Hiperactivo</h3>
-                <ul style="list-style: none;">
-                    <li>Lun - Vie: 07:30 → 21:30</li>
-                    <li>Sábados: 08:30 → 14:30</li>
-                    <li>Dom: Consultas virtuales</li>
-                    <li>WhatsApp 24/7: +51 999 882 344</li>
-                </ul>
-            </div>
+            <div class="contact-panel"><i class="fas fa-map-marker-alt fa-2x" style="color: var(--neon-cyan);"></i><h3>Núcleo Central</h3><p>Ecuador, Ecuador</p><p><i class="fas fa-phone-alt"></i> +593 123 456 789</p><p><i class="fas fa-envelope"></i> synapse@cetapreuni.edu.pe</p></div>
+            <div class="contact-panel"><i class="far fa-clock fa-2x" style="color: var(--neon-cyan);"></i><h3>Horario Hiperactivo</h3><ul style="list-style: none;"><li>Lun - Vie: 07:30 → 21:30</li><li>Sábados: 08:30 → 14:30</li><li>Dom: Consultas virtuales</li><li>WhatsApp 24/7: +593 123 456 789</li></ul></div>
         </div>
     </div>
 </section>
 
-<footer>
-    <div class="container">
-        <p>© 2026 CETA PreUniversitario — Sistema de Entrenamiento Cognitivo de Próxima Generación.</p>
-        <p style="margin-top: 8px;">🔮 IA + Neuroaprendizaje | Resultados cuánticos</p>
-    </div>
-</footer>
-
-<a href="https://wa.me/51999882344?text=Hola%20CETA%20PreU%20quiero%20información%20futurista" class="whatsapp-hover" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-</a>
+<footer><div class="container"><p>© 2026 CETA PreUniversitario — Sistema de Entrenamiento Cognitivo de Próxima Generación.</p><p style="margin-top: 8px;">🔮 IA + Neuroaprendizaje | Resultados cuánticos</p></div></footer>
+<a href="https://wa.me/" class="whatsapp-hover" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
     // PRELOADER
@@ -673,6 +745,18 @@
         setTimeout(() => { preloader.style.display = 'none'; }, 900);
     });
 
+    // MENU HAMBURGUESA
+    const hamburger = document.getElementById('hamburgerBtn');
+    const navLinksMenu = document.getElementById('navLinks');
+    const links = document.querySelectorAll('.nav-links a');
+    const navbar = document.querySelector('.navbar');
+    function closeMobileMenu() { if (navLinksMenu.classList.contains('show-nav')) { navLinksMenu.classList.remove('show-nav'); if (hamburger) hamburger.innerHTML = '<i class="fas fa-bars"></i>'; } }
+    function toggleMobileMenu() { navLinksMenu.classList.toggle('show-nav'); const isOpen = navLinksMenu.classList.contains('show-nav'); hamburger.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; }
+    if (hamburger && navLinksMenu) { hamburger.addEventListener('click', (e) => { e.stopPropagation(); toggleMobileMenu(); }); }
+    links.forEach(link => { link.addEventListener('click', () => { closeMobileMenu(); }); });
+    document.addEventListener('click', (e) => { if (navLinksMenu && navLinksMenu.classList.contains('show-nav') && !navbar.contains(e.target)) closeMobileMenu(); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 850 && navLinksMenu.classList.contains('show-nav')) closeMobileMenu(); });
+
     // CARRUSEL PRINCIPAL
     const track = document.getElementById('carouselTrack');
     const slides = Array.from(track.children);
@@ -680,30 +764,9 @@
     const next = document.getElementById('nextBtn');
     const dotsCont = document.getElementById('dotsContainer');
     let current = 0, autoInt;
-    function buildDots() {
-        dotsCont.innerHTML = '';
-        slides.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot-cyber');
-            if (i === current) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(i));
-            dotsCont.appendChild(dot);
-        });
-    }
-    function updateDots() {
-        Array.from(dotsCont.children).forEach((dot, i) => {
-            if (i === current) dot.classList.add('active');
-            else dot.classList.remove('active');
-        });
-    }
-    function goToSlide(index) {
-        if (index < 0) index = slides.length - 1;
-        if (index >= slides.length) index = 0;
-        current = index;
-        const w = slides[0].getBoundingClientRect().width;
-        track.style.transform = `translateX(-${current * w}px)`;
-        updateDots();
-    }
+    function buildDots() { dotsCont.innerHTML = ''; slides.forEach((_, i) => { const dot = document.createElement('div'); dot.classList.add('dot-cyber'); if (i === current) dot.classList.add('active'); dot.addEventListener('click', () => goToSlide(i)); dotsCont.appendChild(dot); }); }
+    function updateDots() { Array.from(dotsCont.children).forEach((dot, i) => { if (i === current) dot.classList.add('active'); else dot.classList.remove('active'); }); }
+    function goToSlide(index) { if (index < 0) index = slides.length - 1; if (index >= slides.length) index = 0; current = index; const w = slides[0].getBoundingClientRect().width; track.style.transform = `translateX(-${current * w}px)`; updateDots(); }
     function nextSlide() { goToSlide(current + 1); }
     function prevSlide() { goToSlide(current - 1); }
     function startAuto() { if (autoInt) clearInterval(autoInt); autoInt = setInterval(nextSlide, 5500); }
@@ -716,13 +779,15 @@
     caro.addEventListener('mouseenter', () => clearInterval(autoInt));
     caro.addEventListener('mouseleave', startAuto);
 
-    // CARRUSEL TESTIMONIOS
+    // CARRUSEL TESTIMONIOS - TOTALMENTE AUTOMÁTICO + ECUADOR
     const testiTrack = document.getElementById('testiTrack');
     const testiSlides = Array.from(testiTrack.children);
     const testPrev = document.getElementById('testPrev');
     const testNext = document.getElementById('testNext');
     const testiDots = document.getElementById('testiDots');
     let testIdx = 0;
+    let testAutoInterval;
+
     function renderTestDots() {
         testiDots.innerHTML = '';
         testiSlides.forEach((_, i) => {
@@ -734,16 +799,17 @@
             dot.style.margin = '0 6px';
             dot.style.cursor = 'pointer';
             dot.style.opacity = '0.5';
-            if (i === testIdx) { dot.style.opacity = '1'; dot.style.background = 'var(--neon-cyan)'; }
-            dot.addEventListener('click', () => goToTestSlide(i));
+            dot.style.transition = '0.2s';
+            if (i === testIdx) { dot.style.opacity = '1'; dot.style.background = 'var(--neon-cyan)'; dot.style.boxShadow = '0 0 6px var(--neon-cyan)'; }
+            dot.addEventListener('click', () => { goToTestSlide(i); resetTestAuto(); });
             testiDots.appendChild(dot);
         });
     }
     function updateTestDots() {
         const dots = Array.from(testiDots.children);
         dots.forEach((dot, i) => {
-            if (i === testIdx) { dot.style.opacity = '1'; dot.style.background = 'var(--neon-cyan)'; }
-            else { dot.style.opacity = '0.5'; dot.style.background = 'var(--text-secondary)'; }
+            if (i === testIdx) { dot.style.opacity = '1'; dot.style.background = 'var(--neon-cyan)'; dot.style.boxShadow = '0 0 6px var(--neon-cyan)'; }
+            else { dot.style.opacity = '0.5'; dot.style.background = 'var(--text-secondary)'; dot.style.boxShadow = 'none'; }
         });
     }
     function goToTestSlide(index) {
@@ -754,40 +820,34 @@
         testiTrack.style.transform = `translateX(-${testIdx * w}px)`;
         updateTestDots();
     }
-    testPrev.addEventListener('click', () => goToTestSlide(testIdx - 1));
-    testNext.addEventListener('click', () => goToTestSlide(testIdx + 1));
-    window.addEventListener('resize', () => goToTestSlide(testIdx));
-    renderTestDots(); goToTestSlide(0);
+    function nextTestSlide() { goToTestSlide(testIdx + 1); }
+    function prevTestSlide() { goToTestSlide(testIdx - 1); }
+    function startTestAuto() { if (testAutoInterval) clearInterval(testAutoInterval); testAutoInterval = setInterval(nextTestSlide, 6000); }
+    function resetTestAuto() { clearInterval(testAutoInterval); startTestAuto(); }
+    testPrev.addEventListener('click', () => { prevTestSlide(); resetTestAuto(); });
+    testNext.addEventListener('click', () => { nextTestSlide(); resetTestAuto(); });
+    window.addEventListener('resize', () => { goToTestSlide(testIdx); });
+    renderTestDots(); goToTestSlide(0); startTestAuto();
+
+    // Pausar autoplay al hacer hover en el contenedor de testimonios
+    const testiContainer = document.getElementById('testiContainer');
+    if (testiContainer) {
+        testiContainer.addEventListener('mouseenter', () => { if (testAutoInterval) clearInterval(testAutoInterval); });
+        testiContainer.addEventListener('mouseleave', () => { startTestAuto(); });
+    }
 
     // INTERSECCIÓN PARA ANIMACIONES
     const sections = document.querySelectorAll('.futur-section');
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                obs.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+    const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
     sections.forEach(sec => obs.observe(sec));
 
     // MODO OSCURO / CLARO
     const toggle = document.getElementById('darkToggleBtn');
     const stored = localStorage.getItem('ceta_theme_final2');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    function setTheme(isDark) {
-        if (isDark) document.body.classList.remove('light');
-        else document.body.classList.add('light');
-        localStorage.setItem('ceta_theme_final2', isDark ? 'dark' : 'light');
-    }
-    if (stored === 'light') setTheme(false);
-    else if (stored === 'dark') setTheme(true);
-    else if (prefersDark) setTheme(true);
-    else setTheme(false);
-    toggle.addEventListener('click', () => {
-        const isLight = document.body.classList.contains('light');
-        setTheme(isLight);
-    });
+    function setTheme(isDark) { if (isDark) document.body.classList.remove('light'); else document.body.classList.add('light'); localStorage.setItem('ceta_theme_final2', isDark ? 'dark' : 'light'); }
+    if (stored === 'light') setTheme(false); else if (stored === 'dark') setTheme(true); else if (prefersDark) setTheme(true); else setTheme(false);
+    toggle.addEventListener('click', () => { const isLight = document.body.classList.contains('light'); setTheme(isLight); });
 </script>
 </body>
 </html>
