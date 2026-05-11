@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>CETA PreU | Academia Futurista - Ecuador Élite</title>
-    <!-- Google Fonts: Orbitron + Outfit -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -15,14 +15,29 @@
             box-sizing: border-box;
         }
 
-        /* PRELOADER CYBER */
+        /* BASE + ZOOM ROBUSTO */
+        html {
+            font-size: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            overflow-x: hidden;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.2s;
+            scroll-behavior: smooth;
+        }
+
+        /* PRELOADER - BARRA PROGRESIVA NEÓN */
         .preloader-cyber {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #050a14;
+            background: #03060cee;
+            backdrop-filter: blur(12px);
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -33,36 +48,59 @@
             opacity: 0;
             visibility: hidden;
         }
-        .loader-holo {
+        .preloader-container {
+            max-width: 500px;
+            width: 85%;
             text-align: center;
+            padding: 2rem 1.5rem;
+            background: rgba(0, 10, 20, 0.6);
+            backdrop-filter: blur(14px);
+            border-radius: 48px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 35px rgba(0, 200, 255, 0.2);
         }
-        .holo-spinner {
-            width: 80px;
-            height: 80px;
-            border: 3px solid rgba(0, 255, 255, 0.2);
-            border-top: 3px solid #0ff;
-            border-radius: 50%;
-            animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-            margin: 0 auto 20px;
-            box-shadow: 0 0 20px #0ff;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .loader-text {
+        .preloader-title {
             font-family: 'Orbitron', monospace;
-            color: #0ff;
-            letter-spacing: 4px;
-            font-weight: 600;
-            animation: flicker 2s infinite;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #00e0ff, #2a6fdb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
         }
-        @keyframes flicker {
-            0%, 100% { opacity: 0.8; text-shadow: 0 0 5px #0ff; }
-            50% { opacity: 1; text-shadow: 0 0 20px #0ff; }
+        .preloader-desc {
+            font-size: 0.85rem;
+            color: #aad0ff;
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            overflow: hidden;
+            box-shadow: inset 0 0 4px #00000055;
+            margin: 10px 0 12px;
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #00e0ff, #3a86ff);
+            border-radius: 100px;
+            box-shadow: 0 0 12px #00e0ff;
+            transition: width 0.1s linear;
+        }
+        .preloader-percent {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            color: #00e0ff;
+            text-shadow: 0 0 6px cyan;
+            letter-spacing: 2px;
         }
 
-        /* VARIABLES TEMA OSCURO/NEÓN (base oscura futurista) */
+        /* VARIABLES TEMA OSCURO/NEÓN */
         :root {
             --bg-deep: #03060c;
             --bg-card: rgba(8, 18, 28, 0.75);
@@ -86,15 +124,7 @@
             --shadow-neon: 0 0 12px rgba(10,126,158,0.3);
         }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-deep);
-            color: var(--text-primary);
-            transition: background 0.3s ease, color 0.2s;
-            scroll-behavior: smooth;
-        }
-
-        /* scroll-margin para evitar que el header tape secciones */
+        /* scroll-margin */
         .futur-section {
             scroll-margin-top: 85px;
         }
@@ -105,7 +135,7 @@
             padding: 0 24px;
         }
 
-        /* HEADER GLASS + CYBER */
+        /* HEADER GLASS */
         .cyber-header {
             backdrop-filter: blur(16px);
             background: rgba(3, 6, 12, 0.65);
@@ -130,11 +160,35 @@
             font-family: 'Orbitron', monospace;
             font-size: 1.8rem;
             font-weight: 800;
+        }
+        /* Logos dual para responsive */
+        .full-logo {
             background: linear-gradient(135deg, var(--neon-cyan), #2a9eff);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             text-shadow: var(--glow-cyan);
+            display: inline;
+        }
+        .short-logo {
+            background: linear-gradient(135deg, var(--neon-cyan), #2a9eff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: var(--glow-cyan);
+            display: none;
+        }
+        @media (max-width: 650px) {
+            .full-logo {
+                display: none;
+            }
+            .short-logo {
+                display: inline;
+                font-size: 1.8rem;
+            }
+            .logo h1 {
+                font-size: 1.5rem;
+            }
         }
         .logo p {
             font-family: 'Orbitron', monospace;
@@ -162,7 +216,6 @@
             color: var(--neon-cyan);
             text-shadow: 0 0 6px var(--neon-cyan);
         }
-        /* Hamburguesa */
         .hamburger {
             display: none;
             background: rgba(0, 255, 255, 0.1);
@@ -177,25 +230,80 @@
             font-size: 1.6rem;
             color: var(--neon-cyan);
             transition: 0.2s;
+            order: 1;
         }
-        .hamburger:hover {
-            background: rgba(0, 224, 255, 0.2);
-            box-shadow: 0 0 10px var(--neon-cyan);
-        }
-
-        .dark-toggle {
+        /* Nuevo botón modo oscuro: solo icono */
+        .dark-toggle-icon {
             background: rgba(0, 255, 255, 0.1);
             backdrop-filter: blur(4px);
             border: 1px solid var(--glass-border);
             border-radius: 60px;
-            padding: 5px 14px;
-            cursor: pointer;
+            width: 44px;
+            height: 44px;
             display: flex;
-            gap: 8px;
-            font-weight: 500;
-            font-family: monospace;
-            font-size: 0.8rem;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--neon-cyan);
             transition: 0.2s;
+            margin-left: auto;
+        }
+        .dark-toggle-icon:hover {
+            background: rgba(0, 224, 255, 0.2);
+            box-shadow: 0 0 10px var(--neon-cyan);
+            transform: scale(1.02);
+        }
+        /* En desktop el orden natural: logo, navlinks, luego hamburger (oculto), dark-icon */
+        @media (min-width: 851px) {
+            .hamburger {
+                display: none !important;
+            }
+            .dark-toggle-icon {
+                margin-left: 15px;
+            }
+        }
+        @media (max-width: 850px) {
+            .navbar {
+                justify-content: space-between;
+            }
+            .hamburger {
+                display: flex;
+                order: 2;
+                margin-left: auto;
+                margin-right: 12px;
+            }
+            .dark-toggle-icon {
+                order: 3;
+                margin-left: 0;
+            }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-card);
+                backdrop-filter: blur(24px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1.8rem;
+                padding: 2rem 1rem;
+                border-top: 1px solid var(--glass-border);
+                border-bottom: 1px solid var(--glass-border);
+                border-radius: 0 0 28px 28px;
+                box-shadow: 0 30px 40px rgba(0,0,0,0.5);
+                z-index: 1050;
+            }
+            .navbar .nav-links.show-nav {
+                display: flex;
+            }
+            .nav-links a {
+                font-size: 1rem;
+                width: 100%;
+                text-align: center;
+            }
         }
 
         /* BOTONES NEÓN */
@@ -247,7 +355,7 @@
             text-shadow: var(--glow-cyan);
         }
 
-        /* CARRUSEL PRINCIPAL ÉPICO - 100% RESPONSIVE */
+        /* CARRUSEL PRINCIPAL */
         .carousel-hologram {
             border-radius: 32px;
             overflow: hidden;
@@ -269,6 +377,7 @@
             object-fit: cover;
             display: block;
             filter: brightness(0.85) contrast(1.1);
+            background: #0a1a2a;
         }
         .slide-caption {
             position: absolute;
@@ -279,15 +388,6 @@
             padding: 1rem 1.5rem;
             color: white;
             backdrop-filter: blur(5px);
-        }
-        .slide-caption h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.3rem;
-            text-shadow: 0 0 8px cyan;
-        }
-        .slide-caption p {
-            font-size: 0.85rem;
-            max-width: 90%;
         }
         .carousel-btn {
             position: absolute;
@@ -304,9 +404,6 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .carousel-btn:hover { background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
-        .prev-car { left: 12px; }
-        .next-car { right: 12px; }
         .dots-cyber {
             position: absolute;
             bottom: 15px;
@@ -325,10 +422,9 @@
             background: var(--neon-cyan);
             width: 24px;
             border-radius: 12px;
-            box-shadow: 0 0 8px cyan;
         }
 
-        /* MÓDULOS TARJETAS HOLO */
+        /* MÓDULOS */
         .grid-modules {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -355,15 +451,8 @@
             text-shadow: var(--glow-cyan);
             margin-bottom: 15px;
         }
-        .card-holo h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .card-holo p {
-            font-size: 0.9rem;
-        }
 
-        /* DIRECTOR COGNITIVO - TOTALMENTE RESPONSIVE */
+        /* DIRECTOR */
         .director-future {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -375,9 +464,6 @@
             gap: 40px;
             flex-wrap: wrap;
             border: 1px solid var(--glass-border);
-        }
-        .director-future .director-img {
-            flex-shrink: 0;
         }
         .director-future img {
             width: 160px;
@@ -391,24 +477,9 @@
             flex: 1;
             text-align: left;
         }
-        .director-future .director-text h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.7rem;
-            margin-bottom: 0.5rem;
-        }
-        .director-future .director-text p {
-            margin-bottom: 0.75rem;
-            line-height: 1.5;
-            font-size: 0.95rem;
-        }
         @media (max-width: 700px) {
-            .director-future {
-                flex-direction: column;
-                text-align: center;
-            }
-            .director-future .director-text {
-                text-align: center;
-            }
+            .director-future { flex-direction: column; text-align: center; }
+            .director-future .director-text { text-align: center; }
         }
 
         /* SIMULADOR */
@@ -419,12 +490,8 @@
             text-align: center;
             border: 1px solid var(--glass-border);
         }
-        .simulator-neon h3 {
-            font-size: 1.8rem;
-            margin: 15px 0;
-        }
 
-        /* TESTIMONIOS STELLAR - ECUADOR */
+        /* TESTIMONIOS */
         .testi-stellar {
             background: var(--bg-card);
             backdrop-filter: blur(12px);
@@ -448,7 +515,6 @@
             text-align: center;
             border: 1px solid var(--glass-border);
         }
-        .stars i { color: gold; text-shadow: 0 0 4px orange; margin: 0 2px; font-size: 1rem; }
         .testimonial-avatar {
             width: 70px;
             height: 70px;
@@ -456,11 +522,6 @@
             margin: 0 auto 15px;
             border: 2px solid var(--neon-cyan);
             object-fit: cover;
-        }
-        .testi-card p {
-            font-size: 0.95rem;
-            margin: 15px 0;
-            line-height: 1.4;
         }
         .testi-btn {
             position: absolute;
@@ -477,16 +538,10 @@
             transition: 0.2s;
             z-index: 10;
         }
-        .testi-btn:hover {
-            background: var(--neon-cyan);
-            box-shadow: 0 0 12px var(--neon-cyan);
-        }
         .testi-prev { left: 0; }
         .testi-next { right: 0; }
         @media (max-width: 600px) {
             .testi-btn { width: 32px; height: 32px; font-size: 0.8rem; }
-            .testi-prev { left: -5px; }
-            .testi-next { right: -5px; }
         }
 
         /* CONTACTO */
@@ -501,14 +556,6 @@
             padding: 30px;
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(8px);
-        }
-        .contact-panel h3 {
-            font-size: 1.5rem;
-            margin: 10px 0;
-        }
-        .contact-panel p, .contact-panel li {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
         }
         footer {
             background: #01040a;
@@ -540,64 +587,21 @@
             .container { padding: 0 16px; }
             .section-title { font-size: 1.8rem; }
             .carousel-btn { width: 32px; height: 32px; font-size: 1rem; }
-            .dots-cyber { bottom: 8px; right: 12px; gap: 6px; }
-            .dot-cyber { width: 6px; height: 6px; }
-            .dot-cyber.active { width: 18px; }
             .slide-caption h3 { font-size: 1rem; }
-            .slide-caption p { font-size: 0.7rem; }
-        }
-
-        /* MENU HAMBURGUESA RESPONSIVE */
-        @media (max-width: 850px) {
-            .hamburger {
-                display: flex;
-            }
-            .navbar .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--bg-card);
-                backdrop-filter: blur(24px);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 1.8rem;
-                padding: 2rem 1rem;
-                border-top: 1px solid var(--glass-border);
-                border-bottom: 1px solid var(--glass-border);
-                border-radius: 0 0 28px 28px;
-                box-shadow: 0 30px 40px rgba(0,0,0,0.5);
-                z-index: 1050;
-                transition: all 0.2s ease;
-            }
-            .navbar .nav-links.show-nav {
-                display: flex;
-            }
-            .nav-links a {
-                font-size: 1.1rem;
-                padding: 6px 0;
-                width: 100%;
-                text-align: center;
-            }
-            .dark-toggle {
-                margin-left: auto;
-            }
-        }
-        @media (min-width: 851px) {
-            .nav-links {
-                display: flex !important;
-            }
         }
     </style>
 </head>
 <body>
 
+<!-- PRELOADER CON BARRA DE PROGRESO -->
 <div class="preloader-cyber" id="preloader">
-    <div class="loader-holo">
-        <div class="holo-spinner"></div>
-        <div class="loader-text">CETA // INICIALIZANDO NEXUS</div>
+    <div class="preloader-container">
+        <div class="preloader-title">CETA PREUNIVERSITARIO</div>
+        <div class="preloader-desc">Inicializando motor cognitivo · Simuladores adaptativos · IA predictiva</div>
+        <div class="progress-bar-bg">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="preloader-percent" id="progressPercent">0%</div>
     </div>
 </div>
 
@@ -605,7 +609,10 @@
     <div class="container">
         <div class="navbar">
             <div class="logo">
-                <h1>CETA PREUNIVERSITARIO</h1>
+                <h1>
+                    <span class="full-logo">CETA PREUNIVERSITARIO</span>
+                    <span class="short-logo">CETA</span>
+                </h1>
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#">INICIO</a></li>
@@ -618,8 +625,8 @@
             <div class="hamburger" id="hamburgerBtn">
                 <i class="fas fa-bars"></i>
             </div>
-            <div class="dark-toggle" id="darkToggleBtn">
-                <i class="fas fa-sun"></i> / <i class="fas fa-moon"></i> <span>MODO</span>
+            <div class="dark-toggle-icon" id="darkToggleIcon">
+                <i class="fas fa-moon" id="themeIcon"></i>
             </div>
         </div>
     </div>
@@ -630,10 +637,10 @@
     <div class="container">
         <div class="carousel-hologram" id="carouselMain">
             <div class="carousel-track" id="carouselTrack">
-                <div class="slide"><img src="ceta-1.jpeg" alt="Futuro académico"><div class="slide-caption"><h3>🌀 NEURON EXCELENCIA</h3><p>Metodología inmersiva + IA predictiva.</p></div></div>
-                <div class="slide"><img src="ceta-2.jpeg" alt="Matemáticas"><div class="slide-caption"><h3>📐 MATRIX MATEMÁTICA</h3><p>Álgebra, cálculo y geometría cuántica.</p></div></div>
-                <div class="slide"><img src="ceta-3.jpeg" alt="Química"><div class="slide-caption"><h3>⚗️ LABORATORIO SINTÉTICO</h3><p>Química orgánica y simulaciones moleculares.</p></div></div>
-                <div class="slide"><img src="ceta-4.jpeg" alt="Lenguaje"><div class="slide-caption"><h3>📖 LENGUAJE COGNITIVO</h3><p>Lectura crítica & redacción algorítmica.</p></div></div>
+                <div class="slide"><img src="ceta-1.jpeg" alt="Futuro académico" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Neuron+Excelencia'"><div class="slide-caption"><h3>🌀 NEURON EXCELENCIA</h3><p>Metodología inmersiva + IA predictiva.</p></div></div>
+                <div class="slide"><img src="ceta-2.jpeg" alt="Matemáticas" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Matrix+Matemática'"><div class="slide-caption"><h3>📐 MATRIX MATEMÁTICA</h3><p>Álgebra, cálculo y geometría cuántica.</p></div></div>
+                <div class="slide"><img src="ceta-3.jpeg" alt="Ciencias Naturales" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Laboratorio+Natural'"><div class="slide-caption"><h3>⚗️ CIENCIAS NATURALES</h3><p>Química, biología y física integradas con simulaciones moleculares.</p></div></div>
+                <div class="slide"><img src="ceta-4.jpeg" alt="Lenguaje" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Lenguaje+Cognitivo'"><div class="slide-caption"><h3>📖 LENGUAJE COGNITIVO</h3><p>Lectura crítica & redacción algorítmica.</p></div></div>
             </div>
             <button class="carousel-btn prev-car" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
             <button class="carousel-btn next-car" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
@@ -648,7 +655,8 @@
         <h2 class="section-title">Módulos <span>Élite</span> ⚡</h2>
         <div class="grid-modules">
             <div class="card-holo"><div class="icon-cyber"><i class="fas fa-chart-line"></i></div><h3>Matemáticas</h3><p>Estrategias avanzadas, análisis de datos y razonamiento algorítmico.</p></div>
-            <div class="card-holo"><div class="icon-cyber"><i class="fas fa-atom"></i></div><h3>Química</h3><p>Estequiometría, orgánica y laboratorio virtual holográfico.</p></div>
+            <!-- Módulo de Ciencias Naturales (Química + Biología + Física) -->
+            <div class="card-holo"><div class="icon-cyber"><i class="fas fa-flask"></i></div><h3>Ciencias Naturales</h3><p>Química orgánica, biología molecular y física aplicada. Laboratorio virtual holográfico.</p></div>
             <div class="card-holo"><div class="icon-cyber"><i class="fas fa-book-open"></i></div><h3>Lenguaje</h3><p>Comprensión neuronal, sintaxis avanzada y redacción adaptativa.</p></div>
             <div class="card-holo"><div class="icon-cyber"><i class="fas fa-puzzle-piece"></i></div><h3>Abstracto</h3><p>Series 3D, matrices rotacionales y lógica de patrones.</p></div>
         </div>
@@ -660,7 +668,7 @@
     <div class="container">
         <h2 class="section-title">Director <span>Académico</span></h2>
         <div class="director-future">
-            <div class="director-img"><img src="https://teddyfidel.github.io/docente.jpeg" alt="Dr. Ethan Vance"></div>
+            <div class="director-img"><img src="https://teddyfidel.github.io/docente.jpeg" alt="Director" onerror="this.src='https://randomuser.me/api/portraits/men/32.jpg'"></div>
             <div class="director-text">
                 <h3>Ing. Teddy Valencia, Mg. </h3>
                 <p style="color: var(--neon-cyan); font-weight: 600;">Magíster en Educación con mención en Innovaciones Pedagógicas | ULEAM ECUADOR</p>
@@ -682,39 +690,15 @@
     </div>
 </section>
 
-<!-- TESTIMONIOS ECUADOR - NATURALES Y AUTOMÁTICOS -->
+<!-- TESTIMONIOS ECUADOR -->
 <section id="testimonios" class="futur-section">
     <div class="container">
         <h2 class="section-title">Feedback <span>Estelar</span> ⭐</h2>
         <div class="testi-stellar" id="testiContainer">
             <div class="testi-track" id="testiTrack">
-                <div class="testi-slide">
-                    <div class="testi-card">
-                        <img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Andrea Morales">
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p>"Gracias al sistema CETA logré ingresar a Ingeniería en Sistemas en la <strong>Escuela Politécnica Nacional (EPN)</strong>. Los simuladores predictivos y los módulos de matemática me dieron ventaja competitiva. 100% recomendado."</p>
-                        <h4>Andrea Morales</h4>
-                        <span>EPN - Ingeniería en Sistemas</span>
-                    </div>
-                </div>
-                <div class="testi-slide">
-                    <div class="testi-card">
-                        <img class="testimonial-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="José Espinoza">
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p>"Cuando empecé en CETA mis habilidades en Química y Razonamiento eran bajas, pero con la metodología inmersiva y el feedback en tiempo real ingresé a <strong>Medicina en la Universidad Central del Ecuador (UCE)</strong>. Un antes y después."</p>
-                        <h4>José Espinoza</h4>
-                        <span>UCE - Medicina</span>
-                    </div>
-                </div>
-                <div class="testi-slide">
-                    <div class="testi-card">
-                        <img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/90.jpg" alt="Valeria Salazar">
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p>"El enfoque cognitivo de CETA me permitió entender la lógica abstracta como nunca. Logré mi cupo en <strong>Arquitectura en la USFQ</strong> y muchos de mis compañeros también estudiaron aquí. ¡La mejor decisión!"</p>
-                        <h4>Valeria Salazar</h4>
-                        <span>USFQ - Arquitectura</span>
-                    </div>
-                </div>
+                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Andrea"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"Gracias al sistema CETA logré ingresar a Ingeniería en Sistemas en la <strong>Escuela Politécnica Nacional (EPN)</strong>. Los simuladores predictivos me dieron ventaja."</p><h4>Andrea Morales</h4><span>EPN - Ingeniería en Sistemas</span></div></div>
+                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="José"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"Con CETA mis habilidades en Ciencias Naturales mejoraron radicalmente. Ingresé a <strong>Medicina en la Universidad Central del Ecuador (UCE)</strong>. Transformador."</p><h4>José Espinoza</h4><span>UCE - Medicina</span></div></div>
+                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/90.jpg" alt="Valeria"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"El enfoque cognitivo me permitió dominar lógica abstracta. Logré mi cupo en <strong>Arquitectura en la USFQ</strong>. La mejor academia de Ecuador."</p><h4>Valeria Salazar</h4><span>USFQ - Arquitectura</span></div></div>
             </div>
             <button class="testi-btn testi-prev" id="testPrev"><i class="fas fa-chevron-left"></i></button>
             <button class="testi-btn testi-next" id="testNext"><i class="fas fa-chevron-right"></i></button>
@@ -728,7 +712,7 @@
     <div class="container">
         <h2 class="section-title">Contacto <span>Matrix</span></h2>
         <div class="contact-dual">
-            <div class="contact-panel"><i class="fas fa-map-marker-alt fa-2x" style="color: var(--neon-cyan);"></i><h3>Núcleo Central</h3><p>Ecuador, Ecuador</p><p><i class="fas fa-phone-alt"></i> +593 123 456 789</p><p><i class="fas fa-envelope"></i> synapse@cetapreuni.edu.pe</p></div>
+            <div class="contact-panel"><i class="fas fa-map-marker-alt fa-2x" style="color: var(--neon-cyan);"></i><h3>Núcleo Central</h3><p>Ecuador, Quito - Guayaquil</p><p><i class="fas fa-phone-alt"></i> +593 123 456 789</p><p><i class="fas fa-envelope"></i> synapse@cetapreuni.edu.ec</p></div>
             <div class="contact-panel"><i class="far fa-clock fa-2x" style="color: var(--neon-cyan);"></i><h3>Horario Hiperactivo</h3><ul style="list-style: none;"><li>Lun - Vie: 07:30 → 21:30</li><li>Sábados: 08:30 → 14:30</li><li>Dom: Consultas virtuales</li><li>WhatsApp 24/7: +593 123 456 789</li></ul></div>
         </div>
     </div>
@@ -738,14 +722,49 @@
 <a href="https://wa.me/" class="whatsapp-hover" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-    // PRELOADER
-    window.addEventListener('load', () => {
-        const preloader = document.getElementById('preloader');
-        preloader.classList.add('hidden');
-        setTimeout(() => { preloader.style.display = 'none'; }, 900);
-    });
+    // ======================== PRELOADER CON BARRA DE PROGRESO ========================
+    let progress = 0;
+    let progInterval = null;
+    const progressFill = document.getElementById('progressFill');
+    const percentSpan = document.getElementById('progressPercent');
+    const preloaderDiv = document.getElementById('preloader');
 
-    // MENU HAMBURGUESA
+    function updateProgress(value) {
+        let percent = Math.min(100, Math.floor(value));
+        if(progressFill) progressFill.style.width = percent + '%';
+        if(percentSpan) percentSpan.innerText = percent + '%';
+    }
+
+    progInterval = setInterval(() => {
+        if (progress < 95) {
+            progress += Math.floor(Math.random() * 4) + 1;
+            if (progress > 95) progress = 95;
+            updateProgress(progress);
+        }
+    }, 70);
+
+    window.addEventListener('load', () => {
+        if (progInterval) clearInterval(progInterval);
+        progress = 100;
+        updateProgress(100);
+        setTimeout(() => {
+            if(preloaderDiv) {
+                preloaderDiv.classList.add('hidden');
+                setTimeout(() => { if(preloaderDiv) preloaderDiv.style.display = 'none'; }, 900);
+            }
+        }, 400);
+    });
+    setTimeout(() => {
+        if(preloaderDiv && !preloaderDiv.classList.contains('hidden')) {
+            if(progInterval) clearInterval(progInterval);
+            progress = 100;
+            updateProgress(100);
+            preloaderDiv.classList.add('hidden');
+            setTimeout(() => { if(preloaderDiv) preloaderDiv.style.display = 'none'; }, 800);
+        }
+    }, 5000);
+
+    // ======================== MENU HAMBURGUESA ========================
     const hamburger = document.getElementById('hamburgerBtn');
     const navLinksMenu = document.getElementById('navLinks');
     const links = document.querySelectorAll('.nav-links a');
@@ -757,7 +776,7 @@
     document.addEventListener('click', (e) => { if (navLinksMenu && navLinksMenu.classList.contains('show-nav') && !navbar.contains(e.target)) closeMobileMenu(); });
     window.addEventListener('resize', () => { if (window.innerWidth > 850 && navLinksMenu.classList.contains('show-nav')) closeMobileMenu(); });
 
-    // CARRUSEL PRINCIPAL
+    // ======================== CARRUSEL PRINCIPAL ========================
     const track = document.getElementById('carouselTrack');
     const slides = Array.from(track.children);
     const prev = document.getElementById('prevBtn');
@@ -779,7 +798,7 @@
     caro.addEventListener('mouseenter', () => clearInterval(autoInt));
     caro.addEventListener('mouseleave', startAuto);
 
-    // CARRUSEL TESTIMONIOS - TOTALMENTE AUTOMÁTICO + ECUADOR
+    // ======================== TESTIMONIOS ========================
     const testiTrack = document.getElementById('testiTrack');
     const testiSlides = Array.from(testiTrack.children);
     const testPrev = document.getElementById('testPrev');
@@ -787,7 +806,6 @@
     const testiDots = document.getElementById('testiDots');
     let testIdx = 0;
     let testAutoInterval;
-
     function renderTestDots() {
         testiDots.innerHTML = '';
         testiSlides.forEach((_, i) => {
@@ -799,7 +817,6 @@
             dot.style.margin = '0 6px';
             dot.style.cursor = 'pointer';
             dot.style.opacity = '0.5';
-            dot.style.transition = '0.2s';
             if (i === testIdx) { dot.style.opacity = '1'; dot.style.background = 'var(--neon-cyan)'; dot.style.boxShadow = '0 0 6px var(--neon-cyan)'; }
             dot.addEventListener('click', () => { goToTestSlide(i); resetTestAuto(); });
             testiDots.appendChild(dot);
@@ -828,26 +845,45 @@
     testNext.addEventListener('click', () => { nextTestSlide(); resetTestAuto(); });
     window.addEventListener('resize', () => { goToTestSlide(testIdx); });
     renderTestDots(); goToTestSlide(0); startTestAuto();
-
-    // Pausar autoplay al hacer hover en el contenedor de testimonios
     const testiContainer = document.getElementById('testiContainer');
     if (testiContainer) {
-        testiContainer.addEventListener('mouseenter', () => { if (testAutoInterval) clearInterval(testAutoInterval); });
+        testiContainer.addEventListener('mouseenter', () => { if(testAutoInterval) clearInterval(testAutoInterval); });
         testiContainer.addEventListener('mouseleave', () => { startTestAuto(); });
     }
 
-    // INTERSECCIÓN PARA ANIMACIONES
+    // ======================== ANIMACIONES AL SCROLL ========================
     const sections = document.querySelectorAll('.futur-section');
     const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
     sections.forEach(sec => obs.observe(sec));
 
-    // MODO OSCURO / CLARO
-    const toggle = document.getElementById('darkToggleBtn');
+    // ======================== MODO OSCURO/CLARO CON ICONO ========================
+    const themeIcon = document.getElementById('themeIcon');
+    const darkToggleBtn = document.getElementById('darkToggleIcon');
     const stored = localStorage.getItem('ceta_theme_final2');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    function setTheme(isDark) { if (isDark) document.body.classList.remove('light'); else document.body.classList.add('light'); localStorage.setItem('ceta_theme_final2', isDark ? 'dark' : 'light'); }
-    if (stored === 'light') setTheme(false); else if (stored === 'dark') setTheme(true); else if (prefersDark) setTheme(true); else setTheme(false);
-    toggle.addEventListener('click', () => { const isLight = document.body.classList.contains('light'); setTheme(isLight); });
+
+    function setTheme(isDark) {
+        if (isDark) {
+            document.body.classList.remove('light');
+            themeIcon.className = 'fas fa-moon';
+        } else {
+            document.body.classList.add('light');
+            themeIcon.className = 'fas fa-sun';
+        }
+        localStorage.setItem('ceta_theme_final2', isDark ? 'dark' : 'light');
+    }
+
+    function toggleTheme() {
+        const isLight = document.body.classList.contains('light');
+        setTheme(isLight);
+    }
+
+    if (stored === 'light') setTheme(false);
+    else if (stored === 'dark') setTheme(true);
+    else if (prefersDark) setTheme(true);
+    else setTheme(false);
+
+    darkToggleBtn.addEventListener('click', toggleTheme);
 </script>
 </body>
 </html>
