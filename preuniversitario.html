@@ -19,6 +19,7 @@
         html {
             font-size: 100%;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
         body {
             overflow-x: hidden;
@@ -26,7 +27,6 @@
             background: var(--bg-deep);
             color: var(--text-primary);
             transition: background 0.3s ease, color 0.2s;
-            scroll-behavior: smooth;
         }
 
         /* PRELOADER - BARRA PROGRESIVA NEÓN */
@@ -104,6 +104,7 @@
         :root {
             --bg-deep: #03060c;
             --bg-card: rgba(8, 18, 28, 0.75);
+             --bgl-card: rgb(255, 255, 255);
             --glass-border: rgba(0, 255, 255, 0.25);
             --text-primary: #eef5ff;
             --text-secondary: #9bb8e0;
@@ -124,9 +125,49 @@
             --shadow-neon: 0 0 12px rgba(10,126,158,0.3);
         }
 
-        /* scroll-margin */
-        .futur-section {
-            scroll-margin-top: 85px;
+        /* HEADER FIJO (estático) */
+        .cyber-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            backdrop-filter: blur(16px);
+            background: rgba(3, 6, 12, 0.8);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1100;
+            transition: background 0.3s, border 0.2s;
+        }
+        body.light .cyber-header {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        /* FOOTER FIJO (estático) */
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #01040a;
+            padding: 20px 20px;
+            text-align: center;
+            border-top: 1px solid var(--neon-cyan);
+            color: #7b9bc2;
+            font-size: 0.8rem;
+            z-index: 1050;
+            backdrop-filter: blur(8px);
+            transition: background 0.3s, border 0.2s;
+        }
+        body.light .fixed-footer {
+            background: rgba(220, 240, 255, 0.95);
+            border-top-color: var(--neon-cyan);
+            color: #1a4b6e;
+        }
+
+        /* CONTENEDOR PRINCIPAL (scroll con márgenes dinámicos ajustados por JS) */
+        #contentWrap {
+            position: relative;
+            z-index: 10;
+            background: transparent;
         }
 
         .container {
@@ -135,18 +176,20 @@
             padding: 0 24px;
         }
 
-        /* HEADER GLASS */
-        .cyber-header {
-            backdrop-filter: blur(16px);
-            background: rgba(3, 6, 12, 0.65);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        /* AJUSTE DE SCROLL MARGIN (se actualiza dinámicamente) */
+        .futur-section {
+            scroll-margin-top: 90px;
+            opacity: 0;
+            transform: translateY(40px) scale(0.97);
+            transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.2), transform 0.8s ease;
+            padding: 70px 0;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.08);
         }
-        body.light .cyber-header {
-            background: rgba(255, 255, 255, 0.7);
+        .futur-section.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
+
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -161,7 +204,6 @@
             font-size: 1.8rem;
             font-weight: 800;
         }
-        /* Logos dual para responsive */
         .full-logo {
             background: linear-gradient(135deg, var(--neon-cyan), #2a9eff);
             background-clip: text;
@@ -179,16 +221,9 @@
             display: none;
         }
         @media (max-width: 650px) {
-            .full-logo {
-                display: none;
-            }
-            .short-logo {
-                display: inline;
-                font-size: 1.8rem;
-            }
-            .logo h1 {
-                font-size: 1.5rem;
-            }
+            .full-logo { display: none; }
+            .short-logo { display: inline; font-size: 1.8rem; }
+            .logo h1 { font-size: 1.5rem; }
         }
         .logo p {
             font-family: 'Orbitron', monospace;
@@ -202,7 +237,6 @@
             list-style: none;
             flex-wrap: wrap;
             justify-content: center;
-            transition: all 0.2s;
         }
         .nav-links a {
             text-decoration: none;
@@ -232,7 +266,6 @@
             transition: 0.2s;
             order: 1;
         }
-        /* Nuevo botón modo oscuro: solo icono */
         .dark-toggle-icon {
             background: rgba(0, 255, 255, 0.1);
             backdrop-filter: blur(4px);
@@ -254,29 +287,14 @@
             box-shadow: 0 0 10px var(--neon-cyan);
             transform: scale(1.02);
         }
-        /* En desktop el orden natural: logo, navlinks, luego hamburger (oculto), dark-icon */
         @media (min-width: 851px) {
-            .hamburger {
-                display: none !important;
-            }
-            .dark-toggle-icon {
-                margin-left: 15px;
-            }
+            .hamburger { display: none !important; }
+            .dark-toggle-icon { margin-left: 15px; }
         }
         @media (max-width: 850px) {
-            .navbar {
-                justify-content: space-between;
-            }
-            .hamburger {
-                display: flex;
-                order: 2;
-                margin-left: auto;
-                margin-right: 12px;
-            }
-            .dark-toggle-icon {
-                order: 3;
-                margin-left: 0;
-            }
+            .navbar { justify-content: space-between; }
+            .hamburger { display: flex; order: 2; margin-left: auto; margin-right: 12px; }
+            .dark-toggle-icon { order: 3; margin-left: 0; }
             .nav-links {
                 display: none;
                 position: absolute;
@@ -296,17 +314,10 @@
                 box-shadow: 0 30px 40px rgba(0,0,0,0.5);
                 z-index: 1050;
             }
-            .navbar .nav-links.show-nav {
-                display: flex;
-            }
-            .nav-links a {
-                font-size: 1rem;
-                width: 100%;
-                text-align: center;
-            }
+            .navbar .nav-links.show-nav { display: flex; }
+            .nav-links a { font-size: 1rem; width: 100%; text-align: center; }
         }
 
-        /* BOTONES NEÓN */
         .btn-neon {
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
             border: none;
@@ -330,18 +341,6 @@
             box-shadow: 0 0 25px var(--neon-cyan);
         }
 
-        /* SECCIONES ANIMADAS */
-        .futur-section {
-            opacity: 0;
-            transform: translateY(40px) scale(0.97);
-            transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.2), transform 0.8s ease;
-            padding: 70px 0;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.08);
-        }
-        .futur-section.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
         .section-title {
             font-family: 'Orbitron', monospace;
             font-size: 2.2rem;
@@ -350,81 +349,31 @@
             margin-bottom: 50px;
             letter-spacing: -0.5px;
         }
-        .section-title span {
-            color: var(--neon-cyan);
-            text-shadow: var(--glow-cyan);
-        }
+        .section-title span { color: var(--neon-cyan); text-shadow: var(--glow-cyan); }
 
-        /* CARRUSEL PRINCIPAL */
         .carousel-hologram {
             border-radius: 32px;
             overflow: hidden;
             position: relative;
             box-shadow: 0 30px 40px -20px black, inset 0 0 0 1px rgba(0,255,255,0.3);
         }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-        }
-        .slide {
-            flex: 0 0 100%;
-            position: relative;
-        }
-        .slide img {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            display: block;
-            filter: brightness(0.85) contrast(1.1);
-            background: #0a1a2a;
-        }
+        .carousel-track { display: flex; transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.2); }
+        .slide { flex: 0 0 100%; position: relative; }
+        .slide img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; filter: brightness(0.85) contrast(1.1); background: #0a1a2a; }
         .slide-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            position: absolute; bottom: 0; left: 0; right: 0;
             background: linear-gradient(to top, #000000cc, transparent);
-            padding: 1rem 1.5rem;
-            color: white;
-            backdrop-filter: blur(5px);
+            padding: 1rem 1.5rem; color: white; backdrop-filter: blur(5px);
         }
         .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--neon-cyan);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px); border: 1px solid var(--neon-cyan); width: 40px; height: 40px;
+            border-radius: 50%; font-size: 1.2rem; color: white; cursor: pointer; transition: 0.2s;
         }
-        .dots-cyber {
-            position: absolute;
-            bottom: 15px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-        }
-        .dot-cyber {
-            width: 8px;
-            height: 8px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .dot-cyber.active {
-            background: var(--neon-cyan);
-            width: 24px;
-            border-radius: 12px;
-        }
+        .dots-cyber { position: absolute; bottom: 15px; right: 20px; display: flex; gap: 10px; }
+        .dot-cyber { width: 8px; height: 8px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; }
+        .dot-cyber.active { background: var(--neon-cyan); width: 24px; border-radius: 12px; }
 
-        /* MÓDULOS */
         .grid-modules {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -440,19 +389,9 @@
             transition: 0.3s;
             box-shadow: var(--shadow-neon);
         }
-        .card-holo:hover {
-            transform: translateY(-8px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 28px var(--neon-cyan);
-        }
-        .icon-cyber {
-            font-size: 2.8rem;
-            color: var(--neon-cyan);
-            text-shadow: var(--glow-cyan);
-            margin-bottom: 15px;
-        }
+        .card-holo:hover { transform: translateY(-8px); border-color: var(--neon-cyan); box-shadow: 0 0 28px var(--neon-cyan); }
+        .icon-cyber { font-size: 2.8rem; color: var(--neon-cyan); text-shadow: var(--glow-cyan); margin-bottom: 15px; }
 
-        /* DIRECTOR */
         .director-future {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -465,24 +404,13 @@
             flex-wrap: wrap;
             border: 1px solid var(--glass-border);
         }
-        .director-future img {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--neon-cyan);
-            box-shadow: 0 0 25px var(--neon-cyan);
-        }
-        .director-future .director-text {
-            flex: 1;
-            text-align: left;
-        }
+        .director-future img { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 4px solid var(--neon-cyan); box-shadow: 0 0 25px var(--neon-cyan); }
+        .director-future .director-text { flex: 1; text-align: left; }
         @media (max-width: 700px) {
             .director-future { flex-direction: column; text-align: center; }
             .director-future .director-text { text-align: center; }
         }
 
-        /* SIMULADOR */
         .simulator-neon {
             background: radial-gradient(circle at 30% 20%, var(--bg-card), var(--bg-deep));
             border-radius: 48px;
@@ -490,8 +418,6 @@
             text-align: center;
             border: 1px solid var(--glass-border);
         }
-
-        /* TESTIMONIOS */
         .testi-stellar {
             background: var(--bg-card);
             backdrop-filter: blur(12px);
@@ -499,52 +425,24 @@
             padding: 40px 15px;
             position: relative;
         }
-        .testi-track {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-        }
-        .testi-slide {
-            flex: 0 0 100%;
-            padding: 10px;
-        }
+        .testi-track { display: flex; transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.2); }
+        .testi-slide { flex: 0 0 100%; padding: 10px; }
         .testi-card {
-            background: rgba(0,0,0,0.3);
+            
             backdrop-filter: blur(20px);
             border-radius: 40px;
             padding: 30px 20px;
             text-align: center;
             border: 1px solid var(--glass-border);
         }
-        .testimonial-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            border: 2px solid var(--neon-cyan);
-            object-fit: cover;
-        }
+        .testimonial-avatar { width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 15px; border: 2px solid var(--neon-cyan); object-fit: cover; }
         .testi-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.6);
-            border: 1px solid var(--neon-cyan);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.2s;
-            z-index: 10;
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6);
+            border: 1px solid var(--neon-cyan); width: 38px; height: 38px; border-radius: 50%; color: white; cursor: pointer;
+            font-size: 1rem; transition: 0.2s; z-index: 10;
         }
         .testi-prev { left: 0; }
         .testi-next { right: 0; }
-        @media (max-width: 600px) {
-            .testi-btn { width: 32px; height: 32px; font-size: 0.8rem; }
-        }
-
-        /* CONTACTO */
         .contact-dual {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -557,17 +455,9 @@
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(8px);
         }
-        footer {
-            background: #01040a;
-            padding: 30px 20px;
-            text-align: center;
-            border-top: 1px solid var(--neon-cyan);
-            color: #7b9bc2;
-            font-size: 0.8rem;
-        }
         .whatsapp-hover {
             position: fixed;
-            bottom: 20px;
+            bottom: 90px;
             right: 20px;
             background: #25D366;
             width: 55px;
@@ -580,20 +470,21 @@
             color: white;
             box-shadow: 0 0 20px #25D366;
             transition: 0.2s;
-            z-index: 99;
+            z-index: 1200;
             text-decoration: none;
         }
+        .whatsapp-hover:hover { transform: scale(1.05); }
         @media (max-width: 480px) {
             .container { padding: 0 16px; }
             .section-title { font-size: 1.8rem; }
             .carousel-btn { width: 32px; height: 32px; font-size: 1rem; }
             .slide-caption h3 { font-size: 1rem; }
+            .whatsapp-hover { bottom: 80px; width: 48px; height: 48px; font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- PRELOADER CON BARRA DE PROGRESO -->
 <div class="preloader-cyber" id="preloader">
     <div class="preloader-container">
         <div class="preloader-title">CETA PREUNIVERSITARIO</div>
@@ -632,109 +523,105 @@
     </div>
 </header>
 
-<!-- CARRUSEL PRINCIPAL -->
-<section style="padding: 30px 0 20px; border: none;">
-    <div class="container">
-        <div class="carousel-hologram" id="carouselMain">
-            <div class="carousel-track" id="carouselTrack">
-                <div class="slide"><img src="ceta-1.jpeg" alt="Futuro académico" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Neuron+Excelencia'"><div class="slide-caption"><h3>🌀 NEURON EXCELENCIA</h3><p>Metodología inmersiva + IA predictiva.</p></div></div>
-                <div class="slide"><img src="ceta-2.jpeg" alt="Matemáticas" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Matrix+Matemática'"><div class="slide-caption"><h3>📐 MATRIX MATEMÁTICA</h3><p>Álgebra, cálculo y geometría cuántica.</p></div></div>
-                <div class="slide"><img src="ceta-3.jpeg" alt="Ciencias Naturales" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Laboratorio+Natural'"><div class="slide-caption"><h3>⚗️ CIENCIAS NATURALES</h3><p>Química, biología y física integradas con simulaciones moleculares.</p></div></div>
-                <div class="slide"><img src="ceta-4.jpeg" alt="Lenguaje" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Lenguaje+Cognitivo'"><div class="slide-caption"><h3>📖 LENGUAJE COGNITIVO</h3><p>Lectura crítica & redacción algorítmica.</p></div></div>
-            </div>
-            <button class="carousel-btn prev-car" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-            <button class="carousel-btn next-car" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-            <div class="dots-cyber" id="dotsContainer"></div>
-        </div>
-    </div>
-</section>
-
-<!-- MÓDULOS -->
-<section id="modulos" class="futur-section">
-    <div class="container">
-        <h2 class="section-title">Módulos <span>Élite</span> ⚡</h2>
-        <div class="grid-modules">
-            <div class="card-holo"><div class="icon-cyber"><i class="fas fa-chart-line"></i></div><h3>Matemáticas</h3><p>Estrategias avanzadas, análisis de datos y razonamiento algorítmico.</p></div>
-            <!-- Módulo de Ciencias Naturales (Química + Biología + Física) -->
-            <div class="card-holo"><div class="icon-cyber"><i class="fas fa-flask"></i></div><h3>Ciencias Naturales</h3><p>Química orgánica, biología molecular y física aplicada. Laboratorio virtual holográfico.</p></div>
-            <div class="card-holo"><div class="icon-cyber"><i class="fas fa-book-open"></i></div><h3>Lenguaje</h3><p>Comprensión neuronal, sintaxis avanzada y redacción adaptativa.</p></div>
-            <div class="card-holo"><div class="icon-cyber"><i class="fas fa-puzzle-piece"></i></div><h3>Abstracto</h3><p>Series 3D, matrices rotacionales y lógica de patrones.</p></div>
-        </div>
-    </div>
-</section>
-
-<!-- DIRECTOR ACADÉMICO -->
-<section id="director" class="futur-section">
-    <div class="container">
-        <h2 class="section-title">Director <span>Académico</span></h2>
-        <div class="director-future">
-            <div class="director-img"><img src="https://teddyfidel.github.io/docente.jpeg" alt="Director" onerror="this.src='https://randomuser.me/api/portraits/men/32.jpg'"></div>
-            <div class="director-text">
-                <h3>Ing. Teddy Valencia, Mg. </h3>
-                <p style="color: var(--neon-cyan); font-weight: 600;">Magíster en Educación con mención en Innovaciones Pedagógicas | ULEAM ECUADOR</p>
-                <p>Ingeniero en TI & Mg. en Innovaciones Pedagógicas. Experto en Arquitectura de Software e IA aplicada. Dedicado al desarrollo tecnológico y la formación de talentos digitales en entornos de alto rendimiento.</p>
+<div id="contentWrap">
+    <!-- CARRUSEL PRINCIPAL -->
+    <section style="padding: 30px 0 20px; border: none;">
+        <div class="container">
+            <div class="carousel-hologram" id="carouselMain">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="slide"><img src="ceta-1.jpeg" alt="Futuro académico" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Neuron+Excelencia'"><div class="slide-caption"><h3>🌀 NEURON EXCELENCIA</h3><p>Metodología inmersiva + IA predictiva.</p></div></div>
+                    <div class="slide"><img src="ceta-2.jpeg" alt="Matemáticas" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Matrix+Matemática'"><div class="slide-caption"><h3>📐 MATRIX MATEMÁTICA</h3><p>Álgebra, cálculo y geometría cuántica.</p></div></div>
+                    <div class="slide"><img src="ceta-3.jpeg" alt="Ciencias Naturales" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Laboratorio+Natural'"><div class="slide-caption"><h3>⚗️ CIENCIAS NATURALES</h3><p>Química, biología y física integradas con simulaciones moleculares.</p></div></div>
+                    <div class="slide"><img src="ceta-4.jpeg" alt="Lenguaje" onerror="this.src='https://placehold.co/1200x675/0a1a2a/cyan?text=Lenguaje+Cognitivo'"><div class="slide-caption"><h3>📖 LENGUAJE COGNITIVO</h3><p>Lectura crítica & redacción algorítmica.</p></div></div>
+                </div>
+                <button class="carousel-btn prev-car" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next-car" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+                <div class="dots-cyber" id="dotsContainer"></div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- SIMULADORES -->
-<section id="simuladores" class="futur-section">
-    <div class="container">
-        <div class="simulator-neon">
-            <i class="fas fa-microchip" style="font-size: 2.8rem; color: var(--neon-cyan); text-shadow: var(--glow-cyan);"></i>
-            <h3>Simulador Adaptativo CETA</h3>
-            <p>+2000 preguntas tipo examen, inteligencia predictiva y retroalimentación en tiempo real.</p>
-            <a href="#" class="btn-neon" style="margin-top: 20px; display: inline-flex;"><i class="fas fa-rocket"></i> ACCEDER AL SIMULADOR</a>
-        </div>
-    </div>
-</section>
-
-<!-- TESTIMONIOS ECUADOR -->
-<section id="testimonios" class="futur-section">
-    <div class="container">
-        <h2 class="section-title">Feedback <span>Estelar</span> ⭐</h2>
-        <div class="testi-stellar" id="testiContainer">
-            <div class="testi-track" id="testiTrack">
-                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Andrea"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"Gracias al sistema CETA logré ingresar a Ingeniería en Sistemas en la <strong>Escuela Politécnica Nacional (EPN)</strong>. Los simuladores predictivos me dieron ventaja."</p><h4>Andrea Morales</h4><span>EPN - Ingeniería en Sistemas</span></div></div>
-                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="José"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"Con CETA mis habilidades en Ciencias Naturales mejoraron radicalmente. Ingresé a <strong>Medicina en la Universidad Central del Ecuador (UCE)</strong>. Transformador."</p><h4>José Espinoza</h4><span>UCE - Medicina</span></div></div>
-                <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/90.jpg" alt="Valeria"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"El enfoque cognitivo me permitió dominar lógica abstracta. Logré mi cupo en <strong>Arquitectura en la USFQ</strong>. La mejor academia de Ecuador."</p><h4>Valeria Salazar</h4><span>USFQ - Arquitectura</span></div></div>
+    <section id="modulos" class="futur-section">
+        <div class="container">
+            <h2 class="section-title">Módulos <span>Élite</span> ⚡</h2>
+            <div class="grid-modules">
+                <div class="card-holo"><div class="icon-cyber"><i class="fas fa-chart-line"></i></div><h3>Matemáticas</h3><p>Estrategias avanzadas, análisis de datos y razonamiento algorítmico.</p></div>
+                <div class="card-holo"><div class="icon-cyber"><i class="fas fa-flask"></i></div><h3>Ciencias Naturales</h3><p>Química orgánica, biología molecular y física aplicada. Laboratorio virtual holográfico.</p></div>
+                <div class="card-holo"><div class="icon-cyber"><i class="fas fa-book-open"></i></div><h3>Lenguaje</h3><p>Comprensión neuronal, sintaxis avanzada y redacción adaptativa.</p></div>
+                <div class="card-holo"><div class="icon-cyber"><i class="fas fa-puzzle-piece"></i></div><h3>Abstracto</h3><p>Series 3D, matrices rotacionales y lógica de patrones.</p></div>
             </div>
-            <button class="testi-btn testi-prev" id="testPrev"><i class="fas fa-chevron-left"></i></button>
-            <button class="testi-btn testi-next" id="testNext"><i class="fas fa-chevron-right"></i></button>
-            <div style="display: flex; justify-content: center; gap: 12px; margin-top: 25px;" id="testiDots"></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- CONTACTO -->
-<section id="contacto" class="futur-section">
-    <div class="container">
-        <h2 class="section-title">Contacto <span>Matrix</span></h2>
-        <div class="contact-dual">
-            <div class="contact-panel"><i class="fas fa-map-marker-alt fa-2x" style="color: var(--neon-cyan);"></i><h3>Núcleo Central</h3><p>Ecuador, Quito - Guayaquil</p><p><i class="fas fa-phone-alt"></i> +593 123 456 789</p><p><i class="fas fa-envelope"></i> synapse@cetapreuni.edu.ec</p></div>
-            <div class="contact-panel"><i class="far fa-clock fa-2x" style="color: var(--neon-cyan);"></i><h3>Horario Hiperactivo</h3><ul style="list-style: none;"><li>Lun - Vie: 07:30 → 21:30</li><li>Sábados: 08:30 → 14:30</li><li>Dom: Consultas virtuales</li><li>WhatsApp 24/7: +593 123 456 789</li></ul></div>
+    <section id="director" class="futur-section">
+        <div class="container">
+            <h2 class="section-title">Director <span>Académico</span></h2>
+            <div class="director-future">
+                <div class="director-img"><img src="https://teddyfidel.github.io/docente.jpeg" alt="Director" onerror="this.src='https://randomuser.me/api/portraits/men/32.jpg'"></div>
+                <div class="director-text">
+                    <h3>Ing. Teddy Valencia, Mg. </h3>
+                    <p style="color: var(--neon-cyan); font-weight: 600;">Magíster en Educación con mención en Innovaciones Pedagógicas | ULEAM ECUADOR</p>
+                    <p>Ingeniero en TI & Mg. en Innovaciones Pedagógicas. Experto en Arquitectura de Software e IA aplicada. Dedicado al desarrollo tecnológico y la formación de talentos digitales en entornos de alto rendimiento.</p>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<footer><div class="container"><p>© 2026 CETA PreUniversitario — Sistema de Entrenamiento Cognitivo de Próxima Generación.</p><p style="margin-top: 8px;">🔮 IA + Neuroaprendizaje | Resultados cuánticos</p></div></footer>
+    <section id="simuladores" class="futur-section">
+        <div class="container">
+            <div class="simulator-neon">
+                <i class="fas fa-microchip" style="font-size: 2.8rem; color: var(--neon-cyan); text-shadow: var(--glow-cyan);"></i>
+                <h3>Simulador Adaptativo CETA</h3>
+                <p>+2000 preguntas tipo examen, inteligencia predictiva y retroalimentación en tiempo real.</p>
+                <a href="#" class="btn-neon" style="margin-top: 20px; display: inline-flex;"><i class="fas fa-rocket"></i> ACCEDER AL SIMULADOR</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonios" class="futur-section">
+        <div class="container">
+            <h2 class="section-title">Comentarios de  <span>Estudiantes</span> ⭐</h2>
+            <div class="testi-stellar" id="testiContainer">
+                <div class="testi-track" id="testiTrack">
+                    <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Andrea"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"Gracias al sistema CETA logré ingresar a Ingeniería en Sistemas en la <strong>Escuela Politécnica Nacional (EPN)</strong>. Los simuladores predictivos me dieron ventaja."</p><h4>Andrea Morales</h4><span>EPN - Ingeniería en Sistemas</span></div></div>
+                    <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="José"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"Con CETA PreUniversitario mis habilidades en Ciencias Naturales mejoraron radicalmente. Ingresé a <strong>Medicina en la Universidad Central del Ecuador (UCE)</strong>. Transformador."</p><h4>José Espinoza</h4><span>UCE - Medicina</span></div></div>
+                    <div class="testi-slide"><div class="testi-card"><img class="testimonial-avatar" src="https://randomuser.me/api/portraits/women/90.jpg" alt="Valeria"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>"El enfoque cognitivo me permitió dominar lógica abstracta. Logré mi cupo en <strong>Arquitectura en la USFQ</strong>. La mejor academia de Ecuador."</p><h4>Valeria Salazar</h4><span>USFQ - Arquitectura</span></div></div>
+                </div>
+                <button class="testi-btn testi-prev" id="testPrev"><i class="fas fa-chevron-left"></i></button>
+                <button class="testi-btn testi-next" id="testNext"><i class="fas fa-chevron-right"></i></button>
+                <div style="display: flex; justify-content: center; gap: 12px; margin-top: 25px;" id="testiDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="futur-section">
+        <div class="container">
+            <h2 class="section-title">Contacto <span>Matrix</span></h2>
+            <div class="contact-dual">
+                <div class="contact-panel"><i class="fas fa-map-marker-alt fa-2x" style="color: var(--neon-cyan);"></i><h3>Núcleo Central</h3><p>Ecuador, Quito - Guayaquil</p><p><i class="fas fa-phone-alt"></i> +593 123 456 789</p><p><i class="fas fa-envelope"></i> synapse@cetapreuni.edu.ec</p></div>
+                <div class="contact-panel"><i class="far fa-clock fa-2x" style="color: var(--neon-cyan);"></i><h3>Horario Hiperactivo</h3><ul style="list-style: none;"><li>Lun - Vie: 07:30 → 21:30</li><li>Sábados: 08:30 → 14:30</li><li>Dom: Consultas virtuales</li><li>WhatsApp 24/7: +593 123 456 789</li></ul></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="fixed-footer">
+    <div class="container"><p>© 2026 CETA PreUniversitario — Sistema de Entrenamiento Cognitivo de Próxima Generación.</p><p style="margin-top: 8px;">🔮 IA + Neuroaprendizaje | Resultados cuánticos</p></div>
+</footer>
 <a href="https://wa.me/" class="whatsapp-hover" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <script>
-    // ======================== PRELOADER CON BARRA DE PROGRESO ========================
+    // === PRELOADER ===
     let progress = 0;
     let progInterval = null;
     const progressFill = document.getElementById('progressFill');
     const percentSpan = document.getElementById('progressPercent');
     const preloaderDiv = document.getElementById('preloader');
-
     function updateProgress(value) {
         let percent = Math.min(100, Math.floor(value));
         if(progressFill) progressFill.style.width = percent + '%';
         if(percentSpan) percentSpan.innerText = percent + '%';
     }
-
     progInterval = setInterval(() => {
         if (progress < 95) {
             progress += Math.floor(Math.random() * 4) + 1;
@@ -742,7 +629,6 @@
             updateProgress(progress);
         }
     }, 70);
-
     window.addEventListener('load', () => {
         if (progInterval) clearInterval(progInterval);
         progress = 100;
@@ -751,6 +637,7 @@
             if(preloaderDiv) {
                 preloaderDiv.classList.add('hidden');
                 setTimeout(() => { if(preloaderDiv) preloaderDiv.style.display = 'none'; }, 900);
+                adjustFixedMargins();
             }
         }, 400);
     });
@@ -760,11 +647,11 @@
             progress = 100;
             updateProgress(100);
             preloaderDiv.classList.add('hidden');
-            setTimeout(() => { if(preloaderDiv) preloaderDiv.style.display = 'none'; }, 800);
+            setTimeout(() => { if(preloaderDiv) preloaderDiv.style.display = 'none'; adjustFixedMargins(); }, 800);
         }
     }, 5000);
 
-    // ======================== MENU HAMBURGUESA ========================
+    // === MENU HAMBURGUESA ===
     const hamburger = document.getElementById('hamburgerBtn');
     const navLinksMenu = document.getElementById('navLinks');
     const links = document.querySelectorAll('.nav-links a');
@@ -776,7 +663,26 @@
     document.addEventListener('click', (e) => { if (navLinksMenu && navLinksMenu.classList.contains('show-nav') && !navbar.contains(e.target)) closeMobileMenu(); });
     window.addEventListener('resize', () => { if (window.innerWidth > 850 && navLinksMenu.classList.contains('show-nav')) closeMobileMenu(); });
 
-    // ======================== CARRUSEL PRINCIPAL ========================
+    // === AJUSTE MARGENES HEADER/FOOTER FIJO + SCROLL-MARGIN DINÁMICO ===
+    function adjustFixedMargins() {
+        const header = document.querySelector('.cyber-header');
+        const footer = document.querySelector('.fixed-footer');
+        const contentWrap = document.getElementById('contentWrap');
+        if(header && footer && contentWrap) {
+            const headerHeight = header.offsetHeight;
+            const footerHeight = footer.offsetHeight;
+            contentWrap.style.marginTop = headerHeight + 'px';
+            contentWrap.style.marginBottom = footerHeight + 'px';
+            const sections = document.querySelectorAll('.futur-section');
+            sections.forEach(sec => {
+                sec.style.scrollMarginTop = (headerHeight + 20) + 'px';
+            });
+        }
+    }
+    window.addEventListener('resize', () => { adjustFixedMargins(); });
+    document.addEventListener('DOMContentLoaded', () => { adjustFixedMargins(); });
+
+    // === CARRUSEL PRINCIPAL ===
     const track = document.getElementById('carouselTrack');
     const slides = Array.from(track.children);
     const prev = document.getElementById('prevBtn');
@@ -798,7 +704,7 @@
     caro.addEventListener('mouseenter', () => clearInterval(autoInt));
     caro.addEventListener('mouseleave', startAuto);
 
-    // ======================== TESTIMONIOS ========================
+    // === TESTIMONIOS ===
     const testiTrack = document.getElementById('testiTrack');
     const testiSlides = Array.from(testiTrack.children);
     const testPrev = document.getElementById('testPrev');
@@ -851,38 +757,26 @@
         testiContainer.addEventListener('mouseleave', () => { startTestAuto(); });
     }
 
-    // ======================== ANIMACIONES AL SCROLL ========================
-    const sections = document.querySelectorAll('.futur-section');
+    // === SCROLL ANIMATIONS ===
+    const sectionsObs = document.querySelectorAll('.futur-section');
     const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
-    sections.forEach(sec => obs.observe(sec));
+    sectionsObs.forEach(sec => obs.observe(sec));
 
-    // ======================== MODO OSCURO/CLARO CON ICONO ========================
+    // === MODO CLARO/OSCURO ===
     const themeIcon = document.getElementById('themeIcon');
     const darkToggleBtn = document.getElementById('darkToggleIcon');
     const stored = localStorage.getItem('ceta_theme_final2');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
     function setTheme(isDark) {
-        if (isDark) {
-            document.body.classList.remove('light');
-            themeIcon.className = 'fas fa-moon';
-        } else {
-            document.body.classList.add('light');
-            themeIcon.className = 'fas fa-sun';
-        }
+        if (isDark) { document.body.classList.remove('light'); themeIcon.className = 'fas fa-moon'; }
+        else { document.body.classList.add('light'); themeIcon.className = 'fas fa-sun'; }
         localStorage.setItem('ceta_theme_final2', isDark ? 'dark' : 'light');
     }
-
-    function toggleTheme() {
-        const isLight = document.body.classList.contains('light');
-        setTheme(isLight);
-    }
-
+    function toggleTheme() { const isLight = document.body.classList.contains('light'); setTheme(isLight); }
     if (stored === 'light') setTheme(false);
     else if (stored === 'dark') setTheme(true);
     else if (prefersDark) setTheme(true);
     else setTheme(false);
-
     darkToggleBtn.addEventListener('click', toggleTheme);
 </script>
 </body>
