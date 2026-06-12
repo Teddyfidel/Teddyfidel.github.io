@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Aquí Contigo | Cuidado Domiciliario de Alta Gama</title>
+  
+  <!-- Tipografía Elegante y Formal: Playfair Display para Títulos y Inter para textos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Sistema de Variables - Estética Premium Glassmorphism Avanzada */
+    :root {
+      --primary: #236F57;
+      --primary-light: #3ca281;
+      --primary-dark: #164737;
+      --primary-soft: rgba(35, 111, 87, 0.06);
+      --primary-glow: rgba(35, 111, 87, 0.15);
+      --secondary: #F2994A;
+      --bg-white: #FFFFFF;
+      --bg-soft: #F4F7F5;
+      --text-dark: #0B1310;
+      --text-muted: #415349;
+      --text-light: #768E80;
+      --border-light: rgba(35, 111, 87, 0.12);
+      --glass-bg: rgba(255, 255, 255, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --card-shadow: 0 10px 30px -5px rgba(11, 19, 16, 0.04), 0 4px 12px -3px rgba(35, 111, 87, 0.02);
+      --card-shadow-hover: 0 25px 50px -12px rgba(22, 71, 55, 0.15), 0 8px 20px -6px rgba(242, 153, 74, 0.05);
+      --header-bg: rgba(244, 247, 245, 0.75);
+      --footer-bg: #070D0B;
+      --footer-text: #E6ECE9;
+      --radius-xl: 30px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --transition-fluid: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-snappy: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.dark {
+      --primary: #41A384;
+      --primary-light: #59d5af;
+      --primary-dark: #236F57;
+      --primary-soft: rgba(65, 163, 132, 0.12);
+      --primary-glow: rgba(65, 163, 132, 0.25);
+      --secondary: #F4A962;
+      --bg-white: #0E1613;
+      --bg-soft: #050807;
+      --text-dark: #F5FAF7;
+      --text-muted: #94A89E;
+      --text-light: #5C7367;
+      --border-light: rgba(65, 163, 132, 0.16);
+      --glass-bg: rgba(14, 22, 19, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.04);
+      --card-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+      --card-shadow-hover: 0 30px 60px -12px rgba(65, 163, 132, 0.25);
+      --header-bg: rgba(5, 8, 7, 0.75);
+      --footer-bg: #030504;
+      --footer-text: #C3D2CB;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-soft);
+      color: var(--text-dark);
+      scroll-behavior: smooth;
+      transition: background 0.4s var(--transition-snappy), color 0.4s var(--transition-snappy);
+      overflow-x: hidden;
+    }
+
+    /* Loading Screen Premium */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-soft);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+    .loading-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    .loading-logo-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-white);
+      border-radius: 50%;
+      padding: 20px;
+      box-shadow: var(--card-shadow-hover);
+    }
+    .loading-logo-container::before {
+      content: '';
+      position: absolute;
+      top: -6px; left: -6px; right: -6px; bottom: -6px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: var(--primary);
+      border-bottom-color: var(--secondary);
+      animation: spin 2s linear infinite;
+    }
+    .loading-logo {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    .loading-bar-bg {
+      width: 240px;
+      height: 6px;
+      background: var(--border-light);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .loading-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 10px;
+      transition: width 0.1s linear;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Tipografía Estilizada */
+    h1, h2, h3, .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .section-title-container {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      color: var(--text-dark);
+      position: relative;
+      display: inline-block;
+      padding-bottom: 20px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    .section-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-top: 18px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-soft); }
+    ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 20px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Barra de Progreso Superior */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      z-index: 2001;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      width: 0%;
+    }
+
+    /* Navegación Sublime */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 2000;
+      background: var(--header-bg);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 20px 0;
+      transition: var(--transition-fluid);
+    }
+    .navbar.scrolled {
+      padding: 14px 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 46px;
+      width: auto;
+      object-fit: contain;
+      transition: var(--transition-snappy);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.8rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      text-decoration: none;
+      position: relative;
+      padding: 6px 0;
+      transition: var(--transition-snappy);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition-snappy);
+    }
+
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--primary); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dark-toggle, .menu-toggle {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-fluid);
+    }
+
+    .dark-toggle:hover, .menu-toggle:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.05);
+      box-shadow: var(--primary-glow);
+    }
+
+    .menu-toggle { display: none; }
+
+    /* Botones Formales de Alta Gama */
+    .btn-primary, .btn-outline {
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: var(--transition-fluid);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      box-shadow: var(--card-shadow);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      transform: translateY(-3px);
+      box-shadow: 0 12px 26px -6px var(--primary-glow);
+    }
+
+    .btn-outline {
+      background: var(--glass-bg);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 26px -6px var(--primary-glow);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 0 100px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--primary);
+      margin-bottom: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-soft);
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 1px solid var(--border-light);
+    }
+
+    .hero-content h1 {
+      font-size: 4.2rem;
+      line-height: 1.15;
+      margin-bottom: 28px;
+      color: var(--text-dark);
+    }
+
+    .hero-content h1 em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--primary-light);
+      position: relative;
+    }
+
+    /* Slider Hero Refinado */
+    .hero-carousel {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--card-shadow-hover);
+      aspect-ratio: 1/1;
+      position: relative;
+      border: 4px solid var(--bg-white);
+    }
+
+    .carousel-images {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.06);
+      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .carousel-btn-img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: var(--transition-snappy);
+      box-shadow: var(--card-shadow);
+    }
+
+    .carousel-btn-img:hover { background: var(--primary); color: white; transform: translateY(-50%) scale(1.05); }
+    .btn-left-img { left: 20px; }
+    .btn-right-img { right: 20px; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      z-index: 10;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.45);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition-snappy);
+    }
+    .dot.active { background: var(--bg-white); width: 24px; border-radius: 10px; }
+
+    /* Valores / Filosofía */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 24px;
+      margin: 50px 0;
+    }
+
+    .value-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 32px 16px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-fluid);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .value-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      opacity: 0;
+      transition: var(--transition-snappy);
+    }
+
+    .value-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .value-card:hover::before { opacity: 1; }
+
+    .value-card i {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+
+    .value-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    /* Bloque Corporativo */
+    .about-wrap {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 80px;
+      box-shadow: var(--card-shadow);
+      margin: 100px 0;
+      position: relative;
+    }
+    .about-wrap::after {
+      content: '"';
+      position: absolute;
+      right: 60px;
+      bottom: -30px;
+      font-family: 'Playfair Display', serif;
+      font-size: 12rem;
+      color: var(--primary-soft);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* Portafolio de Servicios */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .service-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 48px 32px;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-fluid);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--primary-light);
+    }
+
+    .service-card i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 28px;
+      display: inline-block;
+    }
+
+    .service-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: var(--text-dark);
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.65;
+    }
+
+    /* SECCIONES EN MOVIMIENTO INFINITO */
+    .marquee-section {
+      padding: 80px 0;
+      overflow: hidden;
+    }
+
+    .marquee-viewport {
+      display: flex;
+      overflow: hidden;
+      user-select: none;
+      position: relative;
+      width: 100vw;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      padding: 30px 0;
+    }
+
+    .marquee-viewport::before, .marquee-viewport::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-viewport::before { left: 0; background: linear-gradient(to right, var(--bg-soft), transparent); }
+    .marquee-viewport::after { right: 0; background: linear-gradient(to left, var(--bg-soft), transparent); }
+
+    .marquee-rail-photos {
+      display: flex;
+      gap: 30px;
+      animation: runMarquee 38s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-rail-reviews {
+      display: flex;
+      gap: 30px;
+      animation: runMarquee 48s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-viewport:hover .marquee-rail-photos,
+    .marquee-viewport:hover .marquee-rail-reviews {
+      animation-play-state: paused;
+    }
+
+    @keyframes runMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-50% - 15px)); }
+    }
+
+    /* Elementos del Álbum Modernizados */
+    .album-item {
+      width: 360px;
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: var(--card-shadow);
+      cursor: pointer;
+      border: 2px solid var(--bg-white);
+    }
+
+    .album-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-fluid);
+    }
+
+    .album-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(7, 13, 11, 0.85) 0%, transparent 65%);
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+      opacity: 0;
+      transition: var(--transition-snappy);
+    }
+
+    .album-overlay span {
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transform: translateY(15px);
+      transition: var(--transition-fluid);
+    }
+
+    .album-item:hover img { transform: scale(1.08); }
+    .album-item:hover .album-overlay { opacity: 1; }
+    .album-item:hover .album-overlay span { transform: translateY(0); }
+
+    /* Tarjetas de Reseñas */
+    .review-luxury-card {
+      width: 420px;
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-snappy);
+    }
+    .review-luxury-card:hover { border-color: var(--primary-light); }
+
+    .review-luxury-header {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .review-luxury-avatar {
+      width: 54px;
+      height: 54px;
+      background: var(--primary-soft);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--primary);
+      border: 1px solid var(--border-light);
+    }
+
+    .stars-luxury { color: #F2C94C; font-size: 0.9rem; margin-top: 6px; letter-spacing: 3px; }
+
+    /* Lightbox Premium */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 8, 7, 0.96);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .lightbox.active { opacity: 1; pointer-events: auto; }
+    .lightbox-content { max-width: 85%; max-height: 80vh; position: relative; transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox.active .lightbox-content { transform: scale(1); }
+    .lightbox-content img { max-width: 100%; max-height: 80vh; border-radius: var(--radius-md); box-shadow: 0 30px 70px rgba(0,0,0,0.5); }
+    .lightbox-close { position: absolute; top: -50px; right: 0; color: white; font-size: 2.5rem; cursor: pointer; transition: var(--transition-snappy); }
+    .lightbox-close:hover { color: var(--secondary); transform: scale(1.1); }
+
+    /* Terminal de Asistencia (CRUD) */
+    .form-section {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 70px;
+      box-shadow: var(--card-shadow);
+      margin: 100px 0;
+    }
+
+    .form-group { margin-bottom: 28px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text-dark);
+      letter-spacing: 0.01em;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 18px 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      background: var(--bg-soft);
+      color: var(--text-dark);
+      font-family: inherit;
+      font-size: 0.98rem;
+      transition: var(--transition-snappy);
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--bg-white);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    /* Listado CRUD Modernizado */
+    .crud-title-container {
+      margin-top: 60px;
+      border-top: 1px solid var(--border-light);
+      padding-top: 40px;
+    }
+
+    .query-item {
+      background: var(--bg-soft);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid var(--primary);
+      box-shadow: var(--card-shadow);
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .query-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn-crud-edit, .btn-crud-delete {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-snappy);
+      box-shadow: var(--card-shadow);
+    }
+
+    .btn-crud-edit { color: var(--primary); }
+    .btn-crud-edit:hover { background: var(--primary); color: white; transform: scale(1.1); }
+
+    .btn-crud-delete { color: #C0392B; }
+    .btn-crud-delete:hover { background: #C0392B; color: white; transform: scale(1.1); }
+
+    /* WhatsApp Flotante Tridimensional */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background: #25D366;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35);
+      z-index: 1999;
+      text-decoration: none;
+      transition: var(--transition-fluid);
+    }
+
+    .whatsapp-float:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 15px 35px rgba(37, 211, 102, 0.45); }
+
+    /* Footer Ejecutivo */
+    footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 100px 0 50px;
+    }
+
+    .social-links a {
+      font-size: 1.4rem;
+      color: var(--footer-text);
+      margin: 0 16px;
+      transition: var(--transition-snappy);
+      display: inline-block;
+      opacity: 0.65;
+    }
+
+    .social-links a:hover { color: var(--primary-light); opacity: 1; transform: scale(1.1); }
+
+    /* Responsividad */
+    @media (max-width: 1200px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .values-grid { grid-template-columns: repeat(3, 1fr); }
+      .hero-content h1 { font-size: 3.5rem; }
+    }
+
+    @media (max-width: 992px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+      .hero-content { text-align: center; }
+      .hero-badge { justify-content: center; }
+      .hero-content h1 { font-size: 3.2rem; }
+      .about-wrap, .form-section { padding: 50px; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 24px; }
+      .navbar { padding: 16px 0; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--header-bg);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        flex-direction: column;
+        padding: 30px;
+        gap: 24px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border-bottom: 1px solid var(--border-light);
+      }
+      .nav-links.active { display: flex; }
+      .menu-toggle { display: flex; }
+      .section-title { font-size: 2.4rem; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-wrap, .form-section { padding: 40px 24px; }
+      .review-luxury-card { width: 340px; padding: 28px; }
+      .album-item { width: 290px; }
+      .query-item { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .query-actions { width: 100%; justify-content: flex-end; }
+      .whatsapp-float { bottom: 24px; right: 24px; width: 52px; height: 52px; font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Pantalla de Carga Fluida Inteligente -->
+<div id="loading-screen">
+  <div class="loading-wrapper">
+    <div class="loading-logo-container">
+      <img src="aqui-contigo.png" alt="Aquí Contigo" class="loading-logo" onerror="this.src='https://placehold.co/200x60/236F57/white?text=Aquí+Contigo'">
+    </div>
+    <div class="loading-bar-bg">
+      <div class="loading-bar-fill" id="loadingBar"></div>
+    </div>
+  </div>
+</div>
+
+<div class="progress-container"><div class="progress-bar" id="scrollProgress"></div></div>
+
+<!-- Botón Flotante WhatsApp -->
+<a href="https://wa.me/593995441552?text=Saludos.%20Solicito%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20sus%20servicios%20de%20asistencia%20y%20cuidado%20domiciliario%20de%20alta%20gama." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Contacto WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+<nav class="navbar" id="mainNavbar">
+  <div class="container nav-container">
+    <a href="#inicio" class="logo-link">
+      <img src="aqui-contigo.png" alt="Aquí Contigo" class="logo-img" onerror="this.src='https://placehold.co/200x60/236F57/white?text=Aquí+Contigo'">
+    </a>
+    <div class="nav-actions">
+      <div class="nav-links" id="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#galeria">Álbum</a>
+        <a href="#testimonios">Reseñas</a>
+        <a href="#contacto-crud">Contacto</a>
+      </div>
+      <button class="dark-toggle" id="darkModeToggle" aria-label="Cambiar Tema"><i class="fas fa-moon"></i></button>
+      <button class="menu-toggle" id="mobile-menu" aria-label="Menú"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- Hero Section -->
+  <section id="inicio" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content" data-aos="fade-up">
+        <span class="hero-badge"><i class="fas fa-star" style="font-size:0.75rem; margin-right:4px; color:var(--secondary)"></i> Asistencia Residencial Exclusiva</span>
+        <h1>Donde la excelencia y la <em>calidez</em> transforman vidas</h1>
+        <p style="margin-bottom: 40px; color: var(--text-muted); font-size: 1.1rem; line-height: 1.75;">Brindamos soluciones integrales en atención domiciliaria responsable, elevando los estándares de bienestar de su familia con absoluta tranquilidad.</p>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: inherit;">
+          <a href="#contacto-crud" class="btn-primary">Solicitar Asistencia</a>
+          <a href="#servicios" class="btn-outline">Nuestros Servicios</a>
+        </div>
+      </div>
+      
+      <div class="hero-carousel" data-aos="fade-up" data-aos-delay="150">
+        <div class="carousel-images">
+          <img class="carousel-slide active" src="https://images.pexels.com/photos/6646914/pexels-photo-6646914.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cuidado Profesional">
+          <img class="carousel-slide" src="https://images.pexels.com/photos/4098232/pexels-photo-4098232.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Acompañamiento Técnico">
+          <img class="carousel-slide" src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Enfermería Adultos">
+        </div>
+        <button class="carousel-btn-img btn-left-img" id="prevHeroBtn" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-btn-img btn-right-img" id="nextHeroBtn" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-dots" id="heroDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filosofía -->
+  <section class="container">
+    <div class="section-title-container" data-aos="fade-up">
+      <h2 class="section-title">Valores Fundamentales</h2>
+      <p class="section-sub">Los pilares rectores de nuestra praxis diaria</p>
+    </div>
+    <div class="values-grid" data-aos="fade-up">
+      <div class="value-card"><i class="fas fa-heart"></i><h3>Humana</h3></div>
+      <div class="value-card"><i class="fas fa-chart-line"></i><h3>Profesional</h3></div>
+      <div class="value-card"><i class="fas fa-hand-sparkles"></i><h3>Responsable</h3></div>
+      <div class="value-card"><i class="fas fa-user-friends"></i><h3>Cercana</h3></div>
+      <div class="value-card"><i class="fas fa-smile"></i><h3>Empática</h3></div>
+      <div class="value-card"><i class="fas fa-shield-alt"></i><h3>Confiable</h3></div>
+    </div>
+  </section>
+
+  <!-- Nosotros -->
+  <section id="nosotros" class="container">
+    <div class="about-wrap" data-aos="fade-up">
+      <h2 class="section-title" style="text-align: left; margin-bottom: 28px;">Compromiso Institucional</h2>
+      <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.85;"><strong>Aquí Contigo</strong> nace con el firme propósito de ofrecer un cuidado más humano, cercano y confiable para pacientes que requieren asistencia integral y acompañamiento en sus actividades diarias. Nuestra visión trasciende el soporte operativo clásico: consolidamos un ecosistema de seguridad familiar fundamentado en la empatía estructural y el rigor técnico clínico, ofreciendo el respaldo que los hijos y familiares directos demandan.</p>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section id="servicios" class="container">
+    <div class="section-title-container" data-aos="fade-up">
+      <h2 class="section-title">Servicios Especializados</h2>
+      <p class="section-sub">Soluciones meticulosamente diseñadas para la preservación de la salud</p>
+    </div>
+    <div class="services-grid" data-aos="fade-up">
+      <div class="service-card"><i class="fas fa-user-nurse"></i><h3>Cuidado Especializado</h3><p>Personal de enfermería y cuidadores certificados bajo estrictos protocolos de supervisión periódica.</p></div>
+      <div class="service-card"><i class="fas fa-walking"></i><h3>Acompañamiento Diario</h3><p>Soporte proactivo en la movilidad, control nutricional personalizado y rutinas terapéuticas adaptadas.</p></div>
+      <div class="service-card"><i class="fas fa-hospital-user"></i><h3>Post-Hospitalización</h3><p>Planes estratégicos orientados a la convalecencia óptima y acelerada tras procesos clínicos quirúrgicos.</p></div>
+      <div class="service-card"><i class="fas fa-clock"></i><h3>Asistencia Flexible</h3><p>Modelos modulares por horas diseñados específicamente para el respiro y soporte familiar oportuno.</p></div>
+    </div>
+  </section>
+
+  <!-- Álbum en Movimiento Infinito -->
+  <section id="galeria" class="marquee-section">
+    <div class="container">
+      <div class="section-title-container" data-aos="fade-up">
+        <h2 class="section-title">El Álbum de Momentos</h2>
+        <p class="section-sub">Evidencias gráficas del resguardo y bienestar de nuestros pacientes</p>
+      </div>
+    </div>
+    <div class="marquee-viewport">
+      <div class="marquee-rail-photos">
+        <div class="album-item" onclick="openLightbox(this)"><img src="https://images.pexels.com/photos/3768114/pexels-photo-3768114.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Estimulación Activa"> <div class="album-overlay"><span>Estimulación Cognitiva</span></div></div>
+        <div class="album-item" onclick="openLightbox(this)"><img src="https://images.pexels.com/photos/339712/pexels-photo-339712.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Movilidad Asistida"> <div class="album-overlay"><span>Paseos Asistidos</span></div></div>
+        <div class="album-item" onclick="openLightbox(this)"><img src="https://images.pexels.com/photos/7551622/pexels-photo-7551622.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Control Biométrico"> <div class="album-overlay"><span>Monitoreo Vital</span></div></div>
+        <div class="album-item" onclick="openLightbox(this)"><img src="https://images.pexels.com/photos/3791664/pexels-photo-3791664.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Dinámicas Creativas"><div class="album-overlay"><span>Actividades Lúdicas</span></div></div>
+        <!-- Duplicados para bucle continuo -->
+        <div class="album-item" onclick="openLightbox(this)"><img src="https://images.pexels.com/photos/3768114/pexels-photo-3768114.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Estimulación Activa"> <div class="album-overlay"><span>Estimulación Cognitiva</span></div></div>
+        <div class="album-item" onclick="openLightbox(this)"><img src="https://images.pexels.com/photos/339712/pexels-photo-339712.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Movilidad Asistida"> <div class="album-overlay"><span>Paseos Asistidos</span></div></div>
+        <div class="album-item" onclick="openLightbox(this)"><img src="https://images.pexels.com/photos/7551622/pexels-photo-7551622.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Control Biométrico"> <div class="album-overlay"><span>Monitoreo Vital</span></div></div>
+        <div class="album-item" onclick="openLightbox(this)"><img src="https://images.pexels.com/photos/3791664/pexels-photo-3791664.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Dinámicas Creativas"><div class="album-overlay"><span>Actividades Lúdicas</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+      <img id="lightboxImg" src="" alt="Ampliación">
+    </div>
+  </div>
+
+  <!-- Reseñas en Movimiento Infinito -->
+  <section id="testimonios" class="marquee-section">
+    <div class="container">
+      <div class="section-title-container" data-aos="fade-up">
+        <h2 class="section-title">Testimonios de Familias</h2>
+        <p class="section-sub">La opinión formal de quienes confían en nuestro criterio operativo</p>
+      </div>
+    </div>
+    <div class="marquee-viewport">
+      <div class="marquee-rail-reviews" id="reviewsMarqueeRail">
+        <!-- Generado dinámicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Coordinación de Servicios (CRUD Totalmente Completo) -->
+  <section id="contacto-crud" class="container">
+    <div class="form-section" data-aos="fade-up">
+      <h2 class="section-title" style="text-align: left; margin-bottom: 12px;">Coordinación de Servicios</h2>
+      <p style="color: var(--text-muted); margin-bottom: 45px; font-size: 1rem;">Por favor, formalice sus datos para asignar un evaluador clínico en su domicilio.</p>
+      
+      <form id="consultaForm">
+        <div class="form-group">
+          <label for="nombre">Nombre del Familiar Responsable</label>
+          <input type="text" id="nombre" placeholder="Ingrese el Nombre del Familiar Responsable" required>
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono de Contacto Directo</label>
+          <input type="tel" id="telefono" placeholder="Ingrese su Teléfono de Contacto" required>
+        </div>
+        <div class="form-group">
+          <label for="mensaje">Requerimientos Clínicos o del Paciente</label>
+          <textarea rows="4" id="mensaje" placeholder="Detalle las necesidades específicas de asistencia para elaborar un plan estructurado formal..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;"><i class="fab fa-whatsapp"></i> Registrar y Enviar Mensaje</button>
+      </form>
+      
+      <!-- Componente CRUD LocalStorage Activo y Visible 
+      <div class="crud-title-container">
+        <h3 style="margin-bottom: 24px; font-size: 1.4rem; font-weight: 600;"><i class="fas fa-database" style="color:var(--primary); margin-right: 12px;"></i> Solicitudes Registradas en el Sistema</h3>
+        <div id="queriesContainer"></div>
+      </div>-->
+    </div>
+  </section>
+</main>
+
+<footer style="text-align: center;">
+  <div class="container">
+    <img src="aqui-contigo.png" alt="Aquí Contigo" class="logo-img" style="margin-bottom: 20px;" onerror="this.src='https://placehold.co/200x60/236F57/white?text=Aquí+Contigo'">
+    <p style="margin: 0 auto 36px; max-width: 580px; font-size: 1rem; opacity: 0.75; line-height: 1.75;">Protocolos profesionales de asistencia humana, responsable y certificada en la comodidad de su hogar.</p>
+    <div class="social-links">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <hr style="margin: 45px 0 30px; border: none; border-top: 1px solid rgba(255,255,255,0.07);">
+    <p style="font-size: 0.88rem; opacity: 0.45;">&copy; 2026 Aquí Contigo. Resguardo de Salud Domiciliaria. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // Simulación Avanzada de Carga Real de Página
+  document.addEventListener("DOMContentLoaded", () => {
+    const loadingBar = document.getElementById("loadingBar");
+    const loadingScreen = document.getElementById("loading-screen");
+    let progress = 0;
+
+    const interval = setInterval(() => {
+      progress += Math.floor(Math.random() * 15) + 5;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          loadingScreen.style.opacity = "0";
+          loadingScreen.style.visibility = "hidden";
+          // Inicialización de Animaciones al concluir carga
+          AOS.init({ duration: 900, once: true, easing: 'cubic-bezier(0.25, 1, 0.5, 1)' });
+        }, 250);
+      }
+      loadingBar.style.width = `${progress}%`;
+    }, 50);
+  });
+
+  // Scroll Progress & Navbar Scrolled State
+  const navbar = document.getElementById('mainNavbar');
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('scrollProgress').style.width = (winScroll / height) * 100 + '%';
+    
+    if (winScroll > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // Dark Mode Engine
+  const darkToggle = document.getElementById('darkModeToggle');
+  darkToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    darkToggle.querySelector('i').className = document.body.classList.contains('dark') ? 'fas fa-sun' : 'fas fa-moon';
+  });
+
+  // Mobile Menu Handler
+  const menuBtn = document.getElementById('mobile-menu');
+  const navLinksDiv = document.getElementById('nav-links');
+  menuBtn.addEventListener('click', () => {
+    navLinksDiv.classList.toggle('active');
+    menuBtn.querySelector('i').classList.toggle('fa-bars');
+    menuBtn.querySelector('i').classList.toggle('fa-times');
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinksDiv.classList.remove('active');
+      menuBtn.querySelector('i').className = 'fas fa-bars';
+    });
+  });
+
+  // Hero Slider
+  const slides = document.querySelectorAll('.carousel-slide');
+  let currentSlide = 0;
+  function showSlide(index) {
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+    document.querySelectorAll('.dot').forEach((dot, idx) => dot.classList.toggle('active', idx === index));
+  }
+  function nextSlide() { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }
+  function prevSlide() { currentSlide = (currentSlide - 1 + slides.length) % slides.length; showSlide(currentSlide); }
+  
+  document.getElementById('nextHeroBtn').addEventListener('click', nextSlide);
+  document.getElementById('prevHeroBtn').addEventListener('click', prevSlide);
+  
+  const dotsContainer = document.getElementById('heroDots');
+  slides.forEach((_, i) => {
+    let dot = document.createElement('div');
+    dot.classList.add('dot');
+    if(i===0) dot.classList.add('active');
+    dot.addEventListener('click', () => { currentSlide = i; showSlide(currentSlide); });
+    dotsContainer.appendChild(dot);
+  });
+  setInterval(nextSlide, 6000);
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  function openLightbox(el) { lightboxImg.src = el.querySelector('img').src; lightbox.classList.add('active'); }
+  function closeLightbox() { lightbox.classList.remove('active'); }
+
+  // Renderizado del Marquee de Reseñas
+  const reviewsData = [
+    { name: "Lorena C.", role: "Quito", text: "El cuidado táctico y la templanza que despliega el personal con mis familiares es impecable." },
+    { name: "Elina V.", role: "Manabí", text: "Son verdaderos especialistas que empatizan profundamente. Reconfiguran el significado de asistencia." },
+    { name: "Jenny C.", role: "Quito", text: "La respuesta operativa fue inmediata, segura y transparente. Transmiten solidez absoluta." },
+    { name: "Sonia V.", role: "Guayas", text: "Una absoluta bendición para nuestra familia. Mi padre recibe supervisión experta y un trato digno." }
+  ];
+
+  function buildReviewsMarquee() {
+    const rail = document.getElementById('reviewsMarqueeRail');
+    const cardsHTML = reviewsData.map(r => `
+      <div class="review-luxury-card">
+        <div class="review-luxury-header">
+          <div class="review-luxury-avatar"><i class="fas fa-user"></i></div>
+          <div>
+            <h4 style="font-size:0.98rem; font-weight:600; color:var(--text-dark);">${r.name}</h4>
+            <small style="color:var(--text-light); font-size:0.82rem; font-weight:500;">${r.role}</small>
+            <div class="stars-luxury"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          </div>
+        </div>
+        <p style="font-size:0.98rem; color:var(--text-muted); line-height:1.65; font-style:italic;">“${r.text}”</p>
+      </div>
+    `).join('');
+    
+    rail.innerHTML = cardsHTML + cardsHTML;
+  }
+  buildReviewsMarquee();
+
+  // Motor Core CRUD LocalStorage Completo
+  let consultas = JSON.parse(localStorage.getItem('aquicontigo_consultas') || '[]');
+  
+  function renderQueries() {
+    const container = document.getElementById('queriesContainer');
+    if(!container) return;
+    if(!consultas.length) {
+      container.innerHTML = '<div style="padding:32px; text-align:center; color:var(--text-light); font-size:0.98rem; font-style:italic; border:1px dashed var(--border-light); border-radius:12px;">No existen registros de solicitudes locales pendientes.</div>';
+      return;
+    }
+    container.innerHTML = consultas.map((c, idx) => `
+      <div class="query-item">
+        <div style="padding-right: 16px;">
+          <strong style="color:var(--primary); font-weight:600; font-size:1.05rem;">${c.nombre}</strong> <span style="font-size:0.88rem; color:var(--text-light); font-weight:500;">(${c.telefono})</span>
+          <p style="font-size:0.95rem; color:var(--text-muted); margin-top:8px; line-height:1.5;">${c.mensaje}</p>
+        </div>
+        <div class="query-actions">
+          <button onclick="editConsulta(${idx})" class="btn-crud-edit" aria-label="Editar"><i class="fas fa-edit"></i></button>
+          <button onclick="deleteConsulta(${idx})" class="btn-crud-delete" aria-label="Eliminar"><i class="fas fa-trash-alt"></i></button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.deleteConsulta = function(idx) {
+    consultas.splice(idx, 1);
+    localStorage.setItem('aquicontigo_consultas', JSON.stringify(consultas));
+    renderQueries();
+  };
+
+  window.editConsulta = function(idx) {
+    const c = consultas[idx];
+    document.getElementById('nombre').value = c.nombre;
+    document.getElementById('telefono').value = c.telefono;
+    document.getElementById('mensaje').value = c.mensaje;
+    
+    document.getElementById('contacto-crud').scrollIntoView({ behavior: 'smooth' });
+    window.deleteConsulta(idx);
+  };
+
+  document.getElementById('consultaForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const mensaje = document.getElementById('mensaje').value.trim();
+    
+    consultas.unshift({ nombre, telefono, mensaje });
+    localStorage.setItem('aquicontigo_consultas', JSON.stringify(consultas));
+    renderQueries();
+    
+    const waMsg = `Hola Aquí Contigo! 👋%0A%0A*Nueva Solicitud Formada:*%0A*Responsable:* ${encodeURIComponent(nombre)}%0A*Contacto:* ${encodeURIComponent(telefono)}%0A*Requerimientos:* ${encodeURIComponent(mensaje)}`;
+    window.open(`https://wa.me/593995441552?text=${waMsg}`, '_blank');
+    document.getElementById('consultaForm').reset();
+  });
+
+  renderQueries();
+</script>
+
+</body>
+</html>
