@@ -846,11 +846,11 @@
     .btn-crud-delete { color: #C0392B; }
     .btn-crud-delete:hover { background: #C0392B; color: white; transform: scale(1.1); }
 
-    /* WhatsApp Flotante Tridimensional */
+    /* WhatsApp Flotante Tridimensional - MOVIDO A LA IZQUIERDA */
     .whatsapp-float {
       position: fixed;
       bottom: 40px;
-      right: 40px;
+      left: 40px;
       background: #25D366;
       width: 60px;
       height: 60px;
@@ -867,6 +867,253 @@
     }
 
     .whatsapp-float:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 15px 35px rgba(37, 211, 102, 0.45); }
+
+    /* ESTRUCTURA LUXURY CHATBOT PREMIUM (Derecha) */
+    .chatbot-launcher {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: white;
+      box-shadow: 0 10px 32px var(--primary-glow);
+      z-index: 1999;
+      cursor: pointer;
+      transition: var(--transition-fluid);
+      border: none;
+    }
+
+    .chatbot-launcher:hover { transform: scale(1.08) rotate(8deg); }
+
+    .chatbot-window {
+      position: fixed;
+      bottom: 115px;
+      right: 40px;
+      width: 380px;
+      height: 520px;
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow-hover);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      pointer-events: none;
+      transition: var(--transition-fluid);
+    }
+
+    .chatbot-window.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .chatbot-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chatbot-info { display: flex; align-items: center; gap: 12px; }
+    .chatbot-avatar { width: 38px; height: 38px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    
+    .chatbot-close-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.7; transition: var(--transition-snappy); }
+    .chatbot-close-btn:hover { opacity: 1; }
+
+    .chatbot-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: var(--bg-soft);
+    }
+
+    .chat-msg { max-width: 82%; padding: 12px 16px; border-radius: var(--radius-md); font-size: 0.92rem; line-height: 1.5; animation: fadeIn 0.3s ease; }
+    .chat-msg.bot { background: var(--bg-white); color: var(--text-dark); border-bottom-left-radius: 4px; border: 1px solid var(--border-light); align-self: flex-start; }
+    .chat-msg.user { background: var(--primary); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+
+    .chatbot-options { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
+    .chat-opt-btn {
+      background: var(--bg-white);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 10px 14px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-align: left;
+      transition: var(--transition-snappy);
+    }
+    .chat-opt-btn:hover:not(:disabled) { background: var(--primary); color: white; }
+    .chat-opt-btn:disabled { opacity: 0.6; cursor: not-allowed; border-color: var(--text-light); color: var(--text-light); }
+
+    .chatbot-footer {
+      padding: 14px 20px;
+      background: var(--bg-white);
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: 10px;
+    }
+
+    .chatbot-footer input { padding: 12px 16px; font-size: 0.9rem; border-radius: 30px; }
+    .chatbot-send-btn {
+      background: var(--primary);
+      border: none;
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-snappy);
+      flex-shrink: 0;
+    }
+    .chatbot-send-btn:hover { background: var(--primary-light); }
+
+    /* ESTILOS DE LA VENTANA EMERGENTE CRUD DE SEGURIDAD LEGAL */
+    .legal-crud-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(7, 13, 11, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      z-index: 3500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition-fluid);
+    }
+    .legal-crud-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .legal-crud-container {
+      width: 90%;
+      max-width: 950px;
+      height: 85vh;
+      background: var(--bg-white);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--card-shadow-hover);
+      display: flex;
+      overflow: hidden;
+      transform: scale(0.95);
+      transition: var(--transition-fluid);
+    }
+    .legal-crud-modal.active .legal-crud-container {
+      transform: scale(1);
+    }
+    .legal-sidebar {
+      width: 280px;
+      background: var(--bg-soft);
+      border-right: 1px solid var(--border-light);
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .legal-sidebar h3 {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .legal-nav-btn {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: var(--radius-md);
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: var(--transition-snappy);
+    }
+    .legal-nav-btn.active, .legal-nav-btn:hover {
+      background: var(--bg-white);
+      border-color: var(--border-light);
+      color: var(--primary);
+      box-shadow: var(--card-shadow);
+    }
+    .legal-content-pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-white);
+    }
+    .legal-pane-header {
+      padding: 24px 40px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .legal-pane-header h2 {
+      font-size: 1.6rem;
+      color: var(--text-dark);
+    }
+    .legal-pane-body {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+    .legal-pane-body h4 {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      margin: 25px 0 10px;
+    }
+    .legal-crud-lock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-soft);
+      border: 1px solid var(--border-light);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .legal-control-bar {
+      padding: 16px 40px;
+      background: var(--bg-soft);
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
 
     /* Footer Ejecutivo */
     footer {
@@ -899,6 +1146,9 @@
       .hero-badge { justify-content: center; }
       .hero-content h1 { font-size: 3.2rem; }
       .about-wrap, .form-section { padding: 50px; }
+      .legal-crud-container { flex-direction: column; height: 90vh; }
+      .legal-sidebar { width: 100%; height: auto; padding: 20px; flex-direction: row; flex-wrap: wrap; }
+      .legal-nav-btn { width: auto; padding: 10px 15px; }
     }
 
     @media (max-width: 768px) {
@@ -929,7 +1179,10 @@
       .album-item { width: 290px; }
       .query-item { flex-direction: column; align-items: flex-start; gap: 16px; }
       .query-actions { width: 100%; justify-content: flex-end; }
-      .whatsapp-float { bottom: 24px; right: 24px; width: 52px; height: 52px; font-size: 1.7rem; }
+      /* Corrección posiciones Mobile */
+      .whatsapp-float { bottom: 24px; left: 24px; width: 52px; height: 52px; font-size: 1.7rem; }
+      .chatbot-launcher { bottom: 24px; right: 24px; width: 52px; height: 52px; font-size: 1.4rem; }
+      .chatbot-window { bottom: 90px; right: 24px; width: calc(100% - 48px); height: 460px; }
     }
   </style>
 </head>
@@ -949,8 +1202,57 @@
 
 <div class="progress-container"><div class="progress-bar" id="scrollProgress"></div></div>
 
-<!-- Botón Flotante WhatsApp -->
+<!-- Botón Flotante WhatsApp (LADO IZQUIERDO) -->
 <a href="https://wa.me/593995441552?text=Saludos.%20Solicito%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20sus%20servicios%20de%20asistencia%20y%20cuidado%20domiciliario%20de%20alta%20gama." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Contacto WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+<!-- ESTRUCTURA DEL CHATBOT INTELIGENTE PREMIUM (LADO DERECHO) -->
+<button class="chatbot-launcher" id="chatLauncher" aria-label="Abrir Asistente Virtual"><i class="fas fa-comment-medical"></i></button>
+<div class="chatbot-window" id="chatWindow">
+  <div class="chatbot-header">
+    <div class="chatbot-info">
+      <div class="chatbot-avatar"><i class="fas fa-user-md"></i></div>
+      <div>
+        <h4 style="font-size: 0.95rem; font-weight: 600;">Asistente Clínico</h4>
+        <small style="font-size: 0.78rem; opacity: 0.85; display: flex; align-items: center; gap: 4px;"><span style="width:6px; height:6px; background:#25D366; border-radius:50%; display:inline-block;"></span>En línea</small>
+      </div>
+    </div>
+    <button class="chatbot-close-btn" id="closeChatBtn"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="chatbot-body" id="chatBody">
+    <!-- Mensajes cargados dinámicamente -->
+  </div>
+  <div class="chatbot-footer">
+    <input type="text" id="chatInput" placeholder="Escriba su mensaje aquí..." autocomplete="off">
+    <button class="chatbot-send-btn" id="chatSendBtn" aria-label="Enviar Mensaje"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- VENTANA EMERGENTE DE TIPO CRUD LEGAL (SOLO LECTURA DE SEGURIDAD) -->
+<div class="legal-crud-modal" id="legalCrudModal">
+  <div class="legal-crud-container">
+    <div class="legal-sidebar">
+      <h3><i class="fas fa-folder-open"></i> Consola CRUD</h3>
+      <button class="legal-nav-btn active" id="btnPaneTerminos" onclick="switchLegalPane('terminos')"><i class="fas fa-file-contract"></i> Read: Términos</button>
+      <button class="legal-nav-btn" id="btnPanePoliticas" onclick="switchLegalPane('politicas')"><i class="fas fa-shield-alt"></i> Read: Políticas</button>
+      <hr style="border:none; border-top:1px solid var(--border-light); margin:10px 0;">
+      <button class="legal-nav-btn" style="opacity:0.4; cursor:not-allowed;" disabled><i class="fas fa-plus-circle"></i> Create: Bloqueado</button>
+      <button class="legal-nav-btn" style="opacity:0.4; cursor:not-allowed;" disabled><i class="fas fa-edit"></i> Update: Bloqueado</button>
+      <button class="legal-nav-btn" style="opacity:0.4; cursor:not-allowed;" disabled><i class="fas fa-trash-alt"></i> Delete: Bloqueado</button>
+    </div>
+    <div class="legal-content-pane">
+      <div class="legal-pane-header">
+        <h2 id="legalPaneTitle">Términos y Condiciones de Uso</h2>
+        <span class="legal-crud-lock-badge"><i class="fas fa-lock"></i> Sys.Read_Only</span>
+      </div>
+      <div class="legal-pane-body" id="legalPaneBody">
+        <!-- Inyección dinámica -->
+      </div>
+      <div class="legal-control-bar">
+        <button class="btn-outline" style="padding:10px 24px; font-size:0.88rem;" onclick="closeLegalModal()">Cerrar Consola</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <nav class="navbar" id="mainNavbar">
   <div class="container nav-container">
@@ -1083,7 +1385,7 @@
     </div>
   </section>
 
-  <!-- Sección Coordinación de Servicios (CRUD Totalmente Completo) -->
+  <!-- Sección Coordinación de Servicios -->
   <section id="contacto-crud" class="container">
     <div class="form-section" data-aos="fade-up">
       <h2 class="section-title" style="text-align: left; margin-bottom: 12px;">Coordinación de Servicios</h2>
@@ -1104,12 +1406,6 @@
         </div>
         <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;"><i class="fab fa-whatsapp"></i> Registrar y Enviar Mensaje</button>
       </form>
-      
-      <!-- Componente CRUD LocalStorage Activo y Visible 
-      <div class="crud-title-container">
-        <h3 style="margin-bottom: 24px; font-size: 1.4rem; font-weight: 600;"><i class="fas fa-database" style="color:var(--primary); margin-right: 12px;"></i> Solicitudes Registradas en el Sistema</h3>
-        <div id="queriesContainer"></div>
-      </div>-->
     </div>
   </section>
 </main>
@@ -1123,6 +1419,14 @@
       <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
       <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
     </div>
+    
+    <!-- ENLACES LEGALES HACIA EL CRUD DE SEGURIDAD MODAL -->
+    <div style="margin-top: 25px; display: flex; justify-content: center; gap: 20px; font-size: 0.85rem;">
+      <a href="javascript:void(0)" onclick="openLegalModal('terminos')" style="color: var(--primary-light); text-decoration: none; font-weight: 500;">Términos y Condiciones</a>
+      <span style="opacity: 0.3;">|</span>
+      <a href="javascript:void(0)" onclick="openLegalModal('politicas')" style="color: var(--primary-light); text-decoration: none; font-weight: 500;">Políticas de Privacidad y Tratamiento</a>
+    </div>
+
     <hr style="margin: 45px 0 30px; border: none; border-top: 1px solid rgba(255,255,255,0.07);">
     <p style="font-size: 0.88rem; opacity: 0.45;">&copy; 2026 Aquí Contigo. Resguardo de Salud Domiciliaria. Todos los derechos reservados.</p>
   </div>
@@ -1144,7 +1448,6 @@
         setTimeout(() => {
           loadingScreen.style.opacity = "0";
           loadingScreen.style.visibility = "hidden";
-          // Inicialización de Animaciones al concluir carga
           AOS.init({ duration: 900, once: true, easing: 'cubic-bezier(0.25, 1, 0.5, 1)' });
         }, 250);
       }
@@ -1241,67 +1544,239 @@
         <p style="font-size:0.98rem; color:var(--text-muted); line-height:1.65; font-style:italic;">“${r.text}”</p>
       </div>
     `).join('');
-    
     rail.innerHTML = cardsHTML + cardsHTML;
   }
   buildReviewsMarquee();
 
-  // Motor Core CRUD LocalStorage Completo
-  let consultas = JSON.parse(localStorage.getItem('aquicontigo_consultas') || '[]');
-  
-  function renderQueries() {
-    const container = document.getElementById('queriesContainer');
-    if(!container) return;
-    if(!consultas.length) {
-      container.innerHTML = '<div style="padding:32px; text-align:center; color:var(--text-light); font-size:0.98rem; font-style:italic; border:1px dashed var(--border-light); border-radius:12px;">No existen registros de solicitudes locales pendientes.</div>';
-      return;
-    }
-    container.innerHTML = consultas.map((c, idx) => `
-      <div class="query-item">
-        <div style="padding-right: 16px;">
-          <strong style="color:var(--primary); font-weight:600; font-size:1.05rem;">${c.nombre}</strong> <span style="font-size:0.88rem; color:var(--text-light); font-weight:500;">(${c.telefono})</span>
-          <p style="font-size:0.95rem; color:var(--text-muted); margin-top:8px; line-height:1.5;">${c.mensaje}</p>
-        </div>
-        <div class="query-actions">
-          <button onclick="editConsulta(${idx})" class="btn-crud-edit" aria-label="Editar"><i class="fas fa-edit"></i></button>
-          <button onclick="deleteConsulta(${idx})" class="btn-crud-delete" aria-label="Eliminar"><i class="fas fa-trash-alt"></i></button>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  window.deleteConsulta = function(idx) {
-    consultas.splice(idx, 1);
-    localStorage.setItem('aquicontigo_consultas', JSON.stringify(consultas));
-    renderQueries();
-  };
-
-  window.editConsulta = function(idx) {
-    const c = consultas[idx];
-    document.getElementById('nombre').value = c.nombre;
-    document.getElementById('telefono').value = c.telefono;
-    document.getElementById('mensaje').value = c.mensaje;
-    
-    document.getElementById('contacto-crud').scrollIntoView({ behavior: 'smooth' });
-    window.deleteConsulta(idx);
-  };
-
+  // Envío del Formulario Principal a WhatsApp
   document.getElementById('consultaForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const nombre = document.getElementById('nombre').value.trim();
     const telefono = document.getElementById('telefono').value.trim();
     const mensaje = document.getElementById('mensaje').value.trim();
     
-    consultas.unshift({ nombre, telefono, mensaje });
-    localStorage.setItem('aquicontigo_consultas', JSON.stringify(consultas));
-    renderQueries();
-    
     const waMsg = `Hola Aquí Contigo! 👋%0A%0A*Nueva Solicitud Formada:*%0A*Responsable:* ${encodeURIComponent(nombre)}%0A*Contacto:* ${encodeURIComponent(telefono)}%0A*Requerimientos:* ${encodeURIComponent(mensaje)}`;
     window.open(`https://wa.me/593995441552?text=${waMsg}`, '_blank');
     document.getElementById('consultaForm').reset();
   });
 
-  renderQueries();
+  // =======================================================
+  // MOTOR DE CHATBOT COMPLETAMENTE VOLÁTIL (RESET AL RECARGAR)
+  // =======================================================
+  const chatLauncher = document.getElementById('chatLauncher');
+  const chatWindow = document.getElementById('chatWindow');
+  const closeChatBtn = document.getElementById('closeChatBtn');
+  const chatBody = document.getElementById('chatBody');
+  const chatInput = document.getElementById('chatInput');
+  const chatSendBtn = document.getElementById('chatSendBtn');
+
+  const preguntasChat = [
+    { llave: "nombre", texto: "Para iniciar la coordinación, ¿cuál es el nombre del familiar responsable?" },
+    { llave: "paciente", texto: "¿Cuál es el nombre y la edad del paciente que recibirá el cuidado?" },
+    { llave: "diagnostico", texto: "Por favor, coménteme brevemente la condición médica o requerimientos principales del paciente:" },
+    { llave: "cita", texto: "¿Desea agendar su cita médica para la valoración domiciliaria formal?", tipo: "opciones", alternativas: ["Sí, deseo agendar", "No, solo información"] }
+  ];
+
+  // Estado efímero del Chat (Se destruye en cada recarga de manera explícita)
+  let estadoChat = {
+    indicePaso: 0,
+    respuestas: {},
+    historial: []
+  };
+
+  window.onload = () => {
+    // Forzar limpieza total del chatbot al cargar la página
+    estadoChat = { indicePaso: 0, respuestas: {}, historial: [] };
+    chatBody.innerHTML = "";
+    chatInput.disabled = false;
+    chatSendBtn.disabled = false;
+    setTimeout(inicializarChatbot, 500);
+  };
+
+  chatLauncher.addEventListener('click', () => chatWindow.classList.toggle('active'));
+  closeChatBtn.addEventListener('click', () => chatWindow.classList.remove('active'));
+
+  function appendMensajeVisual(remitente, texto) {
+    const div = document.createElement('div');
+    div.classList.add('chat-msg', remitente);
+    div.innerHTML = texto;
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function renderOpcionesInteractivas(preguntaObj) {
+    const container = document.createElement('div');
+    container.classList.add('chatbot-options');
+    preguntaObj.alternativas.forEach(alt => {
+      const btn = document.createElement('button');
+      btn.classList.add('chat-opt-btn');
+      btn.innerText = alt;
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('button').forEach(b => b.disabled = true);
+        procesarRespuestaUsuario(alt);
+      });
+      container.appendChild(btn);
+    });
+    chatBody.appendChild(container);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function lanzarSiguientePregunta() {
+    if (estadoChat.indicePaso < preguntasChat.length) {
+      const actualPregunta = preguntasChat[estadoChat.indicePaso];
+      appendMensajeVisual('bot', actualPregunta.texto);
+      estadoChat.historial.push({ remitente: 'bot', texto: actualPregunta.texto });
+      
+      if (actualPregunta.tipo === "opciones") {
+        chatInput.disabled = true;
+        chatSendBtn.disabled = true;
+        renderOpcionesInteractivas(actualPregunta);
+      } else {
+        chatInput.disabled = false;
+        chatInput.placeholder = "Escriba su respuesta...";
+        chatSendBtn.disabled = false;
+      }
+    }
+  }
+
+  function reiniciarChatCompleto() {
+    estadoChat = { indicePaso: 0, respuestas: {}, historial: [] };
+    chatBody.innerHTML = "";
+    chatInput.disabled = false;
+    chatSendBtn.disabled = false;
+    chatInput.placeholder = "Escriba su mensaje aquí...";
+    
+    const saludoReiniciar = "Conversación reiniciada. Comencemos de nuevo de manera formal.";
+    appendMensajeVisual('bot', saludoReiniciar);
+    setTimeout(lanzarSiguientePregunta, 800);
+  }
+
+  function procesarRespuestaUsuario(entradaTexto) {
+    if(!entradaTexto.trim()) return;
+
+    appendMensajeVisual('user', entradaTexto);
+    estadoChat.historial.push({ remitente: 'user', texto: entradaTexto });
+
+    const preguntaActual = preguntasChat[estadoChat.indicePaso];
+    estadoChat.respuestas[preguntaActual.llave] = entradaTexto;
+    estadoChat.indicePaso++;
+
+    if (estadoChat.indicePaso >= preguntasChat.length) {
+      chatInput.disabled = true;
+      chatSendBtn.disabled = true;
+      chatInput.placeholder = "Conversación finalizada.";
+
+      if (estadoChat.respuestas['cita'] === "Sí, deseo agendar") {
+        const confirmacionMsg = "¡Excelente elección! Presione el enlace inferior para transferir los datos recopilados de inmediato a nuestros coordinadores vía WhatsApp:";
+        appendMensajeVisual('bot', confirmacionMsg);
+
+        const r = estadoChat.respuestas;
+        const textoLinkWA = `Hola Aquí Contigo! 👋%0A%0A*Solicitud de Agendamiento desde el Chatbot:*%0A*Familiar Responsable:* ${encodeURIComponent(r.nombre)}%0A*Paciente:* ${encodeURIComponent(r.paciente)}%0A*Requerimientos:* ${encodeURIComponent(r.diagnostico)}`;
+        
+        const waLinkElement = document.createElement('a');
+        waLinkElement.href = `https://wa.me/593995441552?text=${textoLinkWA}`;
+        waLinkElement.target = "_blank";
+        waLinkElement.classList.add('btn-primary');
+        waLinkElement.style.marginTop = "10px";
+        waLinkElement.style.width = "100%";
+        waLinkElement.style.justifyContent = "center";
+        waLinkElement.innerHTML = `<i class="fab fa-whatsapp"></i> Enviar a WhatsApp`;
+        
+        chatBody.appendChild(waLinkElement);
+      } else {
+        // Opción adaptada para Habilitar Re-inicio fluido de la conversación
+        const despedidaMsg = "Entendido. Si desea comenzar la conversación desde el inicio para ingresar otros datos, presione el botón inferior:";
+        appendMensajeVisual('bot', despedidaMsg);
+
+        const containerReset = document.createElement('div');
+        containerReset.classList.add('chatbot-options');
+        const btnReset = document.createElement('button');
+        btnReset.classList.add('chat-opt-btn');
+        btnReset.style.borderColor = "var(--secondary)";
+        btnReset.style.color = "var(--secondary)";
+        btnReset.innerHTML = `<i class="fas fa-sync-alt"></i> Reiniciar Conversación`;
+        btnReset.addEventListener('click', reiniciarChatCompleto);
+        containerReset.appendChild(btnReset);
+        chatBody.appendChild(containerReset);
+      }
+      chatBody.scrollTop = chatBody.scrollHeight;
+    } else {
+      setTimeout(lanzarSiguientePregunta, 800);
+    }
+  }
+
+  chatSendBtn.addEventListener('click', () => {
+    const val = chatInput.value;
+    chatInput.value = "";
+    procesarRespuestaUsuario(val);
+  });
+
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      const val = chatInput.value;
+      chatInput.value = "";
+      procesarRespuestaUsuario(val);
+    }
+  });
+
+  function inicializarChatbot() {
+    const saludoInicial = "Bienvenido al canal de Asistencia Avanzada de *Aquí Contigo*. Soy su asesor virtual y le guiaré en su solicitud.";
+    appendMensajeVisual('bot', saludoInicial);
+    setTimeout(lanzarSiguientePregunta, 1000);
+  }
+
+  // =======================================================
+  // MOTOR DEL CRUD LEGAL DE SOLO LECTURA (TEXTOS COMPLETOS)
+  // =======================================================
+  const legalCrudModal = document.getElementById('legalCrudModal');
+  const legalPaneTitle = document.getElementById('legalPaneTitle');
+  const legalPaneBody = document.getElementById('legalPaneBody');
+
+  const textosLegales = {
+    terminos: `
+      <h4>1. Objeto y Generalidades</h4>
+      <p>Los presentes Términos y Condiciones regulan el uso de la plataforma web corporativa de <strong>Aquí Contigo</strong>, cuyo fin exclusivo es facilitar la solicitud de valoraciones clínicas domiciliarias e informativas.</p>
+      <h4>2. Naturaleza del Servicio de Coordinación</h4>
+      <p>El envío de información a través de los formularios o del asistente virtual interactivo no constituye una obligación contractual de prestación inmediata. Los servicios definitivos quedan sujetos a la validación en campo de un evaluador asignado.</p>
+      <h4>3. Responsabilidad del Usuario Familiar</h4>
+      <p>El familiar o solicitante declara bajo juramento legal que toda la información provista con respecto al diagnóstico, edad, tratamiento clínico vigente y estado general de movilidad del paciente es verídica, eximiendo a la institución de contingencias derivadas de omisiones técnicas médicas esenciales.</p>
+      <h4>4. Propiedad Intelectual y Limitaciones de Modificación</h4>
+      <p>El diseño gráfico, la disposición de la interfaz de usuario basada en microservicios, el código informático integrado y las bases de datos transaccionales corresponden exclusivamente a la firma de desarrollo tecnológico aliada y bajo ninguna circunstancia se concede derecho de alteración parcial o total del código fuente de este entorno.</p>
+    `,
+    politicas: `
+      <h4>1. Tratamiento Exhaustivo de Datos Médicos (Sensibles)</h4>
+      <p>De conformidad con las leyes vigentes de Protección de Datos Personales, <strong>Aquí Contigo</strong> informa que el nombre, historial médico resumido, edades y condiciones clínicas ingresadas de forma local se consideran datos sensibles y reciben encriptación de seguridad a nivel lógico.</p>
+      <h4>2. Finalidad del Tratamiento</h4>
+      <p>Los datos capturados por el sistema local o retransmitidos de forma voluntaria a través de la API externa de WhatsApp se usarán únicamente con fines de prospección clínica, estructuración de presupuestos modulares y despacho del equipo asistencial domiciliario de contingencia.</p>
+      <h4>3. Exclusión de Transferencia a Terceros</h4>
+      <p>Bajo ningún concepto técnico u operativo los datos almacenados de forma transaccional se venderán, cederán ni intercambiarán con aseguradoras, laboratorios farmacéuticos u otros intermediarios sin el consentimiento expreso firmado digitalmente por el familiar legal responsable.</p>
+      <h4>4. Ejercicio de Derechos ARCO</h4>
+      <p>El titular o su familiar directo acreditado formalmente podrá solicitar en cualquier momento la revocación del consentimiento para el resguardo de información local escribiendo directamente a los canales corporativos establecidos.</p>
+    `
+  };
+
+  function openLegalModal(seccion = 'terminos') {
+    legalCrudModal.classList.add('active');
+    switchLegalPane(seccion);
+  }
+
+  function closeLegalModal() {
+    legalCrudModal.classList.remove('active');
+  }
+
+  function switchLegalPane(seccion) {
+    document.getElementById('btnPaneTerminos').classList.toggle('active', seccion === 'terminos');
+    document.getElementById('btnPanePoliticas').classList.toggle('active', seccion === 'politicas');
+
+    if (seccion === 'terminos') {
+      legalPaneTitle.innerText = "Términos y Condiciones de Uso";
+      legalPaneBody.innerHTML = textosLegales.terminos;
+    } else {
+      legalPaneTitle.innerText = "Políticas de Privacidad y Tratamiento de la Información";
+      legalPaneBody.innerHTML = textosLegales.politicas;
+    }
+    legalPaneBody.scrollTop = 0;
+  }
 </script>
 
 </body>
