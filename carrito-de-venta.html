@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Aquí Contigo | Tienda Premium</title>
+  <link rel="icon" type="image/x-icon" href="aqui-contigo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
+  <style>
+    /* ===== Variables ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    :root {
+      --primary: #236F57; --primary-light: #3ca281; --primary-dark: #164737;
+      --primary-soft: rgba(35,111,87,0.06); --primary-glow: rgba(35,111,87,0.15);
+      --purple-lila: #7B2CBF; --purple-lila-light: #9D4EDD;
+      --turquesa: #00B4D8; --turquesa-light: #90E0EF;
+      --bg-white: #FFFFFF; --bg-soft: #F4F7F5;
+      --text-dark: #0B1310; --text-muted: #415349; --text-light: #768E80;
+      --border-light: rgba(35,111,87,0.12);
+      --glass-bg: rgba(255,255,255,0.45); --glass-border: rgba(255,255,255,0.6);
+      --card-shadow: 0 10px 30px -5px rgba(11,19,16,0.04), 0 4px 12px -3px rgba(35,111,87,0.02);
+      --card-shadow-hover: 0 25px 50px -12px rgba(123,44,191,0.15), 0 8px 20px -6px rgba(0,180,216,0.05);
+      --header-bg: rgba(244,247,245,0.75);
+      --footer-bg: linear-gradient(135deg, #0B1310 0%, #050807 100%);
+      --footer-text-title: #FFFFFF; --footer-text-body: #A4B6AD;
+      --radius-xl: 30px; --radius-lg: 20px; --radius-md: 14px;
+      --transition-fluid: all 0.5s cubic-bezier(0.16,1,0.3,1);
+      --transition-snappy: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    body.dark {
+      --primary: #41A384; --primary-light: #59d5af; --primary-dark: #236F57;
+      --primary-soft: rgba(65,163,132,0.12); --primary-glow: rgba(65,163,132,0.25);
+      --purple-lila: #9D4EDD; --purple-lila-light: #C77DFF;
+      --turquesa: #00B4D8; --turquesa-light: #ADE8F4;
+      --bg-white: #0E1613; --bg-soft: #050807;
+      --text-dark: #F5FAF7; --text-muted: #94A89E; --text-light: #5C7367;
+      --border-light: rgba(65,163,132,0.16);
+      --glass-bg: rgba(14,22,19,0.55); --glass-border: rgba(255,255,255,0.04);
+      --card-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
+      --card-shadow-hover: 0 30px 60px -12px rgba(65,163,132,0.25);
+      --header-bg: rgba(5,8,7,0.75);
+      --footer-bg: linear-gradient(135deg, #060A08 0%, #010202 100%);
+      --footer-text-title: #F5FAF7; --footer-text-body: #7D9487;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-soft);
+      color: var(--text-dark);
+      transition: background 0.4s var(--transition-snappy), color 0.4s var(--transition-snappy);
+      overflow-x: hidden;
+    }
+    h1, h2, h3, .section-title { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    .btn-primary, .btn-outline {
+      padding: 16px 36px; border-radius: 50px; font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 12px;
+      transition: var(--transition-fluid); text-decoration: none; box-shadow: var(--card-shadow);
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--purple-lila));
+      color: white;
+    }
+    .btn-primary:hover { background: linear-gradient(135deg, var(--purple-lila-light), var(--turquesa)); transform: translateY(-3px); }
+    .btn-outline {
+      background: var(--glass-bg);
+      border: 1px solid var(--turquesa);
+      color: var(--primary);
+    }
+    .btn-outline:hover { background: linear-gradient(135deg, var(--turquesa), var(--primary)); color: white; transform: translateY(-3px); }
+    .section-title-container { text-align: center; margin-bottom: 3rem; }
+    .section-title { font-size: 3rem; color: var(--text-dark); position: relative; display: inline-block; padding-bottom: 20px; }
+    .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 3px; background: linear-gradient(90deg, var(--purple-lila), var(--turquesa)); border-radius: 2px; }
+    .section-sub { font-family: 'Inter', sans-serif; font-size: 1.1rem; color: var(--text-muted); margin-top: 18px; font-weight: 400; }
+
+    /* ===== Navegación con logo ===== */
+    .navbar { position: sticky; top: 0; z-index: 2000; background: var(--header-bg); backdrop-filter: blur(30px); border-bottom: 1px solid var(--border-light); padding: 16px 0; transition: var(--transition-fluid); }
+    .navbar.scrolled { padding: 12px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; }
+    .logo-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-img { height: 50px; width: auto; object-fit: contain; }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-dark); letter-spacing: -0.5px; }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .dark-toggle {
+      background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%;
+      width: 44px; height: 44px; cursor: pointer; color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--card-shadow); transition: var(--transition-fluid);
+    }
+    .dark-toggle:hover { background: linear-gradient(135deg, var(--purple-lila), var(--turquesa)); color: white; transform: scale(1.05); }
+
+    /* Ícono del carrito en el nav */
+    .cart-icon-wrapper {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.6rem;
+      color: var(--text-dark);
+      transition: var(--transition-snappy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--card-shadow);
+    }
+    .cart-icon-wrapper:hover {
+      background: linear-gradient(135deg, var(--primary), var(--purple-lila));
+      color: white;
+      transform: scale(1.05);
+    }
+    .cart-icon-wrapper .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #C0392B;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      min-width: 20px;
+      text-align: center;
+      border: 2px solid var(--bg-white);
+      transition: var(--transition-snappy);
+    }
+    .cart-icon-wrapper .cart-badge.hidden { display: none; }
+
+    /* ===== Tienda ===== */
+    #tienda { padding: 80px 0; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .product-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-fluid);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover { transform: translateY(-8px); box-shadow: var(--card-shadow-hover); border-color: var(--turquesa); }
+    .product-card img {
+      width: 100%; height: 180px; object-fit: cover; border-radius: var(--radius-md);
+      background: var(--bg-soft); margin-bottom: 16px;
+    }
+    .product-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .product-card .product-desc { color: var(--text-muted); font-size: 0.9rem; flex: 1; margin-bottom: 12px; }
+    .product-card .product-price { font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 16px; }
+    .product-card .product-actions { display: flex; gap: 10px; }
+    .product-card .product-actions button {
+      flex: 1; padding: 10px 12px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.85rem;
+      cursor: pointer; transition: var(--transition-snappy); display: flex; align-items: center; justify-content: center; gap: 6px;
+      background: var(--primary); color: white;
+    }
+    .product-card .product-actions button:hover { background: var(--purple-lila); }
+
+    /* ===== Carrito ===== */
+    .cart-sidebar {
+      position: fixed; top: 0; right: -500px; width: 500px; height: 100%;
+      background: var(--bg-white); border-left: 1px solid var(--border-light);
+      box-shadow: var(--card-shadow-hover); z-index: 3000;
+      padding: 30px; overflow-y: auto;
+      transition: right 0.4s cubic-bezier(0.16,1,0.3,1);
+      display: flex; flex-direction: column;
+    }
+    .cart-sidebar.open { right: 0; }
+    .cart-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px; border-bottom: 2px solid var(--border-light);
+      margin-bottom: 20px;
+    }
+    .cart-header h2 { font-size: 2rem; }
+    .cart-header .close-cart { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--text-muted); transition: var(--transition-snappy); }
+    .cart-header .close-cart:hover { color: var(--purple-lila); transform: rotate(90deg); }
+    .cart-items { flex: 1; overflow-y: auto; padding-right: 5px; }
+    .cart-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 0; border-bottom: 1px solid var(--border-light);
+    }
+    .cart-item-info { flex: 1; }
+    .cart-item-info h4 { font-size: 1.05rem; margin-bottom: 4px; }
+    .cart-item-info p { color: var(--text-muted); font-size: 0.9rem; }
+    .cart-item-actions {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .cart-item-actions button {
+      background: var(--bg-soft); border: 1px solid var(--border-light);
+      border-radius: 30px; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-weight: 600; transition: var(--transition-snappy);
+      color: var(--text-dark);
+    }
+    .cart-item-actions button:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .cart-item-actions .qty-num { font-weight: 600; min-width: 20px; text-align: center; }
+    .cart-item-actions .remove-btn { background: none; border: none; color: #C0392B; font-size: 1.2rem; cursor: pointer; transition: var(--transition-snappy); }
+    .cart-item-actions .remove-btn:hover { color: #E74C3C; transform: scale(1.1); }
+
+    .cart-total {
+      margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--border-light);
+      font-size: 1.1rem;
+    }
+    .cart-total .total-row { display: flex; justify-content: space-between; padding: 6px 0; }
+    .cart-total .iva-line { color: var(--text-muted); font-size: 0.9rem; }
+    .cart-total .total-line { font-weight: 700; font-size: 1.5rem; color: var(--primary); }
+    .cart-total .envio-nota { font-size: 0.85rem; color: var(--text-light); margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+
+    /* Formulario de dirección en el carrito */
+    .address-section {
+      margin-top: 20px;
+      padding: 20px;
+      background: var(--bg-soft);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+    }
+    .address-section h3 { font-size: 1.1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .address-section .form-group { margin-bottom: 12px; }
+    .address-section .form-group label { display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 4px; }
+    .address-section .form-group input {
+      width: 100%; padding: 10px 14px; border-radius: var(--radius-md);
+      border: 1px solid var(--border-light); background: var(--bg-white);
+      color: var(--text-dark); font-family: inherit; font-size: 0.95rem;
+      transition: var(--transition-snappy);
+    }
+    .address-section .form-group input:focus {
+      outline: none; border-color: var(--purple-lila); box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+    .address-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* Botón procesar */
+    .checkout-btn-container { margin-top: 20px; }
+    .checkout-btn-container .btn-primary { width: 100%; justify-content: center; padding: 16px; font-size: 1rem; }
+
+    /* ===== Modal de Confirmación ===== */
+    .confirm-modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+      z-index: 4000; display: none; align-items: center; justify-content: center;
+    }
+    .confirm-modal.active { display: flex; }
+    .confirm-panel {
+      background: var(--bg-white);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      max-width: 640px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--card-shadow-hover);
+      position: relative;
+    }
+    .confirm-panel .close-confirm {
+      position: absolute; top: 20px; right: 24px;
+      background: none; border: none; font-size: 1.8rem; cursor: pointer;
+      color: var(--text-muted); transition: var(--transition-snappy);
+    }
+    .confirm-panel .close-confirm:hover { color: var(--purple-lila); transform: rotate(90deg); }
+    .confirm-panel h2 { font-size: 2rem; margin-bottom: 10px; }
+    .confirm-panel .subtitle { color: var(--text-muted); margin-bottom: 24px; }
+    .confirm-details { margin: 20px 0; }
+    .confirm-details .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+    .confirm-details .detail-row:last-child { border-bottom: none; }
+    .confirm-details .total-final { font-weight: 700; font-size: 1.3rem; color: var(--primary); }
+    .confirm-address {
+      background: var(--primary-soft);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      margin: 16px 0;
+      border-left: 4px solid var(--turquesa);
+    }
+    .confirm-address p { margin: 4px 0; }
+    .bank-details {
+      background: var(--bg-white);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      margin: 16px 0;
+      border: 1px solid var(--border-light);
+    }
+    .bank-details p { margin: 4px 0; }
+    .confirm-actions {
+      display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;
+    }
+    .confirm-actions .btn-primary { flex: 2; justify-content: center; }
+    .confirm-actions .btn-outline { flex: 1; justify-content: center; }
+
+    /* ===== Toast ===== */
+    .toast-notification {
+      position: fixed; bottom: 120px; left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: var(--primary-dark); color: white;
+      padding: 12px 28px; border-radius: 30px; font-weight: 500;
+      box-shadow: var(--card-shadow-hover); z-index: 6000;
+      opacity: 0; pointer-events: none;
+      transition: var(--transition-fluid); font-size: 0.9rem;
+    }
+    .toast-notification.active { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+    /* ===== Botón flotante WhatsApp ===== */
+    .whatsapp-float {
+      position: fixed; bottom: 40px; left: 40px;
+      background: #25D366; width: 60px; height: 60px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; color: white; box-shadow: 0 10px 30px rgba(37,211,102,0.35);
+      z-index: 1999; text-decoration: none; transition: var(--transition-fluid);
+    }
+    .whatsapp-float:hover { transform: scale(1.1) translateY(-3px); }
+
+    /* ===== FOOTER COMPLETO (como en la página principal) ===== */
+    .premium-footer {
+      background: var(--footer-bg);
+      color: var(--footer-text-body);
+      padding: 90px 0 40px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.92rem;
+      position: relative;
+      margin-top: 80px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.9fr 1.1fr;
+      gap: 50px;
+      margin-bottom: 70px;
+    }
+    .footer-brand .footer-logo-img {
+      height: 52px;
+      width: auto;
+      margin-bottom: 24px;
+      object-fit: contain;
+    }
+    .footer-brand p {
+      line-height: 1.7;
+      color: var(--footer-text-body);
+      margin-bottom: 30px;
+    }
+    .footer-social-wrapper {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .footer-social-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      color: var(--footer-text-body);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition-fluid);
+    }
+    .footer-social-btn:hover {
+      background: linear-gradient(135deg, var(--primary), var(--purple-lila));
+      color: white;
+      transform: translateY(-4px) scale(1.05);
+      border-color: transparent;
+      box-shadow: 0 10px 20px rgba(35,111,87,0.2);
+    }
+    .footer-col h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--footer-text-title);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -10px;
+      width: 35px; height: 2px;
+      background: var(--turquesa);
+      border-radius: 2px;
+    }
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .footer-links-list a {
+      color: var(--footer-text-body);
+      text-decoration: none;
+      transition: var(--transition-snappy);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-links-list a i {
+      font-size: 0.75rem;
+      opacity: 0;
+      transform: translateX(-50%);
+      transition: var(--transition-snappy);
+      color: var(--purple-lila-light);
+    }
+    .footer-links-list a:hover {
+      color: var(--footer-text-title);
+      padding-left: 6px;
+    }
+    .footer-links-list a:hover i {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .footer-contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-item-box {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .contact-item-box i {
+      font-size: 1.2rem;
+      color: var(--turquesa);
+      margin-top: 3px;
+    }
+    .contact-item-box div h5 {
+      color: var(--footer-text-title);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .contact-item-box div p {
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 35px;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .footer-bottom-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-bottom-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: var(--transition-snappy);
+    }
+    .footer-bottom-links a:hover {
+      color: var(--footer-text-title);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1024px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .cart-sidebar { width: 100%; right: -100%; }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+      .container { padding: 0 20px; }
+      .address-row { grid-template-columns: 1fr; }
+      .confirm-actions { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .logo-text { display: none; }
+    }
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== LOADING SCREEN ===== -->
+  <div id="loading-screen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-soft);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.6s ease;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:30px;">
+      <div style="position:relative;width:160px;height:160px;display:flex;align-items:center;justify-content:center;background:var(--bg-white);border-radius:50%;padding:20px;box-shadow:var(--card-shadow-hover);">
+        <div style="position:absolute;top:-6px;left:-6px;right:-6px;bottom:-6px;border-radius:50%;border:3px solid transparent;border-top-color:var(--primary);border-bottom-color:var(--purple-lila);animation:spin 2s linear infinite;"></div>
+        <img src="aqui-contigo.png" alt="Aquí Contigo" style="width:100%;height:auto;object-fit:contain;" onerror="this.src='https://via.placeholder.com/120?text=Logo'">
+      </div>
+      <div style="width:240px;height:6px;background:var(--border-light);border-radius:10px;overflow:hidden;">
+        <div id="loadingBarFill" style="height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--turquesa));border-radius:10px;transition:width 0.1s linear;"></div>
+      </div>
+    </div>
+  </div>
+  <style>
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+
+  <!-- ===== PROGRESS BAR ===== -->
+  <div class="progress-container" style="position:fixed;top:0;left:0;width:100%;height:4px;background:transparent;z-index:2001;">
+    <div id="progressBar" style="height:100%;background:linear-gradient(90deg,var(--primary),var(--purple-lila));width:0%;"></div>
+  </div>
+
+  <!-- ===== NAVBAR CON LOGO Y NOMBRE ===== -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo-link">
+        <img src="aqui-contigo.png" alt="Aquí Contigo Premium" class="logo-img" onerror="this.src='https://via.placeholder.com/180x50?text=Aqui+Contigo'">
+        
+      </a>
+      <div class="nav-actions">
+        <div class="cart-icon-wrapper" id="cartIconNav" aria-label="Abrir carrito">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="cart-badge hidden" id="cartBadgeNav">0</span>
+        </div>
+        <button class="dark-toggle" id="darkToggle"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== SECCIÓN TIENDA ===== -->
+  <section id="tienda" class="container" data-aos="fade-up">
+    <div class="section-title-container">
+      <h2 class="section-title">Tienda Premium</h2>
+      <p class="section-sub">Productos de cuidado y bienestar para su hogar</p>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <!-- ===== CARRITO ===== -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2>Carrito</h2>
+      <button class="close-cart" id="closeCartBtn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">
+      <div class="total-row"><span>Subtotal</span> <span id="subtotalDisplay">$0.00</span></div>
+      <div class="total-row iva-line"><span>IVA (15%)</span> <span id="ivaDisplay">$0.00</span></div>
+      <div class="total-row total-line"><span>Total</span> <span id="totalDisplay">$0.00</span></div>
+      <div class="envio-nota"><i class="fa-solid fa-truck"></i> El precio de envío no está incluido.</div>
+    </div>
+
+    <!-- Formulario de dirección -->
+    <div class="address-section">
+      <h3><i class="fa-solid fa-location-dot" style="color:var(--turquesa);"></i> Dirección de envío</h3>
+      <div class="address-row">
+        <div class="form-group">
+          <label>Ciudad</label>
+          <input type="text" id="city" placeholder="Ej. Quito" required>
+        </div>
+        <div class="form-group">
+          <label>Provincia</label>
+          <input type="text" id="province" placeholder="Ej. Pichincha" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Dirección completa</label>
+        <input type="text" id="address" placeholder="Calle, número, referencia" required>
+      </div>
+    </div>
+
+    <div class="checkout-btn-container">
+      <button class="btn-primary" id="processOrderBtn"><i class="fa-solid fa-credit-card"></i> Procesar Pedido</button>
+    </div>
+  </div>
+
+  <!-- ===== MODAL DE CONFIRMACIÓN ===== -->
+  <div class="confirm-modal" id="confirmModal">
+    <div class="confirm-panel">
+      <button class="close-confirm" id="closeConfirmBtn"><i class="fa-solid fa-xmark"></i></button>
+      <h2>Confirmar Pedido</h2>
+      <p class="subtitle">Revise los detalles y confirme para enviar por WhatsApp.</p>
+      <div class="confirm-details" id="confirmDetails"></div>
+      <div class="confirm-address" id="confirmAddressDisplay"></div>
+      <div class="bank-details">
+        <p><strong>Transferencia Bancaria</strong></p>
+        <p><strong>Banco Pichincha</strong> – Cuenta: <strong>1234567890</strong></p>
+        <p>Titular: Aquí Contigo S.A.</p>
+        <p style="font-size:0.9rem;color:var(--text-muted);margin-top:6px;"><i class="fa-solid fa-info-circle"></i> El envío se cotizará por separado.</p>
+      </div>
+      <div class="confirm-actions">
+        <button class="btn-primary" id="confirmWhatsappBtn"><i class="fa-brands fa-whatsapp"></i> Confirmar y Enviar por WhatsApp</button>
+        <button class="btn-outline" id="cancelConfirmBtn">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast-notification" id="toastNotification">Operación exitosa</div>
+
+  <!-- ===== WHATSAPP FLOTANTE ===== -->
+  <a class="whatsapp-float" onclick="window.open('https://wa.me/593995441552?text=*Mesa%20de%20Entrada%20Elite*:%20Deseo%20coordinar%20un%20servicio%20m%C3%A9dico.', '_blank')">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ===== FOOTER COMPLETO (como en la página principal) ===== -->
+  <footer class="premium-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Columna 1: Brand -->
+        <div class="footer-brand" data-aos="fade-up" data-aos-delay="100">
+          <img src="aqui-contigo.png" alt="Aquí Contigo Élite" class="footer-logo-img" onerror="this.src='https://via.placeholder.com/180x50?text=Aqui+Contigo'">
+          <p>Ecosistema integral de salud residencial premium. Fusionamos el rigor científico institucional con un trato profundamente humanizado.</p>
+          <div class="footer-social-wrapper">
+            <a href="#" class="footer-social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="footer-social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="footer-social-btn" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" class="footer-social-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <button class="footer-social-btn" id="btnShareTrigger" title="Compartir"><i class="fa-solid fa-share-nodes"></i></button>
+          </div>
+        </div>
+
+        <!-- Columna 2: Navegación -->
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+          <h4>Navegación</h4>
+          <ul class="footer-links-list">
+            <li><a href="#inicio"><i class="fa-solid fa-chevron-right"></i> Inicio</a></li>
+            <li><a href="#nosotros"><i class="fa-solid fa-chevron-right"></i> Nosotros</a></li>
+            <li><a href="#servicios"><i class="fa-solid fa-chevron-right"></i> Servicios</a></li>
+            <li><a href="#tienda"><i class="fa-solid fa-chevron-right"></i> Tienda</a></li>
+            <li><a href="#galeria"><i class="fa-solid fa-chevron-right"></i> Galería</a></li>
+            <li><a href="#testimonios"><i class="fa-solid fa-chevron-right"></i> Testimonios</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Especialidades -->
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
+          <h4>Especialidades</h4>
+          <ul class="footer-links-list">
+            <li><a href="#servicios"><i class="fa-solid fa-chevron-right"></i> Enfermería de Élite</a></li>
+            <li><a href="#servicios"><i class="fa-solid fa-chevron-right"></i> Rehabilitación Física</a></li>
+            <li><a href="#servicios"><i class="fa-solid fa-chevron-right"></i> Soporte Neurocognitivo</a></li>
+            <li><a href="#servicios"><i class="fa-solid fa-chevron-right"></i> Cuidado Posquirúrgico</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 4: Soporte -->
+        <div class="footer-col" data-aos="fade-up" data-aos-delay="400">
+          <h4>Soporte Elite</h4>
+          <div class="footer-contact-info">
+            <div class="contact-item-box">
+              <i class="fa-solid fa-phone-volume"></i>
+              <div>
+                <h5>Línea de Teleasistencia</h5>
+                <p>+593 99 544 1552</p>
+              </div>
+            </div>
+            <div class="contact-item-box">
+              <i class="fa-solid fa-envelope-open-text"></i>
+              <div>
+                <h5>Canal Clínico Oficial</h5>
+                <p>correo@correo.com</p>
+              </div>
+            </div>
+            <div class="contact-item-box">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <h5>Sede Residencial</h5>
+                <p>Quito, Ecuador</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Aquí Contigo. Todos los derechos reservados. Cuidado Residencial de Alta Gama.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Políticas de Privacidad</a>
+          <a href="#">Términos de Contrato</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // =============================================
+    // 1. LOADING, NAVBAR, DARK MODE, TOAST
+    // =============================================
+    AOS.init({ duration: 800, once: true });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const fill = document.getElementById('loadingBarFill');
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) { clearInterval(interval); document.getElementById('loading-screen').style.opacity = '0'; setTimeout(() => document.getElementById('loading-screen').style.visibility = 'hidden', 600); }
+        else { width += 4; fill.style.width = width + '%'; }
+      }, 30);
+    });
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const darkToggle = document.getElementById('darkToggle');
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const icon = darkToggle.querySelector('i');
+      icon.className = document.body.classList.contains('dark') ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      showToast(document.body.classList.contains('dark') ? 'Modo noche activado' : 'Modo día activado');
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      toast.innerText = msg;
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 3000);
+    }
+
+    // =============================================
+    // 2. PRODUCTOS FIJOS
+    // =============================================
+    const products = [
+      { name: 'Kit de Cuidado Integral', desc: 'Termómetro, tensiómetro y oxímetro de pulso.', price: 89.99, image: 'https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&w=500&q=80' },
+      { name: 'Silla de Ruedas Premium', desc: 'Liviana, plegable, con reposabrazos y frenos.', price: 249.50, image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=500&q=80' },
+      { name: 'Set de Infusión Intravenosa', desc: 'Equipo completo para administración de medicamentos.', price: 120.00, image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=500&q=80' },
+      { name: 'Monitor de Signos Vitales', desc: 'Pantalla LCD, mide presión, pulso y saturación O2.', price: 159.99, image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=500&q=80' }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('cart_contigo')) || [];
+
+    // =============================================
+    // 3. RENDER PRODUCTOS
+    // =============================================
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+      products.forEach((p, idx) => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/260x180?text=Producto'">
+          <h3>${p.name}</h3>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-price">$${p.price.toFixed(2)}</div>
+          <div class="product-actions">
+            <button data-index="${idx}"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      document.querySelectorAll('.product-card .product-actions button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.currentTarget.dataset.index);
+          addToCart(idx);
+        });
+      });
+      updateCartUI();
+    }
+
+    // =============================================
+    // 4. CARRITO
+    // =============================================
+    function addToCart(productIndex) {
+      const existing = cart.find(item => item.productIndex === productIndex);
+      if (existing) existing.quantity += 1;
+      else cart.push({ productIndex, quantity: 1 });
+      localStorage.setItem('cart_contigo', JSON.stringify(cart));
+      updateCartUI();
+      showToast('Producto agregado al carrito');
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart_contigo', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function changeQuantity(index, delta) {
+      if (cart[index].quantity + delta <= 0) { removeFromCart(index); return; }
+      cart[index].quantity += delta;
+      localStorage.setItem('cart_contigo', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      // Actualizar badge del nav
+      const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+      const badge = document.getElementById('cartBadgeNav');
+      if (totalItems > 0) {
+        badge.textContent = totalItems;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      // Actualizar contenido del carrito lateral
+      const container = document.getElementById('cartItems');
+      const subtotalSpan = document.getElementById('subtotalDisplay');
+      const ivaSpan = document.getElementById('ivaDisplay');
+      const totalSpan = document.getElementById('totalDisplay');
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:30px 0;">El carrito está vacío.</p>';
+        subtotalSpan.textContent = '$0.00';
+        ivaSpan.textContent = '$0.00';
+        totalSpan.textContent = '$0.00';
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = '';
+      cart.forEach((item, idx) => {
+        const product = products[item.productIndex];
+        if (!product) return;
+        const totalItem = product.price * item.quantity;
+        subtotal += totalItem;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div class="cart-item-info">
+            <h4>${product.name}</h4>
+            <p>$${product.price.toFixed(2)} x ${item.quantity}</p>
+          </div>
+          <div class="cart-item-actions">
+            <button onclick="changeQuantity(${idx}, -1)">−</button>
+            <span class="qty-num">${item.quantity}</span>
+            <button onclick="changeQuantity(${idx}, 1)">+</button>
+            <button class="remove-btn" onclick="removeFromCart(${idx})"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+
+      const iva = subtotal * 0.15;
+      const total = subtotal + iva;
+      subtotalSpan.textContent = '$' + subtotal.toFixed(2);
+      ivaSpan.textContent = '$' + iva.toFixed(2);
+      totalSpan.textContent = '$' + total.toFixed(2);
+    }
+
+    // =============================================
+    // 5. ABRIR/CERRAR CARRITO (desde nav y desde botón cerrar)
+    // =============================================
+    document.getElementById('cartIconNav').addEventListener('click', () => {
+      document.getElementById('cartSidebar').classList.add('open');
+    });
+    document.getElementById('closeCartBtn').addEventListener('click', () => {
+      document.getElementById('cartSidebar').classList.remove('open');
+    });
+
+    // =============================================
+    // 6. PROCESAR PEDIDO - VALIDAR DIRECCIÓN Y ABRIR MODAL
+    // =============================================
+    document.getElementById('processOrderBtn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        showToast('El carrito está vacío');
+        return;
+      }
+      // Validar dirección
+      const city = document.getElementById('city').value.trim();
+      const province = document.getElementById('province').value.trim();
+      const address = document.getElementById('address').value.trim();
+      if (!city || !province || !address) {
+        showToast('Por favor, complete todos los campos de dirección');
+        return;
+      }
+
+      // Construir resumen
+      let subtotal = 0;
+      let detailsHTML = '';
+      cart.forEach((item) => {
+        const product = products[item.productIndex];
+        if (!product) return;
+        const totalItem = product.price * item.quantity;
+        subtotal += totalItem;
+        detailsHTML += `
+          <div class="detail-row">
+            <span>${product.name} x ${item.quantity}</span>
+            <span>$${totalItem.toFixed(2)}</span>
+          </div>
+        `;
+      });
+      const iva = subtotal * 0.15;
+      const total = subtotal + iva;
+
+      document.getElementById('confirmDetails').innerHTML = `
+        ${detailsHTML}
+        <div class="detail-row"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+        <div class="detail-row" style="color:var(--text-muted);"><span>IVA (15%)</span><span>$${iva.toFixed(2)}</span></div>
+        <div class="detail-row total-final"><span>Total</span><span>$${total.toFixed(2)}</span></div>
+      `;
+
+      // Mostrar dirección
+      document.getElementById('confirmAddressDisplay').innerHTML = `
+        <p><strong><i class="fa-solid fa-location-dot"></i> Dirección de envío</strong></p>
+        <p>${address}, ${city}, ${province}</p>
+      `;
+
+      document.getElementById('confirmModal').classList.add('active');
+    });
+
+    document.getElementById('closeConfirmBtn').addEventListener('click', () => {
+      document.getElementById('confirmModal').classList.remove('active');
+    });
+    document.getElementById('cancelConfirmBtn').addEventListener('click', () => {
+      document.getElementById('confirmModal').classList.remove('active');
+    });
+
+    // =============================================
+    // 7. CONFIRMAR Y ENVIAR POR WHATSAPP (incluye dirección)
+    // =============================================
+    document.getElementById('confirmWhatsappBtn').addEventListener('click', () => {
+      if (cart.length === 0) return;
+      const city = document.getElementById('city').value.trim();
+      const province = document.getElementById('province').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      let message = '*🛒 PEDIDO AQUÍ CONTIGO*%0A%0A';
+      let subtotal = 0;
+      cart.forEach((item) => {
+        const product = products[item.productIndex];
+        if (!product) return;
+        const totalItem = product.price * item.quantity;
+        subtotal += totalItem;
+        message += `*${product.name}*%0A`;
+        message += `Descripción: ${product.desc}%0A`;
+        message += `Cantidad: ${item.quantity} x $${product.price.toFixed(2)} = $${totalItem.toFixed(2)}%0A%0A`;
+      });
+      const iva = subtotal * 0.15;
+      const total = subtotal + iva;
+      message += `*Subtotal:* $${subtotal.toFixed(2)}%0A`;
+      message += `*IVA (15%):* $${iva.toFixed(2)}%0A`;
+      message += `*TOTAL:* $${total.toFixed(2)}%0A%0A`;
+      message += `*📍 Dirección de envío*%0A`;
+      message += `${address}, ${city}, ${province}%0A%0A`;
+      message += `*📌 Datos de Transferencia*%0A`;
+      message += `Banco Pichincha%0A`;
+      message += `Cuenta: 1234567890%0A`;
+      message += `Titular: Aquí Contigo S.A.%0A%0A`;
+      message += `*⚠️ El precio de envío no está incluido.*%0A%0A`;
+      message += `*✅ Por favor, enviar el comprobante de la transferencia a este mismo número.*`;
+
+      const url = `https://wa.me/593995441552?text=${message}`;
+      window.open(url, '_blank');
+      // Cerrar modales y carrito
+      document.getElementById('confirmModal').classList.remove('active');
+      document.getElementById('cartSidebar').classList.remove('open');
+      // Vaciar carrito después de enviar
+      cart = [];
+      localStorage.setItem('cart_contigo', JSON.stringify(cart));
+      updateCartUI();
+      showToast('Pedido enviado. ¡Gracias por su compra!');
+    });
+
+    // =============================================
+    // 8. BOTÓN COMPARTIR
+    // =============================================
+    document.getElementById('btnShareTrigger').addEventListener('click', async () => {
+      if (navigator.share) {
+        try { await navigator.share({ title: 'Aquí Contigo Premium', text: 'Cuidado Médico Residencial de Alta Gama.', url: window.location.href }); } catch (e) {}
+      } else {
+        try { await navigator.clipboard.writeText(window.location.href); showToast('Enlace copiado al portapapeles'); } catch (e) { alert('Enlace: ' + window.location.href); }
+      }
+    });
+
+    // =============================================
+    // 9. INICIALIZAR
+    // =============================================
+    renderProducts();
+    updateCartUI();
+
+    // =============================================
+    // 10. BLOQUEO DE TECLAS (seguridad)
+    // =============================================
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey && ['u','s'].includes(e.key.toLowerCase())) || (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase())) || (e.keyCode >= 112 && e.keyCode <= 123)) {
+        e.preventDefault(); e.stopPropagation(); return false;
+      }
+    });
+  </script>
+</body>
+</html>
