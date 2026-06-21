@@ -538,6 +538,36 @@
     .service-card h3 { font-size: 1.4rem; margin-bottom: 16px; }
     .service-card p { color: var(--text-muted); font-size: 0.98rem; line-height: 1.65; }
 
+    /* ========== SECCIÓN CARRITO INFORMATIVA CON ENLACE FUNCIONAL ========== */
+    .carrito-informativo {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 80px 60px;
+      box-shadow: var(--card-shadow);
+      margin: 100px 0;
+      text-align: center;
+    }
+    .carrito-informativo i {
+      font-size: 4rem;
+      background: linear-gradient(135deg, var(--primary), var(--purple-lila));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 30px;
+      display: inline-block;
+    }
+    .carrito-informativo h2 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+    }
+    .carrito-informativo p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
     /* Marquees Infinitos */
     .marquee-section { padding: 80px 0; overflow: hidden; }
     .marquee-viewport {
@@ -868,6 +898,7 @@
       .services-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
       .about-wrap, .form-section { padding: 40px 24px; }
+      .carrito-informativo { padding: 50px 24px; }
       .review-luxury-card { width: 340px; padding: 28px; }
       .album-item { width: 290px; }
       .whatsapp-float { bottom: 24px; left: 24px; width: 52px; height: 52px; font-size: 1.7rem; }
@@ -901,6 +932,7 @@
         <a href="#servicios">Servicios</a>
         <a href="#galeria">Galería</a>
         <a href="#testimonios">Testimonios</a>
+        <a href="#carrito">Carrito</a>
         <a href="#asistencia">Contacto Técnico</a>
       </nav>
       <div class="nav-actions">
@@ -982,6 +1014,18 @@
         <h3>Asistencia Posquirúrgica</h3>
         <p>Cuidados paliativos e intermedios para garantizar una recuperación rápida, óptima, segura y sin complicaciones.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ========== SECCIÓN CARRITO CON ENLACE FUNCIONAL ========== -->
+  <section class="container" id="carrito" data-aos="fade-up">
+    <div class="carrito-informativo">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <h2>Tu Carrito de Compras</h2>
+      <p>Aquí podrás gestionar los paquetes y servicios premium que selecciones para tu cuidado o el de tus seres queridos. Próximamente podrás revisar, modificar y confirmar tus pedidos con total transparencia.</p>
+      <a href="https://teddyfidel.github.io/carrito-de-venta.html" class="btn-outline" style="border-color: var(--primary); color: var(--primary);">
+        <i class="fa-solid fa-bag-shopping"></i> Explorar servicios y productos para añadir
+      </a>
     </div>
   </section>
 
@@ -1132,6 +1176,8 @@
             <li><a href="#servicios"><i class="fa-solid fa-chevron-right"></i> Servicios</a></li>
             <li><a href="#galeria"><i class="fa-solid fa-chevron-right"></i> Galería</a></li>
             <li><a href="#testimonios"><i class="fa-solid fa-chevron-right"></i> Testimonios</a></li>
+            <li><a href="#carrito"><i class="fa-solid fa-chevron-right"></i> Carrito</a></li>
+            <li><a href="#asistencia"><i class="fa-solid fa-chevron-right"></i> Contacto Técnico</a></li>
           </ul>
         </div>
 
