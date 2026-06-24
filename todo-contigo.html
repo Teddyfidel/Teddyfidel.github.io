@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Aquí Contigo | Cuidado Domiciliario de Alta Gama</title>
+  
+  <link rel="manifest" href="manifest.json">
+  
   <link rel="icon" type="image/x-icon" href="aqui-contigo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -249,7 +252,7 @@
 
     .nav-links {
       display: flex;
-      gap: 2.8rem;
+      gap: 2.2rem;
       align-items: center;
     }
 
@@ -302,6 +305,29 @@
     }
 
     .menu-toggle { display: none; }
+
+    /* Estilos del Botón de Instalación del Nav */
+    .btn-nav-install {
+      background: linear-gradient(135deg, var(--purple-lila), var(--turquesa));
+      color: white !important;
+      padding: 8px 18px !important;
+      border-radius: 30px;
+      font-weight: 600 !important;
+      box-shadow: var(--card-shadow);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: var(--transition-fluid) !important;
+    }
+    .btn-nav-install:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-hover);
+      color: white !important;
+    }
+    .btn-nav-install::after { display: none !important; }
 
     .btn-primary, .btn-outline {
       padding: 16px 36px;
@@ -538,7 +564,7 @@
     .service-card h3 { font-size: 1.4rem; margin-bottom: 16px; }
     .service-card p { color: var(--text-muted); font-size: 0.98rem; line-height: 1.65; }
 
-    /* ========== SECCIÓN CARRITO INFORMATIVA CON ENLACE FUNCIONAL ========== */
+    /* Sección Carrito Informativa */
     .carrito-informativo {
       background: var(--bg-white);
       border: 1px solid var(--border-light);
@@ -561,6 +587,37 @@
       margin-bottom: 20px;
     }
     .carrito-informativo p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    /* Sección de Instalación Premium PWA */
+    .seccion-pwa-instalacion {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 80px 60px;
+      box-shadow: var(--card-shadow);
+      margin: 100px 0;
+      text-align: center;
+      display: block;
+    }
+    .seccion-pwa-instalacion i.main-icon {
+      font-size: 4rem;
+      background: linear-gradient(135deg, var(--purple-lila), var(--turquesa));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 30px;
+      display: inline-block;
+    }
+    .seccion-pwa-instalacion h2 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+    }
+    .seccion-pwa-instalacion p {
       font-size: 1.15rem;
       color: var(--text-muted);
       max-width: 700px;
@@ -637,30 +694,14 @@
       width: 100%; padding: 18px 24px; border-radius: var(--radius-md); border: 1px solid var(--border-light); background: var(--bg-soft); color: var(--text-dark); font-family: inherit; font-size: 0.98rem; transition: var(--transition-snappy);
     }
     input:focus, textarea:focus { outline: none; border-color: var(--purple-lila); background: var(--bg-white); box-shadow: 0 0 0 4px var(--primary-soft); }
-    
-    .crud-title-container { margin-top: 60px; border-top: 1px solid var(--border-light); padding-top: 40px; }
-    .query-item {
-      background: var(--bg-soft); border-radius: var(--radius-md); padding: 24px 28px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--turquesa); box-shadow: var(--card-shadow); animation: fadeIn 0.4s ease;
-    }
-    .query-info h4 { font-size: 1.1rem; margin-bottom: 6px; }
-    .query-info p { color: var(--text-muted); font-size: 0.92rem; }
-    .query-actions { display: flex; gap: 16px; }
-    
-    .btn-crud-edit, .btn-crud-delete {
-      background: var(--bg-white); border: 1px solid var(--border-light); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition-snappy);
-    }
-    .btn-crud-edit { color: var(--primary); }
-    .btn-crud-edit:hover { background: var(--purple-lila); color: white; border-color: var(--purple-lila); }
-    .btn-crud-delete { color: #C0392B; }
-    .btn-crud-delete:hover { background: #C0392B; color: white; border-color: #C0392B; }
 
-    /* WhatsApp Flotante - LADO IZQUIERDO */
+    /* WhatsApp Flotante */
     .whatsapp-float {
       position: fixed; bottom: 40px; left: 40px; background: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35); z-index: 1999; text-decoration: none; transition: var(--transition-fluid);
     }
     .whatsapp-float:hover { transform: scale(1.1) translateY(-3px); }
 
-    /* Chatbot Premium - LADO DERECHO */
+    /* Chatbot Premium */
     .chatbot-launcher {
       position: fixed; bottom: 40px; right: 40px; background: linear-gradient(135deg, var(--primary), var(--purple-lila)); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: white; box-shadow: 0 10px 32px var(--primary-glow); z-index: 1999; cursor: pointer; transition: var(--transition-fluid); border: none;
     }
@@ -720,9 +761,7 @@
     }
     .toast-notification.active { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 
-    /* ============================================================ */
-    /* SECCIÓN DE DISEÑO PREMIUM PREMIUM DEL FOOTER (GLASSMORPHISM) */
-    /* ============================================================ */
+    /* Footer Premium */
     .premium-footer {
       background: var(--footer-bg);
       color: var(--footer-text-body);
@@ -884,9 +923,8 @@
       .services-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
       .legal-crud-container { flex-direction: column; height: 90vh; }
-      .legal-crud-sidebar { width: 100%; flexDirection: row; padding: 20px; overflow-x: auto; }
-      .legal-pane-header { padding: 24px; }
-      .legal-pane-body { padding: 24px; }
+      .legal-crud-sidebar { width: 100%; flex-direction: row; padding: 20px; overflow-x: auto; }
+      .legal-pane-header, .legal-pane-body { padding: 24px; }
     }
 
     @media (max-width: 768px) {
@@ -897,8 +935,7 @@
       .values-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .services-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-      .about-wrap, .form-section { padding: 40px 24px; }
-      .carrito-informativo { padding: 50px 24px; }
+      .about-wrap, .form-section, .carrito-informativo, .seccion-pwa-instalacion { padding: 40px 24px; }
       .review-luxury-card { width: 340px; padding: 28px; }
       .album-item { width: 290px; }
       .whatsapp-float { bottom: 24px; left: 24px; width: 52px; height: 52px; font-size: 1.7rem; }
@@ -933,7 +970,9 @@
         <a href="#galeria">Galería</a>
         <a href="#testimonios">Testimonios</a>
         <a href="#carrito">Carrito</a>
+        <a href="#instalacionApp">Instalar</a>
         <a href="#asistencia">Contacto Técnico</a>
+        <button id="btnNavInstall" class="btn-nav-install"><i class="fa-solid fa-mobile-screen-button"></i> Instalar App</button>
       </nav>
       <div class="nav-actions">
         <button class="dark-toggle" id="darkToggle" aria-label="Cambiar modo de color">
@@ -984,7 +1023,7 @@
   <section id="nosotros" class="container" data-aos="fade-up">
     <div class="about-wrap">
       <h2>Nuestra Filosofía de Servicio</h2>
-      <p>En Aquí Contigo transformamos la asistencia domiciliaria convencional en una experiencia médica residencial de categoría Élite. Estudiamos detalladamente el entorno clínico, físico y emocional de cada paciente para desplegar un ecosistema de cuidado altamente personalizado, respaldado por profesionales rigurosamente seleccionados y tecnología de monitoreo continuo en tiempo real.</p>
+      <p>En Aquí Contigo transformamos la asistencia domiciliaria unconventional en una experiencia médica residencial de categoría Élite. Estudiamos detalladamente el entorno clínico, físico y emocional de cada paciente para desplegar un ecosistema de cuidado altamente personalizado, respaldado por profesionales rigurosamente seleccionados y tecnología de monitoreo continuo en tiempo real.</p>
     </div>
   </section>
 
@@ -1017,7 +1056,6 @@
     </div>
   </section>
 
-  <!-- ========== SECCIÓN CARRITO CON ENLACE FUNCIONAL ========== -->
   <section class="container" id="carrito" data-aos="fade-up">
     <div class="carrito-informativo">
       <i class="fa-solid fa-cart-shopping"></i>
@@ -1026,6 +1064,17 @@
       <a href="https://teddyfidel.github.io/carrito-de-venta.html" target="_blank" class="btn-outline" style="border-color: var(--primary); color: var(--primary);">
         <i class="fa-solid fa-bag-shopping"></i> Explorar servicios y productos para añadir
       </a>
+    </div>
+  </section>
+
+  <section class="container" id="instalacionApp" data-aos="fade-up">
+    <div id="wrapperSeccionInstalar" class="seccion-pwa-instalacion">
+      <i class="fa-solid fa-square-plus main-icon"></i>
+      <h2>Lleva Nuestra Plataforma en tu Bolsillo</h2>
+      <p>Crea un acceso directo en la pantalla de inicio de tu dispositivo móvil o de escritorio. Disfruta de una experiencia premium fluida, acceso instantáneo a soporte técnico y monitoreo clínico sin consumir almacenamiento adicional.</p>
+      <button id="btnSectionInstall" class="btn-primary">
+        <i class="fa-solid fa-download"></i> Crear Acceso Directo en Escritorio
+      </button>
     </div>
   </section>
 
@@ -1177,6 +1226,7 @@
             <li><a href="#galeria"><i class="fa-solid fa-chevron-right"></i> Galería</a></li>
             <li><a href="#testimonios"><i class="fa-solid fa-chevron-right"></i> Testimonios</a></li>
             <li><a href="#carrito"><i class="fa-solid fa-chevron-right"></i> Carrito</a></li>
+            <li><a href="#instalacionApp"><i class="fa-solid fa-chevron-right"></i> Instalar</a></li>
             <li><a href="#asistencia"><i class="fa-solid fa-chevron-right"></i> Contacto Técnico</a></li>
           </ul>
         </div>
@@ -1192,7 +1242,7 @@
         </div>
 
         <div class="footer-col" data-aos="fade-up" data-aos-delay="400">
-          <h4>Soporte Elite</h4>
+          <h4>Soporte Élite</h4>
           <div class="footer-contact-info">
             <div class="contact-item-box">
               <i class="fa-solid fa-phone-volume"></i>
@@ -1287,6 +1337,15 @@
         navLinks.style.padding = '20px';
         navLinks.style.borderBottom = '1px solid var(--border-light)';
       }
+    });
+
+    // Cierre automático del menú móvil al hacer clic en un link
+    document.querySelectorAll('#navLinks a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navLinks.style.display = 'none';
+        }
+      });
     });
 
     // 4. Conmutador de Modo Oscuro Avanzado
@@ -1393,7 +1452,7 @@
       renderQueries();
     });
 
-    // 9. RECONSTRUCCIÓN AVANZADA DEL CHATBOT INTERACTIVO (CON FLUJO CRUD Y REINICIO)
+    // 9. RECONSTRUCCIÓN AVANZADA DEL CHATBOT INTERACTIVO
     const chatbotLauncher = document.getElementById('chatbotLauncher');
     const chatbotWindow = document.getElementById('chatbotWindow');
     const chatbotCloseBtn = document.getElementById('chatbotCloseBtn');
@@ -1494,7 +1553,7 @@
       }, 1000);
     };
 
-    // 10. Sistema de Gestión y Visualización de Módulos Legales Dinámicos
+    // 10. Sistema de Gestión de Módulos Legales Dinámicos
     const legalModal = document.getElementById('legalModal');
     const legalPaneTitle = document.getElementById('legalPaneTitle');
     const legalPaneBody = document.getElementById('legalPaneBody');
@@ -1542,9 +1601,45 @@
         } catch (err) { alert("Enlace: " + window.location.href); }
       }
     });
+
+    // 12. SCRIPT PREMIUM DE INSTALACIÓN PWA
+    let promptInstalacionPWA;
+    const btnNavInstall = document.getElementById('btnNavInstall');
+    const btnSectionInstall = document.getElementById('btnSectionInstall');
+    const wrapperSeccionInstalar = document.getElementById('wrapperSeccionInstalar');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      promptInstalacionPWA = e;
+      btnNavInstall.style.opacity = '1';
+      btnNavInstall.style.pointerEvents = 'auto';
+    });
+
+    async function ejecutarInstalacionEscritorio() {
+      if (promptInstalacionPWA) {
+        promptInstalacionPWA.prompt();
+        const { outcome } = await promptInstalacionPWA.userChoice;
+        if (outcome === 'accepted') {
+          showToast("¡Procesando adición al escritorio móvil!");
+        }
+        promptInstalacionPWA = null;
+      } else {
+        showToast("Para instalar de forma nativa, use la opción de su navegador o 'Añadir a pantalla de inicio'");
+      }
+    }
+
+    btnNavInstall.addEventListener('click', ejecutarInstalacionEscritorio);
+    btnSectionInstall.addEventListener('click', ejecutarInstalacionEscritorio);
+
+    window.addEventListener('appinstalled', () => {
+      showToast("¡Aquí Contigo se añadió con éxito al escritorio!");
+      btnNavInstall.style.display = 'none';
+      wrapperSeccionInstalar.style.display = 'none';
+    });
   </script>
 
   <script>
+    // Capa de control técnico de inspección y seguridad visual
     (function() {
       document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
 
