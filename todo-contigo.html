@@ -4,18 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Aquí Contigo | Cuidado Domiciliario de Alta Gama</title>
-  
+
   <link rel="manifest" href="manifest.json">
-  
   <link rel="icon" type="image/x-icon" href="aqui-contigo.png">
+
+  <!-- Preconexiones para fuentes y recursos externos (mejora velocidad) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  
+
+  <!-- Carga diferida de Font Awesome y AOS (mejora rendimiento) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'">
+
   <style>
+    /* ===== ESTILOS COMPLETOS ===== */
     * {
       margin: 0;
       padding: 0;
@@ -24,20 +27,19 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Sistema de Variables - Estética Premium Glassmorphism */
     :root {
       --primary: #236F57;
       --primary-light: #3ca281;
       --primary-dark: #164737;
       --primary-soft: rgba(35, 111, 87, 0.06);
       --primary-glow: rgba(35, 111, 87, 0.15);
-      
+
       --purple-lila: #7B2CBF;
       --purple-lila-light: #9D4EDD;
       --turquesa: #00B4D8;
       --turquesa-light: #90E0EF;
       --secondary: #00B4D8;
-      
+
       --bg-white: #FFFFFF;
       --bg-soft: #F4F7F5;
       --text-dark: #0B1310;
@@ -65,13 +67,13 @@
       --primary-dark: #236F57;
       --primary-soft: rgba(65, 163, 132, 0.12);
       --primary-glow: rgba(65, 163, 132, 0.25);
-      
+
       --purple-lila: #9D4EDD;
       --purple-lila-light: #C77DFF;
       --turquesa: #00B4D8;
       --turquesa-light: #ADE8F4;
       --secondary: #ADE8F4;
-      
+
       --bg-white: #0E1613;
       --bg-soft: #050807;
       --text-dark: #F5FAF7;
@@ -306,7 +308,6 @@
 
     .menu-toggle { display: none; }
 
-    /* Estilos del Botón de Instalación del Nav */
     .btn-nav-install {
       background: linear-gradient(135deg, var(--purple-lila), var(--turquesa));
       color: white !important;
@@ -366,9 +367,110 @@
       transform: translateY(-3px);
     }
 
+    /* ===== REPRODUCTOR DE MÚSICA TERAPÉUTICA ===== */
+    .hero-audio-wrapper {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 16px 28px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(8px);
+      transition: var(--transition-fluid);
+    }
+    .hero-audio-wrapper:hover {
+      box-shadow: var(--card-shadow-hover);
+    }
+    .hero-audio-wrapper .audio-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+    .hero-audio-wrapper .audio-info i {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--purple-lila), var(--turquesa));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-audio-wrapper audio {
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+      height: 40px;
+      border-radius: 30px;
+      background: var(--bg-soft);
+      outline: none;
+    }
+    .hero-audio-wrapper audio::-webkit-media-controls-panel {
+      background: var(--bg-soft);
+    }
+    .hero-audio-wrapper .audio-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .hero-audio-wrapper .audio-btn {
+      background: var(--primary-soft);
+      border: 1px solid var(--border-light);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--primary);
+      transition: var(--transition-snappy);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .hero-audio-wrapper .audio-btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.05);
+    }
+    .hero-audio-wrapper .volume-slider {
+      width: 80px;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--border-light);
+      border-radius: 4px;
+      outline: none;
+      transition: background 0.2s;
+    }
+    .hero-audio-wrapper .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      border: 2px solid var(--bg-white);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .hero-audio-wrapper .volume-slider::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      border: 2px solid var(--bg-white);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
     /* Hero Section */
     .hero {
-      padding: 120px 0 100px;
+      padding: 40px 0 80px;
     }
 
     .hero-grid {
@@ -706,28 +808,28 @@
       position: fixed; bottom: 40px; right: 40px; background: linear-gradient(135deg, var(--primary), var(--purple-lila)); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: white; box-shadow: 0 10px 32px var(--primary-glow); z-index: 1999; cursor: pointer; transition: var(--transition-fluid); border: none;
     }
     .chatbot-launcher:hover { transform: scale(1.08) rotate(8deg); }
-    
+
     .chatbot-window {
       position: fixed; bottom: 115px; right: 40px; width: 380px; height: 520px; background: var(--bg-white); border: 1px solid var(--border-light); border-radius: var(--radius-lg); box-shadow: var(--card-shadow-hover); z-index: 2000; display: flex; flex-direction: column; overflow: hidden; opacity: 0; transform: translateY(30px) scale(0.95); pointer-events: none; transition: var(--transition-fluid);
     }
     .chatbot-window.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-    
+
     .chatbot-header { background: linear-gradient(135deg, var(--primary), var(--purple-lila)); color: white; padding: 20px; display: flex; align-items: center; justify-content: space-between; }
     .chatbot-info { display: flex; align-items: center; gap: 12px; }
     .chatbot-avatar { width: 38px; height: 38px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .chatbot-close-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.7; }
-    
+
     .chatbot-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; background: var(--bg-soft); }
     .chat-msg { max-width: 82%; padding: 12px 16px; border-radius: var(--radius-md); font-size: 0.92rem; line-height: 1.5; animation: fadeIn 0.3s ease; }
     .chat-msg.bot { background: var(--bg-white); color: var(--text-dark); border-bottom-left-radius: 4px; border: 1px solid var(--border-light); align-self: flex-start; }
     .chat-msg.user { background: linear-gradient(135deg, var(--primary), var(--purple-lila)); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
-    
+
     .chatbot-options { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
     .chat-opt-btn {
       background: linear-gradient(135deg, #25D366, #128C7E); border: none; color: white; padding: 12px 16px; border-radius: 30px; cursor: pointer; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.25); transition: var(--transition-snappy);
     }
     .chat-opt-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35); }
-    
+
     .chatbot-footer { padding: 14px 20px; background: var(--bg-white); border-top: 1px solid var(--border-light); display: flex; gap: 10px; }
     .chatbot-footer input { padding: 12px 16px; font-size: 0.9rem; border-radius: 30px; }
     .chatbot-send-btn {
@@ -914,7 +1016,7 @@
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Responsive Design */
+    /* Responsive */
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; gap: 50px; text-align: center; }
       .hero-actions { justify-content: center; }
@@ -925,6 +1027,9 @@
       .legal-crud-container { flex-direction: column; height: 90vh; }
       .legal-crud-sidebar { width: 100%; flex-direction: row; padding: 20px; overflow-x: auto; }
       .legal-pane-header, .legal-pane-body { padding: 24px; }
+      .hero-audio-wrapper { flex-direction: column; align-items: stretch; }
+      .hero-audio-wrapper audio { max-width: 100%; }
+      .hero-audio-wrapper .volume-slider { width: 100%; }
     }
 
     @media (max-width: 768px) {
@@ -986,6 +1091,28 @@
   </header>
 
   <section class="hero container" id="inicio" data-aos="fade-up">
+    <!-- ===== REPRODUCTOR DE MÚSICA TERAPÉUTICA (parte superior del hero) ===== -->
+    <div class="hero-audio-wrapper" data-aos="fade-down" data-aos-delay="100">
+      <div class="audio-info">
+        <i class="fa-solid fa-heart-pulse"></i>
+        <span>Música Terapéutica · Relajación Profunda</span>
+      </div>
+      <audio id="musicaFondo" autoplay loop>
+        <!-- CAMBIA EL src POR TU ENLACE DE MÚSICA RELAJANTE (MP3) -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+      </audio>
+      <div class="audio-controls">
+        <button class="audio-btn" id="audioPlayBtn" aria-label="Reproducir/Pausar">
+          <i class="fa-solid fa-play"></i>
+        </button>
+        <button class="audio-btn" id="audioMuteBtn" aria-label="Alternar silencio">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7" aria-label="Volumen">
+      </div>
+    </div>
+
     <div class="hero-grid">
       <div class="hero-content">
         <div class="hero-badge"><i class="fa-solid fa-crown"></i> Salud Residencial de Élite</div>
@@ -1161,7 +1288,7 @@
   <button class="chatbot-launcher" id="chatbotLauncher" aria-label="Abrir Asistente Virtual">
     <i class="fa-solid fa-comment-medical"></i>
   </button>
-  
+
   <div class="chatbot-window" id="chatbotWindow">
     <div class="chatbot-header">
       <div class="chatbot-info">
@@ -1204,7 +1331,6 @@
   <footer class="premium-footer">
     <div class="container">
       <div class="footer-grid">
-        
         <div class="footer-brand" data-aos="fade-up" data-aos-delay="100">
           <img src="aqui-contigo.png" alt="Aquí Contigo Élite" class="footer-logo-img" onerror="this.src='https://via.placeholder.com/180x50?text=Aqui+Contigo'">
           <p>Ecosistema integral de salud residencial premium. Fusionamos el rigor científico institucional con un trato profundamente humanizado.</p>
@@ -1267,7 +1393,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="footer-divider"></div>
@@ -1282,11 +1407,17 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Scripts diferidos para mejorar velocidad de carga -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
   <script>
-    AOS.init({ duration: 800, once: true });
+    // ===== INICIALIZACIÓN RÁPIDA =====
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 800, once: true });
+      }
+    });
 
-    // 1. Pantalla de carga integrada inteligente
+    // ===== PANTALLA DE CARGA =====
     window.addEventListener('DOMContentLoaded', () => {
       const fill = document.getElementById('loadingBarFill');
       let width = 0;
@@ -1305,354 +1436,491 @@
       }, 30);
     });
 
-    // 2. Control de Barra de Progreso y Navbar al Desplazar
+    // ===== REPRODUCTOR DE MÚSICA TERAPÉUTICA CON VOLUMEN ACTIVO Y CONTROL =====
+    (function() {
+      const audio = document.getElementById('musicaFondo');
+      const playBtn = document.getElementById('audioPlayBtn');
+      const muteBtn = document.getElementById('audioMuteBtn');
+      const volumeSlider = document.getElementById('volumeSlider');
+      if (!audio || !playBtn || !muteBtn || !volumeSlider) return;
+
+      // Configurar volumen inicial (70%)
+      audio.volume = 0.7;
+      volumeSlider.value = 0.7;
+
+      // Intentar reproducir automáticamente (sin mute)
+      audio.play().catch(() => {
+        // Si el navegador bloquea el autoplay, mostramos un mensaje opcional
+        showToast("Presiona play para activar la música terapéutica");
+      });
+
+      // Actualizar íconos
+      function updatePlayIcon() {
+        const icon = playBtn.querySelector('i');
+        if (audio.paused) {
+          icon.className = 'fa-solid fa-play';
+        } else {
+          icon.className = 'fa-solid fa-pause';
+        }
+      }
+
+      function updateMuteIcon() {
+        const icon = muteBtn.querySelector('i');
+        if (audio.muted) {
+          icon.className = 'fa-solid fa-volume-xmark';
+        } else {
+          icon.className = 'fa-solid fa-volume-high';
+        }
+      }
+
+      // Alternar play/pausa
+      playBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (audio.paused) {
+          audio.play().catch(() => {});
+        } else {
+          audio.pause();
+        }
+        updatePlayIcon();
+      });
+
+      // Alternar mute
+      muteBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        audio.muted = !audio.muted;
+        updateMuteIcon();
+        // Si se desmutea y está pausado, reanudar
+        if (!audio.muted && audio.paused) {
+          audio.play().catch(() => {});
+          updatePlayIcon();
+        }
+        showToast(audio.muted ? 'Sonido silenciado' : 'Sonido activado');
+      });
+
+      // Control deslizante de volumen
+      volumeSlider.addEventListener('input', function() {
+        audio.volume = parseFloat(this.value);
+        // Si el volumen es 0, no muteamos, simplemente bajamos el volumen a 0
+        if (audio.volume === 0) {
+          // No forzamos mute, solo volumen 0
+        }
+        // Si el volumen sube y estaba muteado, desmutear
+        if (audio.volume > 0 && audio.muted) {
+          audio.muted = false;
+          updateMuteIcon();
+        }
+      });
+
+      // Sincronizar íconos cuando el audio cambie de estado
+      audio.addEventListener('play', updatePlayIcon);
+      audio.addEventListener('pause', updatePlayIcon);
+      audio.addEventListener('volumechange', updateMuteIcon);
+
+      // Inicializar
+      updatePlayIcon();
+      updateMuteIcon();
+
+      // Si el audio se detiene por error, intentar reanudar
+      audio.addEventListener('error', () => {
+        console.warn('Error en el audio, intentando reanudar...');
+        setTimeout(() => {
+          audio.play().catch(() => {});
+        }, 1000);
+      });
+
+      // Exponer funciones para depuración
+      window.audioPlayer = {
+        togglePlay: function() { playBtn.click(); },
+        toggleMute: function() { muteBtn.click(); },
+        setVolume: function(value) {
+          volumeSlider.value = Math.min(1, Math.max(0, value));
+          audio.volume = parseFloat(volumeSlider.value);
+          if (audio.volume > 0 && audio.muted) {
+            audio.muted = false;
+            updateMuteIcon();
+          }
+        }
+      };
+    })();
+
+    // ===== BARRA DE PROGRESO Y NAVBAR SCROLL =====
     window.addEventListener('scroll', () => {
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = (winScroll / height) * 100;
-      document.getElementById('progressBar').style.width = scrolled + '%';
+      const progressBar = document.getElementById('progressBar');
+      if (progressBar) progressBar.style.width = scrolled + '%';
 
       const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
+      if (navbar) {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
       }
     });
 
-    // 3. Menú de Navegación Móvil
+    // ===== MENÚ MÓVIL =====
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
-    menuToggle.addEventListener('click', () => {
-      if(navLinks.style.display === 'flex') {
-        navLinks.style.display = 'none';
-      } else {
-        navLinks.style.display = 'flex';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '100%';
-        navLinks.style.left = '0';
-        navLinks.style.width = '100%';
-        navLinks.style.background = 'var(--bg-white)';
-        navLinks.style.padding = '20px';
-        navLinks.style.borderBottom = '1px solid var(--border-light)';
-      }
-    });
-
-    // Cierre automático del menú móvil al hacer clic en un link
-    document.querySelectorAll('#navLinks a').forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        if(navLinks.style.display === 'flex') {
           navLinks.style.display = 'none';
+        } else {
+          navLinks.style.display = 'flex';
+          navLinks.style.flexDirection = 'column';
+          navLinks.style.position = 'absolute';
+          navLinks.style.top = '100%';
+          navLinks.style.left = '0';
+          navLinks.style.width = '100%';
+          navLinks.style.background = 'var(--bg-white)';
+          navLinks.style.padding = '20px';
+          navLinks.style.borderBottom = '1px solid var(--border-light)';
+          navLinks.style.zIndex = '1999';
         }
       });
-    });
 
-    // 4. Conmutador de Modo Oscuro Avanzado
+      document.querySelectorAll('#navLinks a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            navLinks.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // ===== MODO OSCURO =====
     const darkToggle = document.getElementById('darkToggle');
-    darkToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      const icon = darkToggle.querySelector('i');
-      if(document.body.classList.contains('dark')) {
-        icon.className = 'fa-solid fa-sun';
-        showToast("Modo noche premium activado");
-      } else {
-        icon.className = 'fa-solid fa-moon';
-        showToast("Modo día premium activado");
-      }
-    });
+    if (darkToggle) {
+      darkToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        const icon = darkToggle.querySelector('i');
+        if(document.body.classList.contains('dark')) {
+          icon.className = 'fa-solid fa-sun';
+          showToast("Modo noche premium activado");
+        } else {
+          icon.className = 'fa-solid fa-moon';
+          showToast("Modo día premium activado");
+        }
+      });
+    }
 
     function showToast(message) {
       const toast = document.getElementById('toastNotification');
+      if (!toast) return;
       toast.innerText = message;
       toast.classList.add('active');
-      setTimeout(() => toast.classList.remove('active'), 3000);
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => toast.classList.remove('active'), 3000);
     }
 
-    // 5. Lógica del Carrusel Fotográfico del Hero
-    const slidesImg = document.querySelectorAll('.carousel-slide');
-    let currentSlideImg = 0;
-    const dotsContainer = document.getElementById('carouselDots');
-    
-    slidesImg.forEach((_, index) => {
-      const dot = document.createElement('div');
-      dot.classList.add('dot');
-      if(index === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => changeSlideImg(index));
-      dotsContainer.appendChild(dot);
-    });
-    
-    const dotsImg = document.querySelectorAll('.dot');
-    function changeSlideImg(index) {
-      slidesImg[currentSlideImg].classList.remove('active');
-      dotsImg[currentSlideImg].classList.remove('active');
-      currentSlideImg = (index + slidesImg.length) % slidesImg.length;
-      slidesImg[currentSlideImg].classList.add('active');
-      dotsImg[currentSlideImg].classList.add('active');
-    }
-    document.getElementById('nextSlideImg').addEventListener('click', () => changeSlideImg(currentSlideImg + 1));
-    document.getElementById('prevSlideImg').addEventListener('click', () => changeSlideImg(currentSlideImg - 1));
-    setInterval(() => changeSlideImg(currentSlideImg + 1), 6000);
+    // ===== CARRUSEL HERO =====
+    (function() {
+      const slides = document.querySelectorAll('.carousel-slide');
+      const dotsContainer = document.getElementById('carouselDots');
+      if (!slides.length || !dotsContainer) return;
+      let current = 0;
 
-    // 6. Duplicación Automática de Elementos en los Marquees para Bucle Infinito
+      slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if(index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => changeSlide(index));
+        dotsContainer.appendChild(dot);
+      });
+
+      const dots = document.querySelectorAll('.dot');
+
+      function changeSlide(index) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (index + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      const prevBtn = document.getElementById('prevSlideImg');
+      const nextBtn = document.getElementById('nextSlideImg');
+      if (prevBtn) prevBtn.addEventListener('click', () => changeSlide(current - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => changeSlide(current + 1));
+
+      setInterval(() => changeSlide(current + 1), 6000);
+    })();
+
+    // ===== DUPLICACIÓN DE MARQUEES =====
     function initMarquee(railId) {
       const rail = document.getElementById(railId);
-      if(rail) {
-        const items = Array.from(rail.children);
-        items.forEach(item => {
-          const clone = item.cloneNode(true);
-          rail.appendChild(clone);
-        });
-      }
+      if(!rail) return;
+      const items = Array.from(rail.children);
+      items.forEach(item => {
+        const clone = item.cloneNode(true);
+        rail.appendChild(clone);
+      });
     }
     initMarquee('marqueePhotos');
     initMarquee('marqueeReviews');
 
-    // 7. Lightbox Integrado para las Imágenes de la Galería
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    document.querySelectorAll('.album-item').forEach(item => {
-      item.addEventListener('click', () => {
-        lightboxImg.src = item.querySelector('img').src;
-        lightbox.classList.add('active');
+    // ===== LIGHTBOX =====
+    (function() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      if (!lightbox || !lightboxImg) return;
+
+      document.querySelectorAll('.album-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const img = item.querySelector('img');
+          if (img) {
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+          }
+        });
       });
-    });
-    document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('active'));
-    lightbox.addEventListener('click', (e) => {
-      if(e.target === lightbox) lightbox.classList.remove('active');
-    });
 
-    // 8. Sistema del CRUD de Solicitudes (Procesamiento Interno Silencioso)
-    const crudForm = document.getElementById('crudForm');
-    let localQueries = JSON.parse(localStorage.getItem('queries_contigo')) || [
-      { name: "Juan Carlos Mendoza", service: "Enfermería Avanzada", desc: "Monitoreo postquirúrgico continuo por cirugía cardíaca." }
-    ];
+      document.getElementById('lightboxClose')?.addEventListener('click', () => lightbox.classList.remove('active'));
+      lightbox.addEventListener('click', (e) => {
+        if(e.target === lightbox) lightbox.classList.remove('active');
+      });
+    })();
 
-    function renderQueries() {
-      localStorage.setItem('queries_contigo', JSON.stringify(localQueries));
-    }
+    // ===== CRUD SOLICITUDES =====
+    (function() {
+      const form = document.getElementById('crudForm');
+      if (!form) return;
+      let queries = JSON.parse(localStorage.getItem('queries_contigo')) || [
+        { name: "Juan Carlos Mendoza", service: "Enfermería Avanzada", desc: "Monitoreo postquirúrgico continuo por cirugía cardíaca." }
+      ];
 
-    crudForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const index = document.getElementById('queryIndex').value;
-      const nameVal = document.getElementById('patientName').value.trim();
-      const serviceVal = document.getElementById('serviceType').value.trim();
-      const descVal = document.getElementById('queryDescription').value.trim();
-
-      if(index === "") {
-        localQueries.push({ name: nameVal, service: serviceVal, desc: descVal });
-        showToast("Solicitud de asistencia registrada localmente");
-      } else {
-        localQueries[parseInt(index)] = { name: nameVal, service: serviceVal, desc: descVal };
-        document.getElementById('queryIndex').value = "";
-        document.getElementById('btnSubmitForm').innerHTML = 'Registrar Solicitud <i class="fa-solid fa-paper-plane"></i>';
-        showToast("Cambios guardados con éxito");
+      function saveQueries() {
+        localStorage.setItem('queries_contigo', JSON.stringify(queries));
       }
-      crudForm.reset();
-      renderQueries();
-    });
 
-    // 9. RECONSTRUCCIÓN AVANZADA DEL CHATBOT INTERACTIVO
-    const chatbotLauncher = document.getElementById('chatbotLauncher');
-    const chatbotWindow = document.getElementById('chatbotWindow');
-    const chatbotCloseBtn = document.getElementById('chatbotCloseBtn');
-    const chatbotSendBtn = document.getElementById('chatbotSendBtn');
-    const chatbotInput = document.getElementById('chatbotInput');
-    const chatbotBody = document.getElementById('chatbotBody');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const index = document.getElementById('queryIndex').value;
+        const nameVal = document.getElementById('patientName').value.trim();
+        const serviceVal = document.getElementById('serviceType').value.trim();
+        const descVal = document.getElementById('queryDescription').value.trim();
 
-    let chatState = 0;
-    let tempQuery = { name: "", service: "", desc: "" };
-
-    chatbotLauncher.addEventListener('click', () => {
-      chatbotWindow.classList.toggle('active');
-      if (chatbotWindow.classList.contains('active') && chatbotBody.children.length === 0) {
-        initChatFlow();
-      }
-    });
-
-    chatbotCloseBtn.addEventListener('click', () => chatbotWindow.classList.remove('active'));
-    chatbotSendBtn.addEventListener('click', handleChatbotSubmit);
-    chatbotInput.addEventListener('keypress', (e) => {
-      if(e.key === 'Enter') handleChatbotSubmit();
-    });
-
-    function initChatFlow() {
-      chatbotBody.innerHTML = '';
-      chatState = 0;
-      tempQuery = { name: "", service: "", desc: "" };
-      appendChatMsg("Bienvenido a los servicios exclusivos de <strong>Aquí Contigo</strong>. Vamos a canalizar su requerimiento clínico.", 'bot');
-      setTimeout(() => {
-        appendChatMsg("Por favor, ingrese el <strong>Nombre Completo</strong> del paciente o titular:", 'bot');
-        chatState = 1;
-      }, 600);
-    }
-
-    function handleChatbotSubmit() {
-      const text = chatbotInput.value.trim();
-      if(!text) return;
-      appendChatMsg(text, 'user');
-      chatbotInput.value = '';
-
-      setTimeout(() => {
-        switch(chatState) {
-          case 1:
-            tempQuery.name = text;
-            appendChatMsg(`Gracias, <strong>${text}</strong>. ¿Qué tipo de <strong>Especialidad o Cuidado</strong> requiere? (Ej. Enfermería, Fisioterapia, Cuidados Paliativos)`, 'bot');
-            chatState = 2;
-            break;
-          case 2:
-            tempQuery.service = text;
-            appendChatMsg("Entendido. Por favor, escriba de forma resumida las <strong>Especificaciones Clínicas</strong> o síntomas del paciente:", 'bot');
-            chatState = 3;
-            break;
-          case 3:
-            tempQuery.desc = text;
-            appendChatMsg("Procesando credenciales de enlace residencial de alta seguridad...", 'bot');
-            setTimeout(() => {
-              appendChatMsg(`<strong>Resumen del Requerimiento Técnico:</strong><br>• <strong>Paciente:</strong> ${tempQuery.name}<br>• <strong>Servicio:</strong> ${tempQuery.service}<br>• <strong>Notas:</strong> ${tempQuery.desc}`, 'bot');
-              setTimeout(() => {
-                appendChatMsg("Los datos han sido pre-guardados encriptadamente. Para dar inicio al protocolo operativo, haga clic en el botón inferior para realizar la <strong>Verificación vía WhatsApp</strong>.", 'bot');
-                
-                const optionsDiv = document.createElement('div');
-                optionsDiv.className = 'chatbot-options';
-                const wsText = encodeURIComponent(`*SOLICITUD ASISTENCIA VIRTUAL*\n\n*Paciente:* ${tempQuery.name}\n*Especialidad:* ${tempQuery.service}\n*Requerimiento:* ${tempQuery.desc}`);
-                optionsDiv.innerHTML = `
-                  <button class="chat-opt-btn" onclick="verifyAndResetChat('${wsText}')">
-                    <i class="fa-brands fa-whatsapp"></i> Verificar en WhatsApp
-                  </button>
-                `;
-                chatbotBody.appendChild(optionsDiv);
-                chatbotBody.scrollTop = chatbotBody.scrollHeight;
-                chatState = 4;
-              }, 600);
-            }, 700);
-            break;
-          case 4:
-            appendChatMsg("Por favor, use el botón superior para completar la verificación técnica.", 'bot');
-            break;
+        if (index === "") {
+          queries.push({ name: nameVal, service: serviceVal, desc: descVal });
+          showToast("Solicitud de asistencia registrada localmente");
+        } else {
+          queries[parseInt(index)] = { name: nameVal, service: serviceVal, desc: descVal };
+          document.getElementById('queryIndex').value = "";
+          document.getElementById('btnSubmitForm').innerHTML = 'Registrar Solicitud <i class="fa-solid fa-paper-plane"></i>';
+          showToast("Cambios guardados con éxito");
         }
-      }, 700);
-    }
-
-    function appendChatMsg(text, sender) {
-      const msg = document.createElement('div');
-      msg.className = `chat-msg ${sender}`;
-      msg.innerHTML = text;
-      chatbotBody.appendChild(msg);
-      chatbotBody.scrollTop = chatbotBody.scrollHeight;
-    }
-
-    window.verifyAndResetChat = function(encodedText) {
-      window.open(`https://wa.me/593995441552?text=${encodedText}`, '_blank');
-      setTimeout(() => {
-        appendChatMsg("<em>Verificación procesada. El asistente virtual se reiniciará en unos instantes...</em>", 'bot');
-        setTimeout(() => {
-          initChatFlow();
-          showToast("Chatbot de soporte reiniciado");
-        }, 2000);
-      }, 1000);
-    };
-
-    // 10. Sistema de Gestión de Módulos Legales Dinámicos
-    const legalModal = document.getElementById('legalModal');
-    const legalPaneTitle = document.getElementById('legalPaneTitle');
-    const legalPaneBody = document.getElementById('legalPaneBody');
-    const btnCloseLegal = document.getElementById('btnCloseLegal');
-
-    const textosLegales = {
-      'politicas-pane': {
-        title: 'Políticas de Privacidad Clínicas',
-        content: '<h3>1. Protección de Historiales Clínicos</h3><p>En Aquí Contigo, todos los datos médicos relativos a tratamientos, diagnósticos y signos vitales se someten a estrictos esquemas de cifrado simétrico AES-256. Ninguna persona ajena al equipo clínico acreditado tiene acceso a la información confidencial de salud residencial del paciente.</p><h3>2. Tratamiento de Datos Personales</h3><p>Los datos ingresados en esta plataforma digital se almacenan en estructuras aisladas y seguras. No se comercializan ni se comparten historiales biológicos con intermediarios, asegurando absoluta privacidad médica de alta gama.</p>'
-      },
-      'contratos-pane': {
-        title: 'Términos de Contrato y Cobertura',
-        content: '<h3>1. Marco Operativo de Prestación</h3><p>Los servicios detallados en esta plataforma constituyen un acuerdo de coordinación logística médica domiciliaria. El personal asignado cumple con un riguroso proceso de validación de credenciales académicas y antecedentes profesionales.</p><h3>2. Cancelaciones y Variaciones Técnicas</h3><p>Las solicitudes de ajuste en los turnos médicos de asistencia domiciliaria residencial premium deben notificarse con un intervalo mínimo de 24 horas a través de los canales exclusivos de teleasistencia.</p>'
-      }
-    };
-
-    function openLegalPane(key) {
-      const data = textosLegales[key];
-      legalPaneTitle.innerText = data.title;
-      legalPaneBody.innerHTML = data.content;
-      document.querySelectorAll('.legal-nav-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-target') === key);
+        form.reset();
+        saveQueries();
       });
-      legalModal.classList.add('active');
-    }
+    })();
 
-    document.getElementById('linkLegalPrivacidad').addEventListener('click', (e) => { e.preventDefault(); openLegalPane('politicas-pane'); });
-    document.getElementById('linkLegalTerminos').addEventListener('click', (e) => { e.preventDefault(); openLegalPane('contratos-pane'); });
-    btnCloseLegal.addEventListener('click', () => legalModal.classList.remove('active'));
+    // ===== CHATBOT =====
+    (function() {
+      const launcher = document.getElementById('chatbotLauncher');
+      const windowChat = document.getElementById('chatbotWindow');
+      const closeBtn = document.getElementById('chatbotCloseBtn');
+      const sendBtn = document.getElementById('chatbotSendBtn');
+      const input = document.getElementById('chatbotInput');
+      const body = document.getElementById('chatbotBody');
+      if (!launcher || !windowChat || !body) return;
 
-    document.querySelectorAll('.legal-nav-btn').forEach(btn => {
-      btn.addEventListener('click', () => openLegalPane(btn.getAttribute('data-target')));
-    });
+      let state = 0;
+      let temp = { name: "", service: "", desc: "" };
 
-    // 11. API de Compartición Web Nativa
-    document.getElementById('btnShareTrigger').addEventListener('click', async () => {
+      launcher.addEventListener('click', () => {
+        windowChat.classList.toggle('active');
+        if (windowChat.classList.contains('active') && body.children.length === 0) {
+          initChat();
+        }
+      });
+
+      closeBtn?.addEventListener('click', () => windowChat.classList.remove('active'));
+      sendBtn?.addEventListener('click', handleSubmit);
+      input?.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSubmit(); });
+
+      function appendMsg(text, sender) {
+        const msg = document.createElement('div');
+        msg.className = `chat-msg ${sender}`;
+        msg.innerHTML = text;
+        body.appendChild(msg);
+        body.scrollTop = body.scrollHeight;
+      }
+
+      function initChat() {
+        body.innerHTML = '';
+        state = 0;
+        temp = { name: "", service: "", desc: "" };
+        appendMsg("Bienvenido a los servicios exclusivos de <strong>Aquí Contigo</strong>. Vamos a canalizar su requerimiento clínico.", 'bot');
+        setTimeout(() => {
+          appendMsg("Por favor, ingrese el <strong>Nombre Completo</strong> del paciente o titular:", 'bot');
+          state = 1;
+        }, 600);
+      }
+
+      function handleSubmit() {
+        const text = input.value.trim();
+        if(!text) return;
+        appendMsg(text, 'user');
+        input.value = '';
+
+        setTimeout(() => {
+          switch(state) {
+            case 1:
+              temp.name = text;
+              appendMsg(`Gracias, <strong>${text}</strong>. ¿Qué tipo de <strong>Especialidad o Cuidado</strong> requiere? (Ej. Enfermería, Fisioterapia, Cuidados Paliativos)`, 'bot');
+              state = 2;
+              break;
+            case 2:
+              temp.service = text;
+              appendMsg("Entendido. Por favor, escriba de forma resumida las <strong>Especificaciones Clínicas</strong> o síntomas del paciente:", 'bot');
+              state = 3;
+              break;
+            case 3:
+              temp.desc = text;
+              appendMsg("Procesando credenciales de enlace residencial de alta seguridad...", 'bot');
+              setTimeout(() => {
+                appendMsg(`<strong>Resumen del Requerimiento Técnico:</strong><br>• <strong>Paciente:</strong> ${temp.name}<br>• <strong>Servicio:</strong> ${temp.service}<br>• <strong>Notas:</strong> ${temp.desc}`, 'bot');
+                setTimeout(() => {
+                  appendMsg("Los datos han sido pre-guardados encriptadamente. Para dar inicio al protocolo operativo, haga clic en el botón inferior para realizar la <strong>Verificación vía WhatsApp</strong>.", 'bot');
+
+                  const optionsDiv = document.createElement('div');
+                  optionsDiv.className = 'chatbot-options';
+                  const wsText = encodeURIComponent(`*SOLICITUD ASISTENCIA VIRTUAL*\n\n*Paciente:* ${temp.name}\n*Especialidad:* ${temp.service}\n*Requerimiento:* ${temp.desc}`);
+                  optionsDiv.innerHTML = `
+                    <button class="chat-opt-btn" onclick="verifyAndReset('${wsText}')">
+                      <i class="fa-brands fa-whatsapp"></i> Verificar en WhatsApp
+                    </button>
+                  `;
+                  body.appendChild(optionsDiv);
+                  body.scrollTop = body.scrollHeight;
+                  state = 4;
+                }, 600);
+              }, 700);
+              break;
+            case 4:
+              appendMsg("Por favor, use el botón superior para completar la verificación técnica.", 'bot');
+              break;
+          }
+        }, 700);
+      }
+
+      window.verifyAndReset = function(encodedText) {
+        window.open(`https://wa.me/593995441552?text=${encodedText}`, '_blank');
+        setTimeout(() => {
+          appendMsg("<em>Verificación procesada. El asistente virtual se reiniciará en unos instantes...</em>", 'bot');
+          setTimeout(() => {
+            initChat();
+            showToast("Chatbot de soporte reiniciado");
+          }, 2000);
+        }, 1000);
+      };
+    })();
+
+    // ===== MÓDULOS LEGALES =====
+    (function() {
+      const modal = document.getElementById('legalModal');
+      const paneTitle = document.getElementById('legalPaneTitle');
+      const paneBody = document.getElementById('legalPaneBody');
+      const closeBtn = document.getElementById('btnCloseLegal');
+      if (!modal || !paneTitle || !paneBody) return;
+
+      const textos = {
+        'politicas-pane': {
+          title: 'Políticas de Privacidad Clínicas',
+          content: '<h3>1. Protección de Historiales Clínicos</h3><p>En Aquí Contigo, todos los datos médicos relativos a tratamientos, diagnósticos y signos vitales se someten a estrictos esquemas de cifrado simétrico AES-256. Ninguna persona ajena al equipo clínico acreditado tiene acceso a la información confidencial de salud residencial del paciente.</p><h3>2. Tratamiento de Datos Personales</h3><p>Los datos ingresados en esta plataforma digital se almacenan en estructuras aisladas y seguras. No se comercializan ni se comparten historiales biológicos con intermediarios, asegurando absoluta privacidad médica de alta gama.</p>'
+        },
+        'contratos-pane': {
+          title: 'Términos de Contrato y Cobertura',
+          content: '<h3>1. Marco Operativo de Prestación</h3><p>Los servicios detallados en esta plataforma constituyen un acuerdo de coordinación logística médica domiciliaria. El personal asignado cumple con un riguroso proceso de validación de credenciales académicas y antecedentes profesionales.</p><h3>2. Cancelaciones y Variaciones Técnicas</h3><p>Las solicitudes de ajuste en los turnos médicos de asistencia domiciliaria residencial premium deben notificarse con un intervalo mínimo de 24 horas a través de los canales exclusivos de teleasistencia.</p>'
+        }
+      };
+
+      function openPane(key) {
+        const data = textos[key];
+        if (!data) return;
+        paneTitle.innerText = data.title;
+        paneBody.innerHTML = data.content;
+        document.querySelectorAll('.legal-nav-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-target') === key);
+        });
+        modal.classList.add('active');
+      }
+
+      document.getElementById('linkLegalPrivacidad')?.addEventListener('click', (e) => { e.preventDefault(); openPane('politicas-pane'); });
+      document.getElementById('linkLegalTerminos')?.addEventListener('click', (e) => { e.preventDefault(); openPane('contratos-pane'); });
+      closeBtn?.addEventListener('click', () => modal.classList.remove('active'));
+
+      document.querySelectorAll('.legal-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => openPane(btn.getAttribute('data-target')));
+      });
+    })();
+
+    // ===== COMPARTIR =====
+    document.getElementById('btnShareTrigger')?.addEventListener('click', async () => {
       if (navigator.share) {
         try {
           await navigator.share({ title: 'Aquí Contigo Premium', text: 'Cuidado Médico Residencial de Alta Gama.', url: window.location.href });
-        } catch (err) { }
+        } catch (err) {}
       } else {
         try {
           await navigator.clipboard.writeText(window.location.href);
           showToast("¡Enlace copiado al portapapeles!");
-        } catch (err) { alert("Enlace: " + window.location.href); }
-      }
-    });
-
-    // 12. SCRIPT PREMIUM DE INSTALACIÓN PWA
-    let promptInstalacionPWA;
-    const btnNavInstall = document.getElementById('btnNavInstall');
-    const btnSectionInstall = document.getElementById('btnSectionInstall');
-    const wrapperSeccionInstalar = document.getElementById('wrapperSeccionInstalar');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      promptInstalacionPWA = e;
-      btnNavInstall.style.opacity = '1';
-      btnNavInstall.style.pointerEvents = 'auto';
-    });
-
-    async function ejecutarInstalacionEscritorio() {
-      if (promptInstalacionPWA) {
-        promptInstalacionPWA.prompt();
-        const { outcome } = await promptInstalacionPWA.userChoice;
-        if (outcome === 'accepted') {
-          showToast("¡Procesando adición al escritorio móvil!");
+        } catch (err) {
+          alert("Enlace: " + window.location.href);
         }
-        promptInstalacionPWA = null;
-      } else {
-        showToast("Para instalar de forma nativa, use la opción de su navegador o 'Añadir a pantalla de inicio'");
       }
-    }
-
-    btnNavInstall.addEventListener('click', ejecutarInstalacionEscritorio);
-    btnSectionInstall.addEventListener('click', ejecutarInstalacionEscritorio);
-
-    window.addEventListener('appinstalled', () => {
-      showToast("¡Aquí Contigo se añadió con éxito al escritorio!");
-      btnNavInstall.style.display = 'none';
-      wrapperSeccionInstalar.style.display = 'none';
     });
-  </script>
 
-  <script>
-    // Capa de control técnico de inspección y seguridad visual
+    // ===== INSTALACIÓN PWA =====
+    (function() {
+      let deferredPrompt;
+      const btnNav = document.getElementById('btnNavInstall');
+      const btnSection = document.getElementById('btnSectionInstall');
+      const wrapper = document.getElementById('wrapperSeccionInstalar');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (btnNav) { btnNav.style.opacity = '1'; btnNav.style.pointerEvents = 'auto'; }
+      });
+
+      async function installApp() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            showToast("¡Procesando adición al escritorio móvil!");
+          }
+          deferredPrompt = null;
+        } else {
+          showToast("Para instalar de forma nativa, use la opción de su navegador o 'Añadir a pantalla de inicio'");
+        }
+      }
+
+      btnNav?.addEventListener('click', installApp);
+      btnSection?.addEventListener('click', installApp);
+
+      window.addEventListener('appinstalled', () => {
+        showToast("¡Aquí Contigo se añadió con éxito al escritorio!");
+        if (btnNav) btnNav.style.display = 'none';
+        if (wrapper) wrapper.style.display = 'none';
+      });
+    })();
+
+    // ===== SEGURIDAD: PREVENIR INSPECCIÓN Y CONTEXTO =====
     (function() {
       document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
-
       document.addEventListener('keydown', function(e) {
         if (e.keyCode >= 112 && e.keyCode <= 123) {
           e.preventDefault();
           e.stopPropagation();
           return false;
         }
-
         const esMeta = e.ctrlKey || e.metaKey;
         const esShift = e.shiftKey;
-
         if (
           (esMeta && e.key.toLowerCase() === 'u') ||
           (esMeta && esShift && e.key.toLowerCase() === 'i') ||
@@ -1665,7 +1933,6 @@
           return false;
         }
       }, false);
-
       document.addEventListener('selectstart', function(e) { e.preventDefault(); }, false);
     })();
   </script>
