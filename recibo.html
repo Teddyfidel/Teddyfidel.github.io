@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador de Recibos Semanales</title>
+    <style>
+        /* === ESTILOS GLOBALES (Modo Oscuro) === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #121212;
+            color: #e0e0e0;
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1.5rem;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: 2rem;
+            letter-spacing: -0.5px;
+            color: #bb86fc;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 300;
+            color: #888;
+        }
+        .subtitle {
+            color: #9e9e9e;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            border-bottom: 1px solid #2a2a2a;
+            padding-bottom: 0.75rem;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        /* === CONTROLES === */
+        .controls {
+            background: #1e1e1e;
+            border-radius: 16px;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2c2c2c;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .controls label {
+            font-weight: 500;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .controls input[type="number"] {
+            background: #2c2c2c;
+            border: 1px solid #444;
+            color: #f0f0f0;
+            padding: 0.5rem 1rem;
+            width: 80px;
+            border-radius: 30px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .controls input[type="number"]:focus {
+            border-color: #bb86fc;
+        }
+        .controls input[type="number"]::-webkit-inner-spin-button {
+            opacity: 1;
+        }
+
+        .controls .btn-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            background: #2c2c2c;
+            border: 1px solid #3d3d3d;
+            color: #e0e0e0;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .controls button:hover {
+            background: #3a3a3a;
+            border-color: #bb86fc;
+            transform: translateY(-2px);
+        }
+        .controls button:active {
+            transform: scale(0.96);
+        }
+        .controls button.primary {
+            background: #bb86fc;
+            border-color: #bb86fc;
+            color: #121212;
+            font-weight: 600;
+        }
+        .controls button.primary:hover {
+            background: #a86ee0;
+            border-color: #a86ee0;
+        }
+
+        /* === CONTENEDOR DEL RECIBO GENERADO === */
+        .recibo-wrapper {
+            width: 100%;
+            max-width: 700px;
+            margin-top: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .recibo-container {
+            width: 100%;
+            background: #1c1c1c;
+            border-radius: 20px;
+            padding: 1.8rem 2rem;
+            border: 1px solid #2b2b2b;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            transition: all 0.2s;
+            display: none;
+            flex-direction: column;
+        }
+        .recibo-container.visible {
+            display: flex;
+        }
+        .recibo-container:hover {
+            border-color: #bb86fc;
+        }
+
+        /* === ESTILOS INTERNOS DEL RECIBO === */
+        .recibo {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .recibo::before {
+            content: "✓";
+            position: absolute;
+            right: -10px;
+            top: -10px;
+            font-size: 5rem;
+            color: rgba(187, 134, 252, 0.06);
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+
+        .recibo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 0.7rem;
+            margin-bottom: 1rem;
+        }
+        .recibo-numero {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #bb86fc;
+            background: #2a1f3a;
+            padding: 0.2rem 1.2rem;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .recibo-fecha {
+            font-size: 1rem;
+            color: #b0b0b0;
+            font-weight: 400;
+        }
+
+        .recibo-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin: 0.5rem 0 0.8rem;
+        }
+        .recibo-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            padding: 0.15rem 0;
+        }
+        .recibo-item .label {
+            color: #9e9e9e;
+            font-weight: 300;
+        }
+        .recibo-item .value {
+            font-weight: 500;
+            color: #f0f0f0;
+        }
+        .recibo-item .value.monto {
+            color: #4caf50;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .recibo-item .value.saldo {
+            color: #ffb74d;
+            font-weight: 600;
+        }
+        .recibo-item .value.saldo.cero {
+            color: #66bb6a;
+        }
+
+        .recibo-footer {
+            margin-top: 1rem;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #777;
+            letter-spacing: 0.5px;
+        }
+        .recibo-footer .recibido {
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        .recibo-footer .recibido span {
+            font-weight: 600;
+            color: #bbb;
+        }
+
+        /* === MENSAJE DE RECIBO NO ENCONTRADO === */
+        .no-recibo {
+            text-align: center;
+            color: #888;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        /* === BOTÓN DE IMPRESIÓN (solo visible cuando hay recibo) === */
+        .print-btn-wrapper {
+            margin-top: 1.5rem;
+            text-align: center;
+            display: none;
+        }
+        .print-btn-wrapper.visible {
+            display: block;
+        }
+        .print-btn-wrapper button {
+            background: #2c2c2c;
+            border: 1px solid #3d3d3d;
+            color: #e0e0e0;
+            padding: 0.7rem 2.5rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        .print-btn-wrapper button:hover {
+            background: #3a3a3a;
+            border-color: #bb86fc;
+            transform: translateY(-2px);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 1.5rem;
+            }
+            .controls label {
+                justify-content: center;
+            }
+            .controls .btn-group {
+                justify-content: center;
+            }
+            .recibo-container {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* === ESTILOS PARA IMPRESIÓN: RECIBO GRANDE QUE OCUPA TODA LA HOJA === */
+        @media print {
+            /* Reiniciar márgenes y fondo */
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                min-height: 100vh !important;
+                display: block !important;
+            }
+
+            /* Ocultar todo excepto el recibo generado */
+            h1, .subtitle, .controls, .print-btn-wrapper, .no-recibo {
+                display: none !important;
+            }
+
+            /* Contenedor del recibo: ocupar toda la página */
+            .recibo-wrapper {
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                height: 100vh !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            .recibo-container {
+                display: flex !important;
+                background: white !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                padding: 2rem !important;
+                width: 100% !important;
+                height: 100% !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* El recibo en sí: ocupa todo el espacio disponible con fuente grande */
+            .recibo {
+                width: 100% !important;
+                height: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-evenly !important;
+                padding: 1.5rem !important;
+                border: 2px solid #222 !important;
+                border-radius: 8px !important;
+                background: #fafafa !important;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1) !important;
+            }
+
+            .recibo::before {
+                display: none !important;
+            }
+
+            /* Aumentar todos los tamaños de fuente */
+            .recibo-header {
+                border-bottom: 2px solid #333 !important;
+                padding-bottom: 1.5rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+            .recibo-numero {
+                font-size: 2.5rem !important;
+                background: #e0d0f0 !important;
+                color: #4a2a6a !important;
+                padding: 0.5rem 2rem !important;
+                border-radius: 40px !important;
+            }
+            .recibo-fecha {
+                font-size: 2.2rem !important;
+                color: #222 !important;
+                font-weight: 500 !important;
+            }
+
+            .recibo-body {
+                gap: 1.5rem !important;
+                margin: 1rem 0 !important;
+            }
+            .recibo-item {
+                font-size: 2rem !important;
+                padding: 0.5rem 0 !important;
+                border-bottom: 1px solid #ddd !important;
+            }
+            .recibo-item .label {
+                color: #444 !important;
+                font-weight: 400 !important;
+            }
+            .recibo-item .value {
+                color: #111 !important;
+                font-weight: 600 !important;
+            }
+            .recibo-item .value.monto {
+                color: #2e7d32 !important;
+                font-size: 2.4rem !important;
+            }
+            .recibo-item .value.saldo {
+                color: #b85c00 !important;
+                font-size: 2.2rem !important;
+            }
+            .recibo-item .value.saldo.cero {
+                color: #2e7d32 !important;
+            }
+
+            .recibo-footer {
+                margin-top: 2rem !important;
+                padding-top: 1.5rem !important;
+                border-top: 2px solid #333 !important;
+                font-size: 1.8rem !important;
+                color: #333 !important;
+            }
+            .recibo-footer .recibido span {
+                color: #111 !important;
+                font-weight: 700 !important;
+            }
+            .recibo-footer span:last-child {
+                font-size: 2rem !important;
+                font-weight: 700 !important;
+                color: #2e7d32 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>
+        📄 Generador de Recibos
+        <small>$400 · $15 semanal</small>
+    </h1>
+    <div class="subtitle">Inicio: 7 de julio de 2026 · Elige el número de pago</div>
+
+    <!-- CONTROLES -->
+    <div class="controls">
+        <label>
+            Número de pago
+            <input type="number" id="pagoNumero" min="1" value="1" />
+        </label>
+        <div class="btn-group">
+            <button id="btnGenerar" class="primary">📄 Generar recibo</button>
+        </div>
+    </div>
+
+    <!-- ÁREA DEL RECIBO -->
+    <div class="recibo-wrapper">
+        <div id="reciboContainer" class="recibo-container">
+            <!-- Aquí se inyecta el recibo generado dinámicamente -->
+        </div>
+        <div id="printBtnWrapper" class="print-btn-wrapper">
+            <button id="btnImprimir">🖨️ Imprimir este recibo</button>
+        </div>
+        <div id="noReciboMsg" class="no-recibo">Selecciona un número y presiona "Generar recibo"</div>
+    </div>
+
+    <script>
+        (function() {
+            // === CONFIGURACIÓN ===
+            const fechaInicio = new Date(2026, 6, 7); // 7 de julio de 2026
+            const totalDeuda = 400;
+            const pagoBase = 15;
+
+            // === CALCULAR TODOS LOS PAGOS ===
+            const pagos = [];
+            let saldo = totalDeuda;
+            let contador = 0;
+
+            while (saldo > 0) {
+                const abono = Math.min(pagoBase, saldo);
+                pagos.push({
+                    numero: contador + 1,
+                    abono: abono,
+                    saldoRestante: saldo - abono,
+                });
+                saldo -= abono;
+                contador++;
+            }
+            const totalPagos = pagos.length;
+
+            // === REFERENCIAS A DOM ===
+            const inputNumero = document.getElementById('pagoNumero');
+            const btnGenerar = document.getElementById('btnGenerar');
+            const reciboContainer = document.getElementById('reciboContainer');
+            const printBtnWrapper = document.getElementById('printBtnWrapper');
+            const noReciboMsg = document.getElementById('noReciboMsg');
+            const btnImprimir = document.getElementById('btnImprimir');
+
+            // Establecer el máximo del input
+            inputNumero.max = totalPagos;
+
+            // === FUNCIÓN PARA FORMATEAR FECHA ===
+            function formatearFecha(fecha) {
+                const dia = String(fecha.getDate()).padStart(2, '0');
+                const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                const anio = fecha.getFullYear();
+                return `${dia}/${mes}/${anio}`;
+            }
+
+            // === FUNCIÓN PARA GENERAR Y MOSTRAR EL RECIBO ===
+            function generarRecibo(numeroPago) {
+                // Validar rango
+                if (numeroPago < 1 || numeroPago > totalPagos) {
+                    reciboContainer.classList.remove('visible');
+                    printBtnWrapper.classList.remove('visible');
+                    noReciboMsg.style.display = 'block';
+                    noReciboMsg.textContent = `Número inválido. Debe ser entre 1 y ${totalPagos}.`;
+                    return;
+                }
+
+                const pago = pagos[numeroPago - 1];
+                if (!pago) {
+                    reciboContainer.classList.remove('visible');
+                    printBtnWrapper.classList.remove('visible');
+                    noReciboMsg.style.display = 'block';
+                    noReciboMsg.textContent = 'Pago no encontrado.';
+                    return;
+                }
+
+                // Calcular fecha del recibo (inicio + (numero-1)*7 días)
+                const fechaRecibo = new Date(fechaInicio);
+                fechaRecibo.setDate(fechaInicio.getDate() + (numeroPago - 1) * 7);
+
+                // Construir el HTML del recibo
+                const saldoClass = pago.saldoRestante === 0 ? 'value saldo cero' : 'value saldo';
+                // Cambiamos "Pendiente" por "Pagado"
+                const estado = pago.saldoRestante === 0 ? '¡Cancelado!' : 'Pagado';
+
+                const reciboHTML = `
+                    <div class="recibo">
+                        <div class="recibo-header">
+                            <span class="recibo-numero">Pago ${pago.numero} de ${totalPagos}</span>
+                            <span class="recibo-fecha">${formatearFecha(fechaRecibo)}</span>
+                        </div>
+                        <div class="recibo-body">
+                            <div class="recibo-item">
+                                <span class="label">Monto abonado</span>
+                                <span class="value monto">$${pago.abono.toFixed(2)}</span>
+                            </div>
+                            <div class="recibo-item">
+                                <span class="label">Saldo restante</span>
+                                <span class="${saldoClass}">$${pago.saldoRestante.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <div class="recibo-footer">
+                            <span class="recibido">✔ <span>Recibido</span></span>
+                            <span>${estado}</span>
+                        </div>
+                    </div>
+                `;
+
+                // Inyectar en el contenedor
+                reciboContainer.innerHTML = reciboHTML;
+                reciboContainer.classList.add('visible');
+                printBtnWrapper.classList.add('visible');
+                noReciboMsg.style.display = 'none';
+            }
+
+            // === MANEJADORES DE EVENTOS ===
+            btnGenerar.addEventListener('click', function() {
+                const num = parseInt(inputNumero.value, 10);
+                if (isNaN(num)) {
+                    reciboContainer.classList.remove('visible');
+                    printBtnWrapper.classList.remove('visible');
+                    noReciboMsg.style.display = 'block';
+                    noReciboMsg.textContent = 'Por favor, ingresa un número válido.';
+                    return;
+                }
+                generarRecibo(num);
+            });
+
+            // También generar al presionar Enter en el input
+            inputNumero.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    btnGenerar.click();
+                }
+            });
+
+            // Botón de imprimir: usa window.print()
+            btnImprimir.addEventListener('click', function() {
+                window.print();
+            });
+
+            // === INICIALIZAR: generar el recibo para el número 1 por defecto ===
+            inputNumero.value = 1;
+            generarRecibo(1);
+        })();
+    </script>
+
+</body>
+</html>
