@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANOVA Neón · Dark Mode</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- jStat -->
+    <script src="https://cdn.jsdelivr.net/npm/jstat@1.9.6/dist/jstat.min.js"></script>
+    <style>
+        /* ===== RESET Y FUENTE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #06060f;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 15px;
+            /* Fondo con sutiles grillas neón */
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a16; }
+        ::-webkit-scrollbar-thumb { background: #00f0ff; border-radius: 10px; box-shadow: 0 0 15px #00f0ff; }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .container {
+            max-width: 1250px;
+            width: 100%;
+            background: rgba(12, 12, 30, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 35px 30px;
+            border-radius: 32px;
+            border: 1.5px solid rgba(0, 240, 255, 0.25);
+            box-shadow: 
+                0 0 50px rgba(0, 240, 255, 0.08),
+                inset 0 0 60px rgba(168, 85, 247, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        /* ===== TIPOGRAFÍA Y TÍTULOS ===== */
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 
+                0 0 15px #00f0ff,
+                0 0 45px #a855f7,
+                0 0 80px rgba(0, 240, 255, 0.3);
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a0b0c0;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+            padding-bottom: 12px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .subtitle span {
+            color: #ff00c8;
+            text-shadow: 0 0 25px #ff00c8;
+        }
+
+        /* ===== FILAS Y COLUMNAS ===== */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .col {
+            flex: 1 1 320px;
+        }
+
+        /* ===== TARJETAS (GLASSMORPHISM + NEON) ===== */
+        .card {
+            background: rgba(18, 18, 40, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 22px 20px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.05);
+        }
+
+        .card h3 {
+            color: #00f0ff;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ===== GRUPOS (items) ===== */
+        #grupos-container {
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 6px;
+            margin-bottom: 10px;
+        }
+
+        .grupo-item {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            transition: 0.25s;
+        }
+
+        .grupo-item:hover {
+            border-color: rgba(0, 240, 255, 0.2);
+            background: rgba(0, 240, 255, 0.03);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.02);
+        }
+
+        .grupo-item label {
+            font-weight: 600;
+            color: #c0d0e0;
+            min-width: 30px;
+            font-size: 0.9rem;
+        }
+
+        .grupo-item input[type="text"] {
+            flex: 1;
+            min-width: 100px;
+            padding: 9px 14px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a2a4a;
+            border-radius: 12px;
+            color: #f0f4ff;
+            font-size: 0.95rem;
+            transition: 0.25s;
+            outline: none;
+        }
+
+        .grupo-item input[type="text"]:focus {
+            border-color: #00f0ff;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.2), inset 0 0 15px rgba(0, 240, 255, 0.05);
+        }
+
+        .grupo-item input::placeholder {
+            color: #5a6a7a;
+            font-weight: 300;
+        }
+
+        /* ===== BOTONES NEÓN ===== */
+        .btn {
+            border: none;
+            padding: 9px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.25s ease;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .btn:hover { transform: translateY(-2px) scale(1.02); }
+
+        /* Botón Agregar (verde neón) */
+        .btn-success {
+            background: rgba(0, 255, 170, 0.08);
+            border-color: #00ffaa;
+            color: #00ffaa;
+            text-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+        }
+        .btn-success:hover {
+            background: #00ffaa;
+            color: #06060f;
+            box-shadow: 0 0 40px rgba(0, 255, 170, 0.4);
+        }
+
+        /* Botón Calcular (cian neón) */
+        .btn-primary {
+            background: rgba(0, 240, 255, 0.08);
+            border-color: #00f0ff;
+            color: #00f0ff;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+        .btn-primary:hover {
+            background: #00f0ff;
+            color: #06060f;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Botón Eliminar / Peligro (rosa neón) */
+        .btn-danger {
+            background: rgba(255, 0, 200, 0.08);
+            border-color: #ff00c8;
+            color: #ff00c8;
+            text-shadow: 0 0 15px rgba(255, 0, 200, 0.2);
+        }
+        .btn-danger:hover {
+            background: #ff00c8;
+            color: #06060f;
+            box-shadow: 0 0 40px rgba(255, 0, 200, 0.5);
+        }
+
+        /* Botón Limpiar (amarillo/naranja neón) */
+        .btn-warning {
+            background: rgba(255, 200, 0, 0.08);
+            border-color: #ffcc00;
+            color: #ffcc00;
+            text-shadow: 0 0 15px rgba(255, 200, 0, 0.2);
+        }
+        .btn-warning:hover {
+            background: #ffcc00;
+            color: #06060f;
+            box-shadow: 0 0 40px rgba(255, 200, 0, 0.5);
+        }
+
+        .btn-sm { padding: 5px 14px; font-size: 0.8rem; }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        /* ===== INSTRUCCIONES ===== */
+        .card ul {
+            padding-left: 22px;
+            color: #b0c4d8;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        .card ul strong { color: #00f0ff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+
+        .ejemplo-box {
+            margin-top: 18px;
+            background: rgba(0, 240, 255, 0.04);
+            padding: 14px 16px;
+            border-radius: 16px;
+            border-left: 4px solid #a855f7;
+            font-size: 0.9rem;
+            color: #b8c8dd;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.05);
+        }
+        .ejemplo-box strong { color: #c084fc; }
+
+        /* ===== MENSAJES ===== */
+        #mensaje {
+            margin-top: 14px;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            background: rgba(0,0,0,0.2);
+            min-height: 20px;
+        }
+        .alert-success { border-color: #00ffaa; color: #7dffd0; text-shadow: 0 0 20px rgba(0,255,170,0.2); }
+        .alert-warning { border-color: #ffcc00; color: #ffe066; text-shadow: 0 0 20px rgba(255,200,0,0.2); }
+        .alert-info { border-color: #00f0ff; color: #80f0ff; text-shadow: 0 0 20px rgba(0,240,255,0.2); }
+
+        /* ===== RESULTADOS ===== */
+        #resultados {
+            margin-top: 35px;
+            padding: 25px 22px;
+            background: rgba(8, 8, 25, 0.7);
+            border-radius: 28px;
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            box-shadow: 0 0 60px rgba(0, 240, 255, 0.03);
+            display: none;
+        }
+        #resultados.visible { display: block; }
+
+        #resultados h2 {
+            color: #fff;
+            text-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+            margin-bottom: 12px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* Tabla ANOVA */
+        .tabla-anova {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+            font-size: 0.95rem;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .tabla-anova th {
+            background: rgba(0, 240, 255, 0.08);
+            color: #00f0ff;
+            padding: 14px 12px;
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+            border-bottom: 2px solid rgba(0, 240, 255, 0.2);
+        }
+        .tabla-anova td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0dcee;
+            text-align: center;
+        }
+        .tabla-anova tr:last-child td { border-bottom: none; }
+        .tabla-anova tr:hover td { background: rgba(0, 240, 255, 0.02); }
+
+        /* Resumen */
+        .resumen {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            justify-content: center;
+            margin: 20px 0 25px 0;
+        }
+        .resumen-item {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+            transition: 0.2s;
+        }
+        .resumen-item:hover { border-color: #00f0ff; box-shadow: 0 0 30px rgba(0, 240, 255, 0.05); }
+        .resumen-item .valor {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00f0ff;
+            text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+        }
+        .resumen-item .etiqueta {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #6a7a8a;
+        }
+
+        /* Gráfico */
+        .chart-container {
+            margin: 25px 0 10px 0;
+            height: 320px;
+            position: relative;
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #3a4a5a;
+            margin-top: 28px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            padding-top: 18px;
+        }
+        .footer span { color: #ff00c8; text-shadow: 0 0 20px rgba(255, 0, 200, 0.2); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .container { padding: 18px 12px; }
+            h1 { font-size: 2.0rem; }
+            .grupo-item { flex-direction: column; align-items: stretch; }
+            .grupo-item label { min-width: auto; }
+            .btn { width: 100%; justify-content: center; }
+            .btn-group { flex-direction: column; }
+            .resumen-item { padding: 10px 18px; }
+            .resumen-item .valor { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>⚡ ANOVA · NEON</h1>
+    <div class="subtitle">Análisis de varianza <span>✦</span> una vía</div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h3>📋 Grupos</h3>
+                <div id="grupos-container"></div>
+                <div class="btn-group">
+                    <button class="btn btn-success" id="btn-agregar">➕ Agregar</button>
+                    <button class="btn btn-primary" id="btn-calcular">🧮 Calcular</button>
+                </div>
+                <div style="margin-top: 10px;">
+                    <button class="btn btn-warning btn-sm" id="btn-limpiar">⟳ Reiniciar grupos</button>
+                </div>
+                <div id="mensaje"></div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <h3>📌 Instrucciones</h3>
+                <ul>
+                    <li><strong>Nombre</strong> y <strong>valores</strong> separados por coma (ej: 12, 15.5, 18).</li>
+                    <li>Mínimo <strong>2 grupos</strong> y cada uno con al menos <strong>2 datos</strong>.</li>
+                    <li>Valores numéricos (punto decimal).</li>
+                    <li>Presiona <strong>"Calcular"</strong> para obtener la tabla y gráfico.</li>
+                </ul>
+                <div class="ejemplo-box">
+                    <strong>✨ Ejemplo:</strong> Grupo A: 23, 25, 28, 30 &nbsp;|&nbsp; Grupo B: 19, 22, 24, 26
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTADOS -->
+    <div id="resultados">
+        <h2>📈 Resultados del ANOVA</h2>
+        <div class="resumen" id="resumen-estadisticas"></div>
+
+        <h3 style="color: #c0d0e0; margin: 10px 0; font-weight: 400; letter-spacing: 1px;">Tabla ANOVA</h3>
+        <table class="tabla-anova" id="tabla-anova">
+            <thead>
+                <tr>
+                    <th>Fuente</th>
+                    <th>SC</th>
+                    <th>gl</th>
+                    <th>CM</th>
+                    <th>F</th>
+                    <th>p-valor</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo-tabla"></tbody>
+        </table>
+
+        <div class="chart-container">
+            <canvas id="graficoMedias"></canvas>
+        </div>
+        <p style="text-align: center; color: #5a6a7a; font-size: 0.85rem; letter-spacing: 0.5px;">
+            ⚡ Medias con barras de error (desviación estándar)
+        </p>
+    </div>
+
+    <div class="footer">Diseño neón · <span>⚡</span> Cálculos con jStat &amp; Chart.js</div>
+</div>
+
+<script>
+    (function() {
+        // ===== ESTADO INICIAL =====
+        let grupos = [
+            { id: 1, nombre: 'Grupo A', valores: '23, 25, 28, 30' },
+            { id: 2, nombre: 'Grupo B', valores: '19, 22, 24, 26' }
+        ];
+        let idCounter = 3;
+
+        const container = document.getElementById('grupos-container');
+        const mensaje = document.getElementById('mensaje');
+        const resultadosDiv = document.getElementById('resultados');
+        const tablaBody = document.getElementById('cuerpo-tabla');
+        const resumenEst = document.getElementById('resumen-estadisticas');
+        const canvas = document.getElementById('graficoMedias');
+        let chartInstance = null;
+
+        // ===== CONFIGURACIÓN GLOBAL DE CHART.JS (MODO OSCURO) =====
+        Chart.defaults.color = '#b0c4d8';
+
+        // ===== FUNCIONES AUXILIARES =====
+        function parseValores(texto) {
+            return texto.split(',').map(s => s.trim()).filter(s => s !== '').map(Number);
+        }
+
+        function validarGrupo(grupo) {
+            const vals = parseValores(grupo.valores);
+            if (vals.length < 2) {
+                return { ok: false, msg: `"${grupo.nombre}" necesita al menos 2 datos.` };
+            }
+            if (vals.some(isNaN)) {
+                return { ok: false, msg: `"${grupo.nombre}" contiene valores no numéricos.` };
+            }
+            return { ok: true, valores: vals };
+        }
+
+        function mostrarMensaje(texto, tipo = 'info') {
+            mensaje.textContent = texto;
+            mensaje.className = 'alert-' + tipo;
+            setTimeout(() => {
+                if (mensaje.textContent === texto) {
+                    mensaje.textContent = '';
+                    mensaje.className = '';
+                }
+            }, 5000);
+        }
+
+        function ocultarResultados() {
+            resultadosDiv.classList.remove('visible');
+            resultadosDiv.style.display = 'none';
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+        }
+
+        // ===== RENDERIZAR GRUPOS =====
+        function renderizarGrupos() {
+            container.innerHTML = '';
+            grupos.forEach((g, index) => {
+                const div = document.createElement('div');
+                div.className = 'grupo-item';
+                div.innerHTML = `
+                    <label>${index + 1}.</label>
+                    <input type="text" class="input-nombre" value="${g.nombre}" placeholder="Nombre">
+                    <input type="text" class="input-valores" value="${g.valores}" placeholder="ej: 12, 15, 18">
+                    <button class="btn btn-danger btn-sm btn-eliminar" data-id="${g.id}">✖</button>
+                `;
+                container.appendChild(div);
+            });
+
+            // Eliminar
+            document.querySelectorAll('.btn-eliminar').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    if (grupos.length <= 2) {
+                        mostrarMensaje('Debe haber al menos 2 grupos.', 'warning');
+                        return;
+                    }
+                    grupos = grupos.filter(g => g.id !== id);
+                    renderizarGrupos();
+                    ocultarResultados();
+                    mostrarMensaje('Grupo eliminado.', 'success');
+                });
+            });
+
+            // Actualizar datos al cambiar inputs
+            document.querySelectorAll('.input-nombre, .input-valores').forEach(input => {
+                input.addEventListener('change', actualizarDatosDesdeDOM);
+            });
+        }
+
+        function actualizarDatosDesdeDOM() {
+            const items = container.querySelectorAll('.grupo-item');
+            const nuevos = [];
+            items.forEach((item, idx) => {
+                const nombreInput = item.querySelector('.input-nombre');
+                const valoresInput = item.querySelector('.input-valores');
+                const id = parseInt(item.querySelector('.btn-eliminar').getAttribute('data-id'));
+                const nombre = nombreInput.value.trim() || `Grupo ${idx + 1}`;
+                const valores = valoresInput.value;
+                nuevos.push({ id, nombre, valores });
+            });
+            grupos = nuevos;
+        }
+
+        // ===== AGREGAR / LIMPIAR =====
+        function agregarGrupo() {
+            const nuevoId = idCounter++;
+            grupos.push({ id: nuevoId, nombre: `Grupo ${grupos.length + 1}`, valores: '' });
+            renderizarGrupos();
+            ocultarResultados();
+            mostrarMensaje('Nuevo grupo agregado.', 'success');
+            const inputs = container.querySelectorAll('.input-valores');
+            if (inputs.length) inputs[inputs.length - 1].focus();
+        }
+
+        function limpiarTodos() {
+            grupos = [
+                { id: idCounter++, nombre: 'Grupo 1', valores: '' },
+                { id: idCounter++, nombre: 'Grupo 2', valores: '' }
+            ];
+            renderizarGrupos();
+            ocultarResultados();
+            mostrarMensaje('Grupos reiniciados.', 'info');
+        }
+
+        // ===== CÁLCULO ANOVA =====
+        function calcularANOVA() {
+            actualizarDatosDesdeDOM();
+
+            const gruposValidos = [];
+            let errores = [];
+            for (let g of grupos) {
+                const valid = validarGrupo(g);
+                if (!valid.ok) {
+                    errores.push(valid.msg);
+                } else {
+                    gruposValidos.push({ nombre: g.nombre, valores: valid.valores });
+                }
+            }
+            if (errores.length > 0) {
+                mostrarMensaje('Error: ' + errores.join(' '), 'warning');
+                ocultarResultados();
+                return;
+            }
+            if (gruposValidos.length < 2) {
+                mostrarMensaje('Se necesitan al menos 2 grupos.', 'warning');
+                ocultarResultados();
+                return;
+            }
+
+            const k = gruposValidos.length;
+            const nTotal = gruposValidos.reduce((s, g) => s + g.valores.length, 0);
+            const medias = gruposValidos.map(g => g.valores.reduce((a, b) => a + b, 0) / g.valores.length);
+            const varianzas = gruposValidos.map((g, i) => {
+                const m = medias[i];
+                return g.valores.reduce((s, x) => s + (x - m) ** 2, 0) / (g.valores.length - 1);
+            });
+            const nGrupos = gruposValidos.map(g => g.valores.length);
+            const mediaGlobal = gruposValidos.reduce((s, g) => s + g.valores.reduce((a, b) => a + b, 0), 0) / nTotal;
+
+            let SCE = 0;
+            for (let i = 0; i < k; i++) SCE += nGrupos[i] * (medias[i] - mediaGlobal) ** 2;
+
+            let SCD = 0;
+            for (let i = 0; i < k; i++) {
+                const m = medias[i];
+                SCD += gruposValidos[i].valores.reduce((s, x) => s + (x - m) ** 2, 0);
+            }
+
+            let SCT = 0;
+            for (let i = 0; i < k; i++) {
+                SCT += gruposValidos[i].valores.reduce((s, x) => s + (x - mediaGlobal) ** 2, 0);
+            }
+
+            const glE = k - 1;
+            const glD = nTotal - k;
+            const glT = nTotal - 1;
+            const CME = SCE / glE;
+            const CMD = SCD / glD;
+            const F = CME / CMD;
+            const p = jStat.centralF.cdf(F, glE, glD);
+            const pValor = 1 - p;
+
+            mostrarResultados({
+                grupos: gruposValidos,
+                medias, varianzas, nGrupos,
+                SCE, SCD, SCT,
+                glE, glD, glT,
+                CME, CMD,
+                F, pValor,
+                mediaGlobal, k, nTotal
+            });
+        }
+
+        // ===== MOSTRAR RESULTADOS =====
+        function mostrarResultados(stats) {
+            tablaBody.innerHTML = `
+                <tr>
+                    <td><strong>Entre grupos</strong></td>
+                    <td>${stats.SCE.toFixed(4)}</td>
+                    <td>${stats.glE}</td>
+                    <td>${stats.CME.toFixed(4)}</td>
+                    <td rowspan="2"><strong style="color:#00f0ff;">${stats.F.toFixed(4)}</strong></td>
+                    <td rowspan="2"><strong style="color:#ff00c8;">${stats.pValor.toFixed(6)}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Dentro de grupos</strong></td>
+                    <td>${stats.SCD.toFixed(4)}</td>
+                    <td>${stats.glD}</td>
+                    <td>${stats.CMD.toFixed(4)}</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td>${stats.SCT.toFixed(4)}</td>
+                    <td>${stats.glT}</td>
+                    <td></td><td></td><td></td>
+                </tr>
+            `;
+
+            resumenEst.innerHTML = `
+                <div class="resumen-item"><span class="etiqueta">Grupos</span><div class="valor">${stats.k}</div></div>
+                <div class="resumen-item"><span class="etiqueta">Datos</span><div class="valor">${stats.nTotal}</div></div>
+                <div class="resumen-item"><span class="etiqueta">Media global</span><div class="valor">${stats.mediaGlobal.toFixed(3)}</div></div>
+                <div class="resumen-item"><span class="etiqueta">F</span><div class="valor">${stats.F.toFixed(4)}</div></div>
+                <div class="resumen-item"><span class="etiqueta">p-valor</span><div class="valor">${stats.pValor.toFixed(6)}</div></div>
+            `;
+
+            resultadosDiv.style.display = 'block';
+            resultadosDiv.classList.add('visible');
+            dibujarGrafico(stats);
+        }
+
+        // ===== GRÁFICO CON ESTILO NEÓN =====
+        function dibujarGrafico(stats) {
+            if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+
+            const ctx = canvas.getContext('2d');
+            const labels = stats.grupos.map((g, i) => `${g.nombre} (n=${stats.nGrupos[i]})`);
+            const medias = stats.medias;
+            const desviaciones = stats.grupos.map((g, i) => Math.sqrt(stats.varianzas[i]));
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Media',
+                        data: medias,
+                        backgroundColor: 'rgba(0, 240, 255, 0.25)',
+                        borderColor: '#00f0ff',
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        barPercentage: 0.6,
+                        hoverBackgroundColor: 'rgba(0, 240, 255, 0.4)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const idx = context.dataIndex;
+                                    return `Media: ${medias[idx].toFixed(3)} ± ${desviaciones[idx].toFixed(3)} (n=${stats.nGrupos[idx]})`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255,255,255,0.04)' },
+                            ticks: { color: '#8090a0' },
+                            title: { display: true, text: 'Media', color: '#8090a0' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#8090a0' }
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'errorBarsNeon',
+                    afterDraw: function(chart) {
+                        const ctx2 = chart.ctx;
+                        const xAxis = chart.scales.x;
+                        const yAxis = chart.scales.y;
+                        const dataset = chart.data.datasets[0];
+                        const meta = chart.getDatasetMeta(0);
+                        if (!meta.data || meta.data.length === 0) return;
+                        const barWidth = meta.data[0]?.width || 20;
+                        const halfWidth = barWidth / 2;
+
+                        dataset.data.forEach((value, index) => {
+                            const x = meta.data[index].x;
+                            const y = yAxis.getPixelForValue(value);
+                            const error = desviaciones[index];
+                            const yTop = yAxis.getPixelForValue(value - error);
+                            const yBottom = yAxis.getPixelForValue(value + error);
+
+                            ctx2.save();
+                            ctx2.beginPath();
+                            ctx2.strokeStyle = '#ff00c8';
+                            ctx2.shadowColor = '#ff00c8';
+                            ctx2.shadowBlur = 15;
+                            ctx2.lineWidth = 2.5;
+                            // Línea vertical
+                            ctx2.moveTo(x, yTop);
+                            ctx2.lineTo(x, yBottom);
+                            ctx2.stroke();
+                            // Líneas horizontales
+                            ctx2.moveTo(x - halfWidth/2, yTop);
+                            ctx2.lineTo(x + halfWidth/2, yTop);
+                            ctx2.stroke();
+                            ctx2.moveTo(x - halfWidth/2, yBottom);
+                            ctx2.lineTo(x + halfWidth/2, yBottom);
+                            ctx2.stroke();
+                            ctx2.restore();
+                        });
+                    }
+                }]
+            });
+        }
+
+        // ===== EVENTOS =====
+        document.getElementById('btn-agregar').addEventListener('click', agregarGrupo);
+        document.getElementById('btn-calcular').addEventListener('click', calcularANOVA);
+        document.getElementById('btn-limpiar').addEventListener('click', limpiarTodos);
+
+        // ===== INICIALIZAR =====
+        renderizarGrupos();
+        mostrarMensaje('✨ Listo para calcular. Edita los datos o agrega grupos.', 'info');
+
+        // Cálculo automático al cargar (opcional, descomentar si se desea)
+        // setTimeout(calcularANOVA, 300);
+    })();
+</script>
+</body>
+</html>
